@@ -1,9 +1,7 @@
 package puttingchallenge.model;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import rollball.graphics.GraphicsComponent;
-import rollball.input.InputComponent;
-import rollball.physics.PhysicsComponent;
+
 
 /**
  * Class that implements an element of the game.
