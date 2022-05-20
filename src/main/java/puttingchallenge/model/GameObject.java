@@ -19,7 +19,7 @@ public interface GameObject {
      */
     void setPosition(double x, double y);
     /**
-     * Sets the vector components.
+     * Sets the velocity of the element.
      * @param x
      *          x-component of the vector
      * @param y
@@ -27,15 +27,15 @@ public interface GameObject {
      */
     void setVector(double x, double y);
     /**
-     * @return the type of the element
+     * @return the type of the element.
      */
     GameObjectType getType();
     /**
-     * @return the coordinates of the element
+     * @return the coordinates of the element.
      */
     Point2D getPosition();
     /**
-     * @return the components of the vector
+     * @return the velocity of the element.
      */
-    Vector2D getVector();
+    Vector2D getVelocity();
 }

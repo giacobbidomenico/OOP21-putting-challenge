@@ -54,7 +54,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public Vector2D getVector() {
+    public Vector2D getVelocity() {
         return vel;
     }
 }
