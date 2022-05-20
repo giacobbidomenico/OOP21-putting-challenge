@@ -2,6 +2,7 @@ package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.GameObject.GameObjectType;
 
 /**
  * factory for all the game objects.
@@ -24,7 +25,7 @@ public final class GameFactory {
     public static GameObject createBall(final Point2D pos,
                                         final double radius,
                                         final Vector2D vel) {
-        return new GameObjectImpl(null, pos, vel);
+        return new GameObjectImpl(GameObjectType.BALL, pos, vel);
     }
 
 }

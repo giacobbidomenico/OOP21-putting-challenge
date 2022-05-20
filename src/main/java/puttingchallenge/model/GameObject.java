@@ -25,7 +25,7 @@ public interface GameObject {
      * @param y
      *          y-component of the vector
      */
-    void setVector(double x, double y);
+    void setVelocity(double x, double y);
     /**
      * @return the type of the element.
      */
