@@ -19,10 +19,9 @@ public class GameObjectImpl implements GameObject {
      * @param velocity
      *                 velocity of the object
      */
-    public GameObjectImpl(
-            final GameObjectType type,
-            final Point2D position,
-            final Vector2D velocity) {
+    public GameObjectImpl(final GameObjectType type,
+                          final Point2D position,
+                          final Vector2D velocity) {
         this.type = type;
         this.pos = position;
         this.vel = velocity;
