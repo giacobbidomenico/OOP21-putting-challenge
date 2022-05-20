@@ -7,6 +7,10 @@ import puttingchallenge.common.Vector2D;
  */
 public interface GameObject {
     /**
+     * types of the game objects.
+     */
+    enum GameObjectType { BALL }
+    /**
      * Sets the coordinates corresponding to the position of the element.
      * @param x
      *          abscissa of the position

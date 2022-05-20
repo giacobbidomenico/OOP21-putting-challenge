@@ -7,8 +7,8 @@ import puttingchallenge.common.Vector2D;
  */
 public class GameObjectImpl implements GameObject {
     private final GameObjectType type;
-    private Point2D position;
-    private Vector2D vector;
+    private Point2D pos;
+    private Vector2D vel;
     /**
      * Build a new {@link GameObjectImpl}.
      * 
@@ -16,28 +16,28 @@ public class GameObjectImpl implements GameObject {
      *                 element type
      * @param position
      *                 coordinates of the element
-     * @param vector
-     *                 components of the vector
+     * @param velocity
+     *                 velocity of the object
      */
     public GameObjectImpl(
             final GameObjectType type,
             final Point2D position,
-            final Vector2D vector) {
+            final Vector2D velocity) {
         this.type = type;
-        this.position = position;
-        this.vector = vector;
+        this.pos = position;
+        this.vel = velocity;
     }
     /**
      * {@inheritDoc}
      */
     public void setPosition(final double x, final double y) {
-        this.position = new Point2D(x, y);
+        this.pos = new Point2D(x, y);
     }
     /**
      * {@inheritDoc}
      */
     public void setVector(final double x, final double y) {
-        this.vector = new Vector2D(x, y);
+        this.vel = new Vector2D(x, y);
     }
     /**
      * {@inheritDoc}
@@ -49,12 +49,12 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     public Point2D getPosition() {
-        return position;
+        return pos;
     }
     /**
      * {@inheritDoc}
      */
     public Vector2D getVector() {
-        return vector;
+        return vel;
     }
 }
