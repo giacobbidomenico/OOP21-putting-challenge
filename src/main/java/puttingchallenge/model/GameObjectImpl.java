@@ -1,6 +1,8 @@
 package puttingchallenge.model;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.graphic.GraphicsComponent;
+import puttingchallenge.physics.PhysicsComponent;
 
 
 /**
@@ -9,9 +11,8 @@ import puttingchallenge.common.Vector2D;
 public class GameObjectImpl implements GameObject {
     private final GameObjectType type;
     private Point2D pos;
-    private Vector2D vel;
-    private GraphicsComponent graph;
-    private PhysicsComponent phys;
+    private final GraphicsComponent graph;
+    private final PhysicsComponent phys;
     /**
      * Build a new {@link GameObjectImpl}.
      * 
@@ -19,8 +20,6 @@ public class GameObjectImpl implements GameObject {
      *                 element type
      * @param position
      *                 coordinates of the element
-     * @param velocity
-     *                 velocity of the object
      * @param graph
      *                 graphic component of the object
      * @param phys
@@ -28,12 +27,10 @@ public class GameObjectImpl implements GameObject {
      */
     public GameObjectImpl(final GameObjectType type,
                           final Point2D position,
-                          final Vector2D velocity,
                           final GraphicsComponent graph,
                           final PhysicsComponent phys) {
         this.type = type;
         this.pos = position;
-        this.vel = velocity;
         this.graph = graph;
         this.phys = phys;
     }
@@ -47,7 +44,7 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     public void setVelocity(final double x, final double y) {
-        this.vel = new Vector2D(x, y);
+        this.phys.setVelocity(x, y);
     }
     /**
      * {@inheritDoc}
@@ -65,6 +62,12 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     public Vector2D getVelocity() {
-        return vel;
+        return this.phys.getVelocity();
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public void updatePhysics(final long dt, final World w) {
+        phys.update(dt, this, w);
     }
 }

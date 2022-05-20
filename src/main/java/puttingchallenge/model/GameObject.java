@@ -1,4 +1,5 @@
 package puttingchallenge.model;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 
@@ -38,4 +39,13 @@ public interface GameObject {
      * @return the velocity of the element.
      */
     Vector2D getVelocity();
+    /**
+     * Update physic state of the object.
+     * 
+     * @param dt
+     *          instant of time.
+     * @param w
+     *          game world.
+     */
+    void updatePhysics(long dt, World w);
 }

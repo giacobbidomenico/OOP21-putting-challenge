@@ -2,7 +2,9 @@ package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.graphic.GraphicsComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
+import puttingchallenge.physics.BallPhysicsComponent;
 
 /**
  * factory for all the game objects.
@@ -20,12 +22,18 @@ public final class GameFactory {
      *          radius of the ball
      * @param vel
      *          initial velocity of the ball
+     * @param acc
+     *          initial acceleration of the ball
      * @return an instance of {@link GameObject} representing the ball
      */
     public static GameObject createBall(final Point2D pos,
                                         final double radius,
-                                        final Vector2D vel) {
-        return new GameObjectImpl(GameObjectType.BALL, pos, vel);
+                                        final Vector2D vel,
+                                        final Vector2D acc) {
+        return new GameObjectImpl(GameObjectType.BALL,
+                                  pos,
+                                  new GraphicsComponent(),
+                                  new BallPhysicsComponent(vel, acc));
     }
 
 }
