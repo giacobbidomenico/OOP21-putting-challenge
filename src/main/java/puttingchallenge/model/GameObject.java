@@ -21,10 +21,8 @@ public interface GameObject {
     void setPosition(double x, double y);
     /**
      * Sets the velocity of the element.
-     * @param x
-     *          x-component of the vector
-     * @param y
-     *          y-component of the vector
+     * @param vel
+     *          velocity vector to assign
      */
     void setVelocity(Vector2D vel);
     /**
