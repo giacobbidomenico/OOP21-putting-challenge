@@ -19,12 +19,10 @@ public interface PhysicsComponent {
     /**
      * Set velocity of the object.
      * 
-     * @param x
-     *          x-component of the 2D vector
-     * @param y
-     *          y-component of the 2D vector
+     * @param vel
+     *          velocity vector to assign
      */
-    void setVelocity(double x, double y);
+    void setVelocity(Vector2D vel);
     /**
      * @return the velocity of the object.
      */
