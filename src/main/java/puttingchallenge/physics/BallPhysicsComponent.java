@@ -1,5 +1,6 @@
 package puttingchallenge.physics;
 
+import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.GameObject;
 
@@ -11,7 +12,6 @@ public class BallPhysicsComponent implements PhysicsComponent {
     private static final double Y_ACCELERATION = 9.81;
 
     private Vector2D vel;
-    private double angle;
     /**
      * Build a new {@link BallPhysicsComponent}.
      * 
@@ -19,21 +19,21 @@ public class BallPhysicsComponent implements PhysicsComponent {
      *          initial velocity of the ball
      */
     public BallPhysicsComponent(final Vector2D vel) {
-        this.init(vel);
+        this.vel = vel;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void update(final long dt, final GameObject obj) {
-       
+        final Point2D nextPos = this.nextPos(dt, obj);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void setVelocity(final Vector2D vel) {
-        this.init(vel);
+        this.vel = vel;
     }
     /**
      * {@inheritDoc}
@@ -43,8 +43,13 @@ public class BallPhysicsComponent implements PhysicsComponent {
         return this.vel;
     }
 
-    private void init(final Vector2D vel) {
-        this.vel = vel;
-        this.angle = Math.acos(this.vel.getX() / this.vel.getModule());
+    private Point2D nextPos(final long dt, final GameObject obj) {
+        final long t = (long) 0.001 * dt;
+        final Point2D curPos = obj.getPosition();
+        final double x = curPos.getX() + (this.vel.getX() * t);
+        final double y = curPos.getY()
+                         + (this.vel.getY() * t)
+                         - (0.5 * Y_ACCELERATION * t * t);
+        return new Point2D(x, y);
     }
 }
