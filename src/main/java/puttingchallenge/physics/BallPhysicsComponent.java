@@ -7,8 +7,7 @@ import puttingchallenge.model.GameObject;
 /**
  * The physical behavior of the ball.
  */
-public class BallPhysicsComponent implements PhysicsComponent {
-
+public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
 
@@ -54,7 +53,6 @@ public class BallPhysicsComponent implements PhysicsComponent {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void setVelocity(final Vector2D vel) {
         this.vel = vel;
     }
