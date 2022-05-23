@@ -4,7 +4,7 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.GameObject;
 
 /**
- *
+ * Describes the physical behavior of a fixed {@link GameObject}.
  */
 public class StaticObstaclePhysicsComponent implements PhysicsComponent {
 

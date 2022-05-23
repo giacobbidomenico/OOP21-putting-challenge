@@ -7,7 +7,7 @@ import puttingchallenge.model.GameObject.GameObjectType;
 import puttingchallenge.physics.BallPhysicsComponent;
 
 /**
- * factory for all the game objects.
+ * Factory class for all the game objects.
  */
 public final class GameFactory {
 

@@ -4,7 +4,7 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.GameObject;
 
 /**
- * Represent the physical behavior of the object.
+ * Describes the physical behavior of a {@link GameObject}.
  */
 public interface PhysicsComponent {
 
@@ -32,4 +32,5 @@ public interface PhysicsComponent {
      * @return the velocity of the object.
      */
     Vector2D getVelocity();
+
 }

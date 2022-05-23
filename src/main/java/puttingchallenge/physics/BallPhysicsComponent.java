@@ -5,9 +5,10 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.GameObject;
 
 /**
- * The physical behavior of the ball.
+ * Describes the physical behavior of the ball.
  */
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
+
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
 
@@ -63,4 +64,5 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                          - (0.5 * Y_ACCELERATION * t * t);
         return new Point2D(x, y);
     }
+
 }
