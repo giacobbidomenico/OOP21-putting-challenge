@@ -7,6 +7,7 @@ import puttingchallenge.model.GameObject;
  * Represent the physical behavior of the object.
  */
 public interface PhysicsComponent {
+
     /**
      * Update the physical state of the provided game object.
      * 
@@ -17,7 +18,8 @@ public interface PhysicsComponent {
      * @param w
      *          world game
      */
-    void update(long dt, GameObject obj, Word w);
+    void update(long dt, GameObject obj, World w);
+
     /**
      * Set velocity of the object.
      * 
@@ -25,6 +27,7 @@ public interface PhysicsComponent {
      *          velocity vector to assign
      */
     void setVelocity(Vector2D vel);
+
     /**
      * @return the velocity of the object.
      */

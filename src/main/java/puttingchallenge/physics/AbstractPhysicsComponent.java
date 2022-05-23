@@ -8,21 +8,24 @@ import puttingchallenge.model.GameObject;
  */
 public abstract class AbstractPhysicsComponent implements PhysicsComponent {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract void update(long dt, GameObject obj);
+    private Vector2D vel;
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public abstract void setVelocity(double x, double y);
+    public abstract void update(long dt, GameObject obj, World w);
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public abstract Vector2D getVelocity();
+    public void setVelocity(final Vector2D vel) {
+        this.vel = vel;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Vector2D getVelocity() {
+        return this.vel;
+    }
 }
