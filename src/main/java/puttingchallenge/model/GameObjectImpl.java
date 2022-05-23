@@ -43,8 +43,8 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void setVelocity(final double x, final double y) {
-        this.phys.setVelocity(x, y);
+    public void setVelocity(final Vector2D vel) {
+        this.phys.setVelocity(vel);
     }
     /**
      * {@inheritDoc}

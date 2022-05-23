@@ -22,18 +22,15 @@ public final class GameFactory {
      *          radius of the ball
      * @param vel
      *          initial velocity of the ball
-     * @param acc
-     *          initial acceleration of the ball
      * @return an instance of {@link GameObject} representing the ball
      */
     public static GameObject createBall(final Point2D pos,
                                         final double radius,
-                                        final Vector2D vel,
-                                        final Vector2D acc) {
+                                        final Vector2D vel) {
         return new GameObjectImpl(GameObjectType.BALL,
                                   pos,
                                   new GraphicsComponent(),
-                                  new BallPhysicsComponent(vel, acc));
+                                  new BallPhysicsComponent(vel));
     }
 
 }

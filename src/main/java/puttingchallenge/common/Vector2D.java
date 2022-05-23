@@ -42,4 +42,10 @@ public class Vector2D implements Serializable {
     public double getY() {
         return y;
     }
+    /**
+     * @return module of the vector
+     */
+    public double getModule() {
+        return (double) Math.sqrt(x * x + y * y);
+    }
 }

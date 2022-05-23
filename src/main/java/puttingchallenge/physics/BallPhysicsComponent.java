@@ -7,19 +7,17 @@ import puttingchallenge.model.GameObject;
  * The physical behavior of the ball.
  */
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
+    private static final double Y_ACCELERATION = 9.81;
     private Vector2D vel;
-    private Vector2D acc;
+    private double angle;
     /**
      * Build a new {@link BallPhysicsComponent}.
      * 
      * @param vel
      *          initial velocity of the ball
-     * @param acc
-     *          initial acceleration of the ball
      */
-    public BallPhysicsComponent(final Vector2D vel, final Vector2D acc) {
-        this.vel = vel;
-        this.acc = acc;
+    public BallPhysicsComponent(final Vector2D vel) {
+        this.init(vel);
     }
     /**
      * {@inheritDoc}
@@ -30,17 +28,25 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void setVelocity(final double x, final double y) {
-        // TODO Auto-generated method stub
+    public void setVelocity(final Vector2D vel) {
+        this.init(vel);
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public Vector2D getVelocity() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.vel;
     }
 
+    private void init(final Vector2D vel) {
+        this.vel = vel;
+        this.angle = Math.acos(this.vel.getX() / this.vel.getModule());
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setVelocity(final double x, final double y) {
+    }
 }
