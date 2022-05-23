@@ -6,7 +6,7 @@ import puttingchallenge.model.GameObject;
 /**
  * The physical behavior of the ball.
  */
-public class BallPhysicsComponent implements PhysicsComponent {
+public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private Vector2D vel;
     private Vector2D acc;
     /**
@@ -26,7 +26,6 @@ public class BallPhysicsComponent implements PhysicsComponent {
      */
     @Override
     public void update(final long dt, final GameObject obj) {
-       
     }
     /**
      * {@inheritDoc}
@@ -34,7 +33,6 @@ public class BallPhysicsComponent implements PhysicsComponent {
     @Override
     public void setVelocity(final double x, final double y) {
         // TODO Auto-generated method stub
-        
     }
     /**
      * {@inheritDoc}
