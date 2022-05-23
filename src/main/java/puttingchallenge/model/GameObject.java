@@ -13,12 +13,10 @@ public interface GameObject {
     enum GameObjectType { BALL }
     /**
      * Sets the coordinates corresponding to the position of the element.
-     * @param x
-     *          abscissa of the position
-     * @param y
-     *          ordinate of the position
+     * @param position
+     *          position to assign
      */
-    void setPosition(double x, double y);
+    void setPosition(Point2D position);
     /**
      * Sets the velocity of the element.
      * @param vel

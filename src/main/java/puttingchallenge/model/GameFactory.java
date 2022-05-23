@@ -30,7 +30,7 @@ public final class GameFactory {
         return new GameObjectImpl(GameObjectType.BALL,
                                   pos,
                                   new GraphicsComponent(),
-                                  new BallPhysicsComponent(vel));
+                                  new BallPhysicsComponent(vel, radius));
     }
 
 }

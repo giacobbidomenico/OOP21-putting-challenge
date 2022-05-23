@@ -14,8 +14,10 @@ public interface PhysicsComponent {
      *          instant of time.
      * @param obj
      *          the instance of {@link GameObject} to update
+     * @param w
+     *          world game
      */
-    void update(long dt, GameObject obj);
+    void update(long dt, GameObject obj, Word w);
     /**
      * Set velocity of the object.
      * 

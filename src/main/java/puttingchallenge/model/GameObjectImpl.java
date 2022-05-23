@@ -37,8 +37,8 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void setPosition(final double x, final double y) {
-        this.pos = new Point2D(x, y);
+    public void setPosition(final Point2D position) {
+        this.pos = position;
     }
     /**
      * {@inheritDoc}
