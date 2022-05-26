@@ -1,6 +1,7 @@
 package puttingchallenge.physics;
 
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -15,10 +16,10 @@ public interface PhysicsComponent {
      *          instant of time.
      * @param obj
      *          the instance of {@link GameObject} to update
-     * @param w
-     *          world game
+     * @param env
+     *          environment of the game
      */
-    void update(long dt, GameObject obj, World w);
+    void update(long dt, GameObject obj, Environment env);
 
     /**
      * Set velocity of the object.

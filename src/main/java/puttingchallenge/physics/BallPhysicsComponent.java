@@ -2,6 +2,7 @@ package puttingchallenge.physics;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -30,7 +31,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update(final long dt, final GameObject obj, final World w) {
+    public void update(final long dt, final GameObject obj, final Environment env) {
         final Point2D nextPos = this.nextPos(dt, obj);
         final Point2D prevPos = obj.getPosition();
         final Vector2D newVel;

@@ -43,5 +43,5 @@ public interface GameObject {
      * @param w
      *          game world.
      */
-    void updatePhysics(long dt, World w);
+    void updatePhysics(long dt, Environment w);
 }
