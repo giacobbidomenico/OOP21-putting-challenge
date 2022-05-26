@@ -35,4 +35,11 @@ public interface Environment {
      *          initial velocity of the ball
      */
     void setBall(Point2D pos, double radius, Vector2D vel);
+    /**
+     * Sets the configuration of the player
+     * 
+     * @param pos
+     *          initial position of the player
+     */
+    void setPlayer(Point2D pos);
 }
