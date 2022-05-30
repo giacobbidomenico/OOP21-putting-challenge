@@ -1,5 +1,8 @@
 package puttingchallenge.model;
 
+import java.util.List;
+import java.util.Optional;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 
@@ -9,6 +12,7 @@ import puttingchallenge.common.Vector2D;
 public interface Environment {
     /**
      * Update the game environment.
+     * 
      */
     void update();
     /**
@@ -20,6 +24,7 @@ public interface Environment {
     boolean checkCollisions();
     /**
      * Adds a static obstacle to the game environment.
+     * 
      * @param pos
      *          position of the static obstacle
      */
@@ -42,4 +47,23 @@ public interface Environment {
      *          initial position of the player
      */
     void setPlayer(Point2D pos);
+    /**
+     * @return the {@link GameObject} corresponding to the ball in the 
+     *         game environment
+     */
+    Optional<GameObject> getBall();
+    /**
+     * @return the {@link GameObject} corresponding to the player in the 
+     *         game environment
+     */
+    Optional<GameObject> getPlayer();
+    /**
+     * @return a list of {@link GameObject} corresponding to the obstacles in the
+     *         game environment
+     */
+    List<GameObject> getObstacles();
+    /**
+     * Stop the movement of the ball.
+     */
+    void notifyBallStopped();
 }
