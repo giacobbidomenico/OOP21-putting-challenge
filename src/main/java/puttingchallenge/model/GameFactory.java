@@ -10,9 +10,7 @@ import puttingchallenge.physics.StaticObstaclePhysicsComponent;
 /**
  * factory for all the game objects.
  */
-public final class GameFactory {
-
-    private GameFactory() { }
+public class GameFactory {
 
     /**
      * Build the ball of the game.
@@ -25,7 +23,7 @@ public final class GameFactory {
      *          initial velocity of the ball
      * @return an instance of {@link GameObject} representing the ball
      */
-    public static GameObject createBall(final Point2D pos,
+    public GameObject createBall(final Point2D pos,
                                         final double radius,
                                         final Vector2D vel) {
         return new GameObjectImpl(GameObjectType.BALL,
@@ -40,7 +38,7 @@ public final class GameFactory {
      *          initial position of the obstacle
      * @return an instance of {@link GameObject} representing a static obstacle
      */
-    public static GameObject createStaticObstacle(final Point2D pos) {
+    public GameObject createStaticObstacle(final Point2D pos) {
         return new GameObjectImpl(GameObjectType.STATIC_OBSTACLE, 
                                   pos,
                                   new GraphicsComponent(),

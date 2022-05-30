@@ -49,7 +49,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         obj.setVelocity(newVel);
         
         if ((velX == 0) && (prevPos.getY() == nextPos.getY())) {
-            w.notifyBallStopped();
+            env.notifyBallStopped();
         }
     }
 
