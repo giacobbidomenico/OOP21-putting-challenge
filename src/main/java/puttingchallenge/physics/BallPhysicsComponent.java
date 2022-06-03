@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -32,11 +33,11 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update(final long dt, final GameObject obj, final World w) {
+    public void update(final long dt, final GameObject obj, final Environment env) {
         this.reduceVel(dt);
         final Point2D nextPos = this.nextPos(dt, obj);
 
-        final Optional<Collision> infoOpt = w.checkCollison(nextPos, obj.getVelocity(), obj.getHitBox());
+        final Optional<Collision> infoOpt = env.checkCollison(nextPos, obj.getVelocity(), obj.getHitBox());
         if(infoOpt.isPresent()) {
             // aggiornare velocità dopo la collisione
             final Collision info = infoOpt.get();
@@ -48,7 +49,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
 
         if (obj.getPosition().equals(nextPos)) {
-            w.notifyBallStopped();
+            env.notifyBallStopped();
         } else {
             obj.setPosition(nextPos);
         }

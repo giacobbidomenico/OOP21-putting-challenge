@@ -1,6 +1,7 @@
 package puttingchallenge.physics;
 
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -13,7 +14,7 @@ public abstract class AbstractPhysicsComponent implements PhysicsComponent {
     /**
      * {@inheritDoc}
      */
-    public abstract void update(long dt, GameObject obj, World w);
+    public abstract void update(long dt, GameObject obj, Environment env);
 
     /**
      * {@inheritDoc}
