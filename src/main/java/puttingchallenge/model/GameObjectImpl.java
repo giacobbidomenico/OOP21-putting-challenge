@@ -75,8 +75,8 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void updatePhysics(final long dt, final World w) {
-        phys.update(dt, this, w);
+    public void updatePhysics(final long dt, final Environment env) {
+        phys.update(dt, this, env);
     }
 
 }

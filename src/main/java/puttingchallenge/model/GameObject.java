@@ -11,7 +11,7 @@ public interface GameObject {
     /**
      * types of the game objects.
      */
-    enum GameObjectType { BALL }
+    enum GameObjectType { BALL, STATIC_OBSTACLE }
 
     /**
      * Sets the coordinates corresponding to the position of the element.
@@ -47,9 +47,9 @@ public interface GameObject {
      * 
      * @param dt
      *          instant of time.
-     * @param w
-     *          game world.
+     * @param env
+     *          environment of the game.
      */
-    void updatePhysics(long dt, World w);
+    void updatePhysics(long dt, Environment env);
 
 }
