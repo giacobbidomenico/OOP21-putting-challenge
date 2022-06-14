@@ -1,38 +1,38 @@
+
 package puttingchallenge.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
-import puttingchallenge.common.Point2D;
-import puttingchallenge.common.Vector2D;
 
 /**
  * Class that implements the game environment.
+ * 
  */
 public class EnvironmentImpl implements Environment {
-
-    private final GameFactory factory;
-    private final List<GameObject> obstacles;
-    private Optional<GameObject> ball;
-    private Optional<GameObject> player;
+    private final List<GameObject> staticObstacles;
+    private final GameObject ball;
+    private final GameObject player;
     /**
      * Build a new {@link EnvironmentImpl}.
      * 
+     * @param ball 
+     *           the {@link GameObject} corresponding to the ball in the game environment
+     * @param player
+     *           the {@link GameObject} corresponding to the player in the game environment
      */
-    public EnvironmentImpl() {
-        this.factory = new GameFactory();
-        this.obstacles = new ArrayList<>();
+    public EnvironmentImpl(final GameObject ball, final GameObject player) {
+        this.ball = Objects.requireNonNull(ball);
+        this.player = Objects.requireNonNull(player);
+        this.staticObstacles = new LinkedList<>();
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void update() {
-        if (ball.isEmpty()) {
-            throw new IllegalStateException();
-        }
-        ball.get().updatePhysics(0, this);
+        ball.updatePhysics(0, this);
     }
     /**
      * {@inheritDoc}
@@ -46,47 +46,29 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public void addStaticObstacle(final Point2D pos) {
-        this.obstacles.add(factory.createStaticObstacle(pos));
+    public void addStaticObstacle(final GameObject obstacle) {
+        this.staticObstacles.add(Objects.requireNonNull(obstacle));
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setBall(final Point2D pos, final double radius, final Vector2D vel) {
-        if (this.ball.isEmpty()) {
-            this.ball = Optional.of(factory.createBall(pos, radius, vel));
-        }
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPlayer(final Point2D pos) {
-        if (player.isEmpty()) {
-            this.player = Optional.of(factory.createPlayer(pos));
-        }
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<GameObject> getBall() {
+    public GameObject getBall() {
         return this.ball;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public Optional<GameObject> getPlayer() {
+    public GameObject getPlayer() {
         return this.player;
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<GameObject> getObstacles() {
-        return this.obstacles;
+    public List<GameObject> getStaticObstacles() {
+        return this.staticObstacles;
     }
     /**
      * {@inheritDoc}
