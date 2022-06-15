@@ -18,8 +18,27 @@ repositories {
     mavenCentral()
 }
 
+val javaFXModules = listOf(
+    "base",
+    "controls",
+    "fxml",
+    "swing",
+    "graphics"
+)
+
+val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
+val jUnitVersion = "5.7.1"
+val javaFxVersion = 15
+
 dependencies {
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
+
+    // JavaFX: comment out if you do not need them
+    for (platform in supportedPlatforms) {
+        for (module in javaFXModules) {
+            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
+        }
+    }
 
     // JUnit API and testing engine
     val jUnitVersion = "5.8.2"
