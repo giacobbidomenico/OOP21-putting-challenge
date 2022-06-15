@@ -5,7 +5,7 @@ import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameObject;
 
 /**
- *
+ * Describes the physical behavior of a fixed {@link GameObject}.
  */
 public class StaticObstaclePhysicsComponent implements PhysicsComponent {
 
@@ -27,6 +27,6 @@ public class StaticObstaclePhysicsComponent implements PhysicsComponent {
      * {@inheritDoc}
      */
     @Override
-    public void update(final long dt, final GameObject obj, final Environment w) { }
+    public void update(final long dt, final GameObject obj, final Environment env) { }
 
 }

@@ -8,7 +8,7 @@ import puttingchallenge.physics.BallPhysicsComponent;
 import puttingchallenge.physics.StaticObstaclePhysicsComponent;
 
 /**
- * factory for all the game objects.
+ * Factory class for all the game objects.
  */
 public class GameFactory {
 

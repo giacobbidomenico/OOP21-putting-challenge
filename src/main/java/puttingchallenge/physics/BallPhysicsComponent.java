@@ -1,14 +1,17 @@
 package puttingchallenge.physics;
 
+import java.util.Optional;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameObject;
 
 /**
- * The physical behavior of the ball.
+ * Describes the physical behavior of the ball.
  */
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
+
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
 
@@ -32,24 +35,24 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      */
     @Override
     public void update(final long dt, final GameObject obj, final Environment env) {
+        this.reduceVel(dt);
         final Point2D nextPos = this.nextPos(dt, obj);
-        final Point2D prevPos = obj.getPosition();
-        final Vector2D newVel;
-        final double velX = obj.getVelocity().getX()
-                            - (6 * Math.PI * FRICTION * obj.getVelocity().getX() * this.radius);
-        velX = velX > 0 ? 0 : velX;
-        
-        if(collison) {
-            
-        } else {
-            newVel = new Vector2D(obj.getVelocity().getX(),
-                                  obj.getVelocity().getY() - Y_ACCELERATION * 0.001 * dt);
+
+        final Optional<Collision> infoOpt = env.checkCollison(nextPos, obj.getVelocity(), obj.getHitBox());
+        if(infoOpt.isPresent()) {
+            // aggiornare velocità dopo la collisione
+            final Collision info = infoOpt.get();
+
+            obj.setVelocity(info.getVelocity());
+            switch (info.getEdge()) {
+            case 
+            }
         }
-        obj.setPosition(nextPos);
-        obj.setVelocity(newVel);
-        
-        if ((velX == 0) && (prevPos.getY() == nextPos.getY())) {
+
+        if (obj.getPosition().equals(nextPos)) {
             env.notifyBallStopped();
+        } else {
+            obj.setPosition(nextPos);
         }
     }
 
@@ -64,4 +67,19 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                          - (0.5 * Y_ACCELERATION * t * t);
         return new Point2D(x, y);
     }
+
+    private void reduceVel(final long dt) {
+        double velX = Math.abs(this.getVelocity().getX());
+        double velY = this.getVelocity().getY();
+
+        velY -= Y_ACCELERATION * 0.001 * dt;
+        if (velX != 0) {
+            velX -= 6 * Math.PI * FRICTION * velX * this.radius;
+            if (this.getVelocity().getX() < 0) {
+                velX *= -1;
+            }
+        }
+        this.setVelocity(new Vector2D(velX, velY));
+    }
+
 }
