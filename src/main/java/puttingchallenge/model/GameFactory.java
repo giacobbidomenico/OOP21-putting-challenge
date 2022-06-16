@@ -31,7 +31,7 @@ public class GameFactory {
                                  final GraphicsContext gc) {
         return new GameObjectImpl(GameObjectType.BALL,
                                   pos,
-                                  new BallGraphicComponent(gc),
+                                  new BallGraphicComponent(gc, radius),
                                   new BallPhysicsComponent(radius));
     }
     /**
