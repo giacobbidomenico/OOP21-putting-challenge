@@ -12,6 +12,8 @@ public class AbstractGraphicComponent implements GraphicComponent {
 
     private final Image skin;
     private final GraphicsContext gc;
+    private final double w;
+    private final double h;
 
     /**
      * Set up a new graphic component.
@@ -20,10 +22,19 @@ public class AbstractGraphicComponent implements GraphicComponent {
      *          the path of the skin
      * @param gc
      *          the {@link GraphicsContext} in which the object has to be drawn
+     * @param w
+     *          the width of the skin
+     * @param h
+     *          the height of the skin
      */
-    protected AbstractGraphicComponent(final String imagePath, final GraphicsContext gc) {
+    protected AbstractGraphicComponent(final String imagePath,
+                                       final GraphicsContext gc,
+                                       final double w,
+                                       final double h) {
         this.skin = new Image(imagePath);
         this.gc = gc;
+        this.w = w;
+        this.h = h;
     }
 
     /**
@@ -35,7 +46,7 @@ public class AbstractGraphicComponent implements GraphicComponent {
     public void draw(final GameObject obj) {
         final double x = obj.getPosition().getX();
         final double y = obj.getPosition().getY();
-        this.gc.drawImage(skin, x, y);
+        this.gc.drawImage(skin, x, y, w, h);
     }
 
 }

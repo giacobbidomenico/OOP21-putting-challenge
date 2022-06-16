@@ -14,9 +14,11 @@ public final class BallGraphicComponent extends AbstractGraphicComponent {
      * 
      * @param gc
      *          the {@link GraphicsContext} in which the object has to be drawn
+     * @param radius
+     *          the radius of the ball
      */
-    public BallGraphicComponent(final GraphicsContext gc) {
-        super(SKIN_PATH, gc);
+    public BallGraphicComponent(final GraphicsContext gc, final double radius) {
+        super(SKIN_PATH, gc, radius * 2, radius * 2);
     }
 
 }
