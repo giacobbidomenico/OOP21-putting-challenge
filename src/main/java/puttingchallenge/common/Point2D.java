@@ -2,7 +2,6 @@ package puttingchallenge.common;
 
 import java.io.Serializable;
 
-import it.unibo.oop.lab05.ex5.Pair;
 
 /**
  * 
