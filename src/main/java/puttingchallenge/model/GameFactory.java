@@ -2,7 +2,6 @@ package puttingchallenge.model;
 
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
-import puttingchallenge.common.Vector2D;
 import puttingchallenge.graphics.BallGraphicComponent;
 import puttingchallenge.graphics.GraphicComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
