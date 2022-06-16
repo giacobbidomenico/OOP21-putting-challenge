@@ -1,4 +1,4 @@
-package puttingchallenge.graphic;
+package puttingchallenge.graphics;
 /**
  *
  */

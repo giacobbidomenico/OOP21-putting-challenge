@@ -1,7 +1,7 @@
 package puttingchallenge.model;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.graphic.GraphicsComponent;
+import puttingchallenge.graphics.GraphicsComponent;
 import puttingchallenge.physics.PhysicsComponent;
 
 
