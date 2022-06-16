@@ -2,7 +2,7 @@ package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.graphics.GraphicsComponent;
+import puttingchallenge.graphics.GraphicComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
 import puttingchallenge.physics.BallPhysicsComponent;
 import puttingchallenge.physics.StaticObstaclePhysicsComponent;
@@ -28,7 +28,7 @@ public class GameFactory {
                                         final Vector2D vel) {
         return new GameObjectImpl(GameObjectType.BALL,
                                   pos,
-                                  new GraphicsComponent(),
+                                  new GraphicComponent(),
                                   new BallPhysicsComponent(vel, radius));
     }
     /**
@@ -41,7 +41,7 @@ public class GameFactory {
     public GameObject createStaticObstacle(final Point2D pos) {
         return new GameObjectImpl(GameObjectType.STATIC_OBSTACLE, 
                                   pos,
-                                  new GraphicsComponent(),
+                                  new GraphicComponent(),
                                   new StaticObstaclePhysicsComponent());
     }
 }

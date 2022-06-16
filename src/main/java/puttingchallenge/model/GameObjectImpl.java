@@ -12,7 +12,7 @@ public class GameObjectImpl implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
-    private final GraphicsComponent graph;
+    private final GraphicComponent graph;
     private final PhysicsComponent phys;
 
     /**
@@ -29,7 +29,7 @@ public class GameObjectImpl implements GameObject {
      */
     public GameObjectImpl(final GameObjectType type,
                           final Point2D position,
-                          final GraphicsComponent graph,
+                          final GraphicComponent graph,
                           final PhysicsComponent phys) {
         this.type = type;
         this.pos = position;
