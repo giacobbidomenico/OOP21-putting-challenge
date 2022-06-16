@@ -40,6 +40,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setPosition(final Point2D position) {
         this.pos = position;
     }
@@ -47,6 +48,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setVelocity(final Vector2D vel) {
         this.phys.setVelocity(vel);
     }
@@ -54,6 +56,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public GameObjectType getType() {
         return type;
     }
@@ -61,6 +64,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Point2D getPosition() {
         return pos;
     }
@@ -68,6 +72,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Vector2D getVelocity() {
         return this.phys.getVelocity();
     }
@@ -75,8 +80,17 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void updatePhysics(final long dt, final Environment env) {
-        phys.update(dt, this, env);
+        this.phys.update(dt, this, env);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void draw() {
+        this.graph.draw(this);
     }
 
 }

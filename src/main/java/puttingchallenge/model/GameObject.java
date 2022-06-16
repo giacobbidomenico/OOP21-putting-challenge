@@ -52,4 +52,9 @@ public interface GameObject {
      */
     void updatePhysics(long dt, Environment env);
 
+    /**
+     * Draw the game object skin in the actual scene.
+     */
+    void draw();
+
 }
