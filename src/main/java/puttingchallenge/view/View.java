@@ -1,16 +1,17 @@
 
 package puttingchallenge.view;
 
+
 /**
  * View of the application.
  */
 public interface View {
-
     /**
-     * Sets the view configuration.
+     * Configure the view and show it on the screen.
      * 
      */
-    void launch();
+    void buildView();
+
     /**
      * Changes the current scene shown.
      * 
@@ -18,10 +19,10 @@ public interface View {
      *            scene that needs to be loaded
      */
     void loadScene(SceneType scene);
+
     /**
-     * Renders the state of the current scene.
+     * Renders the state of the {@link GameObject} in the current scene.
      * 
      */
     void render();
-
 }
