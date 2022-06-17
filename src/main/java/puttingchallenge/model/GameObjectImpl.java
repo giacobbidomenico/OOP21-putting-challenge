@@ -83,8 +83,7 @@ public class GameObjectImpl implements GameObject {
      */
     @Override
     public PhysicsComponent getPhysicsComponent() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.phys;
     }
 
 }
