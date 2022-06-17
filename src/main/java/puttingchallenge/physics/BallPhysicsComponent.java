@@ -85,9 +85,9 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         this.setVelocity(new Vector2D(velX, velY));
     }
     /**
-     * @return
-     *      true if the ball is moving
+     * {@inheritDoc}
      */
+    @Override
     public boolean isMoving() {
         return this.isMoving;
     }

@@ -83,7 +83,8 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void movePlayer() {
         if (!this.ball.getPhysicsComponent().isMoving()) {
-            this.player.setPosition(this.ball.getPosition());
+            // note that (for the moment) the player is not next to the ball but ON it 
+            this.player.setPosition(this.ball.getPosition()); 
         }
     }
 }
