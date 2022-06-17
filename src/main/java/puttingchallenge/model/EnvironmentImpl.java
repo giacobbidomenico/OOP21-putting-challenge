@@ -77,4 +77,11 @@ public class EnvironmentImpl implements Environment {
     public void notifyBallStopped() {
         // TODO Auto-generated method stub
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void movePlayer() {
+        // TODO Auto-generated method stub
+    }
 }
