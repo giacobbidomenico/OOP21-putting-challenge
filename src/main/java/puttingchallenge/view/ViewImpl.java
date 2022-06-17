@@ -4,6 +4,7 @@ import puttingchallenge.core.GameEngine;
 import puttingchallenge.graphics.GraphicComponent;
 import puttingchallenge.model.Environment;
 
+import java.util.List;
 import java.util.Objects;
 import javafx.application.Platform;
 import javafx.stage.Stage;
