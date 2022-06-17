@@ -11,7 +11,6 @@ import puttingchallenge.model.GameObject;
 public class AbstractGraphicComponent implements GraphicComponent {
 
     private final Image skin;
-    private final GraphicsContext gc;
     private final double w;
     private final double h;
 
@@ -20,19 +19,15 @@ public class AbstractGraphicComponent implements GraphicComponent {
      * 
      * @param imagePath
      *          the path of the skin
-     * @param gc
-     *          the {@link GraphicsContext} in which the object has to be drawn
      * @param w
      *          the width of the skin
      * @param h
      *          the height of the skin
      */
     protected AbstractGraphicComponent(final String imagePath,
-                                       final GraphicsContext gc,
                                        final double w,
                                        final double h) {
         this.skin = new Image(imagePath);
-        this.gc = gc;
         this.w = w;
         this.h = h;
     }
@@ -43,10 +38,10 @@ public class AbstractGraphicComponent implements GraphicComponent {
      * The method can be overridden to change the graphic behavior of the object
      */
     @Override
-    public void draw(final GameObject obj) {
+    public void draw(final GameObject obj, final GraphicsContext gc) {
         final double x = obj.getPosition().getX();
         final double y = obj.getPosition().getY();
-        this.gc.drawImage(skin, x, y, w, h);
+        gc.drawImage(skin, x, y, w, h);
     }
 
 }

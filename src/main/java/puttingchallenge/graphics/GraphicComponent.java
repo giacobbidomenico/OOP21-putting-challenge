@@ -1,5 +1,6 @@
 package puttingchallenge.graphics;
 
+import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -12,6 +13,8 @@ public interface GraphicComponent {
      * 
      * @param obj
      *          the instance of {@link GameObject} to be drawn
+     * @param gc
+     *          the {@link GraphicsContext} in which the object has to be drawn
      */
-    void draw(GameObject obj);
+    void draw(GameObject obj, GraphicsContext gc);
 }
