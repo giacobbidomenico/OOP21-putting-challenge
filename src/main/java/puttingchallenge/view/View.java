@@ -1,6 +1,7 @@
 
 package puttingchallenge.view;
 
+import puttingchallenge.model.Environment;
 
 /**
  * View of the application.
@@ -17,8 +18,10 @@ public interface View {
      * 
      * @param scene
      *            indicates the scene to be loaded
+     * @param env
+     *          the {@link Environment} of the scene to be loaded
      */
-    void loadScene(SceneType scene);
+    void loadScene(SceneType scene, Environment env);
 
     /**
      * Renders the state of any {@link GameObject} in the current scene.
