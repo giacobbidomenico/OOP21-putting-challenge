@@ -48,4 +48,33 @@ public class Vector2D implements Serializable {
     public double getModule() {
         return (double) Math.sqrt(x * x + y * y);
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Double.hashCode(x) ^ Double.hashCode(y);
+    }
+
+    /**
+     * Compares this vector to the specified object. The result is true if and
+     * only if the argument is not null and is an instance of {@link Vector2D} and 
+     * contains the same components.
+     * 
+     * @param obj
+     *          the object to compare
+     * 
+     * @return true if the given object is equal to this vector, false otherwise
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Vector2D) {
+            final var v = (Vector2D) obj;
+            return this.x == v.x && this.y == v.y;
+        }
+        return false;
+    }
 }
