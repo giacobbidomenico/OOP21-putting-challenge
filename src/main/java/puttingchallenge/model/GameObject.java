@@ -2,6 +2,7 @@ package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.physics.PhysicsComponent;
 
 /**
  * Class that implements an element of the game.
@@ -51,5 +52,11 @@ public interface GameObject {
      *          environment of the game.
      */
     void updatePhysics(long dt, Environment env);
+    /**
+     * 
+     * @return
+     *      the physics component of the object
+     */
+    PhysicsComponent getPhysicsComponent();
 
 }

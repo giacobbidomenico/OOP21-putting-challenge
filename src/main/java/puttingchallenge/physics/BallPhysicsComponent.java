@@ -14,8 +14,11 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
+    
 
     private final double radius;
+    
+    private boolean isMoving;
 
     /**
      * Build a new {@link BallPhysicsComponent}.
@@ -81,5 +84,14 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
         this.setVelocity(new Vector2D(velX, velY));
     }
-
+    
+    public boolean isMoving() {
+        return this.isMoving;
+    }
+    
+    public void stop() {
+        if(this.isMoving) {
+            this.isMoving = false;
+        }
+    }
 }

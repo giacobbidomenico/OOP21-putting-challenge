@@ -78,5 +78,13 @@ public class GameObjectImpl implements GameObject {
     public void updatePhysics(final long dt, final Environment env) {
         phys.update(dt, this, env);
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PhysicsComponent getPhysicsComponent() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
