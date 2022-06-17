@@ -34,4 +34,10 @@ public interface PhysicsComponent {
      */
     Vector2D getVelocity();
 
+    /**
+     * @return
+     *      true if the ball is moving
+     */
+    boolean isMoving();
+
 }
