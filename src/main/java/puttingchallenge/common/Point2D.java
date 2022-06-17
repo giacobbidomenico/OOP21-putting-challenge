@@ -59,7 +59,7 @@ public class Point2D implements Serializable {
 
     /**
      * Compares this point to the specified object. The result is true if and
-     * only if the argument is not null and is a instance of {@link Point2D} and 
+     * only if the argument is not null and is an instance of {@link Point2D} and 
      * contains the same coordinates.
      * 
      * @param obj
