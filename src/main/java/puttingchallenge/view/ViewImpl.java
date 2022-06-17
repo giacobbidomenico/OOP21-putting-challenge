@@ -1,6 +1,7 @@
 package puttingchallenge.view;
 
 import puttingchallenge.core.GameEngine;
+import puttingchallenge.graphics.GraphicComponent;
 import puttingchallenge.model.Environment;
 
 import java.util.Objects;
@@ -45,8 +46,8 @@ public class ViewImpl implements View {
      * {@inheritDoc}
      */
     @Override
-    public void loadScene(final SceneType typeScene, final Environment env) {
-        final var currentScene = SceneLoader.getLoader().getScene(typeScene, env, this);
+    public void loadScene(final SceneType typeScene, final List<GraphicComponent> objs) {
+        final var currentScene = SceneLoader.getLoader().getScene(typeScene, objs, this);
         this.stage.setScene(scene.getScene());
     }
 
