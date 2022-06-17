@@ -5,7 +5,7 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.graphic.GraphicsComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
 import puttingchallenge.physics.BallPhysicsComponent;
-import puttingchallenge.physics.StaticObstaclePhysicsComponent;
+import puttingchallenge.physics.StaticPhysicsComponent;
 
 /**
  * Factory class for all the game objects.
@@ -35,13 +35,26 @@ public class GameFactory {
      * Build a new static obstacle of the game.
      * 
      * @param pos
-     *          initial position of the obstacle
+     *          static position of the obstacle
      * @return an instance of {@link GameObject} representing a static obstacle
      */
     public GameObject createStaticObstacle(final Point2D pos) {
         return new GameObjectImpl(GameObjectType.STATIC_OBSTACLE, 
                                   pos,
                                   new GraphicsComponent(),
-                                  new StaticObstaclePhysicsComponent());
+                                  new StaticPhysicsComponent());
+    }
+    /**
+     * Build the player.
+     * 
+     * @param pos
+     *          initial position of the player
+     * @return an instance of {@link GameObject} representing the player
+     */
+    public GameObject createPlayer(final Point2D pos) {
+        return new GameObjectImpl(GameObjectType.PLAYER,
+                pos,
+                new GraphicsComponent(),
+                new StaticPhysicsComponent());
     }
 }

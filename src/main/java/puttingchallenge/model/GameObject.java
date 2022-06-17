@@ -11,7 +11,7 @@ public interface GameObject {
     /**
      * types of the game objects.
      */
-    enum GameObjectType { BALL, STATIC_OBSTACLE }
+    enum GameObjectType { BALL, STATIC_OBSTACLE, PLAYER }
 
     /**
      * Sets the coordinates corresponding to the position of the element.
