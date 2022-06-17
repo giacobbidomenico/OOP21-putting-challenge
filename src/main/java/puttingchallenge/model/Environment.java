@@ -44,4 +44,8 @@ public interface Environment {
      * Stop the movement of the ball.
      */
     void notifyBallStopped();
+    /**
+     * Move the player next to the ball.
+     */
+    void movePlayer();
 }
