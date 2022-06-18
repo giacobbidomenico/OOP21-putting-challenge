@@ -1,5 +1,6 @@
 package puttingchallenge.model;
 
+import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.physics.PhysicsComponent;
@@ -10,9 +11,9 @@ import puttingchallenge.physics.PhysicsComponent;
 public interface GameObject {
 
     /**
-     * types of the game objects.
+     * Types of the game objects.
      */
-    enum GameObjectType { BALL, STATIC_OBSTACLE, PLAYER }
+    enum GameObjectType { BALL, STATIC_OBSTACLE, PLAYER, WALL, TREE }
 
     /**
      * Sets the coordinates corresponding to the position of the object.
@@ -60,7 +61,11 @@ public interface GameObject {
 
     /**
      * Draw the game object skin in the actual scene.
+     *
+     * @param graphicsContext
+     *          the {@link GraphicsContext} of the {@link Canvas} 
+     *          where the skin of the {@link GameObject} will be drawn
      */
-    void draw();
+    void draw(GraphicsContext graphicsContext);
 
 }

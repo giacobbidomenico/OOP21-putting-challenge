@@ -1,4 +1,5 @@
 package puttingchallenge.model;
+import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.graphics.GraphicComponent;
@@ -89,8 +90,8 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public void draw() {
-        this.graph.draw(this);
+    public void draw(final GraphicsContext graphicsContext) {
+        this.graph.draw(this, graphicsContext);
     }
 
     /**
