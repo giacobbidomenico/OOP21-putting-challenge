@@ -77,4 +77,14 @@ public class EnvironmentImpl implements Environment {
     public void notifyBallStopped() {
         // TODO Auto-generated method stub
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void movePlayer() {
+        if (!this.ball.getPhysicsComponent().isMoving()) {
+            // note that (for the moment) the player is not next to the ball but ON it 
+            this.player.setPosition(this.ball.getPosition()); 
+        }
+    }
 }

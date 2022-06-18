@@ -7,7 +7,7 @@ import puttingchallenge.graphics.TreeGraphicComponent;
 import puttingchallenge.graphics.WallGraphicComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
 import puttingchallenge.physics.BallPhysicsComponent;
-import puttingchallenge.physics.StaticObstaclePhysicsComponent;
+import puttingchallenge.physics.StaticPhysicsComponent;
 
 /**
  * Factory class for all the game objects.
@@ -39,7 +39,7 @@ public class GameFactory {
      * Build a new wall in the game.
      * 
      * @param pos
-     *          initial position of the wall
+     *          static position of the obstacle
      * @param gc
      *          the {@link GraphicsContext} in which the object has to be drawn
      * @param w
@@ -56,12 +56,40 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos, 
                                   new WallGraphicComponent(gc, w, h), 
-                                  new StaticObstaclePhysicsComponent());
+                                  new StaticPhysicsComponent());
     }
 
     /**
      * Build a new tree in the game.
      * 
+     * @param pos
+     *          initial position of the player
+     * @param gc
+     *          the {@link GraphicsContext} in which the object has to be drawn 
+     * @return an instance of {@link GameObject} representing a static obstacle
+     */
+    public GameObject createStaticObstacle(final Point2D pos, final GraphicsContext gc) {
+        return new GameObjectImpl(GameObjectType.STATIC_OBSTACLE, 
+                                  pos,
+                                  new GraphicsComponent(),
+                                  new StaticPhysicsComponent());
+    }
+
+    /**
+     * Build the player.
+     * 
+     * @param pos
+     *          initial position of the player
+     * @return an instance of {@link GameObject} representing the player
+     */
+    public GameObject createPlayer(final Point2D pos) {
+        return new GameObjectImpl(GameObjectType.PLAYER,
+                pos,
+                new GraphicsComponent(),
+                new StaticPhysicsComponent());
+    }
+
+    /**
      * @param pos
      *          initial position of the tree
      * @param gc
@@ -80,6 +108,6 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
                                   new TreeGraphicComponent(gc, w, h), 
-                                  new StaticObstaclePhysicsComponent());
+                                  new StaticPhysicsComponent());
     }
 }

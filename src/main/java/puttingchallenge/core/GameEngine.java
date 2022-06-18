@@ -1,19 +1,13 @@
 package puttingchallenge.core;
 
-import puttingchallenge.model.WorldEvent;
-import puttingchallenge.model.WorldEventListener;
-
 /**
- * Engine of the entire game.
+ * Represent a basic engine for the game.
  */
-public class GameEngine implements WorldEventListener {
+public interface GameEngine {
 
     /**
-     * {@inheritDoc}
+     * Defines a time window within which to process inputs, update internal state and render graphics.
      */
-    @Override
-    public void notifyEvent(final WorldEvent e) {
-        // TODO Auto-generated method stub
-    }
+    void gameLoop();
 
 }

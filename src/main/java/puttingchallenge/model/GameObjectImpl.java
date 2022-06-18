@@ -94,4 +94,12 @@ public class GameObjectImpl implements GameObject {
         this.graph.draw(this, graphicsContext);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PhysicsComponent getPhysicsComponent() {
+        return this.phys;
+    }
+
 }
