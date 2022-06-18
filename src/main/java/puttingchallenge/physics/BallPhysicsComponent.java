@@ -17,7 +17,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     
 
     private final double radius;
-    
     private boolean isMoving;
 
     /**
@@ -84,13 +83,16 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
         this.setVelocity(new Vector2D(velX, velY));
     }
+
     /**
-     * {@inheritDoc}
+     * Tells if the ball is moving or not.
+     * 
+     * @return true if the ball is stopped, false otherwise
      */
-    @Override
     public boolean isMoving() {
         return this.isMoving;
     }
+
     /**
      * {@inheritDoc}
      */
