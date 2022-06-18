@@ -36,7 +36,7 @@ public class ViewImpl implements View {
     @Override
     public void buildView() {
         this.loadScene(SceneType.MAIN_MENU);
-        this.stage.setScene(scene.getScene());
+        this.stage.setScene(scene.getScene().get());
         this.stage.sizeToScene();
         this.stage.setResizable(false);
         this.stage.show();
@@ -48,8 +48,8 @@ public class ViewImpl implements View {
     @Override
     public void loadScene(final SceneType typeScene) {
         final List<GameObject> objs = this.controller.getEnv().getObjecs();
-        final var currentScene = SceneLoader.getLoader().getScene(typeScene, objs, this);
-        this.stage.setScene(scene.getScene());
+        this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
+        this.stage.setScene(scene.getScene().get());
     }
 
     /**
