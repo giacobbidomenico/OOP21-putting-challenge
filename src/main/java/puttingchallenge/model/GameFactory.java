@@ -3,6 +3,8 @@ package puttingchallenge.model;
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.graphics.BallGraphicComponent;
+import puttingchallenge.graphics.TreeGraphicComponent;
+import puttingchallenge.graphics.WallGraphicComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
 import puttingchallenge.physics.BallPhysicsComponent;
 import puttingchallenge.physics.StaticObstaclePhysicsComponent;
@@ -40,14 +42,20 @@ public class GameFactory {
      *          initial position of the wall
      * @param gc
      *          the {@link GraphicsContext} in which the object has to be drawn
+     * @param w
+     *          the width of the wall
+     * @param h
+     *          the height of the wall
      *
      * @return an instance of {@link GameObject} representing a wall.
      */
     public GameObject createWall(final Point2D pos,
-                                 final GraphicsContext gc) {
+                                 final GraphicsContext gc,
+                                 final double w,
+                                 final double h) {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos, 
-                                  null, 
+                                  new WallGraphicComponent(gc, w, h), 
                                   new StaticObstaclePhysicsComponent());
     }
 
@@ -58,14 +66,20 @@ public class GameFactory {
      *          initial position of the tree
      * @param gc
      *          the {@link GraphicsContext} in which the object has to be drawn
+     * @param w
+     *          the width of the tree
+     * @param h
+     *          the height of the tree
      *
      * @return an instance of {@link GameObject} representing a tree.
      */
     public GameObject createTree(final Point2D pos,
-                                 final GraphicsContext gc) {
+                                 final GraphicsContext gc,
+                                 final double w,
+                                 final double h) {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
-                                  null, 
+                                  new TreeGraphicComponent(gc, w, h), 
                                   new StaticObstaclePhysicsComponent());
     }
 }
