@@ -1,5 +1,7 @@
 package puttingchallenge.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +26,7 @@ public final class SceneLoader {
     private static final String PATH_START = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
+    private static final String PATH_LEVELS = "levels";
 
     /**
      * Returns the single instance of the {@link SceneLoader}.
@@ -87,16 +90,22 @@ public final class SceneLoader {
                                           final List<GameObject> objs,
                                           final View view) {
         final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
-        JSONObject jsonObj = new JSONObject(path).getJSONObject("scene");
+        final JSONObject jsonObj = new JSONObject(path).getJSONObject("scene");
         final String background = jsonObj.getString("background");
-        final double h = Double.parseDouble(jsonObj.getString("height"));
-        final double w = Double.parseDouble(jsonObj.getString("weight"));
+        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        final double h = dim.getHeight() / 2;
+        final double w = dim.getWidth() / 2;
+
+        final FXMLLoader loader = new FXMLLoader();
+        path = PATH_START + PATH_LEVELS + PATH_END_SCREEN;
+        final Parent parent = loader.load(this.getClass().getResourceAsStream(path));
 
         final Group root = new Group();
         final Scene scene = new Scene(root);
         final Canvas canvas = new Canvas(h, w);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
+        root.getChildren().add(parent);
         gc.drawImage(new Image(background), 0, 0, w, h);
         return new LevelController(scene, objs, view);
     }
