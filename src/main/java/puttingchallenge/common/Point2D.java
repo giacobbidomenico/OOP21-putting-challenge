@@ -2,8 +2,10 @@ package puttingchallenge.common;
 
 import java.io.Serializable;
 
-import it.unibo.oop.lab05.ex5.Pair;
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 /**
  * 
  * 2-dimensional point.
@@ -25,6 +27,17 @@ public class Point2D implements Serializable {
     public Point2D(final double x, final double y) {
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * Build a new {@link Point2D}, copy of the point given as argument.
+     * 
+     * @param point
+     *          another instance of {@link Point2D} class 
+     */
+    public Point2D(final Point2D point) {
+        this.x = point.x;
+        this.y = point.y;
     }
 
     /**
@@ -59,7 +72,7 @@ public class Point2D implements Serializable {
 
     /**
      * Compares this point to the specified object. The result is true if and
-     * only if the argument is not null and is a instance of {@link Point2D} and 
+     * only if the argument is not null and is an instance of {@link Point2D} and 
      * contains the same coordinates.
      * 
      * @param obj

@@ -1,7 +1,9 @@
 package puttingchallenge.model;
 
+import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.physics.PhysicsComponent;
 
 /**
  * Class that implements an element of the game.
@@ -9,36 +11,36 @@ import puttingchallenge.common.Vector2D;
 public interface GameObject {
 
     /**
-     * types of the game objects.
+     * Types of the game objects.
      */
-    enum GameObjectType { BALL, STATIC_OBSTACLE, PLAYER }
+    enum GameObjectType { BALL, STATIC_OBSTACLE, PLAYER, WALL, TREE }
 
     /**
-     * Sets the coordinates corresponding to the position of the element.
+     * Sets the coordinates corresponding to the position of the object.
      * @param position
      *          position to assign
      */
     void setPosition(Point2D position);
 
     /**
-     * Sets the velocity of the element.
+     * Sets the velocity of the object.
      * @param vel
      *          velocity vector to assign
      */
     void setVelocity(Vector2D vel);
 
     /**
-     * @return the type of the element.
+     * @return the type of the object.
      */
     GameObjectType getType();
 
     /**
-     * @return the coordinates of the element.
+     * @return the coordinates of the object.
      */
     Point2D getPosition();
 
     /**
-     * @return the velocity of the element.
+     * @return the velocity of the object.
      */
     Vector2D getVelocity();
 
@@ -51,5 +53,19 @@ public interface GameObject {
      *          environment of the game.
      */
     void updatePhysics(long dt, Environment env);
+
+    /**
+     * @return the {@link PhysicsComponent} of the object.
+     */
+    PhysicsComponent getPhysicsComponent();
+
+    /**
+     * Draw the game object skin in the actual scene.
+     *
+     * @param graphicsContext
+     *          the {@link GraphicsContext} of the {@link Canvas} 
+     *          where the skin of the {@link GameObject} will be drawn
+     */
+    void draw(GraphicsContext graphicsContext);
 
 }
