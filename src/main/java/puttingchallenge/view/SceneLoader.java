@@ -64,10 +64,12 @@ public final class SceneLoader {
 
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs,
-                                       final View view) {
+                                       final View view) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
         final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
-        final Parent parent = loader.load(this.getClass().getResourceAsStream(path));
+        final Parent parent;
+        parent = loader.load(this.getClass().getResourceAsStream(path));
+
 
         final SceneController sc;
         switch (sceneTag) {
@@ -77,19 +79,18 @@ public final class SceneLoader {
             case LEADEARBOARD:
                 sc = new LeaderboardController(new Scene(parent), objs, view);
                 break;
-            case GAME_OVER:
+            default:
                 sc = new GameOverController(new Scene(parent), objs, view);
                 break;
-            default:
-                break;
         }
+
         return sc;
     }
 
     private SceneController loadGameLevel(final SceneType sceneTag,
                                           final List<GameObject> objs,
-                                          final View view) {
-        final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+                                          final View view) throws IOException {
+        String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
         final JSONObject jsonObj = new JSONObject(path).getJSONObject("scene");
         final String background = jsonObj.getString("background");
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -107,7 +108,7 @@ public final class SceneLoader {
         root.getChildren().add(canvas);
         root.getChildren().add(parent);
         gc.drawImage(new Image(background), 0, 0, w, h);
-        return new LevelController(scene, objs, view);
+        return new LevelController(scene, objs, view, gc);
     }
 }
 
