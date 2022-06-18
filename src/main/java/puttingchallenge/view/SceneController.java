@@ -1,7 +1,7 @@
 package puttingchallenge.view;
 
 import java.util.List;
-import java.util.Optional;
+
 import javafx.scene.Scene;
 import puttingchallenge.model.GameObject;
 
@@ -12,24 +12,26 @@ import puttingchallenge.model.GameObject;
 public interface SceneController {
 
     /**
-     * Create and configure the new main {@link Scene}.
+     * @return the current {@link Scene} to be shown
      * 
-     * @param newGameObjects
-     *                   {@link GameObject} that will have to be inserted 
-     *                   in the new created {@link Scene}
      */
-    void setScene(List<GameObject> newGameObjects);
+    Scene getScene();
 
     /**
-     * @return the current {@link Scene} to be shown.
+     * @return the {@link View} where the {@link Scene} will be displayed
      * 
      */
-    Optional<Scene> getScene();
+    View getView();
+
+    /**
+     * @return the list of {@link GameObject} present in the current {@link Scene}
+     * 
+     */
+    List<GameObject> getGameObjects();
 
     /**
      * Draw the {@link GameObject} on the {@link Scene}.
      * 
      */
     void render();
-
 }
