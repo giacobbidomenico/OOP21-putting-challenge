@@ -6,8 +6,13 @@ package puttingchallenge.model;
  */
 public interface GameState {
     /**
+     *
+     */
+    int NO_LIVES = 0;
+    /**
      * @return
      *      the current environment
      */
     Environment getEnvironment();
+    
 }
