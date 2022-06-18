@@ -58,4 +58,9 @@ public interface GameObject {
      */
     PhysicsComponent getPhysicsComponent();
 
+    /**
+     * Draw the game object skin in the actual scene.
+     */
+    void draw();
+
 }

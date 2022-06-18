@@ -2,6 +2,10 @@ package puttingchallenge.common;
 
 import java.io.Serializable;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 /**
  * 
  * 2-dimensional point.

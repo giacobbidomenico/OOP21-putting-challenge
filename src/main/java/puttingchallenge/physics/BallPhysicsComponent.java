@@ -28,8 +28,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      * @param radius
      *          radius of the ball
      */
-    public BallPhysicsComponent(final Vector2D vel, final double radius) {
-        this.setVelocity(vel);
+    public BallPhysicsComponent(final double radius) {
+        this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
     }
     
