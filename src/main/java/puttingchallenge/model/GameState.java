@@ -13,6 +13,11 @@ public interface GameState {
      */
     int NO_LIVES = 0;
     /**
+     * @return
+     *          the current status of the game
+     */
+    GameStatus getStatus();
+    /**
      * Get the current environment.
      * @return
      *      the current environment
