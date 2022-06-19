@@ -62,6 +62,22 @@ public class GameStateImpl implements GameState {
         this.score++;
     }
     /**
+     * Decrements lives.
+     */
+    private void decLives() {
+        this.lives--;
+        if (this.lives == 0) {
+            this.status = GameStatus.GAME_OVER;
+            // game engine should be notified here
+        }
+    }
+    /**
+     * Increments lives due to in game boosts.
+     */
+    private void incLives() {
+        this.lives++;
+    }
+    /**
      * Sets the appropriate environment for the specific state.
      */
     private void setNextEnvironment() {

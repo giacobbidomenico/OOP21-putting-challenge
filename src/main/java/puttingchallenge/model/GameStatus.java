@@ -12,5 +12,9 @@ public enum GameStatus {
     /**
      * The player finally shoots the ball.
      */
-    SHOOTING
+    SHOOTING,
+    /**
+     * The player run out of lives.
+     */
+    GAME_OVER
 }
