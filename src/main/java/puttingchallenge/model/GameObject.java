@@ -53,7 +53,7 @@ public interface GameObject {
          *              the index of the game object type
          * @return a {@link GameObjectType} indexed by the {@code index}
          */
-        public Optional<GameObjectType> getIndex(final int index) {
+        public Optional<GameObjectType> getFromIndex(final int index) {
             for (final GameObjectType t : GameObjectType.values()) {
                 if (t.index == index) {
                     return Optional.of(t);
