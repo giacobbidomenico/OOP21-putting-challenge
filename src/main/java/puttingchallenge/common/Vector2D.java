@@ -94,4 +94,14 @@ public class Vector2D implements Serializable {
         }
         return false;
     }
+    /**
+     * Return a new {@link Vector2D} object starting from pointA to pointB.
+     * @param pointA
+     * @param pointB
+     * @return
+     *          the new {@link Vector2D}
+     */
+    public static Vector2D getVectorFrom(final Point2D pointA, final Point2D pointB) {
+        return new Vector2D(pointA.getX() - pointB.getX(), pointA.getY() - pointB.getY());
+    }
 }
