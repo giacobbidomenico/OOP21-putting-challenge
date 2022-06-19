@@ -94,7 +94,7 @@ public class Point2D implements Serializable {
      * @return
      *          the distance between point A and B
      */
-    public double getDistance(final Point2D pointA, final Point2D pointB) {
+    public static double getDistance(final Point2D pointA, final Point2D pointB) {
         return new Vector2D(pointA.getX() - pointB.getX(), pointA.getY() - pointB.getY()).getModule();
     }
 
