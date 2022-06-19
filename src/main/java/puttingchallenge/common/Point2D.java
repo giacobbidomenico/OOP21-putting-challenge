@@ -2,10 +2,6 @@ package puttingchallenge.common;
 
 import java.io.Serializable;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 /**
  * 
  * 2-dimensional point.
@@ -90,6 +86,17 @@ public class Point2D implements Serializable {
             return this.x == p.x && this.y == p.y;
         }
         return false;
+    }
+    // could be useless
+    /**
+     * Get the distance between two {@link Point2D}.
+     * @param pointA
+     * @param pointB
+     * @return
+     *          the distance between point A and B
+     */
+    public static double getDistance(final Point2D pointA, final Point2D pointB) {
+        return new Vector2D(pointA.getX() - pointB.getX(), pointA.getY() - pointB.getY()).getModule();
     }
 
 }
