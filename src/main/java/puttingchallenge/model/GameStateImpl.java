@@ -46,7 +46,7 @@ public class GameStateImpl implements GameState {
      * Moves the player next to the ball.
      */
     private void movePlayer() {
-        this.currentEnvironment.movePlayer();
+        this.getEnvironment().movePlayer();
     }
     /**
      * Decrements the game score.
