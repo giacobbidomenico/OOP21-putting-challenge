@@ -106,7 +106,7 @@ public final class SceneLoader {
         final String background = jsonObj.getString("background");
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final double h = dim.getHeight() / jsonObj.getDouble("wScale");
-        final double w = dim.getWidth() / jsonObj.getDouble("wScale");
+        final double w = dim.getWidth() / jsonObj.getDouble("hScale");
 
         final FXMLLoader loader = new FXMLLoader();
         path = PATH_START + PATH_LEVELS + PATH_END_SCREEN;

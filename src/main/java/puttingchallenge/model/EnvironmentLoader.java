@@ -75,7 +75,7 @@ public final class EnvironmentLoader {
         file.getJSONObject("scene");
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final double h = dim.getHeight() / file.getDouble("wScale");
-        final double w = dim.getWidth() / file.getDouble("wScale");
+        final double w = dim.getWidth() / file.getDouble("hScale");
         builder.dimension(w, h);
     }
 
