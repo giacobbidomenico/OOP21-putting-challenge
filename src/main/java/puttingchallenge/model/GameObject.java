@@ -6,7 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.physics.PhysicsComponent;
-import puttingchallenge.view.SceneType;
 
 /**
  * Class that implements an element of the game.
@@ -40,7 +39,7 @@ public interface GameObject {
          * @return a {@link GameObjectType} indexed by the {@code index}
          */
         public Optional<GameObjectType> getIndex(final int index) {
-            for (GameObjectType t : GameObjectType.values()) {
+            for (final GameObjectType t : GameObjectType.values()) {
                 if (t.index == index) {
                     return Optional.of(t);
                 }
