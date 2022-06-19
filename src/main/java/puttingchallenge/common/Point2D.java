@@ -87,6 +87,7 @@ public class Point2D implements Serializable {
         }
         return false;
     }
+    // could be useless
     /**
      * Get the distance between two {@link Point2D}.
      * @param pointA
