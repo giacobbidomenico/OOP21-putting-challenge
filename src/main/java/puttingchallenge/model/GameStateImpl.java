@@ -16,6 +16,13 @@ public class GameStateImpl implements GameState {
      * {@inheritDoc}
      */
     @Override
+    public GameStatus getStatus() {
+        return this.status;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Environment getEnvironment() {
         return this.currentEnvironment;
     }
@@ -34,14 +41,6 @@ public class GameStateImpl implements GameState {
     public void shoot(final Point2D releasedOnPoint) {
         this.getEnvironment().getBall().setVelocity(Vector2D.getVectorFrom(releasedOnPoint, this.startingPoint));
         this.status = GameStatus.SHOOTING;
-    }
-    /**
-     * Check whether the game is over or not.
-     * @return
-     *      true if the game is over
-     */
-    private boolean isGameOver() {
-        return this.lives == NO_LIVES;
     }
     /**
      * Moves the player next to the ball.
@@ -67,7 +66,7 @@ public class GameStateImpl implements GameState {
      */
     private void decLives() {
         this.lives--;
-        if (this.lives == 0) {
+        if (this.lives == NO_LIVES) {
             this.status = GameStatus.GAME_OVER;
             // game engine should be notified here
         }
