@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.json.JSONObject;
 
 import puttingchallenge.common.Point2D;
-import puttingchallenge.common.Vector2D;
 import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject.GameObjectType;
 import puttingchallenge.view.SceneType;
@@ -85,7 +84,7 @@ public final class EnvironmentLoader {
         final double x = ball.getDouble("posX");
         final double y = ball.getDouble("posY");
         final double radius = ball.getDouble("radius");
-        builder.ball(new Point2D(x, y), radius, new Vector2D(0, 0));
+        builder.ball(new Point2D(x, y), radius);
     }
 
 }

@@ -1,6 +1,7 @@
 package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject.GameObjectType;
 
 /**
@@ -8,6 +9,16 @@ import puttingchallenge.model.GameObject.GameObjectType;
  * 
  */
 public interface BuilderEnvironment {
+
+    /**
+     * Sets the game controller.
+     * 
+     * @param controller
+     *         an instance of {@link GameEngine}, the controller of the application
+     * @return an instance of {@link BuilderEnvironment} ,the builder of 
+     *         the game environment
+     */
+    BuilderEnvironment controller(GameEngine controller);
 
     /**
      * Sets the ball configuration.

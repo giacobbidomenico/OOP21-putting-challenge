@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject.GameObjectType;
 
 /**
@@ -17,6 +18,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
     private final List<GameObject> gameObjects;
     private Optional<GameObject> ball;
     private Optional<GameObject> player;
+    private Optional<GameEngine> controller;
 
     /**
      * Build a new {@link BuilderEnvironmentImpl}.
@@ -25,6 +27,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
     public BuilderEnvironmentImpl() {
         this.ball = Optional.empty();
         this.player = Optional.empty();
+        this.controller = Optional.empty();
         this.gameObjects = new LinkedList<>();
     }
 
@@ -73,12 +76,24 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         return this;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BuilderEnvironment controller(final GameEngine controller) {
+        if (this.controller.isEmpty()) {
+            this.controller = Optional.of(controller);
+        }
+        return this;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Environment build() {
-        if (ball.isEmpty() || player.isEmpty()) {
+        if (ball.isEmpty() || player.isEmpty() || controller.isEmpty()) {
             throw new IllegalStateException();
         }
         return new EnvironmentImpl(this.ball.get(), this.player.get());
