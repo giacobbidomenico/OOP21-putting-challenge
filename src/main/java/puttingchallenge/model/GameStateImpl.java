@@ -51,6 +51,7 @@ public class GameStateImpl implements GameState {
     }
     /**
      * Decrements the game score.
+     * Note that in game score could become negative in case the player takes penalties
      */
     private void decScore() {
         this.score--;
