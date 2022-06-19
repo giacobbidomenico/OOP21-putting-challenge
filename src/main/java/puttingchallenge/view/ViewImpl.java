@@ -3,6 +3,7 @@ package puttingchallenge.view;
 import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject;
 
+import javafx.scene.input.MouseEvent;
 import java.util.List;
 import java.util.Objects;
 import javafx.application.Platform;
@@ -41,6 +42,22 @@ public class ViewImpl implements View {
         this.stage.setResizable(false);
         this.stage.show();
     }
+    /**
+     * Handles mouse pressed event.
+     * @param event
+     */
+    private void handleMousePressed(final MouseEvent event) {
+        this.controller.startAiming(event.getSceneX(), event.getSceneY());
+        event.consume();
+    }
+    /**
+     * Handles mouse released event.
+     * @param event
+     */
+    private void handleMouseReleased(final MouseEvent event) {
+        this.controller.shoot(event.getSceneX(), event.getSceneY());
+        event.consume();
+    }
 
     /**
      * {@inheritDoc}
@@ -50,6 +67,8 @@ public class ViewImpl implements View {
         final List<GameObject> objs = this.controller.getEnv().getObjecs();
         this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
         this.stage.setScene(scene.getScene().get());
+        this.scene.getScene().get().addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleMousePressed);
+        this.scene.getScene().get().addEventFilter(MouseEvent.MOUSE_RELEASED, this::handleMouseReleased);
     }
 
     /**

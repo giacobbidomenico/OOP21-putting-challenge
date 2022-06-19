@@ -1,4 +1,3 @@
-
 package puttingchallenge.model;
 
 import java.util.LinkedList;
@@ -14,6 +13,7 @@ public class EnvironmentImpl implements Environment {
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
     private final GameObject player;
+
     /**
      * Build a new {@link EnvironmentImpl}.
      * 
@@ -27,6 +27,7 @@ public class EnvironmentImpl implements Environment {
         this.player = Objects.requireNonNull(player);
         this.staticObstacles = new LinkedList<>();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -34,6 +35,7 @@ public class EnvironmentImpl implements Environment {
     public void update() {
         ball.updatePhysics(0, this);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -42,6 +44,7 @@ public class EnvironmentImpl implements Environment {
         // TODO Auto-generated method stub
         return false;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -49,6 +52,7 @@ public class EnvironmentImpl implements Environment {
     public void addStaticObstacle(final GameObject obstacle) {
         this.staticObstacles.add(Objects.requireNonNull(obstacle));
     }
+
     /**
      * {@inheritDoc}
      */
@@ -56,6 +60,7 @@ public class EnvironmentImpl implements Environment {
     public GameObject getBall() {
         return this.ball;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -63,6 +68,7 @@ public class EnvironmentImpl implements Environment {
     public GameObject getPlayer() {
         return this.player;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -70,6 +76,7 @@ public class EnvironmentImpl implements Environment {
     public List<GameObject> getStaticObstacles() {
         return this.staticObstacles;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -77,14 +84,12 @@ public class EnvironmentImpl implements Environment {
     public void notifyBallStopped() {
         // TODO Auto-generated method stub
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void movePlayer() {
-        if (!this.ball.getPhysicsComponent().isMoving()) {
-            // note that (for the moment) the player is not next to the ball but ON it 
-            this.player.setPosition(this.ball.getPosition()); 
-        }
+        // TODO Auto-generated method stub
     }
 }
