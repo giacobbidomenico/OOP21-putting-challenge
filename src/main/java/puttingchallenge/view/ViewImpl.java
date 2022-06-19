@@ -47,7 +47,7 @@ public class ViewImpl implements View {
      * @param event
      */
     private void handleMousePressed(final MouseEvent event) {
-        this.controller.startAiming(event.getSceneX(), event.getSceneY());
+        this.controller.notifyEvent(event);
         event.consume();
     }
     /**
@@ -55,7 +55,7 @@ public class ViewImpl implements View {
      * @param event
      */
     private void handleMouseReleased(final MouseEvent event) {
-        this.controller.shoot(event.getSceneX(), event.getSceneY());
+        this.controller.notifyEvent(event);
         event.consume();
     }
 
