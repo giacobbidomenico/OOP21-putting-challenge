@@ -16,17 +16,32 @@ public interface GameObject {
      * Types of the game objects.
      */
     enum GameObjectType { 
-        
+
+        /**
+         * The type of the game ball.
+         */
         BALL(1),
-        
+
+        /**
+         * The type of a generic static obstacle.
+         */
         STATIC_OBSTACLE(2),
-        
+
+        /**
+         * The type of the game player.
+         */
         PLAYER(3),
-        
+
+        /**
+         * The type of a wall static obstacle.
+         */
         WALL(4),
-        
+
+        /**
+         * The type of a tree static obstacle.
+         */
         TREE(5);
-        
+
         private final int index;
 
         GameObjectType(final int index) {
