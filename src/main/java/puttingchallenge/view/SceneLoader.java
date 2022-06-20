@@ -79,20 +79,8 @@ public final class SceneLoader {
         parent = loader.load(new FileInputStream(path));
 
 
-        final SceneController sc;
-        switch (sceneTag) {
-            case MAIN_MENU:
-                sc = new MenuController(new Scene(parent), objs, view);
-                break;
-            case LEADEARBOARD:
-                sc = new LeaderboardController(new Scene(parent), objs, view);
-                break;
-            case GAME_OVER:
-                sc = new GameOverController(new Scene(parent), objs, view);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+        final SceneController sc = loader.getController();
+        sc.init(new Scene(parent), objs, view);
         return sc;
     }
 
@@ -118,7 +106,10 @@ public final class SceneLoader {
         root.getChildren().add(canvas);
         root.getChildren().add(parent);
         gc.drawImage(new Image(background), 0, 0, w, h);
-        return new LevelController(scene, objs, view, gc, background);
+
+        final LevelController sc = loader.getController();
+        sc.init(scene, objs, view, gc, background);
+        return sc;
     }
 }
 
