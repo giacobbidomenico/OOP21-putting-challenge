@@ -7,7 +7,7 @@ import puttingchallenge.physics.PhysicsComponent;
 /**
  * The {@link GameObject} of a ball.
  */
-public class BallGameObject extends GameObjectImpl {
+public class BallGameObject extends AbstractGameObject {
 
     private final double radius;
 

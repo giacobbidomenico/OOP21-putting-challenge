@@ -1,4 +1,5 @@
 package puttingchallenge.model;
+
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -7,9 +8,9 @@ import puttingchallenge.physics.PhysicsComponent;
 
 
 /**
- * Class that implements an element of the game.
+ * Abstract class that implements an element of the game.
  */
-public abstract class GameObjectImpl implements GameObject {
+public abstract class AbstractGameObject implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
@@ -17,7 +18,7 @@ public abstract class GameObjectImpl implements GameObject {
     private final PhysicsComponent phys;
 
     /**
-     * Build a new {@link GameObjectImpl}.
+     * Build a new {@link AbstractGameObject}.
      * 
      * @param type 
      *                 element type
@@ -28,10 +29,10 @@ public abstract class GameObjectImpl implements GameObject {
      * @param phys
      *                 physical component of the object
      */
-    public GameObjectImpl(final GameObjectType type,
-                          final Point2D position,
-                          final GraphicComponent graph,
-                          final PhysicsComponent phys) {
+    public AbstractGameObject(final GameObjectType type,
+                                  final Point2D position,
+                                  final GraphicComponent graph,
+                                  final PhysicsComponent phys) {
         this.type = type;
         this.pos = position;
         this.graph = graph;
