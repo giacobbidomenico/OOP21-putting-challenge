@@ -26,6 +26,6 @@ public final class App extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         final Rectangle2D screenDim = Screen.getPrimary().getBounds();
-        final GameEngine gameEngine = new GameEngine(primaryStage, screenDim.getWidth(), screenDim.getHeight());
+        final GameEngine gameEngine = new GameEngine(primaryStage, screenDim);
     }
 }

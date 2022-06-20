@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Optional;
+import javafx.geometry.Rectangle2D;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -46,10 +47,8 @@ public final class EnvironmentLoader {
      *      the {@link SceneType} related to the environment to be loaded
      * @param controller
      *      the controller of the application
-     * @param screenWidth
-     *       width of the screen
-     * @param screenHeight
-     *       height of the screen
+     * @param screenDimensions
+     *       dimensions of the screen
      * @return
      *      the {@link Environment} related to the given tag
      * @throws IOException
@@ -57,8 +56,7 @@ public final class EnvironmentLoader {
      */
     public Optional<Environment> getEnvironment(final SceneType sceneTag, 
                                                 final GameEngine controller, 
-                                                final double screenWidth,
-                                                final double screenHeight) throws IOException {
+                                                final Rectangle2D screenDimensions) throws IOException {
         if (sceneTag.isLevel()) {
             final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
@@ -66,8 +64,8 @@ public final class EnvironmentLoader {
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
 
             builder.controller(controller);
-            builder.screenDimension(screenWidth, screenHeight);
-            this.setDimension(builder, file, screenWidth, screenHeight);
+            builder.screenDimension(screenDimensions);
+            this.setDimension(builder, file, screenDimensions);
             this.setBall(builder, file);
             this.setPlayer(builder, file);
             this.addObstacles(builder, file);
@@ -78,12 +76,11 @@ public final class EnvironmentLoader {
     }
 
     private void setDimension(final BuilderEnvironment builder, 
-                              final JSONObject file, 
-                              final double screenWidth,
-                              final double screenHeight) {
+                              final JSONObject file,
+                              final Rectangle2D dimensions) {
         file.getJSONObject("scene");
-        final double w = screenWidth / file.getDouble("hScale");
-        final double h = screenHeight / file.getDouble("wScale");
+        final double w = dimensions.getWidth() / file.getDouble("hScale");
+        final double h = dimensions.getHeight() / file.getDouble("wScale");
         builder.dimension(w, h);
     }
 
