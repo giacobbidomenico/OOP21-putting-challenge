@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="puttingchallenge.view.GameOverController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <ImageView blendMode="DIFFERENCE" fitHeight="408.0" fitWidth="640.0" layoutY="-4.0">
                <image>
-                  <Image url="@../../../../Downloads/Layer%201.png" />
+                  <Image url="@" />
                </image>
             </ImageView>
-            <Button layoutX="187.0" layoutY="251.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" text="NEW GAME" />
-            <Button layoutX="336.0" layoutY="251.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" text="MENU" />
+            <Button layoutX="187.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleNewGame" prefHeight="55.0" prefWidth="117.0" text="NEW GAME" />
+            <Button layoutX="336.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleToMenu" prefHeight="55.0" prefWidth="117.0" text="MENU" />
             <Label alignment="CENTER" layoutX="113.0" layoutY="28.0" prefHeight="152.0" prefWidth="414.0" text="GAME OVER">
                <font>
                   <Font name="Times New Roman Bold" size="58.0" />
