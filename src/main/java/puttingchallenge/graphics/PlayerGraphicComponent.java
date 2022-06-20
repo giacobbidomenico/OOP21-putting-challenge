@@ -7,17 +7,17 @@ import puttingchallenge.model.GameObject;
  * Class that implements the graphical representation of the player.
  */
 public class PlayerGraphicComponent extends AbstractGraphicComponent {
-    private static final int HEIGHT = 10;
-    private static final int WIDTH = 10;
 
     private boolean show;
     /**
      * Create a new {@link GraphicComponent} for the player.
      * @param imagePath
      *          of the skin
+     * @param width
+     * @param height
      */
-    public PlayerGraphicComponent(final String imagePath) {
-        super(imagePath, WIDTH, HEIGHT);
+    public PlayerGraphicComponent(final String imagePath, final double width, final double height) {
+        super(imagePath, width, height);
         this.show = true;
     }
     /**
