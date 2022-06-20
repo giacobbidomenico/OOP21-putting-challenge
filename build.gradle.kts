@@ -39,6 +39,9 @@ dependencies {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
+    
+    implementation("org.json:json:20220320")
+    implementation("commons-io:commons-io:2.6")	
 
     // JUnit API and testing engine
     val jUnitVersion = "5.8.2"

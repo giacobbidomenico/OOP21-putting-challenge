@@ -1,7 +1,8 @@
 package puttingchallenge.model;
+import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.graphic.GraphicsComponent;
+import puttingchallenge.graphics.GraphicComponent;
 import puttingchallenge.physics.PhysicsComponent;
 
 
@@ -12,7 +13,7 @@ public class GameObjectImpl implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
-    private final GraphicsComponent graph;
+    private final GraphicComponent graph;
     private final PhysicsComponent phys;
 
     /**
@@ -29,7 +30,7 @@ public class GameObjectImpl implements GameObject {
      */
     public GameObjectImpl(final GameObjectType type,
                           final Point2D position,
-                          final GraphicsComponent graph,
+                          final GraphicComponent graph,
                           final PhysicsComponent phys) {
         this.type = type;
         this.pos = position;
@@ -40,6 +41,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setPosition(final Point2D position) {
         this.pos = position;
     }
@@ -47,6 +49,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setVelocity(final Vector2D vel) {
         this.phys.setVelocity(vel);
     }
@@ -54,6 +57,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public GameObjectType getType() {
         return type;
     }
@@ -61,6 +65,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Point2D getPosition() {
         return pos;
     }
@@ -68,6 +73,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Vector2D getVelocity() {
         return this.phys.getVelocity();
     }
@@ -75,8 +81,25 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void updatePhysics(final long dt, final Environment env) {
-        phys.update(dt, this, env);
+        this.phys.update(dt, this, env);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void draw(final GraphicsContext graphicsContext) {
+        this.graph.draw(this, graphicsContext);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PhysicsComponent getPhysicsComponent() {
+        return this.phys;
     }
 
 }
