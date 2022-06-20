@@ -11,6 +11,18 @@ import puttingchallenge.model.GameObject.GameObjectType;
 public interface BuilderEnvironment {
 
     /**
+     * Sets the size of the game environment.
+     * 
+     * @param percWidth
+     *                width of the game environment in percent
+     * @param percHeight
+     *                height of the game environment in percent
+     * @return an instance of {@link BuilderEnvironment} ,the builder of 
+     *         the game environment
+     */
+    BuilderEnvironment dimension(double percWidth, double percHeight);
+
+    /**
      * Sets the game controller.
      * 
      * @param controller

@@ -16,6 +16,8 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
 
     private final GameFactory factory = new GameFactory();
     private final List<GameObject> gameObjects;
+    private Optional<Double> percWidth;
+    private Optional<Double> percHeight;
     private Optional<GameObject> ball;
     private Optional<GameObject> player;
     private Optional<GameEngine> controller;
@@ -25,10 +27,25 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * 
      */
     public BuilderEnvironmentImpl() {
+        this.percWidth = Optional.empty();
+        this.percHeight = Optional.empty();
         this.ball = Optional.empty();
         this.player = Optional.empty();
         this.controller = Optional.empty();
         this.gameObjects = new LinkedList<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BuilderEnvironment dimension(final double percWidth, 
+                                        final double percHeight) {
+        if (this.percWidth.isEmpty() && this.percHeight.isEmpty()) {
+            this.percHeight = Optional.of(percWidth);
+            this.percWidth = Optional.of(percHeight);
+        }
+        return this;
     }
 
     /**
@@ -93,10 +110,9 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      */
     @Override
     public Environment build() {
-        if (ball.isEmpty() || player.isEmpty() || controller.isEmpty()) {
+        if (this.percWidth.isEmpty() || this.percHeight.isEmpty() || ball.isEmpty() || player.isEmpty() || controller.isEmpty()) {
             throw new IllegalStateException();
         }
-        return new EnvironmentImpl(this.ball.get(), this.player.get());
+        return new EnvironmentImpl(this.percWidth.get(), this.percHeight.get(), this.ball.get(), this.player.get());
     }
-
 }
