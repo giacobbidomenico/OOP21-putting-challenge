@@ -101,7 +101,10 @@ public final class EnvironmentLoader {
         final JSONObject player = file.getJSONObject("player");
         final double x = player.getDouble("posX");
         final double y = player.getDouble("posY");
-        builder.player(new Point2D(x, y));
+        final double w = player.getDouble("weight");
+        final double h = player.getDouble("height");
+        final String path = player.getString("skinPath");
+        builder.player(new Point2D(x, y), path, w, h);
     }
 
     private void setBall(final BuilderEnvironment builder, final JSONObject file) {

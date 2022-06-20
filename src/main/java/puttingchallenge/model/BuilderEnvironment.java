@@ -51,10 +51,14 @@ public interface BuilderEnvironment {
      *          initial position of the player
      * @param skinPath
      *          path of the player's skin
+     * @param w
+     *          width of the rectangle where the player will be contained
+     * @param h
+     *          height of the rectangle where the player will be contained
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game environment
      */
-    BuilderEnvironment player(Point2D pos, String skinPath);
+    BuilderEnvironment player(Point2D pos, String skinPath, double w, double h);
 
     /**
      * Sets the configuration of a new static obstacle.

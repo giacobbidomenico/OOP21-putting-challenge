@@ -40,12 +40,16 @@ public class GameFactory {
      *          initial position of the player
      * @param skinPath
      *          path of the player's skin
+     * @param w
+     *          the width of the tree
+     * @param h
+     *          the height of the tree
      * @return an instance of {@link GameObject} representing the player
      */
-    public GameObject createPlayer(final Point2D pos, final String skinPath) {
-        return new GameObjectImpl(GameObjectType.PLAYER,
+    public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
+        return new PlayerObject(GameObjectType.PLAYER,
                 pos,
-                new PlayerGraphicComponent(skinPath),
+                new PlayerGraphicComponent(skinPath, w, h),
                 new StaticPhysicsComponent());
     }
 
