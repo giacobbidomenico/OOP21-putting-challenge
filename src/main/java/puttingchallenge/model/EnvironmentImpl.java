@@ -13,7 +13,7 @@ import puttingchallenge.common.Vector2D;
 public class EnvironmentImpl implements Environment {
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
-    private final GameObject ball;
+    private final BallGameObject ball;
     private final GameObject player;
 
 
@@ -28,7 +28,7 @@ public class EnvironmentImpl implements Environment {
      *           the {@link GameObject} corresponding to the player in the game {@link Environment}
      */
     public EnvironmentImpl(final Rectangle2D container,
-                           final GameObject ball, 
+                           final BallGameObject ball, 
                            final GameObject player) {
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
@@ -114,5 +114,18 @@ public class EnvironmentImpl implements Environment {
      */
     private boolean isBallStationary() {
         return this.ball.getVelocity().equals(new Vector2D(0, 0));
+    }
+
+    /**
+     * @return true if the ball is out of bounds
+     *         false otherwise
+     */
+    private boolean isBallOutOfBounds() {
+        final var posBall = this.ball.getPosition();
+        final var rectBall = new Rectangle2D(posBall.getX(), 
+                                             posBall.getY(), 
+                                             ball.getRadius() * 2, 
+                                             ball.getRadius() * 2);
+        return this.container.contains(rectBall);
     }
 }
