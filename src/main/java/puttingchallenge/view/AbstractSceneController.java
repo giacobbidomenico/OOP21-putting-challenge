@@ -3,6 +3,7 @@ package puttingchallenge.view;
 import java.util.List;
 
 import javafx.scene.Scene;
+import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -11,27 +12,19 @@ import puttingchallenge.model.GameObject;
  */
 public abstract class AbstractSceneController implements SceneController {
 
-    private final Scene scene;
-    private final List<GameObject> gameObjects;
-    private final View view;
+    private Scene scene;
+    private List<GameObject> gameObjects;
+    private GameEngine controller;
 
     /**
-     * Build a new {@link AbstractSceneController}.
-     * 
-     * @param scene
-     *            {@link Scene} managed by the controller
-     * @param gameObjects
-     *            {@link GameObject} present in the {@link Scene}
-     * @param view
-     *            {@link View} where the {@link Scene} is displayed
-     *
+     * {@inheritDoc}
      */
-    public AbstractSceneController(final Scene scene, 
-                                   final List<GameObject> gameObjects, 
-                                   final View view) { 
+    public void init(final Scene scene, 
+                     final List<GameObject> gameObjects, 
+                     final GameEngine controller) { 
         this.scene = scene;
         this.gameObjects = gameObjects;
-        this.view = view;
+        this.controller = controller;
     }
 
     /**
@@ -44,8 +37,8 @@ public abstract class AbstractSceneController implements SceneController {
     /**
      * {@inheritDoc}
      */
-    public View getView() {
-        return view;
+    public GameEngine getController() {
+        return controller;
     }
 
     /**

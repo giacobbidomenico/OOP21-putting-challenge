@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -15,28 +16,28 @@ public class LevelController extends AbstractSceneController {
     private static final double UPPER_LEFT_X = 0.0;
     private static final double UPPER_LEFT_Y = 0.0;
 
-    private final GraphicsContext gc;
-    private final String background;
+    private GraphicsContext gc;
+    private String background;
 
     /**
-     * Build a new {@link LevelController}.
+     * Initialize a new {@link LevelController}.
      * 
      * @param scene
      *            {@link Scene} relating to the loaded game level.
      * @param gameObjects
      *            {@link GameObject} present in the {@link Scene}
-     * @param view
-     *            {@link View} where the {@link Scene} is displayed
+     * @param controller
+     *            the controller of the application
      * @param gc
      *            the {@link GraphicsContext} in which the object has to be drawn
      * @param background
      */
-    public LevelController(final Scene scene,
-                           final List<GameObject> gameObjects,
-                           final View view,
-                           final GraphicsContext gc,
-                           final String background) {
-        super(scene, gameObjects, view);
+    public void init(final Scene scene,
+                     final List<GameObject> gameObjects,
+                     final GameEngine controller,
+                     final GraphicsContext gc,
+                     final String background) {
+        super.init(scene, gameObjects, controller);
         this.gc = gc;
         this.background = background;
     }

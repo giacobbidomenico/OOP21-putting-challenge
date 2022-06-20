@@ -3,6 +3,7 @@ package puttingchallenge.view;
 import java.util.List;
 
 import javafx.scene.Scene;
+import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject;
 
 /**
@@ -12,16 +13,28 @@ import puttingchallenge.model.GameObject;
 public interface SceneController {
 
     /**
+     * Initialize the scene controller.
+     * 
+     * @param scene
+     *          the related {@link Scene}
+     * @param gameObjects
+     *          the list of all game objects of the current scene
+     * @param controller
+     *          the controller of the application
+     */
+    void init(Scene scene, List<GameObject> gameObjects, GameEngine controller);
+
+    /**
      * @return the current {@link Scene} to be shown
      * 
      */
     Scene getScene();
 
     /**
-     * @return the {@link View} where the {@link Scene} will be displayed
+     * @return the controller of the application
      * 
      */
-    View getView();
+    GameEngine getController();
 
     /**
      * @return the list of {@link GameObject} present in the current {@link Scene}
