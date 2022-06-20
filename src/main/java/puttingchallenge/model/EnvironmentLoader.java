@@ -1,7 +1,5 @@
 package puttingchallenge.model;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -48,12 +46,19 @@ public final class EnvironmentLoader {
      *      the {@link SceneType} related to the environment to be loaded
      * @param controller
      *      the controller of the application
+     * @param screenWidth
+     *       width of the screen
+     * @param screenHeight
+     *       height of the screen
      * @return
      *      the {@link Environment} related to the given tag
      * @throws IOException
      *      if the file is not loaded correctly
      */
-    public Optional<Environment> getEnvironment(final SceneType sceneTag, final GameEngine controller) throws IOException {
+    public Optional<Environment> getEnvironment(final SceneType sceneTag, 
+                                                final GameEngine controller, 
+                                                final double screenWidth,
+                                                final double screenHeight) throws IOException {
         if (sceneTag.isLevel()) {
             final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
@@ -61,7 +66,8 @@ public final class EnvironmentLoader {
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
 
             builder.controller(controller);
-            this.setDimension(builder, file);
+            builder.screenDimension(screenWidth, screenHeight);
+            this.setDimension(builder, file, screenWidth, screenHeight);
             this.setBall(builder, file);
             this.setPlayer(builder, file);
             this.addObstacles(builder, file);
@@ -71,11 +77,13 @@ public final class EnvironmentLoader {
         }
     }
 
-    private void setDimension(final BuilderEnvironment builder, final JSONObject file) {
+    private void setDimension(final BuilderEnvironment builder, 
+                              final JSONObject file, 
+                              final double screenWidth,
+                              final double screenHeight) {
         file.getJSONObject("scene");
-        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        final double h = dim.getHeight() / file.getDouble("wScale");
-        final double w = dim.getWidth() / file.getDouble("hScale");
+        final double w = screenWidth / file.getDouble("hScale");
+        final double h = screenHeight / file.getDouble("wScale");
         builder.dimension(w, h);
     }
 
