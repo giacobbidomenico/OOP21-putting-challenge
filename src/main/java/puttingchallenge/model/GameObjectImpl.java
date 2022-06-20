@@ -9,7 +9,7 @@ import puttingchallenge.physics.PhysicsComponent;
 /**
  * Class that implements an element of the game.
  */
-public class GameObjectImpl implements GameObject {
+public abstract class GameObjectImpl implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
