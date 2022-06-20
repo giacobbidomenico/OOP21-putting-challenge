@@ -91,8 +91,7 @@ public final class SceneLoader {
                 sc = new GameOverController(new Scene(parent), objs, view);
                 break;
             default:
-                sc = null;
-                break;
+                throw new IllegalArgumentException();
         }
         return sc;
     }
