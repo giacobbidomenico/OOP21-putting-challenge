@@ -2,6 +2,7 @@ package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.graphics.BallGraphicComponent;
+import puttingchallenge.graphics.PlayerGraphicComponent;
 import puttingchallenge.graphics.TreeGraphicComponent;
 import puttingchallenge.graphics.WallGraphicComponent;
 import puttingchallenge.model.GameObject.GameObjectType;
@@ -37,12 +38,14 @@ public class GameFactory {
      * 
      * @param pos
      *          initial position of the player
+     * @param skinPath
+     *          path of the player's skin
      * @return an instance of {@link GameObject} representing the player
      */
-    public GameObject createPlayer(final Point2D pos) {
+    public GameObject createPlayer(final Point2D pos, final String skinPath) {
         return new GameObjectImpl(GameObjectType.PLAYER,
                 pos,
-                new GraphicsComponent(),
+                new PlayerGraphicComponent(skinPath),
                 new StaticPhysicsComponent());
     }
 
