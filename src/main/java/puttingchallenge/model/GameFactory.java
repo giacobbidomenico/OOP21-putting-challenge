@@ -4,6 +4,7 @@ import puttingchallenge.common.Point2D;
 import puttingchallenge.gameobjects.BallGameObject;
 import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.gameobjects.GenericGameObject;
+import puttingchallenge.gameobjects.PlayerObject;
 import puttingchallenge.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.graphics.BallGraphicComponent;
 import puttingchallenge.graphics.PlayerGraphicComponent;
@@ -49,8 +50,7 @@ public class GameFactory {
      * @return an instance of {@link GameObject} representing the player
      */
     public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
-        return new PlayerObject(GameObjectType.PLAYER,
-                pos,
+        return new PlayerObject(pos,
                 new PlayerGraphicComponent(skinPath, w, h),
                 new StaticPhysicsComponent());
     }
