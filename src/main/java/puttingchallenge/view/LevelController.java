@@ -2,6 +2,9 @@ package puttingchallenge.view;
 
 import javafx.scene.image.Image;
 import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.core.GameEngine;
@@ -57,6 +60,14 @@ public class LevelController extends AbstractSceneController {
                           super.getScene().getWidth(), 
                           super.getScene().getHeight());
         super.getGameObjects().stream().peek(e -> e.draw(gc));
+    }
+    /**
+     * Method that handle the action on the quit button.
+     * @param event
+     */
+    @FXML
+    public void handleQuit(final ActionEvent event) {
+        this.getController().notifyEvent(event);
     }
 
 }
