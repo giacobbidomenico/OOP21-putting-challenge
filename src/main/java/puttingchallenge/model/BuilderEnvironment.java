@@ -1,5 +1,6 @@
 package puttingchallenge.model;
 
+import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameEngine;
 import puttingchallenge.model.GameObject.GameObjectType;
@@ -11,16 +12,14 @@ import puttingchallenge.model.GameObject.GameObjectType;
 public interface BuilderEnvironment {
 
     /**
-     * Sets the size of the game environment.
+     * Sets the {@link Rectangle2D} that contains the game {@link Environment}.
      * 
-     * @param percWidth
-     *                width of the game environment in percent
-     * @param percHeight
-     *                height of the game environment in percent
-     * @return an instance of {@link BuilderEnvironment} ,the builder of 
-     *         the game environment
+     * @param container
+     *         the {@link Rectangle2D} that contains the game {@link Environment}
+     * @return an instance of {@link BuilderEnvironment},the builder of 
+     *         the game {@link Environment}
      */
-    BuilderEnvironment dimension(double percWidth, double percHeight);
+    BuilderEnvironment container(Rectangle2D container);
 
     /**
      * Sets the game controller.
@@ -28,7 +27,7 @@ public interface BuilderEnvironment {
      * @param controller
      *         an instance of {@link GameEngine}, the controller of the application
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
-     *         the game environment
+     *         the game {@link Environment}
      */
     BuilderEnvironment controller(GameEngine controller);
 
@@ -40,7 +39,7 @@ public interface BuilderEnvironment {
      * @param radius
      *          radius of the ball
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
-     *         the game environment
+     *         the game {@link Environment}
      */
     BuilderEnvironment ball(Point2D pos, double radius);
 
@@ -52,7 +51,7 @@ public interface BuilderEnvironment {
      * @param skinPath
      *          path of the player's skin
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
-     *         the game environment
+     *         the game {@link Environment}
      */
     BuilderEnvironment player(Point2D pos, String skinPath);
 
@@ -63,17 +62,16 @@ public interface BuilderEnvironment {
      *          type of the static obstacle
      * @param pos
      *          position of the obstacle
-     * @param w
-     *          width of the rectangle where the obstacle will be contained
-     * @param h
-     *          height of the rectangle where the obstacle will be contained
+     * @param dimensions
+     *          rectangle where the obstacle will be contained
+
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
-     *         the game environment
+     *         the game {@link Environment}
      */
-    BuilderEnvironment addStaticObstacle(GameObjectType typeOfObstacle, Point2D pos, double w, double h);
+    BuilderEnvironment addStaticObstacle(GameObjectType typeOfObstacle, Point2D pos, Rectangle2D dimensions);
 
     /**
-     * Builds the game environment.
+     * Builds the game {@link Environment}.
      * 
      * @return an instance of {@link Environment}, representing the
      *         game environment
