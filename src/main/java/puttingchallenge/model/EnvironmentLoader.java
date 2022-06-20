@@ -1,10 +1,15 @@
 package puttingchallenge.model;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 import puttingchallenge.common.Point2D;
@@ -18,7 +23,12 @@ import puttingchallenge.view.SceneType;
 public final class EnvironmentLoader {
 
     private static final EnvironmentLoader SINGLETON = new EnvironmentLoader();
-    private static final String PATH_START = "/scenes/";
+
+    private static final String SEP = File.separator + File.separator;
+    private static final String PATH_START = System.getProperty("user.dir")
+                                             + SEP + "res"
+                                             + SEP + "scenes"
+                                             + SEP;
     private static final String PATH_END = ".json";
 
     /**
@@ -46,10 +56,12 @@ public final class EnvironmentLoader {
     public Optional<Environment> getEnvironment(final SceneType sceneTag, final GameEngine controller) throws IOException {
         if (sceneTag.isLevel()) {
             final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
-            final JSONObject file = new JSONObject(path);
+            final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
+            final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
 
             builder.controller(controller);
+            this.setDimension(builder, file);
             this.setBall(builder, file);
             this.setPlayer(builder, file);
             this.addObstacles(builder, file);
@@ -57,6 +69,14 @@ public final class EnvironmentLoader {
         } else {
             return Optional.empty();
         }
+    }
+
+    private void setDimension(final BuilderEnvironment builder, final JSONObject file) {
+        file.getJSONObject("scene");
+        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        final double h = dim.getHeight() / file.getDouble("wScale");
+        final double w = dim.getWidth() / file.getDouble("hScale");
+        builder.dimension(w, h);
     }
 
     private void addObstacles(final BuilderEnvironment builder, final JSONObject file) {
