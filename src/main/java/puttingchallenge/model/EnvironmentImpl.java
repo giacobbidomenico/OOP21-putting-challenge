@@ -3,37 +3,33 @@ package puttingchallenge.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
+import javafx.geometry.Rectangle2D;
 
 /**
  * Class that implements the game environment.
  * 
  */
 public class EnvironmentImpl implements Environment {
-    private final double percWidth;
-    private final double percHeight;
+    private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
     private final GameObject player;
 
+
     /**
      * Build a new {@link EnvironmentImpl}.
      * 
-     * @param percWidth
-     *                width of the game environment in percent
-     * @param percHeight
-     *                height of the game environment in percent
+     * @param container
+     *           the {@link Rectangle2D} inside which there is the game {@link Environment}
      * @param ball 
-     *           the {@link GameObject} corresponding to the ball in the game environment
+     *           the {@link GameObject} corresponding to the ball in the game {@link Environment}
      * @param player
-     *           the {@link GameObject} corresponding to the player in the game environment
+     *           the {@link GameObject} corresponding to the player in the game {@link Environment}
      */
-    public EnvironmentImpl(final double percWidth,
-                           final double percHeight,
+    public EnvironmentImpl(final Rectangle2D container,
                            final GameObject ball, 
                            final GameObject player) {
-        this.percWidth = Objects.requireNonNull(percWidth);
-        this.percHeight = Objects.requireNonNull(percHeight);
+        this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
         this.staticObstacles = new LinkedList<>();
@@ -107,16 +103,7 @@ public class EnvironmentImpl implements Environment {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public double getPercWidth() {
-        return this.percWidth;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getPercHeight() {
-        return this.percHeight;
+    public Rectangle2D getContainer() {
+        return this.container;
     }
 }
