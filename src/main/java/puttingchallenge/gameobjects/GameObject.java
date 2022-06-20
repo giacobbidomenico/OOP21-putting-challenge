@@ -1,10 +1,11 @@
-package puttingchallenge.model;
+package puttingchallenge.gameobjects;
 
 import java.util.Optional;
 
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.Environment;
 import puttingchallenge.physics.PhysicsComponent;
 
 /**

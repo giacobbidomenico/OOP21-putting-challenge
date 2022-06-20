@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.model.GameObject.GameObjectType;
+import puttingchallenge.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.view.SceneType;
 
 /**

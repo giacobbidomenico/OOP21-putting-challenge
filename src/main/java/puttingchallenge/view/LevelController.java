@@ -1,10 +1,11 @@
 package puttingchallenge.view;
 
 import javafx.scene.image.Image;
+import puttingchallenge.gameobjects.GameObject;
+
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import puttingchallenge.model.GameObject;
 
 /**
  * Class that defines the controller that manages the {@link Scene} related to the loaded game level.

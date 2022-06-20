@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
 import puttingchallenge.model.GameFactory;
-import puttingchallenge.model.GameObject;
 
 /**
  * Describes the physical behavior of the ball.

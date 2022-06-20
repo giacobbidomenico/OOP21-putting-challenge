@@ -2,8 +2,7 @@ package puttingchallenge.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import puttingchallenge.model.GameObject;
+import puttingchallenge.gameobjects.GameObject;
 
 /**
  * Define the default behavior of a {@link GraphicComponent}.

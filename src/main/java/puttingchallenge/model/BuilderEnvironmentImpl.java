@@ -7,7 +7,8 @@ import java.util.Optional;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.model.GameObject.GameObjectType;
+import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.gameobjects.GameObject.GameObjectType;
 
 /**
  * Class that implements the builder of the game environment.

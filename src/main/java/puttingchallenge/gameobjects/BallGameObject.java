@@ -1,4 +1,4 @@
-package puttingchallenge.model;
+package puttingchallenge.gameobjects;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.graphics.GraphicComponent;
