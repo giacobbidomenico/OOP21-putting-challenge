@@ -14,7 +14,11 @@ public enum GameStatus {
      */
     SHOOTING,
     /**
-     * The player run out of lives.
+     * The player runs out of lives.
      */
-    GAME_OVER
+    GAME_OVER,
+    /**
+     * The player quits the game or has just started the application.
+     */
+    MAIN_MENU;
 }
