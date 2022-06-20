@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,16 +49,13 @@ public final class EnvironmentLoader {
      *      the {@link SceneType} related to the environment to be loaded
      * @param controller
      *      the controller of the application
-     * @param screenDimensions
-     *       dimensions of the screen
      * @return
      *      the {@link Environment} related to the given tag
      * @throws IOException
      *      if the file is not loaded correctly
      */
     public Optional<Environment> getEnvironment(final SceneType sceneTag, 
-                                                final GameEngine controller, 
-                                                final Rectangle2D screenDimensions) throws IOException {
+                                                final GameEngine controller) throws IOException {
         if (sceneTag.isLevel()) {
             final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
@@ -64,8 +63,7 @@ public final class EnvironmentLoader {
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
 
             builder.controller(controller);
-            builder.screenDimension(screenDimensions);
-            this.setDimension(builder, file, screenDimensions);
+            this.setDimension(builder, file);
             this.setBall(builder, file);
             this.setPlayer(builder, file);
             this.addObstacles(builder, file);
@@ -75,13 +73,12 @@ public final class EnvironmentLoader {
         }
     }
 
-    private void setDimension(final BuilderEnvironment builder, 
-                              final JSONObject file,
-                              final Rectangle2D dimensions) {
+    private void setDimension(final BuilderEnvironment builder, final JSONObject file) {
         file.getJSONObject("scene");
-        final double w = dimensions.getWidth() / file.getDouble("hScale");
-        final double h = dimensions.getHeight() / file.getDouble("wScale");
-        builder.dimension(w, h);
+        final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        final double w = screenDim.getWidth() / file.getDouble("wScale");
+        final double h = screenDim.getHeight() / file.getDouble("hScale");
+        builder.dimension(new Rectangle2D(0, 0, w, h));
     }
 
     private void addObstacles(final BuilderEnvironment builder, final JSONObject file) {
@@ -91,9 +88,10 @@ public final class EnvironmentLoader {
             final GameObjectType type = GameObjectType.getFromIndex(obj.getInt("type")).get();
             final double x = obj.getDouble("posX");
             final double y = obj.getDouble("posY");
-            final double w = obj.getDouble("weight");
-            final double h = obj.getDouble("height");
-            builder.addStaticObstacle(type, new Point2D(x, y), w, h);
+            final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+            final double w = screenDim.getWidth() / obj.getDouble("wScale");
+            final double h = screenDim.getHeight() / obj.getDouble("hScale");
+            builder.addStaticObstacle(type, new Point2D(x, y), new Rectangle2D(0, 0, w, h));
         }
     }
 
@@ -101,18 +99,20 @@ public final class EnvironmentLoader {
         final JSONObject player = file.getJSONObject("player");
         final double x = player.getDouble("posX");
         final double y = player.getDouble("posY");
-        final double w = player.getDouble("weight");
-        final double h = player.getDouble("height");
+        final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        final double w = screenDim.getWidth() / player.getDouble("wScale");
+        final double h = screenDim.getHeight() / player.getDouble("hScale");
         final String path = player.getString("skinPath");
-        builder.player(new Point2D(x, y), path, w, h);
+        builder.player(new Point2D(x, y), path, new Rectangle2D(0, 0, w, h));
     }
 
     private void setBall(final BuilderEnvironment builder, final JSONObject file) {
         final JSONObject ball = file.getJSONObject("ball");
         final double x = ball.getDouble("posX");
         final double y = ball.getDouble("posY");
-        final double radius = ball.getDouble("radius");
-        builder.ball(new Point2D(x, y), radius);
+        final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        final double radius = screenDim.getWidth() / ball.getDouble("radiusScale");
+        builder.ball(new Point2D(x, y), new Rectangle2D(0, 0, radius * 2, radius * 2));
     }
 
 }
