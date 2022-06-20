@@ -27,7 +27,7 @@ public final class SceneLoader {
 
     private static final SceneLoader SINGLETON = new SceneLoader();
 
-    private static final String SEP = File.separator + File.separator;
+    private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
                                              + SEP + "res"
                                              + SEP + "scenes"

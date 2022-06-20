@@ -25,7 +25,7 @@ public final class EnvironmentLoader {
 
     private static final EnvironmentLoader SINGLETON = new EnvironmentLoader();
 
-    private static final String SEP = File.separator + File.separator;
+    private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
                                              + SEP + "res"
                                              + SEP + "scenes"
