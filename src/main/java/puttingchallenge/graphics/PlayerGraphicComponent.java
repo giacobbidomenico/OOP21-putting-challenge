@@ -1,7 +1,7 @@
 package puttingchallenge.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
-import puttingchallenge.model.GameObject;
+import puttingchallenge.gameobjects.GameObject;
 
 /**
  * Class that implements the graphical representation of the player.

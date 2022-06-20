@@ -12,14 +12,14 @@ public class MenuController extends AbstractSceneController {
      * Request the interruption of application execution.
      */
     public void quitGame(final ActionEvent event) {
-        
+
     }
 
     /**
      * Request the start of the game.
      */
     public void startGame(final ActionEvent event) {
-        
+
     }
 
 }

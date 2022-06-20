@@ -4,7 +4,7 @@ import java.util.List;
 
 import javafx.scene.Scene;
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.model.GameObject;
+import puttingchallenge.gameobjects.GameObject;
 
 /**
  * Interface that defines the controller that manages the {@link Scene} of the view.
