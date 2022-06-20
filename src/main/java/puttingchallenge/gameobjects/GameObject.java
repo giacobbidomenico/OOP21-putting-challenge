@@ -41,7 +41,11 @@ public interface GameObject {
         /**
          * The type of a tree static obstacle.
          */
-        TREE(5);
+        TREE(5),
+        /**
+         * The type of the game hole.
+         */
+        HOLE(6);
 
         private final int index;
 

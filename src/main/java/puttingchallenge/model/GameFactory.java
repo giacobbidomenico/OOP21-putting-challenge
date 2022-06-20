@@ -9,6 +9,7 @@ import puttingchallenge.graphics.BallGraphicComponent;
 import puttingchallenge.graphics.PlayerGraphicComponent;
 import puttingchallenge.graphics.TreeGraphicComponent;
 import puttingchallenge.graphics.WallGraphicComponent;
+import puttingchallenge.graphics.HoleGraphicComponent;
 import puttingchallenge.physics.BallPhysicsComponent;
 import puttingchallenge.physics.StaticPhysicsComponent;
 
@@ -94,6 +95,23 @@ public class GameFactory {
         return new GenericGameObject(GameObjectType.TREE,
                                      pos, 
                                      new TreeGraphicComponent(w, h), 
+                                     new StaticPhysicsComponent());
+    }
+
+    /**
+     * Build a new hole in the game.
+     * 
+     * @param pos
+     * @param w
+     * @param h
+     * @return -
+     */
+    public GameObject createHole(final Point2D pos,
+                                 final double w,
+                                 final double h) {
+        return new GenericGameObject(GameObjectType.HOLE, 
+                                     pos, 
+                                     new HoleGraphicComponent(w, h), 
                                      new StaticPhysicsComponent());
     }
 
