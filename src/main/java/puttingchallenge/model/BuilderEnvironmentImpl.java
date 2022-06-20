@@ -64,9 +64,9 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment player(final Point2D pos) {
+    public BuilderEnvironment player(final Point2D pos, final String skinPath) {
         if (player.isEmpty()) {
-            player = Optional.of(factory.createPlayer(pos));
+            player = Optional.of(factory.createPlayer(pos, skinPath));
         }
         return this;
     }
