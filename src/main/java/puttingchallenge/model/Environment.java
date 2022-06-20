@@ -48,4 +48,12 @@ public interface Environment {
      * Move the player next to the ball.
      */
     void movePlayer();
+    /**
+     * @return the width of the game environment as a percentage.
+     */
+    double getPercWidth();
+    /** 
+     * @return the height of the game environment as a percentage.
+     */
+    double getPercHeight();
 }
