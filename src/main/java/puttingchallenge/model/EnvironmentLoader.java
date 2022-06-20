@@ -78,7 +78,7 @@ public final class EnvironmentLoader {
         final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         final double w = screenDim.getWidth() / file.getDouble("wScale");
         final double h = screenDim.getHeight() / file.getDouble("hScale");
-        builder.dimension(new Rectangle2D(0, 0, w, h));
+        builder.container(new Rectangle2D(0, 0, w, h));
     }
 
     private void addObstacles(final BuilderEnvironment builder, final JSONObject file) {

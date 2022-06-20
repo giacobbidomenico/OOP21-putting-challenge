@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import javafx.geometry.Rectangle2D;
+import puttingchallenge.common.Vector2D;
 
 /**
  * Class that implements the game environment.
@@ -105,5 +106,13 @@ public class EnvironmentImpl implements Environment {
      */
     public Rectangle2D getContainer() {
         return this.container;
+    }
+
+    /**
+     * @return true if the ball is stationary, 
+     *         false otherwise
+     */
+    private boolean isBallStationary() {
+        return this.ball.getVelocity().equals(new Vector2D(0, 0));
     }
 }
