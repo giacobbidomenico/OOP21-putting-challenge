@@ -13,7 +13,7 @@
       <children>
             <ImageView fitHeight="400.0" fitWidth="641.0">
                <image>
-                  <Image url="@../backgrounds/main_menu.png" />
+                  <Image url="@/backgrounds/main_menu.png" />
                </image>
             </ImageView>
             <Button contentDisplay="CENTER" ellipsisString="" layoutX="405.0" layoutY="251.0" mnemonicParsing="false" onAction="#startGame" prefHeight="56.0" prefWidth="208.0" text="Start Game" textAlignment="CENTER" AnchorPane.bottomAnchor="93.0">
