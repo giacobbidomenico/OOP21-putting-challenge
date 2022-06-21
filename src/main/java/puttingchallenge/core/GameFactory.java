@@ -1,16 +1,16 @@
-package puttingchallenge.model;
+package puttingchallenge.core;
 
 import puttingchallenge.common.Point2D;
-import puttingchallenge.gameobjects.GameObject;
-import puttingchallenge.gameobjects.GameObject.GameObjectType;
-import puttingchallenge.gameobjects.GameObjectImpl;
-import puttingchallenge.graphics.BallGraphicComponent;
-import puttingchallenge.graphics.PlayerGraphicComponent;
-import puttingchallenge.graphics.TreeGraphicComponent;
-import puttingchallenge.graphics.WallGraphicComponent;
-import puttingchallenge.graphics.HoleGraphicComponent;
-import puttingchallenge.physics.BallPhysicsComponent;
-import puttingchallenge.physics.StaticPhysicsComponent;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObjectImpl;
+import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
+import puttingchallenge.model.physics.BallPhysicsComponent;
+import puttingchallenge.model.physics.StaticPhysicsComponent;
+import puttingchallenge.view.graphics.BallGraphicComponent;
+import puttingchallenge.view.graphics.HoleGraphicComponent;
+import puttingchallenge.view.graphics.PlayerGraphicComponent;
+import puttingchallenge.view.graphics.TreeGraphicComponent;
+import puttingchallenge.view.graphics.WallGraphicComponent;
 
 /**
  * Factory class for all the game objects.

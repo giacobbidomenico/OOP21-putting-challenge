@@ -1,10 +1,11 @@
-package puttingchallenge.view;
+package puttingchallenge.view.controllers;
 
 import java.util.List;
 
 import javafx.scene.Scene;
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.View;
 
 /**
  * Abstract class that defines the controller that manages the {@link Scene} of the {@link View}.

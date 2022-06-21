@@ -1,13 +1,14 @@
 package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.events.Colleague;
 
 /**
  * 
  * Interface for maintaining and handling the state of the game.
  *
  */
-public interface GameState {
+public interface GameState extends Colleague {
     /**
      *
      */

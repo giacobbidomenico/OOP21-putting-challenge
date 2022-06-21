@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Class that implements the game environment.

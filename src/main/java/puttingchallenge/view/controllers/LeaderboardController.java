@@ -1,4 +1,4 @@
-package puttingchallenge.view;
+package puttingchallenge.view.controllers;
 
 /**
  * Class that defines the controller that manages the {@link Scene} related to the leader board.
