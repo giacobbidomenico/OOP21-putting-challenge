@@ -18,7 +18,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import puttingchallenge.model.GameObject;
+
+import puttingchallenge.core.GameEngine;
+import puttingchallenge.gameobjects.GameObject;
 
 /**
  * Loads the given {@link SceneType} from its corresponding file.
@@ -27,7 +29,7 @@ public final class SceneLoader {
 
     private static final SceneLoader SINGLETON = new SceneLoader();
 
-    private static final String SEP = File.separator + File.separator;
+    private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
                                              + SEP + "res"
                                              + SEP + "scenes"
@@ -53,8 +55,8 @@ public final class SceneLoader {
      *      the {@link SceneType} to be loaded
      * @param objs
      *      a {@link List} of the game objects of the scene
-     * @param view
-     *      the view of the application
+     * @param controller
+     *      the controller of the application
      * @return
      *      the {@link SceneController} related to the given tag
      * @throws IOException
@@ -62,43 +64,31 @@ public final class SceneLoader {
      */
     public SceneController getScene(final SceneType sceneTag,
                                     final List<GameObject> objs,
-                                    final View view) throws IOException {
+                                    final GameEngine controller) throws IOException {
         if (sceneTag.isLevel()) {
-            return this.loadGameLevel(sceneTag, objs, view);
+            return this.loadGameLevel(sceneTag, objs, controller);
         } else {
-            return this.loadScreen(sceneTag, objs, view);
+            return this.loadScreen(sceneTag, objs, controller);
         }
     }
 
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs,
-                                       final View view) throws IOException {
+                                       final GameEngine controller) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
         final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
         final Parent parent;
         parent = loader.load(new FileInputStream(path));
 
 
-        final SceneController sc;
-        switch (sceneTag) {
-            case MAIN_MENU:
-                sc = new MenuController(new Scene(parent), objs, view);
-                break;
-            case LEADEARBOARD:
-                sc = new LeaderboardController(new Scene(parent), objs, view);
-                break;
-            case GAME_OVER:
-                sc = new GameOverController(new Scene(parent), objs, view);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
+        final SceneController sc = loader.getController();
+        sc.init(new Scene(parent), objs, controller);
         return sc;
     }
 
     private SceneController loadGameLevel(final SceneType sceneTag,
                                           final List<GameObject> objs,
-                                          final View view) throws IOException {
+                                          final GameEngine controller) throws IOException {
         String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
         final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
@@ -118,7 +108,10 @@ public final class SceneLoader {
         root.getChildren().add(canvas);
         root.getChildren().add(parent);
         gc.drawImage(new Image(background), 0, 0, w, h);
-        return new LevelController(scene, objs, view, gc, background);
+
+        final LevelController sc = loader.getController();
+        sc.init(scene, objs, controller, gc, background);
+        return sc;
     }
 }
 

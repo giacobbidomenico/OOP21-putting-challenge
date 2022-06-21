@@ -1,10 +1,11 @@
-package puttingchallenge.model;
+package puttingchallenge.gameobjects;
 
 import java.util.Optional;
 
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.Environment;
 import puttingchallenge.physics.PhysicsComponent;
 
 /**
@@ -40,7 +41,11 @@ public interface GameObject {
         /**
          * The type of a tree static obstacle.
          */
-        TREE(5);
+        TREE(5),
+        /**
+         * The type of the game hole.
+         */
+        HOLE(6);
 
         private final int index;
 

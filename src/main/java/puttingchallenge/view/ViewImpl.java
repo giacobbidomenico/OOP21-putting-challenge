@@ -1,8 +1,7 @@
 package puttingchallenge.view;
 
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.model.GameObject;
-
+import puttingchallenge.gameobjects.GameObject;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;

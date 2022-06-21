@@ -2,6 +2,9 @@ package puttingchallenge.model;
 
 import java.util.List;
 
+import javafx.geometry.Rectangle2D;
+import puttingchallenge.gameobjects.GameObject;
+
 /**
  * Interface that defines the game environment.
  */
@@ -49,11 +52,7 @@ public interface Environment {
      */
     void movePlayer();
     /**
-     * @return the width of the game environment as a percentage.
+     * @return the {@link Rectangle2D} inside which there is the game {@link Environment}.
      */
-    double getPercWidth();
-    /** 
-     * @return the height of the game environment as a percentage.
-     */
-    double getPercHeight();
+    Rectangle2D getContainer();
 }

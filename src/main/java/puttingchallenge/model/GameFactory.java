@@ -1,11 +1,15 @@
 package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.gameobjects.BallGameObject;
+import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.gameobjects.GenericGameObject;
+import puttingchallenge.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.graphics.BallGraphicComponent;
 import puttingchallenge.graphics.PlayerGraphicComponent;
 import puttingchallenge.graphics.TreeGraphicComponent;
 import puttingchallenge.graphics.WallGraphicComponent;
-import puttingchallenge.model.GameObject.GameObjectType;
+import puttingchallenge.graphics.HoleGraphicComponent;
 import puttingchallenge.physics.BallPhysicsComponent;
 import puttingchallenge.physics.StaticPhysicsComponent;
 
@@ -25,10 +29,9 @@ public class GameFactory {
      * 
      * @return an instance of {@link GameObject} representing the ball
      */
-    public GameObject createBall(final Point2D pos,
-                                 final double radius) {
-        return new GameObjectImpl(GameObjectType.BALL,
-                                  pos,
+    public BallGameObject createBall(final Point2D pos, final double radius) {
+        return new BallGameObject(pos,
+                                  radius,
                                   new BallGraphicComponent(radius),
                                   new BallPhysicsComponent(radius));
     }
@@ -40,12 +43,16 @@ public class GameFactory {
      *          initial position of the player
      * @param skinPath
      *          path of the player's skin
+     * @param w
+     *          the width of the tree
+     * @param h
+     *          the height of the tree
      * @return an instance of {@link GameObject} representing the player
      */
-    public GameObject createPlayer(final Point2D pos, final String skinPath) {
-        return new GameObjectImpl(GameObjectType.PLAYER,
+    public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
+        return new PlayerObject(GameObjectType.PLAYER,
                 pos,
-                new PlayerGraphicComponent(skinPath),
+                new PlayerGraphicComponent(skinPath, w, h),
                 new StaticPhysicsComponent());
     }
 
@@ -64,10 +71,10 @@ public class GameFactory {
     public GameObject createWall(final Point2D pos,
                                  final double w,
                                  final double h) {
-        return new GameObjectImpl(GameObjectType.WALL,
-                                  pos, 
-                                  new WallGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+        return new GenericGameObject(GameObjectType.WALL,
+                                     pos, 
+                                     new WallGraphicComponent(w, h), 
+                                     new StaticPhysicsComponent());
     }
 
     /**
@@ -85,10 +92,27 @@ public class GameFactory {
     public GameObject createTree(final Point2D pos,
                                  final double w,
                                  final double h) {
-        return new GameObjectImpl(GameObjectType.TREE,
-                                  pos, 
-                                  new TreeGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+        return new GenericGameObject(GameObjectType.TREE,
+                                     pos, 
+                                     new TreeGraphicComponent(w, h), 
+                                     new StaticPhysicsComponent());
+    }
+
+    /**
+     * Build a new hole in the game.
+     * 
+     * @param pos
+     * @param w
+     * @param h
+     * @return -
+     */
+    public GameObject createHole(final Point2D pos,
+                                 final double w,
+                                 final double h) {
+        return new GenericGameObject(GameObjectType.HOLE, 
+                                     pos, 
+                                     new HoleGraphicComponent(w, h), 
+                                     new StaticPhysicsComponent());
     }
 
 }
