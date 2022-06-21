@@ -6,6 +6,7 @@ import java.util.Objects;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.physics.BallPhysicsComponent;
 
 /**
  * Class that implements the game environment.
@@ -137,8 +138,8 @@ public class EnvironmentImpl implements Environment {
         final var posBall = this.ball.getPosition();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(), 
-                                             ball.getPhysicsComponent().getRadius() * 2, 
-                                             ball.getPhysicsComponent().getRadius() * 2);
+                                             ((BallPhysicsComponent) ball.getPhysicsComponent()).getRadius() * 2, 
+                                             ((BallPhysicsComponent) ball.getPhysicsComponent()).getRadius() * 2);
         return this.container.contains(rectBall);
     }
 }
