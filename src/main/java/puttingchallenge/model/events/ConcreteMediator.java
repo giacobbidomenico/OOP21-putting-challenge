@@ -1,6 +1,6 @@
 package puttingchallenge.model.events;
 
-import puttingchallenge.model.GameEvent;
+import puttingchallenge.model.events.GameEvent;
 
 /**
  * 

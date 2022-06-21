@@ -1,4 +1,4 @@
-package puttingchallenge.graphics;
+package puttingchallenge.view.graphics;
 
 /**
  * Class that implements the graphical representation of a wall in the game.

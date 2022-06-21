@@ -3,9 +3,13 @@ package puttingchallenge.model;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
+<<<<<<< HEAD
 import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.events.Mediator;
+=======
+import puttingchallenge.model.gameobjects.GameObject;
+>>>>>>> master
 
 /**
  * Interface that defines the game environment.

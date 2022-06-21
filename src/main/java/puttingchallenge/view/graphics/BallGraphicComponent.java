@@ -1,4 +1,4 @@
-package puttingchallenge.graphics;
+package puttingchallenge.view.graphics;
 
 /**
  * Represent the graphic behavior of the game ball.

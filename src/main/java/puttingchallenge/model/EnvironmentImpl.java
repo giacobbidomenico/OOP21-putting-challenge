@@ -7,9 +7,13 @@ import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Vector2D;
+<<<<<<< HEAD
 import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.ModelEventType;
+=======
+import puttingchallenge.model.gameobjects.GameObject;
+>>>>>>> master
 
 /**
  * Class that implements the game environment.

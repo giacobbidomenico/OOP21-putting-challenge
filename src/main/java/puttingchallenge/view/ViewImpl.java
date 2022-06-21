@@ -1,7 +1,8 @@
 package puttingchallenge.view;
 
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.controllers.SceneController;
 
 import java.io.IOException;
 import java.util.List;

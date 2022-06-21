@@ -1,7 +1,5 @@
 package puttingchallenge.model.events;
 
-import puttingchallenge.model.GameEvent;
-
 /**
  * Defines an object (Mediator) that encapsulates the interactions between a set of colleagues.
  * A colleague delegates its interaction with other colleagues to a Mediator.
