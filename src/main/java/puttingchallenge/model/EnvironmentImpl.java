@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.gameobjects.BallGameObject;
 import puttingchallenge.gameobjects.GameObject;
 
 /**
@@ -15,9 +14,9 @@ import puttingchallenge.gameobjects.GameObject;
 public class EnvironmentImpl implements Environment {
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
-    private final BallGameObject ball;
+    private final GameObject ball;
     private final GameObject player;
-
+    private final GameObject hole;
 
     /**
      * Build a new {@link EnvironmentImpl}.
@@ -28,13 +27,17 @@ public class EnvironmentImpl implements Environment {
      *           the {@link GameObject} corresponding to the ball in the game {@link Environment}
      * @param player
      *           the {@link GameObject} corresponding to the player in the game {@link Environment}
+     * @param hole
+     *           the {@link GameObject} corresponding to the hole in the game {@link Environment}
      */
     public EnvironmentImpl(final Rectangle2D container,
-                           final BallGameObject ball, 
-                           final GameObject player) {
+                           final GameObject ball, 
+                           final GameObject player,
+                           final GameObject hole) {
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
+        this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>();
     }
 
@@ -77,6 +80,14 @@ public class EnvironmentImpl implements Environment {
     @Override
     public GameObject getPlayer() {
         return this.player;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObject getHole() {
+        return this.hole;
     }
 
     /**
@@ -126,8 +137,8 @@ public class EnvironmentImpl implements Environment {
         final var posBall = this.ball.getPosition();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(), 
-                                             ball.getRadius() * 2, 
-                                             ball.getRadius() * 2);
+                                             ball.getPhysicsComponent().getRadius() * 2, 
+                                             ball.getPhysicsComponent().getRadius() * 2);
         return this.container.contains(rectBall);
     }
 }

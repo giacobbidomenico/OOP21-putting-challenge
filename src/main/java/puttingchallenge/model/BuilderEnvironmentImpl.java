@@ -7,7 +7,6 @@ import java.util.Optional;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.gameobjects.BallGameObject;
 import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.gameobjects.GameObject.GameObjectType;
 
@@ -20,7 +19,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
     private final GameFactory factory;
     private final List<GameObject> gameObjects;
     private Optional<Rectangle2D> container;
-    private Optional<BallGameObject> ball;
+    private Optional<GameObject> ball;
     private Optional<GameObject> player;
     private Optional<GameObject> hole;
     private Optional<GameEngine> controller;
@@ -122,10 +121,17 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      */
     @Override
     public Environment build() {
-        if (this.container.isEmpty() || ball.isEmpty() || player.isEmpty() || controller.isEmpty()) {
+        if (this.container.isEmpty()
+                || ball.isEmpty() 
+                || player.isEmpty() 
+                || controller.isEmpty()
+                || hole.isEmpty()) {
             throw new IllegalStateException();
         }
-        return new EnvironmentImpl(this.container.get(), this.ball.get(), this.player.get());
+        return new EnvironmentImpl(this.container.get(), 
+                                   this.ball.get(), 
+                                   this.player.get(),
+                                   this.hole.get());
     }
 
 }

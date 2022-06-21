@@ -3,7 +3,6 @@ package puttingchallenge.model;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.gameobjects.GameObject.GameObjectType;
 
 /**
@@ -49,8 +48,6 @@ public interface BuilderEnvironment {
      * 
      * @param pos
      *          initial position of the player
-     * @param skinPath
-     *          path of the player's skin
      * @param w
      *          width of the rectangle where the player will be contained
      * @param h
@@ -58,7 +55,7 @@ public interface BuilderEnvironment {
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment player(Point2D pos, String skinPath, double w, double h);
+    BuilderEnvironment player(Point2D pos,  double w, double h);
 
     /**
      * Sets the configuration of a new static obstacle.
@@ -74,8 +71,21 @@ public interface BuilderEnvironment {
      *         the game {@link Environment}
      */
     BuilderEnvironment addStaticObstacle(GameObjectType typeOfObstacle, Point2D pos, Rectangle2D dimensions);
-    
-    BuilderEnvironment hole(GameObject hole);
+
+    /**
+     * Sets the hole configuration.
+     * 
+     * @param pos
+     *          initial position of the hole
+     * @param w
+     *          width of the rectangle where the hole will be contained
+     * @param h
+     *          height of the rectangle where the hole will be contained
+     * 
+     * @return an instance of {@link BuilderEnvironment} ,the builder of 
+     *         the game {@link Environment}
+     */
+    BuilderEnvironment hole(Point2D pos, double w, double h);
 
     /**
      * Builds the game {@link Environment}.

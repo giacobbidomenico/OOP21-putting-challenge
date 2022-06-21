@@ -39,6 +39,11 @@ public interface Environment {
      */
     GameObject getPlayer();
     /**
+     * @return the {@link GameObject} corresponding to the hole in the 
+     *         game environment
+     */
+    GameObject getHole();
+    /**
      * @return a list of {@link GameObject} corresponding to the static 
      *         obstacles in the game environment
      */
