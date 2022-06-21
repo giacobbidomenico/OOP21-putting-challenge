@@ -45,9 +45,9 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      */
     @Override
     public void update(final long dt, final GameObject obj, final Environment env) {
-        final GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()),
-                                                              this.radius, 
-                                                              new Vector2D(this.getVelocity()));
+        final GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()), this.radius);
+        clone.setVelocity(new Vector2D(this.getVelocity()));
+
         final Optional<Collision> infoOpt = env.checkCollison(clone);
         final Point2D nextPos;
         if(infoOpt.isPresent()) {
