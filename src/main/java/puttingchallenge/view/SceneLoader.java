@@ -2,11 +2,14 @@ package puttingchallenge.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONObject;
+import org.apache.commons.io.IOUtils;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -15,7 +18,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import puttingchallenge.model.GameObject;
+
+import puttingchallenge.core.GameEngine;
+import puttingchallenge.gameobjects.GameObject;
 
 /**
  * Loads the given {@link SceneType} from its corresponding file.
@@ -23,7 +28,12 @@ import puttingchallenge.model.GameObject;
 public final class SceneLoader {
 
     private static final SceneLoader SINGLETON = new SceneLoader();
-    private static final String PATH_START = "/scenes/";
+
+    private static final String SEP = File.separator;
+    private static final String PATH_START = System.getProperty("user.dir")
+                                             + SEP + "res"
+                                             + SEP + "scenes"
+                                             + SEP;
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
     private static final String PATH_LEVELS = "levels";
@@ -45,8 +55,8 @@ public final class SceneLoader {
      *      the {@link SceneType} to be loaded
      * @param objs
      *      a {@link List} of the game objects of the scene
-     * @param view
-     *      the view of the application
+     * @param controller
+     *      the controller of the application
      * @return
      *      the {@link SceneController} related to the given tag
      * @throws IOException
@@ -54,60 +64,54 @@ public final class SceneLoader {
      */
     public SceneController getScene(final SceneType sceneTag,
                                     final List<GameObject> objs,
-                                    final View view) throws IOException {
+                                    final GameEngine controller) throws IOException {
         if (sceneTag.isLevel()) {
-            return this.loadGameLevel(sceneTag, objs, view);
+            return this.loadGameLevel(sceneTag, objs, controller);
         } else {
-            return this.loadScreen(sceneTag, objs, view);
+            return this.loadScreen(sceneTag, objs, controller);
         }
     }
 
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs,
-                                       final View view) {
+                                       final GameEngine controller) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
         final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
-        final Parent parent = loader.load(this.getClass().getResourceAsStream(path));
+        final Parent parent;
+        parent = loader.load(new FileInputStream(path));
 
-        final SceneController sc;
-        switch (sceneTag) {
-            case MAIN_MENU:
-                sc = new MenuController(new Scene(parent), objs, view);
-                break;
-            case LEADEARBOARD:
-                sc = new LeaderboardController(new Scene(parent), objs, view);
-                break;
-            case GAME_OVER:
-                sc = new GameOverController(new Scene(parent), objs, view);
-                break;
-            default:
-                break;
-        }
+
+        final SceneController sc = loader.getController();
+        sc.init(new Scene(parent), objs, controller);
         return sc;
     }
 
     private SceneController loadGameLevel(final SceneType sceneTag,
                                           final List<GameObject> objs,
-                                          final View view) {
-        final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
-        final JSONObject jsonObj = new JSONObject(path).getJSONObject("scene");
+                                          final GameEngine controller) throws IOException {
+        String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+        final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
+        final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
         final String background = jsonObj.getString("background");
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        final double h = dim.getHeight() / 2;
-        final double w = dim.getWidth() / 2;
+        final double h = dim.getHeight() / jsonObj.getDouble("wScale");
+        final double w = dim.getWidth() / jsonObj.getDouble("hScale");
 
         final FXMLLoader loader = new FXMLLoader();
         path = PATH_START + PATH_LEVELS + PATH_END_SCREEN;
-        final Parent parent = loader.load(this.getClass().getResourceAsStream(path));
+        final Parent parent = loader.load(new FileInputStream(path));
 
         final Group root = new Group();
-        final Scene scene = new Scene(root);
-        final Canvas canvas = new Canvas(h, w);
+        final Scene scene = new Scene(root, w, h);
+        final Canvas canvas = new Canvas(w, h);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         root.getChildren().add(parent);
         gc.drawImage(new Image(background), 0, 0, w, h);
-        return new LevelController(scene, objs, view);
+
+        final LevelController sc = loader.getController();
+        sc.init(scene, objs, controller, gc, background);
+        return sc;
     }
 }
 

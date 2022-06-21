@@ -1,9 +1,10 @@
 package puttingchallenge.view;
 
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.model.GameObject;
-
+import puttingchallenge.gameobjects.GameObject;
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import javafx.application.Platform;
@@ -37,7 +38,7 @@ public class ViewImpl implements View {
     @Override
     public void buildView() {
         this.loadScene(SceneType.MAIN_MENU);
-        this.stage.setScene(scene.getScene().get());
+        this.stage.setScene(scene.getScene());
         this.stage.sizeToScene();
         this.stage.setResizable(false);
         this.stage.show();
@@ -64,11 +65,15 @@ public class ViewImpl implements View {
      */
     @Override
     public void loadScene(final SceneType typeScene) {
-        final List<GameObject> objs = this.controller.getEnv().getObjecs();
-        this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
-        this.stage.setScene(scene.getScene().get());
-        this.scene.getScene().get().addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleMousePressed);
-        this.scene.getScene().get().addEventFilter(MouseEvent.MOUSE_RELEASED, this::handleMouseReleased);
+        try {
+            final List<GameObject> objs = this.controller.getEnv().getObjecs();
+            this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
+            this.stage.setScene(scene.getScene());
+            this.scene.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleMousePressed);
+            this.scene.getScene().addEventFilter(MouseEvent.MOUSE_RELEASED, this::handleMouseReleased);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -1,7 +1,9 @@
 package puttingchallenge;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.stage.Stage;
+import javafx.stage.Screen;
 
 /**
  * The class that start the application.
@@ -23,6 +25,7 @@ public final class App extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final GameEngine gameEngine = new GameEngine(primaryStage);
+        final Rectangle2D screenDim = Screen.getPrimary().getBounds();
+        final GameEngine gameEngine = new GameEngine(primaryStage, screenDim);
     }
 }
