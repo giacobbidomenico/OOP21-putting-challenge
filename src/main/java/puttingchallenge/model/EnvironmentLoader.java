@@ -112,7 +112,7 @@ public final class EnvironmentLoader {
         final double y = ball.getDouble("posY");
         final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         final double radius = screenDim.getWidth() / ball.getDouble("radiusScale");
-        builder.ball(new Point2D(x, y), new Rectangle2D(0, 0, radius * 2, radius * 2));
+        builder.ball(new Point2D(x, y), radius);
     }
 
 }
