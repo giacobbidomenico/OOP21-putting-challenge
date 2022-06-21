@@ -2,18 +2,19 @@ package puttingchallenge.model;
 
 /**
  * Implementation of {@link GameEvent} interface.
+ * @param <A>, the Enum type subclass that defines the types of events
  */
 public class GameEventImpl<A extends Enum<A>> implements GameEvent<A> {
 
-    private final GameEventType type;
+    private final A type;
 
     /**
      * Build a new game event without details.
      * 
      * @param type
-     *          the {@link GameEventType} of the event
+     *          the type of the event
      */
-    public GameEventImpl(final GameEventType type) {
+    public GameEventImpl(final A type) {
         this.type = type;
     }
 
@@ -22,8 +23,7 @@ public class GameEventImpl<A extends Enum<A>> implements GameEvent<A> {
      */
     @Override
     public A getEventType() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.type;
     }
 
 }
