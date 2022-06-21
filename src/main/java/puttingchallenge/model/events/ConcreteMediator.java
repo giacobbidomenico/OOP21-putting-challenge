@@ -1,7 +1,5 @@
 package puttingchallenge.model.events;
 
-import puttingchallenge.model.events.GameEvent;
-
 /**
  * 
  */
@@ -11,7 +9,7 @@ public class ConcreteMediator implements Mediator {
      * {@inheritDoc}
      */
     @Override
-    public void addColleague(Colleague newColleague) {
+    public void addColleague(final Colleague newColleague) {
 
     }
 
@@ -19,7 +17,7 @@ public class ConcreteMediator implements Mediator {
      * {@inheritDoc}
      */
     @Override
-    public void removeColleague(Colleague toRemove) {
+    public void removeColleague(final Colleague toRemove) {
 
     }
 
@@ -27,7 +25,7 @@ public class ConcreteMediator implements Mediator {
      * {@inheritDoc}
      */
     @Override
-    public void notifyColleagues(GameEvent<?, ?> event, Colleague sender) {
+    public void notifyColleagues(final GameEvent<?> event, final Colleague sender) {
 
     }
 
