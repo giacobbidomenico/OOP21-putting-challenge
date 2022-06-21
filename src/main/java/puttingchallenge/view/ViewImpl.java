@@ -2,7 +2,6 @@ package puttingchallenge.view;
 
 import puttingchallenge.core.GameEngine;
 import puttingchallenge.gameobjects.GameObject;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,23 +43,6 @@ public class ViewImpl implements View {
         this.stage.show();
     }
     /**
-     * Handles mouse pressed event.
-     * @param event
-     */
-    private void handleMousePressed(final MouseEvent event) {
-        this.controller.startAiming(event.getSceneX(), event.getSceneY());
-        event.consume();
-    }
-    /**
-     * Handles mouse released event.
-     * @param event
-     */
-    private void handleMouseReleased(final MouseEvent event) {
-        this.controller.shoot(event.getSceneX(), event.getSceneY());
-        event.consume();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -69,8 +51,6 @@ public class ViewImpl implements View {
             final List<GameObject> objs = this.controller.getEnv().getObjecs();
             this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
             this.stage.setScene(scene.getScene());
-            this.scene.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, this::handleMousePressed);
-            this.scene.getScene().addEventFilter(MouseEvent.MOUSE_RELEASED, this::handleMouseReleased);
         } catch (IOException e) {
             e.printStackTrace();
         }
