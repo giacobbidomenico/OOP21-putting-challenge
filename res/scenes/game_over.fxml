@@ -14,18 +14,18 @@
       <children>
             <ImageView blendMode="DIFFERENCE" fitHeight="408.0" fitWidth="640.0" layoutY="-4.0">
                <image>
-                  <Image url="@" />
+                  <Image url="@/backgrounds/game_over.png" />
                </image>
             </ImageView>
             <Button layoutX="187.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleNewGame" prefHeight="55.0" prefWidth="117.0" text="NEW GAME" />
             <Button layoutX="336.0" layoutY="251.0" mnemonicParsing="false" onAction="#handleToMenu" prefHeight="55.0" prefWidth="117.0" text="MENU" />
-            <Label alignment="CENTER" layoutX="113.0" layoutY="28.0" prefHeight="152.0" prefWidth="414.0" text="GAME OVER">
+            <Label alignment="CENTER" layoutX="113.0" layoutY="28.0" prefHeight="152.0" prefWidth="414.0" text="GAME OVER" textFill="RED">
                <font>
-                  <Font name="Times New Roman Bold" size="58.0" />
+                  <Font name="Algerian" size="58.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="244.0" layoutY="180.0" prefHeight="40.0" prefWidth="76.0" text="SCORE" />
-            <Label alignment="CENTER" layoutX="320.0" layoutY="180.0" prefHeight="40.0" prefWidth="76.0" text="YOUR SCORE" />
+            <Label alignment="CENTER" layoutX="244.0" layoutY="180.0" prefHeight="40.0" prefWidth="76.0" text="SCORE" textFill="#ff9900" />
+            <Label alignment="CENTER" layoutX="320.0" layoutY="180.0" prefHeight="40.0" prefWidth="76.0" text="YOUR SCORE" textFill="#2fff00" />
       </children>
     </AnchorPane>
   </children>
