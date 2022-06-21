@@ -1,4 +1,4 @@
-package puttingchallenge.core;
+package puttingchallenge.model.events;
 
 import puttingchallenge.model.GameEvent;
 
@@ -14,8 +14,13 @@ public interface Mediator {
     void addColleague(Colleague newColleague);
 
     /**
-     * @param event 
-     * represents the event occured that the colleagues wants to send
+     * @param toRemove the colleague to be removed
      */
-    void notifyColleagues(GameEvent<?, ?> event);
+    void removeColleague(Colleague toRemove);
+
+    /**
+     * @param event represents the event occured that the colleagues wants to send
+     * @param sender the colleague who wants to send an event
+     */
+    void notifyColleagues(GameEvent<?, ?> event, Colleague sender);
 }
