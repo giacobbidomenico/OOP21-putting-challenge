@@ -2,8 +2,6 @@ package puttingchallenge.common;
 
 import java.io.Serializable;
 
-import it.unibo.oop.lab05.ex5.Pair;
-
 /**
  * 
  * 2-dimensional point.
@@ -25,6 +23,17 @@ public class Point2D implements Serializable {
     public Point2D(final double x, final double y) {
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * Build a new {@link Point2D}, copy of the point given as argument.
+     * 
+     * @param point
+     *          another instance of {@link Point2D} class 
+     */
+    public Point2D(final Point2D point) {
+        this.x = point.x;
+        this.y = point.y;
     }
 
     /**
@@ -59,7 +68,7 @@ public class Point2D implements Serializable {
 
     /**
      * Compares this point to the specified object. The result is true if and
-     * only if the argument is not null and is a instance of {@link Point2D} and 
+     * only if the argument is not null and is an instance of {@link Point2D} and 
      * contains the same coordinates.
      * 
      * @param obj
@@ -77,6 +86,17 @@ public class Point2D implements Serializable {
             return this.x == p.x && this.y == p.y;
         }
         return false;
+    }
+    // could be useless
+    /**
+     * Get the distance between two {@link Point2D}.
+     * @param pointA
+     * @param pointB
+     * @return
+     *          the distance between point A and B
+     */
+    public static double getDistance(final Point2D pointA, final Point2D pointB) {
+        return new Vector2D(pointA.getX() - pointB.getX(), pointA.getY() - pointB.getY()).getModule();
     }
 
 }

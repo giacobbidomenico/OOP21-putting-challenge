@@ -1,32 +1,43 @@
-
 package puttingchallenge.model;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
+import javafx.geometry.Rectangle2D;
+import puttingchallenge.common.Vector2D;
+import puttingchallenge.gameobjects.BallGameObject;
+import puttingchallenge.gameobjects.GameObject;
 
 /**
  * Class that implements the game environment.
  * 
  */
 public class EnvironmentImpl implements Environment {
+    private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
-    private final GameObject ball;
+    private final BallGameObject ball;
     private final GameObject player;
+
+
     /**
      * Build a new {@link EnvironmentImpl}.
      * 
+     * @param container
+     *           the {@link Rectangle2D} inside which there is the game {@link Environment}
      * @param ball 
-     *           the {@link GameObject} corresponding to the ball in the game environment
+     *           the {@link GameObject} corresponding to the ball in the game {@link Environment}
      * @param player
-     *           the {@link GameObject} corresponding to the player in the game environment
+     *           the {@link GameObject} corresponding to the player in the game {@link Environment}
      */
-    public EnvironmentImpl(final GameObject ball, final GameObject player) {
+    public EnvironmentImpl(final Rectangle2D container,
+                           final BallGameObject ball, 
+                           final GameObject player) {
+        this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
         this.staticObstacles = new LinkedList<>();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -34,6 +45,7 @@ public class EnvironmentImpl implements Environment {
     public void update() {
         ball.updatePhysics(0, this);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -42,6 +54,7 @@ public class EnvironmentImpl implements Environment {
         // TODO Auto-generated method stub
         return false;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -49,6 +62,7 @@ public class EnvironmentImpl implements Environment {
     public void addStaticObstacle(final GameObject obstacle) {
         this.staticObstacles.add(Objects.requireNonNull(obstacle));
     }
+
     /**
      * {@inheritDoc}
      */
@@ -56,6 +70,7 @@ public class EnvironmentImpl implements Environment {
     public GameObject getBall() {
         return this.ball;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -63,6 +78,7 @@ public class EnvironmentImpl implements Environment {
     public GameObject getPlayer() {
         return this.player;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -70,6 +86,7 @@ public class EnvironmentImpl implements Environment {
     public List<GameObject> getStaticObstacles() {
         return this.staticObstacles;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -77,11 +94,40 @@ public class EnvironmentImpl implements Environment {
     public void notifyBallStopped() {
         // TODO Auto-generated method stub
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void movePlayer() {
         // TODO Auto-generated method stub
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Rectangle2D getContainer() {
+        return this.container;
+    }
+
+    /**
+     * @return true if the ball is stationary, 
+     *         false otherwise
+     */
+    private boolean isBallStationary() {
+        return this.ball.getVelocity().equals(new Vector2D(0, 0));
+    }
+
+    /**
+     * @return true if the ball is out of bounds
+     *         false otherwise
+     */
+    private boolean isBallOutOfBounds() {
+        final var posBall = this.ball.getPosition();
+        final var rectBall = new Rectangle2D(posBall.getX(), 
+                                             posBall.getY(), 
+                                             ball.getRadius() * 2, 
+                                             ball.getRadius() * 2);
+        return this.container.contains(rectBall);
     }
 }

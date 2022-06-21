@@ -2,6 +2,9 @@ package puttingchallenge.model;
 
 import java.util.List;
 
+import javafx.geometry.Rectangle2D;
+import puttingchallenge.gameobjects.GameObject;
+
 /**
  * Interface that defines the game environment.
  */
@@ -48,4 +51,8 @@ public interface Environment {
      * Move the player next to the ball.
      */
     void movePlayer();
+    /**
+     * @return the {@link Rectangle2D} inside which there is the game {@link Environment}.
+     */
+    Rectangle2D getContainer();
 }
