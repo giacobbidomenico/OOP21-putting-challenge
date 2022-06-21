@@ -22,5 +22,5 @@ public interface Mediator {
      * @param event represents the event occured that the colleagues wants to send
      * @param sender the colleague who wants to send an event
      */
-    void notifyColleagues(GameEvent<?, ?> event, Colleague sender);
+    void notifyColleagues(GameEvent<?> event, Colleague sender);
 }

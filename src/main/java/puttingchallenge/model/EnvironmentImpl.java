@@ -3,9 +3,13 @@ package puttingchallenge.model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.events.Mediator;
+import puttingchallenge.model.ModelEventType;
 
 /**
  * Class that implements the game environment.
@@ -17,6 +21,7 @@ public class EnvironmentImpl implements Environment {
     private final GameObject ball;
     private final GameObject player;
     private final GameObject hole;
+    private Optional<Mediator> mediator;
 
     /**
      * Build a new {@link EnvironmentImpl}.
@@ -38,6 +43,7 @@ public class EnvironmentImpl implements Environment {
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
         this.hole = Objects.requireNonNull(hole);
+        this.mediator = Optional.empty();
         this.staticObstacles = new LinkedList<>();
     }
 
@@ -140,5 +146,24 @@ public class EnvironmentImpl implements Environment {
                                              ball.getPhysicsComponent().getRadius() * 2, 
                                              ball.getPhysicsComponent().getRadius() * 2);
         return this.container.contains(rectBall);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMediator(final Mediator mediator) {
+        this.mediator = Optional.of(mediator);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent<?> event) {
+        if (this.mediator.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        this.mediator.get().notifyColleagues(event, this);
     }
 }

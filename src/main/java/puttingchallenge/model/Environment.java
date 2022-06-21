@@ -4,11 +4,13 @@ import java.util.List;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.events.Colleague;
+import puttingchallenge.model.events.Mediator;
 
 /**
  * Interface that defines the game environment.
  */
-public interface Environment {
+public interface Environment extends Colleague {
     /**
      * Update the game environment.
      * 
@@ -60,4 +62,13 @@ public interface Environment {
      * @return the {@link Rectangle2D} inside which there is the game {@link Environment}.
      */
     Rectangle2D getContainer();
+    /**
+     * Configure the {@link Mediator} that links {@link Environment} and {@link GameState} classes.
+     * 
+     * @param mediator
+     *           The {@link Mediator} that links {@link Environment} and {@link GameState} classes.
+     * @param sender
+     *           The {@link Colleague} who wants to send an event
+     */
+    void configureMediator(Mediator mediator, Colleague sender);
 }

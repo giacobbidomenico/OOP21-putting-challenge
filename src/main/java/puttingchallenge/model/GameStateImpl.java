@@ -90,6 +90,7 @@ public class GameStateImpl implements GameState {
         // TODO
         // remove the previous environment
         this.environmentMediator.addColleague(this.currentEnvironment);
+        this.currentEnvironment.setMediator(this.environmentMediator);
     }
     /**
      * Update the status of the game.
