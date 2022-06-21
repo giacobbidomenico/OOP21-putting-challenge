@@ -1,4 +1,4 @@
-package puttingchallenge.core;
+package puttingchallenge.model.events;
 
 import puttingchallenge.model.GameEvent;
 
