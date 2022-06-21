@@ -1,6 +1,13 @@
 package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
+<<<<<<< HEAD
+=======
+import puttingchallenge.gameobjects.BallGameObject;
+import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.gameobjects.GenericGameObject;
+import puttingchallenge.gameobjects.PlayerObject;
+>>>>>>> aim
 import puttingchallenge.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.gameobjects.GameObjectImpl;
