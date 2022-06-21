@@ -14,14 +14,6 @@ public interface View extends Colleague {
     void buildView();
 
     /**
-     * Changes the current scene, read from file.
-     * 
-     * @param scene
-     *            indicates the scene to be loaded
-     */
-    void loadScene(SceneType scene);
-
-    /**
      * Renders the state of any {@link GameObject} in the current scene.
      */
     void render();
