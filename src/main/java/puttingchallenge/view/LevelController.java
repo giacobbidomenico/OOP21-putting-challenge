@@ -1,9 +1,13 @@
 package puttingchallenge.view;
 
 import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import puttingchallenge.core.GameEngine;
 import puttingchallenge.gameobjects.GameObject;
 
@@ -58,5 +62,28 @@ public class LevelController extends AbstractSceneController {
                           super.getScene().getHeight());
         super.getGameObjects().stream().peek(e -> e.draw(gc));
     }
-
+    /**
+     * Handles mouse pressed event.
+     * @param event
+     */
+    @FXML
+    public void handleMousePressed(final MouseEvent event) {
+        // TODO
+    }
+    /**
+     * Handles mouse released event.
+     * @param event
+     */
+    @FXML
+    public void handleMouseReleased(final MouseEvent event) {
+        // TODO
+    }
+    /**
+     * Method that handle the action on the quit button.
+     * @param event
+     */
+    @FXML
+    public void handleQuit(final ActionEvent event) {
+        //TODO
+    }
 }

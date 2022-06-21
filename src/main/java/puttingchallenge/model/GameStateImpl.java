@@ -32,7 +32,7 @@ public class GameStateImpl implements GameState {
     @Override
     public void aim(final Point2D pressedOnPoint) {
         this.startingPoint = pressedOnPoint;
-        this.status = GameStatus.AIMING;
+        this.setStatus(GameStatus.AIMING);
     }
     /**
      * {@inheritDoc}
@@ -40,13 +40,13 @@ public class GameStateImpl implements GameState {
     @Override
     public void shoot(final Point2D releasedOnPoint) {
         this.getEnvironment().getBall().setVelocity(Vector2D.getVectorFrom(releasedOnPoint, this.startingPoint));
-        this.status = GameStatus.SHOOTING;
+        this.setStatus(GameStatus.SHOOTING);
     }
     /**
      * Moves the player next to the ball.
      */
     private void movePlayer() {
-        this.currentEnvironment.movePlayer();
+        this.getEnvironment().movePlayer();
     }
     /**
      * Decrements the game score.
@@ -67,7 +67,7 @@ public class GameStateImpl implements GameState {
     private void decLives() {
         this.lives--;
         if (this.lives == NO_LIVES) {
-            this.status = GameStatus.GAME_OVER;
+            this.setStatus(GameStatus.GAME_OVER);
             // game engine should be notified here
         }
     }
@@ -82,5 +82,12 @@ public class GameStateImpl implements GameState {
      */
     private void setNextEnvironment() {
         // TODO
+    }
+    /**
+     * Update the status of the game.
+     * @param status
+     */
+    private void setStatus(final GameStatus status) {
+        this.status = status;
     }
 }

@@ -1,8 +1,8 @@
 package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
-import puttingchallenge.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.gameobjects.GameObjectImpl;
 import puttingchallenge.graphics.BallGraphicComponent;
 import puttingchallenge.graphics.PlayerGraphicComponent;
