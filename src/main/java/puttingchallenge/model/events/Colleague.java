@@ -1,7 +1,5 @@
 package puttingchallenge.model.events;
 
-import puttingchallenge.model.GameEvent;
-
 /**
  * Defines an object that needs to interact with other objects (Colleagues), notifying them the occurred event.
  * A Colleague delegates its interaction with other Colleagues to a Mediator.

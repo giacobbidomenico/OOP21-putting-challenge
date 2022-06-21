@@ -20,7 +20,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import puttingchallenge.core.GameEngine;
-import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.controllers.LevelController;
+import puttingchallenge.view.controllers.SceneController;
 
 /**
  * Loads the given {@link SceneType} from its corresponding file.
