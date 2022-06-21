@@ -1,6 +1,9 @@
 package puttingchallenge.view;
 
 import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -63,6 +66,7 @@ public class LevelController extends AbstractSceneController {
      * Handles mouse pressed event.
      * @param event
      */
+    @FXML
     public void handleMousePressed(final MouseEvent event) {
         // TODO
     }
@@ -70,8 +74,16 @@ public class LevelController extends AbstractSceneController {
      * Handles mouse released event.
      * @param event
      */
+    @FXML
     public void handleMouseReleased(final MouseEvent event) {
         // TODO
     }
-
+    /**
+     * Method that handle the action on the quit button.
+     * @param event
+     */
+    @FXML
+    public void handleQuit(final ActionEvent event) {
+        //TODO
+    }
 }
