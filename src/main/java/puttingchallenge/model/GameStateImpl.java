@@ -14,11 +14,7 @@ public class GameStateImpl implements GameState {
     private Environment currentEnvironment;
     private GameStatus status;
     private Point2D startingPoint;
-    private Mediator environmentMediator;
-    public GameStateImpl() {
-        this.environmentMediator = new Mediator();
-        this.setMediator(this.environmentMediator);
-    }
+    private Mediator generalMediator;
     /**
      * {@inheritDoc}
      */
@@ -90,7 +86,7 @@ public class GameStateImpl implements GameState {
     private void setNextEnvironment() {
         // TODO
         // remove the previous environment
-        this.environmentMediator.addColleague(this.currentEnvironment);
+        
     }
     /**
      * Update the status of the game.
@@ -104,13 +100,13 @@ public class GameStateImpl implements GameState {
      */
     @Override
     public void setMediator(final Mediator mediator) {
-        mediator.addColleague(this); 
+        this.generalMediator = mediator;
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void notifyEvent(final GameEvent<?, ?> event) {
-        // TODO Auto-generated method stub
+        //TODO
     }
 }
