@@ -1,9 +1,10 @@
 package puttingchallenge.model;
 
 /**
- * Enumration that establishes the various types of events occurred in the Application.
+ * Enumeration that establishes the various types of events occurred in the Application, to exchange between
+ * Model, Controller and View.
  */
-public enum ApplicationState {
+public enum GameEventType {
 
     /**
      * A match has started.
@@ -26,12 +27,12 @@ public enum ApplicationState {
     AIM,
 
     /**
-     * Viewing the results of ended matches.
+     * Leaderboard required.
      */
-    SHOW_RESULTS,
+    SHOW_LEADERBOARD,
 
     /**
      * Main menu required.
      */
-    MAIN_MENU;
+    SHOW_MAIN_MENU;
 }
