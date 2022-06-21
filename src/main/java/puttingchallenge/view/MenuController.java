@@ -10,6 +10,7 @@ public class MenuController extends AbstractSceneController {
 
     /**
      * Request the interruption of application execution.
+     * @param event
      */
     public void quitGame(final ActionEvent event) {
 
@@ -17,6 +18,7 @@ public class MenuController extends AbstractSceneController {
 
     /**
      * Request the start of the game.
+     * @param event
      */
     public void startGame(final ActionEvent event) {
 

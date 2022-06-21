@@ -103,7 +103,7 @@ public final class EnvironmentLoader {
         final double w = screenDim.getWidth() / player.getDouble("wScale");
         final double h = screenDim.getHeight() / player.getDouble("hScale");
         final String path = player.getString("skinPath");
-        builder.player(new Point2D(x, y), path, new Rectangle2D(0, 0, w, h));
+        builder.player(new Point2D(x, y), path, w, h);
     }
 
     private void setBall(final BuilderEnvironment builder, final JSONObject file) {

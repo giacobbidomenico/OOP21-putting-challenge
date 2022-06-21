@@ -33,7 +33,12 @@ public enum SceneType {
     /**
      * The game over scene.
      */
-    GAME_OVER(false);
+    GAME_OVER(false),
+    
+    /**
+     * The game win scene.
+     */
+    GAME_WIN(false);
 
     private final boolean isLevel;
 
