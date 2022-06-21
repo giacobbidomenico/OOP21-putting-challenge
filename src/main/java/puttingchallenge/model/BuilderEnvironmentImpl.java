@@ -113,7 +113,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
                                    final double w, 
                                    final double h) {
         if (this.hole.isEmpty()) {
-            this.hole = Optional.of(hole);
+            this.hole = Optional.of(this.factory.createHole(pos, w, h));
         }
         return this;
     }
