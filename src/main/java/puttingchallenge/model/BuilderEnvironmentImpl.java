@@ -109,7 +109,9 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment hole(final GameObject hole) {
+    public BuilderEnvironment hole(final Point2D pos, 
+                                   final double w, 
+                                   final double h) {
         if (this.hole.isEmpty()) {
             this.hole = Optional.of(hole);
         }
