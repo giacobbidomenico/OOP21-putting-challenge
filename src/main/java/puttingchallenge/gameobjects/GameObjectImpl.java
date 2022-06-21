@@ -9,9 +9,9 @@ import puttingchallenge.physics.PhysicsComponent;
 
 
 /**
- * Abstract class that implements an element of the game.
+ * Class that implements an element of the game.
  */
-public abstract class AbstractGameObject implements GameObject {
+public class GameObjectImpl implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
@@ -19,7 +19,7 @@ public abstract class AbstractGameObject implements GameObject {
     private final PhysicsComponent phys;
 
     /**
-     * Build a new {@link AbstractGameObject}.
+     * Build a new {@link GameObjectImpl}.
      * 
      * @param type 
      *                 element type
@@ -30,10 +30,10 @@ public abstract class AbstractGameObject implements GameObject {
      * @param phys
      *                 physical component of the object
      */
-    public AbstractGameObject(final GameObjectType type,
-                                  final Point2D position,
-                                  final GraphicComponent graph,
-                                  final PhysicsComponent phys) {
+    public GameObjectImpl(final GameObjectType type,
+                          final Point2D position,
+                          final GraphicComponent graph,
+                          final PhysicsComponent phys) {
         this.type = type;
         this.pos = position;
         this.graph = graph;

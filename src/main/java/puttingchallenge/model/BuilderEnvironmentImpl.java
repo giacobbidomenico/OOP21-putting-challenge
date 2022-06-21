@@ -16,11 +16,12 @@ import puttingchallenge.gameobjects.GameObject.GameObjectType;
  */
 public class BuilderEnvironmentImpl implements BuilderEnvironment {
 
-    private final GameFactory factory = new GameFactory();
+    private final GameFactory factory;
     private final List<GameObject> gameObjects;
     private Optional<Rectangle2D> container;
     private Optional<GameObject> ball;
     private Optional<GameObject> player;
+    private Optional<GameObject> hole;
     private Optional<GameEngine> controller;
 
     /**
@@ -28,6 +29,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * 
      */
     public BuilderEnvironmentImpl() {
+        this.factory = new GameFactory();
         this.gameObjects = new LinkedList<>();
         this.container = Optional.empty();
         this.ball = Optional.empty();
@@ -107,11 +109,29 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
+    public BuilderEnvironment hole(final GameObject hole) {
+        if (this.hole.isEmpty()) {
+            this.hole = Optional.of(hole);
+        }
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Environment build() {
-        if (this.container.isEmpty() || ball.isEmpty() || player.isEmpty() || controller.isEmpty()) {
+        if (this.container.isEmpty()
+                || ball.isEmpty() 
+                || player.isEmpty() 
+                || controller.isEmpty()
+                || hole.isEmpty()) {
             throw new IllegalStateException();
         }
-        return new EnvironmentImpl(this.container.get(), this.ball.get(), this.player.get());
+        return new EnvironmentImpl(this.container.get(), 
+                                   this.ball.get(), 
+                                   this.player.get(),
+                                   this.hole.get());
     }
 
 }
