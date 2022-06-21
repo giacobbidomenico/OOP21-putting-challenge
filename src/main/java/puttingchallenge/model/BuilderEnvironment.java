@@ -3,6 +3,7 @@ package puttingchallenge.model;
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameEngine;
+import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.gameobjects.GameObject.GameObjectType;
 
 /**
@@ -73,6 +74,8 @@ public interface BuilderEnvironment {
      *         the game {@link Environment}
      */
     BuilderEnvironment addStaticObstacle(GameObjectType typeOfObstacle, Point2D pos, Rectangle2D dimensions);
+    
+    BuilderEnvironment hole(GameObject hole);
 
     /**
      * Builds the game {@link Environment}.
