@@ -1,10 +1,12 @@
 
 package puttingchallenge.view;
 
+import puttingchallenge.model.events.Colleague;
+
 /**
  * View of the application.
  */
-public interface View {
+public interface View extends Colleague {
 
     /**
      * Configure the view and show it on the screen.
