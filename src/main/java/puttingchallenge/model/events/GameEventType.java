@@ -39,5 +39,10 @@ public enum GameEventType {
     /**
      * Require to set a specified scene.
      */
-    SET_SCENE;
+    SET_SCENE,
+    
+    /**
+     * Require to shutdown the entire application.
+     */
+    QUIT;
 }
