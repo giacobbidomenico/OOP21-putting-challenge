@@ -16,16 +16,17 @@ import puttingchallenge.view.ViewImpl;
  */
 public class GameLoopImpl implements GameEngine, Colleague {
 
+    private static final long FRAME_TIME = 20;
     private Mediator mediator;
-    private GameStateManager gameState;
-    private View view;
+    private final GameStateManager gameState;
+    private final View view;
 
     /**
      * Builds a {@link GameLoopImpl}.
      * @param primaryStage main stage of the application
      */
     public GameLoopImpl(final Stage primaryStage) {
-        Mediator mediator = new ConcreteMediator();
+        final Mediator mediator = new ConcreteMediator();
         this.gameState = new GameStateManagerImpl();
         this.view = new ViewImpl(primaryStage);
 
@@ -38,13 +39,26 @@ public class GameLoopImpl implements GameEngine, Colleague {
         this.setMediator(mediator);
     }
 
+    private void waitCycleTime(final long startTime) {
+        long delta = System.currentTimeMillis() - startTime;
+        if (delta < FRAME_TIME) {
+            try {
+                Thread.sleep(FRAME_TIME - delta);
+            } catch (Exception ex) { }
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void gameLoop() {
+        long previusCycleStartTime = System.currentTimeMillis();
         while (true) {
-
+            long currentCycleStartTime = System.currentTimeMillis();
+            long delta = currentCycleStartTime - previusCycleStartTime;
+            waitCycleTime(currentCycleStartTime);
+            previusCycleStartTime = System.currentTimeMillis();
         }
     }
 
