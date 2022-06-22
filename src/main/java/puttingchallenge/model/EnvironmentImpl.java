@@ -59,7 +59,8 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void update(final long dt) {
-        ball.updatePhysics(dt, this);
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        bf.update(dt, ball, this);
     }
 
     /**
