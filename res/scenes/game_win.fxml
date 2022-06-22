@@ -17,7 +17,7 @@
                   <Image url="@../backgrounds/game_win.png" />
                </image>
             </ImageView>
-            <Button layoutX="411.0" layoutY="258.0" mnemonicParsing="false" onAction="backToMenu" prefHeight="59.0" prefWidth="168.0" text="BACK TO MENU" />
+            <Button layoutX="411.0" layoutY="258.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="59.0" prefWidth="168.0" text="BACK TO MENU" />
             <Label alignment="CENTER" layoutX="363.0" layoutY="78.0" prefHeight="91.0" prefWidth="263.0" text="GAME WIN" textFill="#2fce03">
                <font>
                   <Font name="Algerian" size="51.0" />

@@ -1,7 +1,7 @@
 package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
-import puttingchallenge.core.Colleague;
+import puttingchallenge.model.events.Colleague;
 
 /**
  * 

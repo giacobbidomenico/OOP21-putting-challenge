@@ -1,4 +1,4 @@
-package puttingchallenge.model;
+package puttingchallenge.model.events;
 
 /**
  * Implementation of {@link GameEventWithDetails} interface.

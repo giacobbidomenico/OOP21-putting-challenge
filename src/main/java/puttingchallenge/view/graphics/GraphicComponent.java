@@ -1,7 +1,7 @@
-package puttingchallenge.graphics;
+package puttingchallenge.view.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
-import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Interface that represent the graphical component of a {@link GameObject}.

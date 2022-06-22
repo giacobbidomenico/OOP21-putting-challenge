@@ -1,9 +1,12 @@
 package puttingchallenge.model.events;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
-import puttingchallenge.model.GameEvent;
+
+import puttingchallenge.model.events.GameEvent;
+
 
 /**
  * Implementation of {@link Mediator}.
@@ -39,7 +42,7 @@ public class ConcreteMediator implements Mediator {
      * {@inheritDoc}
      */
     @Override
-    public void notifyColleagues(final GameEvent<?, ?> event, final Colleague sender) {
+    public void notifyColleagues(final GameEvent<?> event, final Colleague sender) {
         this.colleagues.stream().filter(x -> !x.equals(sender)).forEach(x -> x.notifyEvent(event));
     }
 

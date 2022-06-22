@@ -2,7 +2,8 @@ package puttingchallenge.model;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.core.Mediator;
+import puttingchallenge.model.events.Mediator;
+import puttingchallenge.model.events.GameEvent;
 
 /**
  * Class that implements the game state.

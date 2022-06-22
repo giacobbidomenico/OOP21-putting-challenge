@@ -1,8 +1,8 @@
-package puttingchallenge.physics;
+package puttingchallenge.model.physics;
 
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Describes the physical behavior of a {@link GameObject}.

@@ -1,4 +1,8 @@
-package puttingchallenge.model;
+package puttingchallenge.model.events;
+
+import puttingchallenge.model.Environment;
+import puttingchallenge.model.GameState;
+
 /**
  * Enumeration for the different event types notified 
  * from the {@link GameState} to the {@link Environment} and vice-versa.

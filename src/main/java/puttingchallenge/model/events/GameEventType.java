@@ -1,4 +1,4 @@
-package puttingchallenge.model;
+package puttingchallenge.model.events;
 
 /**
  * Enumeration that establishes the various types of events occurred in the Application, to exchange between

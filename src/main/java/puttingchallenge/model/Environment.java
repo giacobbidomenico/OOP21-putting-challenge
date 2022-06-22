@@ -3,7 +3,7 @@ package puttingchallenge.model;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
-import puttingchallenge.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Interface that defines the game environment.
