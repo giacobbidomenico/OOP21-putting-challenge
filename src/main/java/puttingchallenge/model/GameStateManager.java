@@ -24,4 +24,10 @@ public interface GameStateManager extends Colleague {
      *          the current {@link Environment} object
      */
     Environment getCurrentEnvironment();
+    /**
+     * Method that updates the physics state of the {@link GameObject}.
+     * @param dt
+     *          time elapsed since the last frame
+     */
+    void update(long dt);
 }
