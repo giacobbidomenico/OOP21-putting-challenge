@@ -3,7 +3,7 @@ package puttingchallenge.view.controllers;
 import java.util.List;
 
 import javafx.scene.Scene;
-import puttingchallenge.core.GameEngine;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 
 /**
@@ -19,10 +19,10 @@ public interface SceneController {
      *          the related {@link Scene}
      * @param gameObjects
      *          the list of all game objects of the current scene
-     * @param controller
-     *          the controller of the application
+     * @param mediator
+     *          the mediator between view, controller and model
      */
-    void init(Scene scene, List<GameObject> gameObjects, GameEngine controller);
+    void init(Scene scene, List<GameObject> gameObjects, Mediator mediator);
 
     /**
      * @return the current {@link Scene} to be shown
@@ -30,11 +30,6 @@ public interface SceneController {
      */
     Scene getScene();
 
-    /**
-     * @return the controller of the application
-     * 
-     */
-    GameEngine getController();
 
     /**
      * @return the list of {@link GameObject} present in the current {@link Scene}
