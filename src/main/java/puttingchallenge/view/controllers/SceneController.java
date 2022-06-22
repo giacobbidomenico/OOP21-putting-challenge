@@ -26,20 +26,17 @@ public interface SceneController {
 
     /**
      * @return the current {@link Scene} to be shown
-     * 
      */
     Scene getScene();
 
 
     /**
      * @return the list of {@link GameObject} present in the current {@link Scene}
-     * 
      */
     List<GameObject> getGameObjects();
 
     /**
-     * Draw the {@link GameObject} on the {@link Scene}.
-     * 
+     * Draw the {@link GameObject}s of the current environment on the {@link Scene}.
      */
     void render();
 }
