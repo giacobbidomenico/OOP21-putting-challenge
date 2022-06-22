@@ -7,7 +7,12 @@ package puttingchallenge.model;
 public interface GameState {
     /**
      * @return
-     *          the current status of the game
+     *          the current {@link GameStatus} of the game
      */
     GameStatus getStatus();
+    /**
+     * @return
+     *          the {@link GameStateManager}
+     */
+    GameStateManager getGameStateManager();
 }
