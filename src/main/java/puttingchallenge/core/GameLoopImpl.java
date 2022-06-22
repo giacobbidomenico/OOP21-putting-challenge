@@ -48,6 +48,14 @@ public class GameLoopImpl implements GameEngine, Colleague {
         }
     }
 
+    private void updateGame(final long time) {
+        this.gameState.update(time);
+    }
+
+    private void render() {
+        view.render();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -55,10 +63,14 @@ public class GameLoopImpl implements GameEngine, Colleague {
     public void gameLoop() {
         long previusCycleStartTime = System.currentTimeMillis();
         while (true) {
-            long currentCycleStartTime = System.currentTimeMillis();
-            long delta = currentCycleStartTime - previusCycleStartTime;
+            final long currentCycleStartTime = System.currentTimeMillis();
+            final long delta = currentCycleStartTime - previusCycleStartTime;
+
+            this.updateGame(delta);
+            this.render();
+
             waitCycleTime(currentCycleStartTime);
-            previusCycleStartTime = System.currentTimeMillis();
+            previusCycleStartTime = currentCycleStartTime;
         }
     }
 
