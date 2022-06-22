@@ -122,4 +122,15 @@ public interface GameObject {
      */
     void draw(GraphicsContext graphicsContext);
 
+    /**
+     * 
+     * @param flip
+     */
+    void setFlip(boolean flip);
+
+    /**
+     * 
+     * @return
+     */
+    boolean isFlipped();
 }

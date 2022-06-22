@@ -15,6 +15,7 @@ public class GameObjectImpl implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
+    private boolean isFlipped;
     private final GraphicComponent graph;
     private final PhysicsComponent phys;
 
@@ -38,6 +39,7 @@ public class GameObjectImpl implements GameObject {
         this.pos = position;
         this.graph = graph;
         this.phys = phys;
+        this.isFlipped = false;
     }
 
     /**
@@ -102,6 +104,22 @@ public class GameObjectImpl implements GameObject {
     @Override
     public PhysicsComponent getPhysicsComponent() {
         return this.phys;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFlip(final boolean flip) {
+        this.isFlipped = flip;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFlipped() {
+        return this.isFlipped;
     }
 
 }
