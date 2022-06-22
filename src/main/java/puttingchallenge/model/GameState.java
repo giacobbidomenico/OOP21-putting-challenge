@@ -12,7 +12,13 @@ public interface GameState {
     GameStatus getStatus();
     /**
      * @return
-     *          the {@link GameStateManager}
+     *          the {@link GameStateManager} object
      */
     GameStateManager getGameStateManager();
+    /**
+     * 
+     * @return
+     *          the {@link Environment} object
+     */
+    Environment getEnvironment();
 }
