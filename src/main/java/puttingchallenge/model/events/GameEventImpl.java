@@ -1,5 +1,7 @@
 package puttingchallenge.model.events;
 
+import java.util.Optional;
+
 /**
  * Implementation of {@link GameEvent} interface.
  */
@@ -23,6 +25,14 @@ public class GameEventImpl implements GameEvent {
     @Override
     public GameEventType getEventType() {
         return this.type;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<?> getDetails() {
+        return Optional.empty();
     }
 
 }

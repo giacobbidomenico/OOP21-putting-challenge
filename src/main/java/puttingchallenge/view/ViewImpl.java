@@ -1,6 +1,8 @@
 package puttingchallenge.view;
 
 import puttingchallenge.core.GameEngine;
+import puttingchallenge.model.events.GameEvent;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.SceneController;
 
@@ -15,9 +17,10 @@ import javafx.stage.Stage;
  */
 public class ViewImpl implements View {
 
-    private final GameEngine controller;
     private final Stage stage;
     private SceneController scene;
+    private Mediator mediator;
+    private final GameEngine controller;
 
     /**
      * Build a new {@link ViewImpl}.
@@ -43,14 +46,11 @@ public class ViewImpl implements View {
         this.stage.setResizable(false);
         this.stage.show();
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void loadScene(final SceneType typeScene) {
+
+    private void loadScene(final SceneType typeScene) {
         try {
-            final List<GameObject> objs = this.controller.getEnv().getObjecs();
-            this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
+            final List<GameObject> objs = this.controller.getEnv().getObjects();
+            this.scene = SceneLoader.getLoader().getScene(typeScene, objs, mediator);
             this.stage.setScene(scene.getScene());
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +63,28 @@ public class ViewImpl implements View {
     @Override
     public void render() {
         Platform.runLater(() -> this.scene.render());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMediator(final Mediator mediator) {
+       this.mediator = mediator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) {
+        switch (event.getEventType()) {
+            case SET_SCENE:
+                this.loadScene((SceneType) event.getDetails().get());
+                break;
+            default:
+                break;
+        }
     }
 
 }
