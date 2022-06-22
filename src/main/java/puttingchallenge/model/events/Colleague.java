@@ -15,5 +15,5 @@ public interface Colleague {
      * The method to call to notify the Colleague.
      * @param event to be passed
      */
-    void notifyEvent(GameEvent<?, ?> event);
+    void notifyEvent(GameEvent<?> event);
 }

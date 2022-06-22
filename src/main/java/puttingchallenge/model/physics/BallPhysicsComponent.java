@@ -45,29 +45,30 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      */
     @Override
     public void update(final long dt, final GameObject obj, final Environment env) {
-        final GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()),
-                                                              this.radius, 
-                                                              new Vector2D(this.getVelocity()));
-        final Optional<Collision> infoOpt = env.checkCollison(clone);
-        final Point2D nextPos;
-        if(infoOpt.isPresent()) {
-            // aggiornare velocità dopo la collisione
-            final Collision info = infoOpt.get();
+        if (this.isMoving) {
+            ffinal GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()), this.radius);
+            clone.setVelocity(new Vector2D(this.getVelocity()));
 
-            obj.setVelocity(info.getVelocity());
-            switch (info.getEdge()) {
-            case 
+            final Optional<Collision> infoOpt = env.checkCollison(clone);
+            final Point2D nextPos;
+            if(infoOpt.isPresent()) {
+                // aggiornare velocità dopo la collisione
+                final Collision info = infoOpt.get();
+    
+                obj.setVelocity(info.getVelocity());
+                switch (info.getEdge()) {
+                case 
+                }
+            } else {
+                nextPos = this.nextPos(dt, obj);
             }
-        } else {
-            nextPos = this.nextPos(dt, obj);
-        }
-
-        this.reduceVel(dt);
-        if (obj.getPosition().equals(nextPos)) {
-            this.isMoving = false;
-            env.notifyBallStopped();
-        } else {
-            obj.setPosition(nextPos);
+    
+            this.reduceVel(dt);
+            if (obj.getPosition().equals(nextPos)) {
+                this.setVelocity(new Vector2D(0, 0));
+            } else {
+                obj.setPosition(nextPos);
+            }
         }
     }
 

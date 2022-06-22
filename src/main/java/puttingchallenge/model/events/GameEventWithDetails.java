@@ -5,10 +5,9 @@ package puttingchallenge.model.events;
  * It Also contains some details about the event.
  * When a colleague wants to interact with other colleagues, it calls the Mediator passing the event occured.
  * The Mediator proceeds to notify the other colleagues passing them the event.
- * @param <A>, the Enum type subclass that defines the types of events
  * @param <B>, the type of the object containing details about the event
  */
-public interface GameEventWithDetails<A extends Enum<A>, B> extends GameEvent<A> {
+public interface GameEventWithDetails<B> extends GameEvent {
 
     /**
      * @return the details about the event

@@ -7,17 +7,17 @@ package puttingchallenge.model.events;
 public enum GameEventType {
 
     /**
-     * A match has started.
+     * Require to the application the start of the game.
      */
     START,
 
     /**
-     * A match has end.
+     * Notify the application that the game is over.
      */
     GAMEOVER,
 
     /**
-     * A match has been won.
+     * Notify the application that the game is won.
      */
     WIN,
 
@@ -27,12 +27,17 @@ public enum GameEventType {
     AIM,
 
     /**
-     * Leaderboard required.
+     * Require to the application to show the leaderboard.
      */
     SHOW_LEADERBOARD,
 
     /**
-     * Main menu required.
+     * Require to the application to show the main menu.
      */
-    SHOW_MAIN_MENU;
+    SHOW_MAIN_MENU,
+
+    /**
+     * Require to set a specified scene.
+     */
+    SET_SCENE;
 }
