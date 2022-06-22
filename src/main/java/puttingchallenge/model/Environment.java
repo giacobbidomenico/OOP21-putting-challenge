@@ -1,7 +1,6 @@
 package puttingchallenge.model;
 
 import java.util.List;
-import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.model.events.ObservableEvents;
@@ -95,4 +94,12 @@ public interface Environment {
      * @return the {@link ObservableEvents}
      */
     ObservableEvents getObservable();
+
+    /**
+     * @return a {@link List} of {@link GameObject}s, where:
+     *         -the first element is the player
+     *         -the second element is the ball
+     *         -the other elements are the obstacles
+     */
+    List<GameObject> getObjects();
 }

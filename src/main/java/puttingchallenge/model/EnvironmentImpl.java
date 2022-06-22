@@ -210,4 +210,16 @@ public class EnvironmentImpl implements Environment {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<GameObject> getObjects() {
+        final List<GameObject> allGameObjects = new LinkedList<>();
+        allGameObjects.add(player);
+        allGameObjects.add(ball);
+        allGameObjects.addAll(staticObstacles);
+        return allGameObjects;
+    }
+
 }
