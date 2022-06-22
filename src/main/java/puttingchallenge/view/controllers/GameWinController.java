@@ -13,7 +13,7 @@ public class GameWinController extends AbstractSceneController {
      */
     @FXML
     public void backToMenu(final ActionEvent event) {
-        this.getController().notifyEvent(event);
+        
     }
 
 }

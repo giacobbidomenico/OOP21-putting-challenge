@@ -3,14 +3,14 @@ package puttingchallenge.view.controllers;
 import java.util.List;
 
 import javafx.scene.Scene;
-import puttingchallenge.model.events.Mediator;
+import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Interface that defines the controller that manages the {@link Scene} of the view.
  * 
  */
-public interface SceneController {
+public interface SceneController extends Colleague {
 
     /**
      * Initialize the scene controller.
@@ -19,10 +19,8 @@ public interface SceneController {
      *          the related {@link Scene}
      * @param gameObjects
      *          the list of all game objects of the current scene
-     * @param mediator
-     *          the mediator between view, controller and model
      */
-    void init(Scene scene, List<GameObject> gameObjects, Mediator mediator);
+    void init(Scene scene, List<GameObject> gameObjects);
 
     /**
      * @return the current {@link Scene} to be shown
