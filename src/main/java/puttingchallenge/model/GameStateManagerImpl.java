@@ -47,5 +47,12 @@ public class GameStateManagerImpl implements GameStateManager {
     public void notifyEvent(final GameEvent<?> event) {
         this.generalMediator.notifyColleagues(event, this);
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Environment getCurrentEnvironment() {
+        return this.getCurrentState().getEnvironment();
+    }
 
 }
