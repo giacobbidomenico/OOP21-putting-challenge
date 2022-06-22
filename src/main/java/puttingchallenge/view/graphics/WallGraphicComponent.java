@@ -1,12 +1,18 @@
 package puttingchallenge.view.graphics;
 
+import java.io.File;
+
 /**
  * Class that implements the graphical representation of a wall in the game.
  * 
  */
 public class WallGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String TEXTURE_PATH_IMAGE = "";
+    private static final String SEP = File.separator;
+    private static final String TEXTURE_PATH_IMAGE = System.getProperty("user.dir")
+                                                     + SEP + "res"
+                                                     + SEP + "obstacles"
+                                                     + SEP + "wall.png";
 
     /**
      * Build a new {@link GraphicComponent} for a wall in the game.

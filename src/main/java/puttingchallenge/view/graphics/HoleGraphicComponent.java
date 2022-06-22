@@ -1,12 +1,18 @@
 package puttingchallenge.view.graphics;
 
+import java.io.File;
+
 /**
  * Class that implements the graphical representation of the game hole.
  * 
  */
 public class HoleGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String IMAGE_OF_THE_HOLE = "";
+    private static final String SEP = File.separator;
+    private static final String IMAGE_OF_THE_HOLE = System.getProperty("user.dir")
+                                                    + SEP + "res"
+                                                    + SEP + "obstacles"
+                                                    + SEP + "hole.png";
 
     /**
      * Build a new {@link HoleGraphicComponent}.
