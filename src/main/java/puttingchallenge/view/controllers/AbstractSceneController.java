@@ -3,9 +3,8 @@ package puttingchallenge.view.controllers;
 import java.util.List;
 
 import javafx.scene.Scene;
-import puttingchallenge.core.GameEngine;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
-import puttingchallenge.view.View;
 
 /**
  * Abstract class that defines the controller that manages the {@link Scene} of the {@link View}.
@@ -15,36 +14,33 @@ public abstract class AbstractSceneController implements SceneController {
 
     private Scene scene;
     private List<GameObject> gameObjects;
-    private GameEngine controller;
+    private Mediator mediator;
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void init(final Scene scene, 
                      final List<GameObject> gameObjects, 
-                     final GameEngine controller) { 
+                     final Mediator mediator) { 
         this.scene = scene;
         this.gameObjects = gameObjects;
-        this.controller = controller;
+        this.mediator = mediator;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Scene getScene() {
         return scene;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public GameEngine getController() {
-        return controller;
-    }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<GameObject> getGameObjects() {
         return gameObjects;
     }
@@ -52,7 +48,6 @@ public abstract class AbstractSceneController implements SceneController {
     /**
      * {@inheritDoc}
      */
-    public void render() {
- 
-    }
+    @Override
+    public abstract void render();
 }
