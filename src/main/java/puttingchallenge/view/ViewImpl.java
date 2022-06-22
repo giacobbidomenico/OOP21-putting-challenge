@@ -46,7 +46,9 @@ public class ViewImpl implements View {
 
     private void loadScene(final SceneType typeScene, final List<GameObject> objs) {
         try {
-            this.scene = SceneLoader.getLoader().getScene(typeScene, objs, mediator);
+            this.mediator.removeColleague(scene);
+            this.scene = SceneLoader.getLoader().getScene(typeScene, objs);
+            this.mediator.addColleague(scene);
             this.stage.setScene(scene.getScene());
         } catch (IOException e) {
             e.printStackTrace();
