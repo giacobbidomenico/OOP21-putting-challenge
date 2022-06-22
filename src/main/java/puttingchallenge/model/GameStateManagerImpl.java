@@ -19,6 +19,7 @@ public class GameStateManagerImpl implements GameStateManager {
                 this.currentGameState = new GamePlayGameState(this, status);
             break;
             case GAME_OVER:
+            case MAIN_MENU:
                 this.currentGameState = new ScreenGameState(this, status);
             break;
         default:
