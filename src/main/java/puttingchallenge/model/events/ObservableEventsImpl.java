@@ -2,6 +2,7 @@ package puttingchallenge.model.events;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class that implements an event observable of type {@link ModelEventType}.
@@ -38,10 +39,8 @@ public class ObservableEventsImpl implements ObservableEvents {
      */
     @Override
     public List<ModelEventType> eventsRecieved() {
-        final List<ModelEventType> list = new LinkedList<>();
-        for (final ObserverEvents observer : this.observers) {
-            list.addAll(observer.getEvents());
-        }
-        return list;
+        return this.observers.stream()
+                .flatMap(e -> e.getEvents().stream())
+                .collect(Collectors.toList());
     }
 }

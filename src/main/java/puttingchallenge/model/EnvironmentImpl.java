@@ -6,26 +6,28 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-<<<<<<< HEAD
-import puttingchallenge.gameobjects.GameObject;
-import puttingchallenge.model.events.Mediator;
-import puttingchallenge.model.ModelEventType;
-=======
+import puttingchallenge.model.events.ObservableEvents;
+import puttingchallenge.model.events.ObservableEventsImpl;
+import puttingchallenge.model.events.ObserverEvents;
+import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
->>>>>>> master
+import puttingchallenge.model.events.ModelEventType;
 
 /**
  * Class that implements the game environment.
  * 
  */
 public class EnvironmentImpl implements Environment {
+    private Optional<ObservableEvents> observable;
+    private final ObserverEvents observer;
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
     private final GameObject player;
     private final GameObject hole;
-    private Optional<Mediator> mediator;
+
 
     /**
      * Build a new {@link EnvironmentImpl}.
@@ -43,11 +45,11 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final GameObject hole) {
+        this.observer = new ObserverEventsImpl();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
         this.hole = Objects.requireNonNull(hole);
-        this.mediator = Optional.empty();
         this.staticObstacles = new LinkedList<>();
     }
 
@@ -113,7 +115,6 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void notifyBallStopped() {
-        // TODO Auto-generated method stub
     }
 
     /**
@@ -152,22 +153,52 @@ public class EnvironmentImpl implements Environment {
         return this.container.contains(rectBall);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setMediator(final Mediator mediator) {
-        this.mediator = Optional.of(mediator);
+    private boolean isBallInTheHole() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void notifyEvent(final GameEvent<?> event) {
-        if (this.mediator.isEmpty()) {
+    public void configureObservable(final ObservableEvents observable) {
+        this.observable = Optional.of(Objects.requireNonNull(observable));
+        this.observable.get().addObserver(observer);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvents() {
+        final List<ModelEventType> events = new LinkedList<>();
+        if (this.isBallOutOfBounds()) {
+            events.add(ModelEventType.BALL_STOPPED);
+        }
+        if (this.isBallOutOfBounds()) {
+            events.add(ModelEventType.BALL_OUT_OF_BOUND);
+        }
+        if (this.isBallInTheHole()) {
+            events.add(ModelEventType.BALL_IN_HOLE);
+        }
+        this.observer.notifyEvents(events);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void receiveEvents() {
+        if (this.observable.isEmpty()) {
             throw new IllegalStateException();
         }
-        this.mediator.get().notifyColleagues(event, this);
+        final List<ModelEventType> eventsReceived = this.observable.get().eventsRecieved();
+        if (eventsReceived.stream()
+                .filter(e -> e.equals(ModelEventType.MOVE_PLAYER))
+                .count() != 0) {
+            this.movePlayer();
+        }
     }
+
 }
