@@ -12,7 +12,10 @@ import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
+<<<<<<< HEAD
 import puttingchallenge.model.events.ModelEventType;
+=======
+>>>>>>> game_core
 
 /**
  * Class that implements the game environment.
@@ -145,6 +148,7 @@ public class EnvironmentImpl implements Environment {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(), 
+<<<<<<< HEAD
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
         return !this.container.contains(rectBall);
@@ -204,6 +208,11 @@ public class EnvironmentImpl implements Environment {
                 .count() != 0) {
             this.movePlayer();
         }
+=======
+                                             ((BallPhysicsComponent) ball.getPhysicsComponent()).getRadius() * 2, 
+                                             ((BallPhysicsComponent) ball.getPhysicsComponent()).getRadius() * 2);
+        return this.container.contains(rectBall);
+>>>>>>> game_core
     }
 
     /**

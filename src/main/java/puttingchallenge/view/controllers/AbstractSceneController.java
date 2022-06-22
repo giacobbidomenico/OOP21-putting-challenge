@@ -3,9 +3,9 @@ package puttingchallenge.view.controllers;
 import java.util.List;
 
 import javafx.scene.Scene;
-import puttingchallenge.core.GameEngine;
+import puttingchallenge.model.events.GameEvent;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
-import puttingchallenge.view.View;
 
 /**
  * Abstract class that defines the controller that manages the {@link Scene} of the {@link View}.
@@ -15,36 +15,30 @@ public abstract class AbstractSceneController implements SceneController {
 
     private Scene scene;
     private List<GameObject> gameObjects;
-    private GameEngine controller;
+    private Mediator mediator;
 
     /**
      * {@inheritDoc}
      */
-    public void init(final Scene scene, 
-                     final List<GameObject> gameObjects, 
-                     final GameEngine controller) { 
+    @Override
+    public void init(final Scene scene, final List<GameObject> gameObjects) { 
         this.scene = scene;
         this.gameObjects = gameObjects;
-        this.controller = controller;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Scene getScene() {
         return scene;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public GameEngine getController() {
-        return controller;
-    }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<GameObject> getGameObjects() {
         return gameObjects;
     }
@@ -52,7 +46,28 @@ public abstract class AbstractSceneController implements SceneController {
     /**
      * {@inheritDoc}
      */
-    public void render() {
- 
+    @Override
+    public void render() { }
+
+    /**
+     * @return the mediator between view, controller and model
+     */
+    protected Mediator getMediator() {
+        return this.mediator;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMediator(final Mediator mediator) {
+       this.mediator = mediator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) { }
+
 }

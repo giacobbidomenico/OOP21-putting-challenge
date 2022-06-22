@@ -1,34 +1,34 @@
 package puttingchallenge.view;
 
-import puttingchallenge.core.GameEngine;
+import puttingchallenge.model.events.GameEvent;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.SceneController;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 /**
  * Class that implements the view.
  */
 public class ViewImpl implements View {
 
-    private final GameEngine controller;
     private final Stage stage;
     private SceneController scene;
+    private Mediator mediator;
 
     /**
      * Build a new {@link ViewImpl}.
      * 
-     * @param controller
-     *          {@link GameEngine}, the main controller of the application
      * @param stage
      *          the primary stage of the JavaFX application
      */
-    public ViewImpl(final GameEngine controller, final Stage stage) {
-        this.controller = Objects.requireNonNull(controller);
+    public ViewImpl(final Stage stage) {
         this.stage = Objects.requireNonNull(stage);
     }
 
@@ -37,20 +37,18 @@ public class ViewImpl implements View {
      */
     @Override
     public void buildView() {
-        this.loadScene(SceneType.MAIN_MENU);
+        this.loadScene(SceneType.MAIN_MENU, Collections.emptyList());
         this.stage.setScene(scene.getScene());
         this.stage.sizeToScene();
         this.stage.setResizable(false);
         this.stage.show();
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void loadScene(final SceneType typeScene) {
+
+    private void loadScene(final SceneType typeScene, final List<GameObject> objs) {
         try {
-            final List<GameObject> objs = this.controller.getEnv().getObjecs();
-            this.scene = SceneLoader.getLoader().getScene(typeScene, objs, this);
+            this.mediator.removeColleague(scene);
+            this.scene = SceneLoader.getLoader().getScene(typeScene, objs);
+            this.mediator.addColleague(scene);
             this.stage.setScene(scene.getScene());
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,6 +61,29 @@ public class ViewImpl implements View {
     @Override
     public void render() {
         Platform.runLater(() -> this.scene.render());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMediator(final Mediator mediator) {
+       this.mediator = mediator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) {
+        switch (event.getEventType()) {
+            case SET_SCENE:
+                final Pair<SceneType, List<GameObject>> wrapper = (Pair<SceneType, List<GameObject>>) event.getDetails().get();
+                this.loadScene(wrapper.getKey(), wrapper.getValue());
+                break;
+            default:
+                break;
+        }
     }
 
 }

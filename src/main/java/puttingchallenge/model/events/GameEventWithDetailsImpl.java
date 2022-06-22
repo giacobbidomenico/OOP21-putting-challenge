@@ -1,11 +1,12 @@
 package puttingchallenge.model.events;
 
+import java.util.Optional;
+
 /**
  * Implementation of {@link GameEventWithDetails} interface.
- * @param <A>, the Enum type subclass that defines the types of events
  * @param <B>, the type of the object containing details about the event
  */
-public class GameEventWithDetailsImpl<A extends Enum<A>, B> extends GameEventImpl<A> {
+public class GameEventWithDetailsImpl<B> extends GameEventImpl {
 
     private final B details;
 
@@ -17,16 +18,17 @@ public class GameEventWithDetailsImpl<A extends Enum<A>, B> extends GameEventImp
      * @param details
      *          the details of the event
      */
-    public GameEventWithDetailsImpl(final A type, final B details) {
+    public GameEventWithDetailsImpl(final GameEventType type, final B details) {
         super(type);
         this.details = details;
     }
 
     /**
-     * @return the details of the event
+     * {@inheritDoc}
      */
-    public B getDetails() {
-        return this.details;
+    @Override
+    public Optional<B> getDetails() {
+        return Optional.of(this.details);
     }
 
 }
