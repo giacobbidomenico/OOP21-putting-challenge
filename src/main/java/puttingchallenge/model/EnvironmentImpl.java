@@ -12,6 +12,7 @@ import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.model.events.ModelEventType;
 
 /**
@@ -117,7 +118,19 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
-        // TODO Auto-generated method stub
+        if (!this.isBallStationary()) {
+            throw new IllegalStateException();
+        }
+
+        final Point2D pos = this.ball.getPosition();
+        if ((pos.getX() - 2) < 0) {
+            this.player.setPosition(new Point2D(pos.getX() - 2, pos.getY()));
+            return;
+        }
+        if ((pos.getX() + 2) >= this.container.getWidth()) {
+            this.player.setPosition(new Point2D(pos.getX() + 2, pos.getY()));
+            return;
+        }
     }
 
     /**
