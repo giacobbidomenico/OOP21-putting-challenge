@@ -8,10 +8,10 @@ import puttingchallenge.model.events.Colleague;
 public interface GameStateManager extends Colleague {
     /**
      * Sets a new current{@link GameState}.
-     * @param newState
+     * @param status
      *          to switch to
      */
-    void switchState(GameState newState);
+    void switchState(GameStatus status);
     /**
      * Gets the current {@link GameState}.
      * @return
