@@ -1,5 +1,7 @@
 package puttingchallenge.model.events;
 
+import java.util.Optional;
+
 /**
  * Interface that represent a game event. Indicates that a colleague-defined event has occurred.
  * It Also contains some details about the event.
@@ -12,6 +14,6 @@ public interface GameEventWithDetails<B> extends GameEvent {
     /**
      * @return the details about the event
      */
-    B getDetails();
+    Optional<B> getDetails();
 
 }

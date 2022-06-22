@@ -1,5 +1,7 @@
 package puttingchallenge.model.events;
 
+import java.util.Optional;
+
 /**
  * Interface that represent a game event. Indicates that a colleague-defined event has occurred.
  * When a colleague wants to interact with other colleagues, it calls the Mediator passing the event occured.
@@ -12,4 +14,8 @@ public interface GameEvent {
      */
     GameEventType getEventType();
 
+    /**
+     * @return an empty {@link Optional}
+     */
+    Optional<?> getDetails();
 }

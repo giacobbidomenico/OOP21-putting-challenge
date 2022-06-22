@@ -1,5 +1,7 @@
 package puttingchallenge.model.events;
 
+import java.util.Optional;
+
 /**
  * Implementation of {@link GameEventWithDetails} interface.
  * @param <B>, the type of the object containing details about the event
@@ -22,10 +24,11 @@ public class GameEventWithDetailsImpl<B> extends GameEventImpl {
     }
 
     /**
-     * @return the details of the event
+     * {@inheritDoc}
      */
-    public B getDetails() {
-        return this.details;
+    @Override
+    public Optional<B> getDetails() {
+        return Optional.of(this.details);
     }
 
 }
