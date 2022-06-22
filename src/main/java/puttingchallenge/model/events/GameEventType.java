@@ -22,9 +22,14 @@ public enum GameEventType {
     WIN,
 
     /**
-     * A match is proceeding.
+     * Notify that the player started aiming.
      */
     AIM,
+
+    /**
+     * Notify that the player shot the ball.
+     */
+    SHOOT,
 
     /**
      * Require to the application to show the leaderboard.
@@ -40,7 +45,7 @@ public enum GameEventType {
      * Require to set a specified scene.
      */
     SET_SCENE,
-    
+
     /**
      * Require to shutdown the entire application.
      */
