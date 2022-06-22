@@ -3,7 +3,6 @@ package puttingchallenge.model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 import puttingchallenge.view.SceneType;
 
@@ -17,7 +16,7 @@ public class GamePlayGameState extends AbstractGameState {
     private static final int NO_LIVES = 0;
     private static final int NO_SCORE = 0;
     private static final int MAX_LIVES = 3;
-    private static final Iterator<SceneType> ORDER = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
+    private static final Iterator<SceneType> MAPS = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     /**
      * 
      * @param manager
