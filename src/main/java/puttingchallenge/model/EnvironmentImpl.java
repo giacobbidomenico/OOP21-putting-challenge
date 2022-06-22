@@ -12,10 +12,8 @@ import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
-<<<<<<< HEAD
+import puttingchallenge.common.Point2D;
 import puttingchallenge.model.events.ModelEventType;
-=======
->>>>>>> game_core
 
 /**
  * Class that implements the game environment.
@@ -120,7 +118,19 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
-        // TODO Auto-generated method stub
+        if (!this.isBallStationary()) {
+            throw new IllegalStateException();
+        }
+
+        final Point2D pos = this.ball.getPosition();
+        if ((pos.getX() - 2) < 0) {
+            this.player.setPosition(new Point2D(pos.getX() - 2, pos.getY()));
+            return;
+        }
+        if ((pos.getX() + 2) >= this.container.getWidth()) {
+            this.player.setPosition(new Point2D(pos.getX() + 2, pos.getY()));
+            return;
+        }
     }
 
     /**
@@ -147,8 +157,7 @@ public class EnvironmentImpl implements Environment {
         final var posBall = this.ball.getPosition();
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
-                                             posBall.getY(), 
-<<<<<<< HEAD
+                                             posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
         return !this.container.contains(rectBall);
@@ -208,11 +217,6 @@ public class EnvironmentImpl implements Environment {
                 .count() != 0) {
             this.movePlayer();
         }
-=======
-                                             ((BallPhysicsComponent) ball.getPhysicsComponent()).getRadius() * 2, 
-                                             ((BallPhysicsComponent) ball.getPhysicsComponent()).getRadius() * 2);
-        return this.container.contains(rectBall);
->>>>>>> game_core
     }
 
     /**

@@ -7,6 +7,7 @@ public abstract class AbstractGameState implements GameState {
     private GameStatus status;
     private GameStateManager stateManager;
     private Environment environment;
+    
     /**
      * 
      * @param manager
@@ -16,6 +17,7 @@ public abstract class AbstractGameState implements GameState {
         this.stateManager = manager;
         this.status = status;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -23,6 +25,7 @@ public abstract class AbstractGameState implements GameState {
     public GameStatus getStatus() {
         return this.status;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -30,6 +33,7 @@ public abstract class AbstractGameState implements GameState {
     public GameStateManager getGameStateManager() {
         return this.stateManager;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -37,6 +41,7 @@ public abstract class AbstractGameState implements GameState {
     public Environment getEnvironment() {
         return this.environment;
     }
+
     /**
      * 
      * @param nextStatus
