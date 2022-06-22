@@ -6,12 +6,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
-import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.events.ModelEventType;
 
 /**
@@ -58,8 +58,9 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
-        ball.updatePhysics(0, this);
+    public void update(final long dt) {
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        bf.update(dt, ball, this);
     }
 
     /**
@@ -115,13 +116,6 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public void notifyBallStopped() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void movePlayer() {
         // TODO Auto-generated method stub
     }
@@ -138,7 +132,8 @@ public class EnvironmentImpl implements Environment {
      *         false otherwise
      */
     private boolean isBallStationary() {
-        return this.ball.getVelocity().equals(new Vector2D(0, 0));
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        return !bf.isMoving();
     }
 
     /**
@@ -147,11 +142,12 @@ public class EnvironmentImpl implements Environment {
      */
     private boolean isBallOutOfBounds() {
         final var posBall = this.ball.getPosition();
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(), 
-                                             ball.getPhysicsComponent().getRadius() * 2, 
-                                             ball.getPhysicsComponent().getRadius() * 2);
-        return this.container.contains(rectBall);
+                                             bf.getRadius() * 2, 
+                                             bf.getRadius() * 2);
+        return !this.container.contains(rectBall);
     }
 
     private boolean isBallInTheHole() {
@@ -182,7 +178,7 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallOutOfBounds()) {
+        if (this.isBallStationary()) {
             events.add(ModelEventType.BALL_STOPPED);
         }
         if (this.isBallOutOfBounds()) {
