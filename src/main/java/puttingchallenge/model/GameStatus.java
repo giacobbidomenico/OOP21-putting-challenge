@@ -5,6 +5,10 @@ package puttingchallenge.model;
  *
  */
 public enum GameStatus {
+	/**
+	 * The player started the game.
+	 */
+    PLAY,
     /**
      * The player is currently aiming.
      */

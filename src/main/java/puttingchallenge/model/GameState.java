@@ -1,37 +1,23 @@
 package puttingchallenge.model;
-
-import puttingchallenge.common.Point2D;
-import puttingchallenge.model.events.Colleague;
-
 /**
  * 
- * Interface for maintaining and handling the state of the game.
+ * Interface for maintaining and handling the states of the game.
  *
  */
-public interface GameState extends Colleague {
-    /**
-     *
-     */
-    int NO_LIVES = 0;
+public interface GameState {
     /**
      * @return
-     *          the current status of the game
+     *          the current {@link GameStatus} of the game
      */
     GameStatus getStatus();
     /**
-     * Get the current environment.
      * @return
-     *      the current environment
+     *          the {@link GameStateManager} object
+     */
+    GameStateManager getGameStateManager();
+    /**
+     * @return
+     *          the {@link Environment} object
      */
     Environment getEnvironment();
-    /**
-     * The player starts aiming.
-     * @param pressedOnPoint
-     */
-    void aim(Point2D pressedOnPoint);
-    /**
-     * The player finally shoots the ball.
-     * @param releasedOnPoint
-     */
-    void shoot(Point2D releasedOnPoint);
 }
