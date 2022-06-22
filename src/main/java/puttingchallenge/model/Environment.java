@@ -3,6 +3,7 @@ package puttingchallenge.model;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
+import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.gameobjects.GameObject;
 
@@ -84,12 +85,12 @@ public interface Environment {
      * @param observable
      *           the {@link ObservableEvents}, that allows the communication.
      */
-    void configureObservable(ObservableEvents observable);
+    void configureObservable(ObservableEvents<ModelEventType> observable);
 
     /**
      * @return the {@link ObservableEvents}
      */
-    ObservableEvents getObservable();
+    ObservableEvents<ModelEventType> getObservable();
 
     /**
      * @return a {@link List} of {@link GameObject}s, where:

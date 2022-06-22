@@ -20,9 +20,9 @@ import puttingchallenge.model.events.ModelEventType;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    private Optional<ObservableEvents> observableGameState;
-    private final ObservableEvents observable;
-    private final ObserverEvents observer;
+    private Optional<ObservableEvents<ModelEventType>> observableGameState;
+    private final ObservableEvents<ModelEventType> observable;
+    private final ObserverEvents<ModelEventType> observer;
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
@@ -46,8 +46,8 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final GameObject hole) {
-        this.observable = new ObservableEventsImpl();
-        this.observer = new ObserverEventsImpl();
+        this.observable = new ObservableEventsImpl<>();
+        this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
@@ -172,7 +172,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public ObservableEvents getObservable() {
+    public ObservableEvents<ModelEventType> getObservable() {
         return this.observable;
     }
 
@@ -180,7 +180,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public void configureObservable(final ObservableEvents observableGameState) {
+    public void configureObservable(final ObservableEvents<ModelEventType> observableGameState) {
         this.observableGameState = Optional.of(Objects.requireNonNull(observableGameState));
         this.observableGameState.get().addObserver(observer);
     }
