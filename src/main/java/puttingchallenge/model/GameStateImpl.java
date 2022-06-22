@@ -1,8 +1,16 @@
 package puttingchallenge.model;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.events.Mediator;
+import puttingchallenge.model.events.ModelEventType;
+import puttingchallenge.model.events.ObservableEvents;
+import puttingchallenge.model.events.ObserverEvents;
+import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.events.GameEvent;
 
 /**
@@ -15,7 +23,11 @@ public class GameStateImpl implements GameState {
     private GameStatus status;
     private Point2D startingPoint;
     private Mediator environmentMediator;
+    private Optional<ObservableEvents> observable;
+    private ObserverEvents observer;
+
     public GameStateImpl() {
+        this.observer = new ObserverEventsImpl();
         this.environmentMediator = new Mediator();
         this.setMediator(this.environmentMediator);
     }
@@ -87,12 +99,44 @@ public class GameStateImpl implements GameState {
     /**
      * Sets the appropriate environment for the specific state.
      */
+
     private void setNextEnvironment() {
         // TODO
         // remove the previous environment
         this.environmentMediator.addColleague(this.currentEnvironment);
         this.currentEnvironment.setMediator(this.environmentMediator);
+        this.currentEnvironment.configureObservable(observable);
+        this.observable = this.currentEnvironment.getObservable();
     }
+
+    private void notifyEventToEnvironment() {
+        final List<ModelEventType> events = new LinkedList<>();
+        //TODO
+        this.observer.notifyEvents(events);
+    }
+
+    private void receiveEventFromEnvironment() {
+        if (this.observable.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        final List<ModelEventType> receivedEvents = this.observable.get().eventsRecieved();
+        receivedEvents.stream().peek(e -> {
+            switch (e) {
+            case BALL_IN_HOLE:
+                //TODO
+                break;
+            case BALL_OUT_OF_BOUND:
+                //TODO
+                break;
+            case BALL_STOPPED:
+                //TODO
+                break;
+            default:
+                break;
+            }
+        });
+    }
+
     /**
      * Update the status of the game.
      * @param status

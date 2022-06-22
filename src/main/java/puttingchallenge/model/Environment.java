@@ -1,6 +1,7 @@
 package puttingchallenge.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.model.events.ObservableEvents;
@@ -89,4 +90,10 @@ public interface Environment {
      *           the {@link ObservableEvents}, that allows the communication.
      */
     void configureObservable(ObservableEvents observable);
+
+    /**
+     * @return the {@link ObservableEvents} if exists,
+     *         empty otherwise
+     */
+    Optional<ObservableEvents> getObservable();
 }

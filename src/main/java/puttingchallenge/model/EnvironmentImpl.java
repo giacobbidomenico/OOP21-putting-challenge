@@ -162,6 +162,14 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
+    public Optional<ObservableEvents> getObservable() {
+        return this.observable;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void configureObservable(final ObservableEvents observable) {
         this.observable = Optional.of(Objects.requireNonNull(observable));
         this.observable.get().addObserver(observer);
