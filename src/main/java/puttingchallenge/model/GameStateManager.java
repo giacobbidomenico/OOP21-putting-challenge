@@ -15,7 +15,13 @@ public interface GameStateManager extends Colleague {
     /**
      * Gets the current {@link GameState}.
      * @return
-     *          the current {@link GameState}
+     *          the current {@link GameState} object
      */
     GameState getCurrentState();
+    /**
+     * Gets the current {@link Environment} in the current {@link GameState}.
+     * @return
+     *          the current {@link Environment} object
+     */
+    Environment getCurrentEnvironment();
 }
