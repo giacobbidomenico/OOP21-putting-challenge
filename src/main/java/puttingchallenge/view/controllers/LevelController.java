@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import puttingchallenge.core.GameEngine;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 
 /**
@@ -30,18 +30,15 @@ public class LevelController extends AbstractSceneController {
      *            {@link Scene} relating to the loaded game level.
      * @param gameObjects
      *            {@link GameObject} present in the {@link Scene}
-     * @param controller
-     *            the controller of the application
      * @param gc
      *            the {@link GraphicsContext} in which the object has to be drawn
      * @param background
      */
     public void init(final Scene scene,
                      final List<GameObject> gameObjects,
-                     final GameEngine controller,
                      final GraphicsContext gc,
                      final String background) {
-        super.init(scene, gameObjects, controller);
+        super.init(scene, gameObjects);
         this.gc = gc;
         this.background = background;
     }

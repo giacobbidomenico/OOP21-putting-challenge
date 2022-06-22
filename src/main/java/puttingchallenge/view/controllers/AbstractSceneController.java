@@ -3,6 +3,7 @@ package puttingchallenge.view.controllers;
 import java.util.List;
 
 import javafx.scene.Scene;
+import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 
@@ -20,12 +21,9 @@ public abstract class AbstractSceneController implements SceneController {
      * {@inheritDoc}
      */
     @Override
-    public void init(final Scene scene, 
-                     final List<GameObject> gameObjects, 
-                     final Mediator mediator) { 
+    public void init(final Scene scene, final List<GameObject> gameObjects) { 
         this.scene = scene;
         this.gameObjects = gameObjects;
-        this.mediator = mediator;
     }
 
     /**
@@ -49,5 +47,27 @@ public abstract class AbstractSceneController implements SceneController {
      * {@inheritDoc}
      */
     @Override
-    public abstract void render();
+    public void render() { }
+
+    /**
+     * @return the mediator between view, controller and model
+     */
+    protected Mediator getMediator() {
+        return this.mediator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMediator(final Mediator mediator) {
+       this.mediator = mediator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) { }
+
 }

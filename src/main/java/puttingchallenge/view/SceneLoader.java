@@ -19,7 +19,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -57,26 +56,22 @@ public final class SceneLoader {
      *      the {@link SceneType} to be loaded
      * @param objs
      *      a {@link List} of the game objects of the scene
-     * @param mediator
-     *      the mediator between view, controller and model
      * @return
      *      the {@link SceneController} related to the given tag
      * @throws IOException
      *      if the file is not loaded correctly
      */
     public SceneController getScene(final SceneType sceneTag,
-                                    final List<GameObject> objs,
-                                    final Mediator mediator) throws IOException {
+                                    final List<GameObject> objs) throws IOException {
         if (sceneTag.isLevel()) {
-            return this.loadGameLevel(sceneTag, objs, mediator);
+            return this.loadGameLevel(sceneTag, objs);
         } else {
-            return this.loadScreen(sceneTag, objs, mediator);
+            return this.loadScreen(sceneTag, objs);
         }
     }
 
     private SceneController loadScreen(final SceneType sceneTag,
-                                       final List<GameObject> objs,
-                                       final Mediator mediator) throws IOException {
+                                       final List<GameObject> objs) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
         final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
         final Parent parent;
@@ -84,13 +79,12 @@ public final class SceneLoader {
 
 
         final SceneController sc = loader.getController();
-        sc.init(new Scene(parent), objs, mediator);
+        sc.init(new Scene(parent), objs);
         return sc;
     }
 
     private SceneController loadGameLevel(final SceneType sceneTag,
-                                          final List<GameObject> objs,
-                                          final Mediator mediator) throws IOException {
+                                          final List<GameObject> objs) throws IOException {
         String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
         final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
@@ -112,7 +106,7 @@ public final class SceneLoader {
         gc.drawImage(new Image(background), 0, 0, w, h);
 
         final LevelController sc = loader.getController();
-        sc.init(scene, objs, mediator, gc, background);
+        sc.init(scene, objs, gc, background);
         return sc;
     }
 }
