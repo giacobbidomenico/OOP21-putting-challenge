@@ -16,7 +16,6 @@ public interface GameState {
      */
     GameStateManager getGameStateManager();
     /**
-     * 
      * @return
      *          the {@link Environment} object
      */
