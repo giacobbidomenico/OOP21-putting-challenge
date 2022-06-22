@@ -13,8 +13,16 @@ public class GameStateManagerImpl implements GameStateManager {
      * {@inheritDoc}
      */
     @Override
-    public void switchState(final GameState newState) {
-        this.currentGameState = newState;
+    public void switchState(final GameStatus status) {
+        switch (status) {
+            case PLAY:
+                this.currentGameState = new GamePlayGameState(this, status);
+            break;
+            case GAME_OVER:
+                this.currentGameState = new ScreenGameState(this, status);
+        default:
+            break;
+        }
     }
     /**
      * {@inheritDoc}
