@@ -27,6 +27,11 @@ public enum GameEventType {
     AIM,
 
     /**
+     * Notify that the player shot the ball.
+     */
+    SHOOT,
+
+    /**
      * Require to the application to show the leaderboard.
      */
     SHOW_LEADERBOARD,
