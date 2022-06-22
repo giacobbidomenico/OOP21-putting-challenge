@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
-import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
@@ -59,8 +58,8 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
-        ball.updatePhysics(0, this);
+    public void update(final long dt) {
+        ball.updatePhysics(dt, this);
     }
 
     /**
@@ -110,13 +109,6 @@ public class EnvironmentImpl implements Environment {
     @Override
     public List<GameObject> getStaticObstacles() {
         return this.staticObstacles;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void notifyBallStopped() {
     }
 
     /**

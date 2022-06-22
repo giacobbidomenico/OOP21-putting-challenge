@@ -13,8 +13,9 @@ public interface Environment {
     /**
      * Update the game environment.
      * 
+     * @param dt
      */
-    void update();
+    void update(long dt);
 
     /**
      * Check if there has been a collision between several {@link GameObject}.
@@ -55,11 +56,6 @@ public interface Environment {
      *         obstacles in the game environment
      */
     List<GameObject> getStaticObstacles();
-
-    /**
-     * Stop the movement of the ball.
-     */
-    void notifyBallStopped();
 
     /**
      * Move the player next to the ball.
