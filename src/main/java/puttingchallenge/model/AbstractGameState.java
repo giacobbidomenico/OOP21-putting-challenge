@@ -6,6 +6,7 @@ package puttingchallenge.model;
 public abstract class AbstractGameState implements GameState {
     private GameStatus status;
     private GameStateManager stateManager;
+    private Environment environment;
     /**
      * 
      * @param manager
@@ -28,6 +29,13 @@ public abstract class AbstractGameState implements GameState {
     @Override
     public GameStateManager getGameStateManager() {
         return this.stateManager;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Environment getEnvironment() {
+        return this.environment;
     }
     /**
      * 
