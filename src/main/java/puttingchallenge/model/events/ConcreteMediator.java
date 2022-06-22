@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-import puttingchallenge.model.events.GameEvent;
-
-
 /**
  * Implementation of {@link Mediator}.
  */
