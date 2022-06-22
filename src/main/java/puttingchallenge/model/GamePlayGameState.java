@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
+import javafx.util.Pair;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.view.SceneType;
 
 /**
@@ -54,6 +56,12 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void incLives() {
         this.lives++;
+    }
+    /**
+     * 
+     * @param points
+     */
+    public void shoot(final Pair<Point2D, Point2D> points) {
     }
     /**
      * {@inheritDoc}
