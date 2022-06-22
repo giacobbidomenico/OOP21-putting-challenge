@@ -1,6 +1,8 @@
 package puttingchallenge.view.controllers;
 
 import java.util.List;
+import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -8,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
@@ -25,6 +28,7 @@ public class LevelController extends AbstractSceneController {
     private GraphicsContext gc;
     private String background;
     private boolean isAiming;
+    private Optional<Point2D> aimingPoint;
 
     /**
      * Initialize a new {@link LevelController}.
@@ -69,11 +73,11 @@ public class LevelController extends AbstractSceneController {
      */
     @FXML
     public void handleMouseMoved(final MouseEvent event) {
-        if (this.isAiming) {
-            final Pair<Double, Double> coord = this.getCoord(event);
+//        if (this.isAiming) {
+//            final Pair<Double, Double> coord = this.getCoord(event);
 //            final GameEventWithDetailsImpl<Pair<Double, Double>> movingEvent = new GameEventWithDetailsImpl<>(GameEventType.MOVING, coord);
 //            this.getMediator().notifyColleagues(movingEvent, this);
-        }
+//        }
     }
     /**
      * Handles mouse pressed event.
@@ -81,9 +85,7 @@ public class LevelController extends AbstractSceneController {
      */
     @FXML
     public void handleMousePressed(final MouseEvent event) {
-        this.isAiming = true;
-        final GameEventWithDetailsImpl<Pair<Double, Double>> movingEvent = new GameEventWithDetailsImpl<>(GameEventType.AIM, this.getCoord(event));
-        this.getMediator().notifyColleagues(movingEvent, this);
+        this.aimingPoint = Optional.of(this.getCoord(event));
     }
     /**
      * Handles mouse released event.
@@ -91,9 +93,11 @@ public class LevelController extends AbstractSceneController {
      */
     @FXML
     public void handleMouseReleased(final MouseEvent event) {
-        this.isAiming = false;
-        final GameEventWithDetailsImpl<Pair<Double, Double>> shootingEvent = new GameEventWithDetailsImpl<>(GameEventType.SHOOT, this.getCoord(event));
-        this.getMediator().notifyColleagues(shootingEvent, this);
+        if (this.aimingPoint.isPresent()) {
+            final Pair<Point2D, Point2D> points = new Pair<>(this.aimingPoint.get(), this.getCoord(event));
+            final GameEventWithDetailsImpl<Pair<Point2D, Point2D>> shootingEvent = new GameEventWithDetailsImpl<>(GameEventType.SHOOT, points);
+            this.getMediator().notifyColleagues(shootingEvent, this);
+        }
     }
     /**
      * Method that handle the action on the quit button.
@@ -105,7 +109,7 @@ public class LevelController extends AbstractSceneController {
         this.getMediator().notifyColleagues(quitEvent, this);
     }
 
-    private Pair<Double, Double> getCoord(final MouseEvent event) {
-        return new Pair<>(event.getScreenX(), event.getSceneY());
+    private Point2D getCoord(final MouseEvent event) {
+        return new Point2D(event.getScreenX(), event.getScreenY());
     }
 }
