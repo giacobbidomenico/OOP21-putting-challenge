@@ -76,8 +76,8 @@ public final class EnvironmentLoader {
     private void setDimension(final BuilderEnvironment builder, final JSONObject file) {
         file.getJSONObject("scene");
         final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        final double w = screenDim.getWidth() / file.getDouble("wScale");
-        final double h = screenDim.getHeight() / file.getDouble("hScale");
+        final double w = screenDim.getWidth() / file.getDouble("wScale") * 100;
+        final double h = screenDim.getHeight() / file.getDouble("hScale") * 100;
         builder.container(new Rectangle2D(0, 0, w, h));
     }
 
@@ -100,8 +100,8 @@ public final class EnvironmentLoader {
         final double x = player.getDouble("posX");
         final double y = player.getDouble("posY");
         final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        final double w = screenDim.getWidth() / player.getDouble("wScale");
-        final double h = screenDim.getHeight() / player.getDouble("hScale");
+        final double w = screenDim.getWidth() / player.getDouble("wScale") * 100;
+        final double h = screenDim.getHeight() / player.getDouble("hScale") * 100;
         final String path = player.getString("skinPath");
         builder.player(new Point2D(x, y), path, w, h);
     }
