@@ -46,10 +46,10 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     @Override
     public void update(final long dt, final GameObject obj, final Environment env) {
         if (this.isMoving) {
-            ffinal GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()), this.radius);
+            final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
 
-            final Optional<Collision> infoOpt = env.checkCollison(clone);
+            final Optional<Collision> infoOpt = env.checkCollison(obj.getHitBox(), clone, obj.getPosition());
             final Point2D nextPos;
             if(infoOpt.isPresent()) {
                 // aggiornare velocità dopo la collisione
@@ -60,10 +60,9 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 case 
                 }
             } else {
-                nextPos = this.nextPos(dt, obj);
+                nextPos = this.nextPos(dt, obj.getPosition());
             }
-    
-            this.reduceVel(dt);
+
             if (obj.getPosition().equals(nextPos)) {
                 this.setVelocity(new Vector2D(0, 0));
             } else {
@@ -72,11 +71,21 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
     }
 
-    private Point2D nextPos(final long dt, final GameObject obj) {
+    /**
+     * Given a delta time, it calculates the next position of the object, starting from an initial position.
+     * Follow the formulas of the motion of the projectile in a viscous medium.
+     * 
+     * @param dt
+     *          delta time
+     * @param curPos
+     *          starting position
+     * @return the next expected position
+     */
+    public Point2D nextPos(final long dt, final Point2D curPos) {
         final long t = (long) 0.001 * dt;
-        final Point2D curPos = obj.getPosition();
         final Vector2D vel = this.getVelocity();
 
+        this.reduceVel(dt);
         final double x = curPos.getX() + (vel.getX() * t);
         final double y = curPos.getY()
                          + (vel.getY() * t)
