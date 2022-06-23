@@ -10,4 +10,9 @@ public interface GameEngine {
      */
     void gameLoop();
 
+    /**
+     * Launch the entire application.
+     */
+    void launch();
+
 }

@@ -27,7 +27,7 @@ public class GameStateManagerImpl implements GameStateManager {
         return Collections.unmodifiableMap(result);
     }
     /**
-     * Sets the initial state of the game.
+     * {@inheritDoc}
      */
     public void initState() {
         this.switchState(INITIAL_STATE);

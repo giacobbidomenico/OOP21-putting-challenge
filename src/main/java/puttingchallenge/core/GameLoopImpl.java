@@ -1,6 +1,5 @@
 package puttingchallenge.core;
 
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,7 +11,6 @@ import puttingchallenge.model.GameStateManagerImpl;
 import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.events.ConcreteMediator;
 import puttingchallenge.model.events.GameEvent;
-import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
@@ -35,15 +33,24 @@ public class GameLoopImpl implements GameEngine, Colleague {
 
     /**
      * Builds a {@link GameLoopImpl}.
-     * @param primaryStage main stage of the application
+     * 
+     * @param primaryStage
+     *          main stage of the application
      */
     public GameLoopImpl(final Stage primaryStage) {
-        final Mediator mediator = new ConcreteMediator();
         this.gameState = new GameStateManagerImpl();
         this.view = new ViewImpl(primaryStage);
         this.receivedEvents = new LinkedList<>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void launch() {
         this.isOver = false;
 
+        final Mediator mediator = new ConcreteMediator();
         mediator.addColleague(gameState);
         mediator.addColleague(view);
         mediator.addColleague(this);
@@ -51,6 +58,11 @@ public class GameLoopImpl implements GameEngine, Colleague {
         this.gameState.setMediator(mediator);
         this.view.setMediator(mediator);
         this.setMediator(mediator);
+
+        this.gameState.initState();
+        this.view.buildView();
+
+        this.gameLoop();
     }
 
     private void waitCycleTime(final long startTime) {
