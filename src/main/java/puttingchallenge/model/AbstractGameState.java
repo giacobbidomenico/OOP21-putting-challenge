@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import puttingchallenge.model.events.GameEventType;
+
 /**
  * Abstract class that represent a {@link GameState}.
  */
@@ -49,9 +51,11 @@ public abstract class AbstractGameState implements GameState {
         this.stateManager.switchState(nextStatus);
     }
     /**
-     * Notifies if an event has been intercepted.
+     * Notify the intercepted event.
+     * @param eventType
+     *          of the event intercepted
      */
-    abstract void notifyEvents();
+    abstract void notifyEvents(GameEventType eventType);
     /**
      * Reads the events sent by the {@link GameState}.
      */
