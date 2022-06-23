@@ -15,7 +15,6 @@ import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
-import puttingchallenge.view.SceneLoader;
 import puttingchallenge.view.SceneType;
 
 /**
@@ -39,13 +38,28 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
         super(manager, status);
-        this.lives = MAX_LIVES;
-        this.score = NO_SCORE;
         this.environmentObservable = this.getEnvironment().getObservable();
         this.observer = new ObserverEventsImpl<>();
         this.environmentObservable.addObserver(this.observer);
         this.observable = new ObservableEventsImpl<>();
         this.getEnvironment().configureObservable(this.observable);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public void initState() {
+        this.lives = MAX_LIVES;
+        this.score = NO_SCORE;
+        this.loadNextEnvironment();
+    }
+    private void loadNextEnvironment() {
+        try {
+            EnvironmentLoader.getLoader().getEnvironment(MAPS.next());
+        } catch (NoSuchElementException e) {
+            this.leavingState(GameStatus.GAME_OVER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Decrements the game score.
@@ -77,14 +91,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void handleWin() {
         this.incScore();
-        try {
-            final SceneType nextscene = MAPS.next();
-            EnvironmentLoader.getLoader().getEnvironment(nextscene);
-        } catch (NoSuchElementException e) {
-            this.leavingState(GameStatus.GAME_OVER);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.loadNextEnvironment();
     }
     /**
      * Method called when the ball stops or it is out of bound.

@@ -40,6 +40,7 @@ public class GameStateManagerImpl implements GameStateManager {
         switch (status) {
             case PLAY:
                 this.currentGameState = new GamePlayGameState(this, status);
+                this.currentGameState.initState();
                 break;
             case GAME_OVER:
             case MAIN_MENU:

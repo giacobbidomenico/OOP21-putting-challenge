@@ -6,6 +6,10 @@ package puttingchallenge.model;
  */
 public interface GameState {
     /**
+     * Sets the initial state.
+     */
+    void initState();
+    /**
      * @return
      *          the current {@link GameStatus} of the game
      */
