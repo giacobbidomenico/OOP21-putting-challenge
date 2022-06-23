@@ -4,11 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
@@ -75,6 +73,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void handleWin() {
         this.incScore();
+        // check on next env
     }
     /**
      * Method called when the ball stops or it is out of bound.

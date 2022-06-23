@@ -1,4 +1,7 @@
 package puttingchallenge.model;
+
+import puttingchallenge.model.events.ModelEventType;
+
 /**
  * Class that represent all the not in-game state of the application.
  */
@@ -10,6 +13,16 @@ public class ScreenGameState extends AbstractGameState {
      */
     public ScreenGameState(final GameStateManager manager, final GameStatus status) {
         super(manager, status);
+    }
+
+    @Override
+    void notifyEvents(final ModelEventType eventType) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    void receiveEvents() {
+        // TODO Auto-generated method stub
     }
 
 }
