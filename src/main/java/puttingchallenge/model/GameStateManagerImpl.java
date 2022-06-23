@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import javafx.util.Pair;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.Mediator;
 
@@ -9,6 +11,13 @@ import puttingchallenge.model.events.Mediator;
 public class GameStateManagerImpl implements GameStateManager {
     private GameState currentGameState;
     private Mediator generalMediator;
+    private static final GameStatus INITIAL_STATE = GameStatus.MAIN_MENU;
+    /**
+     * {@inheritDoc}
+     */
+    public void initState() {
+        this.switchState(INITIAL_STATE);
+    }
     /**
      * {@inheritDoc}
      */
@@ -17,11 +26,12 @@ public class GameStateManagerImpl implements GameStateManager {
         switch (status) {
             case PLAY:
                 this.currentGameState = new GamePlayGameState(this, status);
-            break;
+                break;
+            case LEADERBOARD:
             case GAME_OVER:
             case MAIN_MENU:
                 this.currentGameState = new ScreenGameState(this, status);
-            break;
+                break;
         default:
             break;
         }
@@ -45,7 +55,24 @@ public class GameStateManagerImpl implements GameStateManager {
      */
     @Override
     public void notifyEvent(final GameEvent event) {
-        this.generalMediator.notifyColleagues(event, this);
+        switch (event.getEventType()) {
+            case SHOOT:
+                if (this.getCurrentState().getStatus() == GameStatus.PLAY) {
+                    ((GamePlayGameState) this.getCurrentState()).shoot((Pair<Point2D, Point2D>) event.getDetails().get());
+                }
+                break;
+            case SHOW_MAIN_MENU:
+                this.switchState(GameStatus.MAIN_MENU);
+                break;
+            case SHOW_LEADERBOARD:
+                this.switchState(GameStatus.LEADERBOARD);
+                break;
+            case START:
+                this.switchState(GameStatus.PLAY);
+                break;
+            default:
+                break;
+        }
     }
     /**
      * {@inheritDoc}

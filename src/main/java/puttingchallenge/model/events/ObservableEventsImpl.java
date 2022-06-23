@@ -6,9 +6,10 @@ import java.util.stream.Collectors;
 
 /**
  * Class that implements an event observable of type {@link ModelEventType}.
+ * @param <A>
  */
-public class ObservableEventsImpl implements ObservableEvents {
-    private final List<ObserverEvents> observers;
+public class ObservableEventsImpl<A> implements ObservableEvents<A> {
+    private final List<ObserverEvents<A>> observers;
 
     /**
      * Build a new {@link ObservableEventsImpl}.
@@ -22,7 +23,7 @@ public class ObservableEventsImpl implements ObservableEvents {
      * {@inheritDoc}
      */
     @Override
-    public void addObserver(final ObserverEvents observer) {
+    public void addObserver(final ObserverEvents<A> observer) {
         this.observers.add(observer);
     }
 
@@ -30,7 +31,7 @@ public class ObservableEventsImpl implements ObservableEvents {
      * {@inheritDoc}
      */
     @Override
-    public void removeObserver(final ObserverEvents observer) {
+    public void removeObserver(final ObserverEvents<A> observer) {
         this.observers.remove(observer);
     }
 
@@ -38,7 +39,7 @@ public class ObservableEventsImpl implements ObservableEvents {
      * {@inheritDoc}
      */
     @Override
-    public List<ModelEventType> eventsRecieved() {
+    public List<A> eventsRecieved() {
         return this.observers.stream()
                 .flatMap(e -> e.getEvents().stream())
                 .collect(Collectors.toList());

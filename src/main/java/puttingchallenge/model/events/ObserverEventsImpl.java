@@ -5,16 +5,17 @@ import java.util.List;
 
 /**
  * Class that implements an event observer of type {@link ModelEventType}.
+ * @param <A>
  */
-public class ObserverEventsImpl implements ObserverEvents {
+public class ObserverEventsImpl<A> implements ObserverEvents<A> {
 
-   private final List<ModelEventType> events = new LinkedList<>();
+   private final List<A> events = new LinkedList<>();
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public void notifyEvents(final List<ModelEventType> types) {
+   public void notifyEvents(final List<A> types) {
        this.events.clear();
        this.events.addAll(types);
    }
@@ -23,7 +24,7 @@ public class ObserverEventsImpl implements ObserverEvents {
     * {@inheritDoc}
     */
    @Override
-   public List<ModelEventType> getEvents() {
+   public List<A> getEvents() {
        return this.events;
    }
 }

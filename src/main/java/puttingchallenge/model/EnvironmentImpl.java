@@ -20,9 +20,11 @@ import puttingchallenge.model.events.ModelEventType;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    private Optional<ObservableEvents> observableGameState;
-    private final ObservableEvents observable;
-    private final ObserverEvents observer;
+    private static final int PERC_DISTANCE = 2;
+
+    private Optional<ObservableEvents<ModelEventType>> observableGameState;
+    private final ObservableEvents<ModelEventType> observable;
+    private final ObserverEvents<ModelEventType> observer;
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
@@ -46,8 +48,9 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final GameObject hole) {
-        this.observable = new ObservableEventsImpl();
-        this.observer = new ObserverEventsImpl();
+        this.observableGameState = Optional.empty();
+        this.observable = new ObservableEventsImpl<>();
+        this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
@@ -121,14 +124,17 @@ public class EnvironmentImpl implements Environment {
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
-
-        final Point2D pos = this.ball.getPosition();
-        if ((pos.getX() - 2) < 0) {
-            this.player.setPosition(new Point2D(pos.getX() - 2, pos.getY()));
+        final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
+                                         this.container.getHeight() * (PERC_DISTANCE / 100));
+        final var pos = this.ball.getPosition();
+        if ((pos.getX() - calcDist.getX()) >= 0) {
+            this.player.setFlip(false);
+            this.player.setPosition(new Point2D(pos.getX() - calcDist.getX(), pos.getY()));
             return;
         }
-        if ((pos.getX() + 2) >= this.container.getWidth()) {
-            this.player.setPosition(new Point2D(pos.getX() + 2, pos.getY()));
+        if ((pos.getX() + calcDist.getX()) < this.container.getWidth()) {
+            this.player.setFlip(true);
+            this.player.setPosition(new Point2D(pos.getX() + calcDist.getX(), pos.getY()));
             return;
         }
     }
@@ -172,7 +178,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public ObservableEvents getObservable() {
+    public ObservableEvents<ModelEventType> getObservable() {
         return this.observable;
     }
 
@@ -180,7 +186,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public void configureObservable(final ObservableEvents observableGameState) {
+    public void configureObservable(final ObservableEvents<ModelEventType> observableGameState) {
         this.observableGameState = Optional.of(Objects.requireNonNull(observableGameState));
         this.observableGameState.get().addObserver(observer);
     }

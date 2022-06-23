@@ -1,6 +1,7 @@
 package puttingchallenge.view.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.model.gameobjects.GameObject;
 
 /**
@@ -31,6 +32,9 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
      */
     @Override
     public void draw(final GameObject obj, final GraphicsContext gc) {
+        if (obj.isFlipped()) {
+            obj.setPosition(new Point2D(-obj.getPosition().getX(), obj.getPosition().getY()));
+        }
         if (this.show) {
             super.draw(obj, gc);
         }
