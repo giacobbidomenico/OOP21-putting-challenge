@@ -70,9 +70,15 @@ public class GamePlayGameState extends AbstractGameState {
     private void incLives() {
         this.lives++;
     }
+    /**
+     * Method called when the ball enters the hole.
+     */
     private void handleWin() {
         this.incScore();
     }
+    /**
+     * Method called when the ball stops or it is out of bound.
+     */
     private void handleMiss() {
         this.decLives();
         if (this.lives == NO_LIVES) {
