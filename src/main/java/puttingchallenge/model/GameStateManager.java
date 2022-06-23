@@ -7,6 +7,10 @@ import puttingchallenge.model.events.Colleague;
  */
 public interface GameStateManager extends Colleague {
     /**
+     * Sets the initial state of the game.
+     */
+    void initState();
+    /**
      * Sets a new current{@link GameState}.
      * @param status
      *          to switch to
