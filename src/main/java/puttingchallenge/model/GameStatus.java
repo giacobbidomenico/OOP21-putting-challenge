@@ -5,9 +5,9 @@ package puttingchallenge.model;
  *
  */
 public enum GameStatus {
-	/**
-	 * The player started the game.
-	 */
+    /**
+     * The player started the game.
+     */
     PLAY,
     /**
      * The player is currently aiming.
@@ -21,6 +21,10 @@ public enum GameStatus {
      * The player runs out of lives.
      */
     GAME_OVER,
+    /**
+     * The user consults the leaderboard.
+     */
+    LEADERBOARD,
     /**
      * The player quits the game or has just started the application.
      */
