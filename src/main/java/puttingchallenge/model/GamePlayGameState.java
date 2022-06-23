@@ -3,6 +3,8 @@ package puttingchallenge.model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
+
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -61,17 +63,23 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void decLives() {
         this.lives--;
-        if (this.lives == NO_LIVES) {
-            this.leavingState(GameStatus.GAME_OVER);
-        } else {
-            this.notifyEvents(GameEventType.MOVE_PLAYER);
-        }
     }
     /**
      * Increments lives due to in game boosts.
      */
     private void incLives() {
         this.lives++;
+    }
+    private void handleWin() {
+        this.incScore();
+    }
+    private void handleMiss() {
+        this.decLives();
+        if (this.lives == NO_LIVES) {
+            this.leavingState(GameStatus.GAME_OVER);
+        } else {
+            this.notifyEvents(GameEventType.MOVE_PLAYER);
+        }
     }
     /**
      * 
@@ -97,8 +105,25 @@ public class GamePlayGameState extends AbstractGameState {
     void notifyEvents(final GameEventType eventType) {
         this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     void receiveEvents() {
-        // TODO Auto-generated method stub
+        final List<ModelEventType> eventsReceived = this.environmentObservable.eventsRecieved();
+        eventsReceived.stream().forEach((event) -> {
+            switch (event) {
+            case BALL_IN_HOLE:
+                this.handleWin();
+                break;
+            case BALL_OUT_OF_BOUND:
+            case BALL_STOPPED:
+                this.handleMiss();
+                break;
+            default:
+                break;
+            }
+        });
+
     }
 }
