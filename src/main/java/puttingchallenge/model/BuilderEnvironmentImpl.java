@@ -23,7 +23,6 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
     private Optional<GameObject> ball;
     private Optional<GameObject> player;
     private Optional<GameObject> hole;
-    private Optional<GameEngine> controller;
 
     /**
      * Build a new {@link BuilderEnvironmentImpl}.
@@ -35,7 +34,6 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         this.container = Optional.empty();
         this.ball = Optional.empty();
         this.player = Optional.empty();
-        this.controller = Optional.empty();
     }
 
 
@@ -94,18 +92,6 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         return this;
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BuilderEnvironment controller(final GameEngine controller) {
-        if (this.controller.isEmpty()) {
-            this.controller = Optional.of(controller);
-        }
-        return this;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -127,7 +113,6 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         if (this.container.isEmpty()
                 || ball.isEmpty() 
                 || player.isEmpty() 
-                || controller.isEmpty()
                 || hole.isEmpty()) {
             throw new IllegalStateException();
         }

@@ -47,22 +47,18 @@ public final class EnvironmentLoader {
      * 
      * @param sceneTag
      *      the {@link SceneType} related to the environment to be loaded
-     * @param controller
-     *      the controller of the application
      * @return
      *      the {@link Environment} related to the given tag
      * @throws IOException
      *      if the file is not loaded correctly
      */
-    public Optional<Environment> getEnvironment(final SceneType sceneTag, 
-                                                final GameEngine controller) throws IOException {
+    public Optional<Environment> getEnvironment(final SceneType sceneTag) throws IOException {
         if (sceneTag.isLevel()) {
             final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
 
-            builder.controller(controller);
             this.setDimension(builder, file);
             this.setBall(builder, file);
             this.setPlayer(builder, file);
