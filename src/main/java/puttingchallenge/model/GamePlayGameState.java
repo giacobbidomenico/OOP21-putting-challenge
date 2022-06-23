@@ -84,7 +84,7 @@ public class GamePlayGameState extends AbstractGameState {
         if (this.lives == NO_LIVES) {
             this.leavingState(GameStatus.GAME_OVER);
         } else {
-            this.notifyEvents(GameEventType.MOVE_PLAYER);
+            this.notifyEvents(ModelEventType.MOVE_PLAYER);
         }
     }
     /**
@@ -108,7 +108,7 @@ public class GamePlayGameState extends AbstractGameState {
      * {@inheritDoc}
      */
     @Override
-    void notifyEvents(final GameEventType eventType) {
+    void notifyEvents(final ModelEventType eventType) {
         this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**

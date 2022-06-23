@@ -48,6 +48,7 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final GameObject hole) {
+        this.observableGameState = Optional.empty();
         this.observable = new ObservableEventsImpl<>();
         this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
