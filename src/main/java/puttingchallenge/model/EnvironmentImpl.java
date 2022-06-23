@@ -65,6 +65,8 @@ public class EnvironmentImpl implements Environment {
     public void update(final long dt) {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         bf.update(dt, ball, this);
+        this.receiveEvents();
+        this.notifyEvents();
     }
 
     /**
