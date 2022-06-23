@@ -38,11 +38,6 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
         super(manager, status);
-        this.environmentObservable = this.getEnvironment().getObservable();
-        this.observer = new ObserverEventsImpl<>();
-        this.environmentObservable.addObserver(this.observer);
-        this.observable = new ObservableEventsImpl<>();
-        this.getEnvironment().configureObservable(this.observable);
     }
     /**
      * {@inheritDoc}
@@ -60,6 +55,11 @@ public class GamePlayGameState extends AbstractGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.environmentObservable = this.getEnvironment().getObservable();
+        this.observer = new ObserverEventsImpl<>();
+        this.environmentObservable.addObserver(this.observer);
+        this.observable = new ObservableEventsImpl<>();
+        this.getEnvironment().configureObservable(this.observable);
     }
     /**
      * Decrements the game score.
