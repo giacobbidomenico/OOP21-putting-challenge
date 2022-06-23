@@ -22,16 +22,6 @@ public interface BuilderEnvironment {
     BuilderEnvironment container(Rectangle2D container);
 
     /**
-     * Sets the game controller.
-     * 
-     * @param controller
-     *         an instance of {@link GameEngine}, the controller of the application
-     * @return an instance of {@link BuilderEnvironment} ,the builder of 
-     *         the game {@link Environment}
-     */
-    BuilderEnvironment controller(GameEngine controller);
-
-    /**
      * Sets the ball configuration.
      * 
      * @param pos

@@ -1,9 +1,12 @@
 package puttingchallenge.model;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -12,6 +15,7 @@ import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
+import puttingchallenge.view.SceneLoader;
 import puttingchallenge.view.SceneType;
 
 /**
@@ -73,7 +77,14 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void handleWin() {
         this.incScore();
-        // check on next env
+        try {
+            final SceneType nextscene = MAPS.next();
+            EnvironmentLoader.getLoader().getEnvironment(nextscene);
+        } catch (NoSuchElementException e) {
+            this.leavingState(GameStatus.GAME_OVER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Method called when the ball stops or it is out of bound.
