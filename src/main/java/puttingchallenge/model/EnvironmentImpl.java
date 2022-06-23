@@ -124,14 +124,15 @@ public class EnvironmentImpl implements Environment {
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
-        final var calcDist = new Point2D(this.container.getWidth() * (PERC_DISTANCE / 100),
-                                          this.container.getHeight() * (PERC_DISTANCE / 100));
+        final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
+                                         this.container.getHeight() * (PERC_DISTANCE / 100));
         final var pos = this.ball.getPosition();
-        if ((pos.getX() - calcDist.getX()) < 0) {
+        if ((pos.getX() - calcDist.getX()) >= 0) {
+            this.player.setFlip(false);
             this.player.setPosition(new Point2D(pos.getX() - calcDist.getX(), pos.getY()));
             return;
         }
-        if ((pos.getX() + calcDist.getX()) >= this.container.getWidth()) {
+        if ((pos.getX() + calcDist.getX()) < this.container.getWidth()) {
             this.player.setFlip(true);
             this.player.setPosition(new Point2D(pos.getX() + calcDist.getX(), pos.getY()));
             return;
