@@ -13,7 +13,7 @@ public class GameStateManagerImpl implements GameStateManager {
     private Mediator generalMediator;
     private static final GameStatus INITIAL_STATE = GameStatus.MAIN_MENU;
     /**
-     * Sets the initial state of the game.
+     * {@inheritDoc}
      */
     public void initState() {
         this.switchState(INITIAL_STATE);
