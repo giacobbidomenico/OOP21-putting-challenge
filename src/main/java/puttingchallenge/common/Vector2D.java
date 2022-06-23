@@ -43,12 +43,18 @@ public class Vector2D implements Serializable {
     public String toString() {
         return "Vector2D (" + x + ", " + y + ")";
     }
-    
-    public void setX(double x) {
+    /**
+     * Sets the x component of the vector.
+     * @param x
+     */
+    public void setX(final double x) {
         this.x = x;
     }
-
-    public void setY(double y) {
+    /**
+     * Sets the y component of the vector.
+     * @param y
+     */
+    public void setY(final double y) {
         this.y = y;
     }
     /**
