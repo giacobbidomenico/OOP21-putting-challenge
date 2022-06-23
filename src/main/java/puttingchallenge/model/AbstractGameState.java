@@ -7,7 +7,6 @@ public abstract class AbstractGameState implements GameState {
     private GameStatus status;
     private GameStateManager stateManager;
     private Environment environment;
-    
     /**
      * 
      * @param manager
@@ -17,7 +16,7 @@ public abstract class AbstractGameState implements GameState {
         this.stateManager = manager;
         this.status = status;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -25,7 +24,7 @@ public abstract class AbstractGameState implements GameState {
     public GameStatus getStatus() {
         return this.status;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -49,5 +48,13 @@ public abstract class AbstractGameState implements GameState {
     void leavingState(final GameStatus nextStatus) {
         this.stateManager.switchState(nextStatus);
     }
+    /**
+     * Notifies if an event has been intercepted.
+     */
+    abstract void notifyEvents();
+    /**
+     * Reads the events sent by the {@link GameState}.
+     */
+    abstract void receiveEvents();
 
 }
