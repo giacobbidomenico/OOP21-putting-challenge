@@ -103,5 +103,6 @@ public class GameStateManagerImpl implements GameStateManager {
     @Override
     public void update(final long dt) {
         this.currentGameState.getEnvironment().update(dt);
+        this.currentGameState.receiveEvents();
     }
 }

@@ -125,28 +125,29 @@ public class GamePlayGameState extends AbstractGameState {
      * {@inheritDoc}
      */
     @Override
-    void notifyEvents(final ModelEventType eventType) {
+    public void notifyEvents(final ModelEventType eventType) {
         this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    void receiveEvents() {
+    public void receiveEvents() {
         final List<ModelEventType> eventsReceived = this.environmentObservable.eventsRecieved();
-        eventsReceived.stream().forEach((event) -> {
-            switch (event) {
-            case BALL_IN_HOLE:
-                this.handleWin();
-                break;
-            case BALL_OUT_OF_BOUND:
-            case BALL_STOPPED:
-                this.handleMiss();
-                break;
-            default:
-                break;
-            }
-        });
-
+        if (!eventsReceived.isEmpty()) {
+            eventsReceived.stream().forEach((event) -> {
+                switch (event) {
+                case BALL_IN_HOLE:
+                    this.handleWin();
+                    break;
+                case BALL_OUT_OF_BOUND:
+                case BALL_STOPPED:
+                    this.handleMiss();
+                    break;
+                default:
+                    break;
+                }
+            });
+        }
     }
 }
