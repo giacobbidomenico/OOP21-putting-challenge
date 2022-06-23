@@ -16,12 +16,17 @@ public class ScreenGameState extends AbstractGameState {
     }
 
     @Override
-    void notifyEvents(final ModelEventType eventType) {
+    public void notifyEvents(final ModelEventType eventType) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    void receiveEvents() {
+    public void receiveEvents() {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void initState() {
         // TODO Auto-generated method stub
     }
 
