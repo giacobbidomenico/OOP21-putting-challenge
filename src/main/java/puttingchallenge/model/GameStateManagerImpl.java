@@ -11,6 +11,13 @@ import puttingchallenge.model.events.Mediator;
 public class GameStateManagerImpl implements GameStateManager {
     private GameState currentGameState;
     private Mediator generalMediator;
+    private static final GameStatus INITIAL_STATE = GameStatus.MAIN_MENU;
+    /**
+     * Sets the initial state of the game.
+     */
+    public void initState() {
+        this.switchState(INITIAL_STATE);
+    }
     /**
      * {@inheritDoc}
      */
@@ -20,6 +27,7 @@ public class GameStateManagerImpl implements GameStateManager {
             case PLAY:
                 this.currentGameState = new GamePlayGameState(this, status);
                 break;
+            case LEADERBOARD:
             case GAME_OVER:
             case MAIN_MENU:
                 this.currentGameState = new ScreenGameState(this, status);
