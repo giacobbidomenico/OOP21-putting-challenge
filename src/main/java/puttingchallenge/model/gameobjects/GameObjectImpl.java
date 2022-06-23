@@ -15,6 +15,7 @@ public class GameObjectImpl implements GameObject {
 
     private final GameObjectType type;
     private Point2D pos;
+    private boolean isFlipped;
     private final GraphicComponent graph;
     private final PhysicsComponent phys;
     private final HitBox hitBox;

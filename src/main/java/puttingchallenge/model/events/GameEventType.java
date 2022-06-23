@@ -32,11 +32,6 @@ public enum GameEventType {
     SHOOT,
 
     /**
-     * The ball stopped but the player has at least one life so he can try again.
-     */
-    MOVE_PLAYER,
-
-    /**
      * Require to the application to show the leaderboard.
      */
     SHOW_LEADERBOARD,
