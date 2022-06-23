@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Vector2D implements Serializable {
 
     private static final long serialVersionUID = -6448133475513092884L;
-    private final double x, y;
+    private double x, y;
 
     /**
      * Build a new {@link Vector2D}.
@@ -43,7 +43,14 @@ public class Vector2D implements Serializable {
     public String toString() {
         return "Vector2D (" + x + ", " + y + ")";
     }
+    
+    public void setX(double x) {
+        this.x = x;
+    }
 
+    public void setY(double y) {
+        this.y = y;
+    }
     /**
      * @return x-component of the 2D vector
      */
@@ -104,4 +111,12 @@ public class Vector2D implements Serializable {
     public static Vector2D getVectorFrom(final Point2D pointA, final Point2D pointB) {
         return new Vector2D(pointA.getX() - pointB.getX(), pointA.getY() - pointB.getY());
     }
+    /**
+     * Flips the vector components.
+     */
+    public void flipVector() {
+        this.setX(-x);
+        this.setY(-y); 
+    }
+
 }
