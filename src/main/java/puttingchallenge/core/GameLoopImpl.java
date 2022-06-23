@@ -1,6 +1,5 @@
 package puttingchallenge.core;
 
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,7 +11,6 @@ import puttingchallenge.model.GameStateManagerImpl;
 import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.events.ConcreteMediator;
 import puttingchallenge.model.events.GameEvent;
-import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
