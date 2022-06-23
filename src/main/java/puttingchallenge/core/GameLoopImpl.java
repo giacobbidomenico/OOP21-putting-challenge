@@ -59,7 +59,7 @@ public class GameLoopImpl implements GameEngine, Colleague {
         this.view.setMediator(mediator);
         this.setMediator(mediator);
 
-        this.gameState.init();
+        this.gameState.initState();
         this.view.buildView();
 
         this.gameLoop();
