@@ -17,6 +17,7 @@ public abstract class AbstractGameState implements GameState {
      */
     public AbstractGameState(final GameStateManager manager,
                              final GameStatus status) {
+        this.environment = Optional.empty();
         this.stateManager = manager;
         this.status = status;
     }
