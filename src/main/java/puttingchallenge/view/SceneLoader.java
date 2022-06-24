@@ -31,10 +31,7 @@ public final class SceneLoader {
     private static final SceneLoader SINGLETON = new SceneLoader();
 
     private static final String SEP = File.separator;
-    private static final String PATH_START = System.getProperty("user.dir")
-                                             + SEP + "res"
-                                             + SEP + "scenes"
-                                             + SEP;
+    private static final String PATH_START = SEP + "scenes" + SEP;
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
     private static final String PATH_LEVELS = "levels";
@@ -72,17 +69,9 @@ public final class SceneLoader {
 
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs) throws IOException {
-        final String path = "/" + "scenes" + "/" + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
-        String path1 = "/scenes/main_menu.fxml";
-        System.out.println(path);
-        var a = getClass().getResource(path);
-        final FXMLLoader loader = new FXMLLoader(a);
-        //final Parent parent = loader.load();
+        final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         final VBox vbox = loader.load();
-        //loader.setController();
-        //final Parent parent = FXMLLoader.load(getClass().getResource(path));
-        //parent = loader.load(new FileInputStream(path));
-
 
         final SceneController sc = loader.getController();
         sc.init(new Scene(vbox), objs);
