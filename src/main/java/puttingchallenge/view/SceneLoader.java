@@ -71,7 +71,6 @@ public final class SceneLoader {
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs) throws IOException {
         final String path = PATH_START_SCREEN + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
-        System.out.println(path);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         final VBox vbox = loader.load();
 
