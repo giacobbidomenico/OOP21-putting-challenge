@@ -2,6 +2,7 @@ package puttingchallenge.model;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,7 +11,10 @@ import puttingchallenge.common.Point2D;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
+import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.SceneType;
 
 /**
  * Implementation of {@link GameStateManager} interface.
@@ -41,7 +45,8 @@ public class GameStateManagerImpl implements GameStateManager {
         switch (status) {
             case PLAY:
                 this.currentGameState = new GamePlayGameState(this, status);
-                this.currentGameState.initState();
+                final Pair<SceneType, List<GameObject>> pair = this.currentGameState.initState();
+                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<SceneType, List<GameObject>>>(GameEventType.SET_SCENE, pair), this);
                 break;
             case GAME_OVER:
                 this.currentGameState = new ScreenGameState(this, status);
