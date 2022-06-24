@@ -9,10 +9,7 @@ import java.io.File;
 public class WallGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-    private static final String TEXTURE_PATH_IMAGE = System.getProperty("user.dir")
-                                                     + SEP + "src"
-                                                     + SEP + "main"
-                                                     + SEP + "resources"
+    private static final String TEXTURE_PATH_IMAGE = SEP + "resources"
                                                      + SEP + "obstacles"
                                                      + SEP + "hole.png";
 

@@ -9,10 +9,7 @@ import java.io.File;
 public class TreeGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-    private static final String IMAGE_PATH = System.getProperty("user.dir")
-                                             + SEP + "src"
-                                             + SEP + "main"
-                                             + SEP + "resources"
+    private static final String IMAGE_PATH = "resources"
                                              + SEP + "obstacles"
                                              + SEP + "tree.png";
 
