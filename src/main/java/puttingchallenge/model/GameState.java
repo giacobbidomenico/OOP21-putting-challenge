@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import java.util.Optional;
+
 import puttingchallenge.model.events.ModelEventType;
 
 /**
@@ -26,7 +28,7 @@ public interface GameState {
      * @return
      *          the {@link Environment} object
      */
-    Environment getEnvironment();
+    Optional<Environment> getEnvironment();
     /**
      * Notify the intercepted event.
      * @param eventType

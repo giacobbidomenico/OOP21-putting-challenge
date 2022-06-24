@@ -3,6 +3,7 @@ package puttingchallenge.model;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
@@ -94,7 +95,7 @@ public class GameStateManagerImpl implements GameStateManager {
      * {@inheritDoc}
      */
     @Override
-    public Environment getCurrentEnvironment() {
+    public Optional<Environment> getCurrentEnvironment() {
         return this.getCurrentState().getEnvironment();
     }
     /**
@@ -102,7 +103,9 @@ public class GameStateManagerImpl implements GameStateManager {
      */
     @Override
     public void update(final long dt) {
-        this.currentGameState.getEnvironment().update(dt);
+        if (this.currentGameState.getEnvironment().isPresent()) {
+            this.currentGameState.getEnvironment().get().update(dt);
+        }
         this.currentGameState.receiveEvents();
     }
 }

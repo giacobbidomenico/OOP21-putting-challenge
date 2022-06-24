@@ -55,11 +55,20 @@ public class GamePlayGameState extends AbstractGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.environmentObservable = this.getEnvironment().getObservable();
+        this.checkExceptionEnvironment();
+        this.environmentObservable = this.getEnvironment().get().getObservable();
         this.observer = new ObserverEventsImpl<>();
         this.environmentObservable.addObserver(this.observer);
         this.observable = new ObservableEventsImpl<>();
-        this.getEnvironment().configureObservable(this.observable);
+        this.getEnvironment().get().configureObservable(this.observable);
+    }
+    /**
+     * Check if the environment exists.
+     */
+    private void checkExceptionEnvironment() {
+        if (this.getEnvironment().isEmpty()) {
+            throw new IllegalStateException();
+        }
     }
     /**
      * Decrements the game score.
@@ -111,7 +120,8 @@ public class GamePlayGameState extends AbstractGameState {
     public void shoot(final Pair<Point2D, Point2D> points) {
         final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
         shootingVector.flipVector();
-        this.getEnvironment().getBall().setVelocity(shootingVector);
+        this.checkExceptionEnvironment();
+        this.getEnvironment().get().getBall().setVelocity(shootingVector);
     }
     /**
      * {@inheritDoc}

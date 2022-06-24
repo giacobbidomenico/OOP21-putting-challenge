@@ -1,12 +1,14 @@
 package puttingchallenge.model;
 
+import java.util.Optional;
+
 /**
  * Abstract class that represent a {@link GameState}.
  */
 public abstract class AbstractGameState implements GameState {
-    private GameStatus status;
-    private GameStateManager stateManager;
-    private Environment environment;
+    private final GameStatus status;
+    private final GameStateManager stateManager;
+    private Optional<Environment> environment;
     /**
      * 
      * @param manager
@@ -37,7 +39,7 @@ public abstract class AbstractGameState implements GameState {
      * {@inheritDoc}
      */
     @Override
-    public Environment getEnvironment() {
+    public Optional<Environment> getEnvironment() {
         return this.environment;
     }
 

@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import java.util.Optional;
+
 import puttingchallenge.model.events.Colleague;
 
 /**
@@ -27,7 +29,7 @@ public interface GameStateManager extends Colleague {
      * @return
      *          the current {@link Environment} object
      */
-    Environment getCurrentEnvironment();
+    Optional<Environment> getCurrentEnvironment();
     /**
      * Method that updates the physics state of the {@link GameObject}.
      * @param dt

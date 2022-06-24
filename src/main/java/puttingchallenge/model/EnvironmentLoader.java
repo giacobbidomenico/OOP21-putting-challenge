@@ -57,13 +57,6 @@ public final class EnvironmentLoader {
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
-
-<<<<<<< HEAD
-            this.setDimension(builder, file);
-            this.setBall(builder, file);
-            this.setPlayer(builder, file);
-            this.addObstacles(builder, file);
-=======
             file.getJSONObject("scene");
             final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
             final double w = screenDim.getWidth() * (file.getDouble("wScale") / 100);
@@ -73,7 +66,6 @@ public final class EnvironmentLoader {
             this.setBall(w, h, builder, file);
             this.setPlayer(w, h, builder, file);
             this.addObstacles(w, h, builder, file);
->>>>>>> af445f45ba2a950ab2e54645808e3b67a3be64f0
             return Optional.of(builder.build());
         } else {
             return Optional.empty();
