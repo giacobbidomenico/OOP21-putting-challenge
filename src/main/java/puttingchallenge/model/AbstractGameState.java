@@ -14,9 +14,12 @@ public abstract class AbstractGameState implements GameState {
      * @param manager
      * @param status
      */
-    public AbstractGameState(final GameStateManager manager, final GameStatus status) {
+    public AbstractGameState(final GameStateManager manager,
+                             final GameStatus status,
+                             final Environment environment) {
         this.stateManager = manager;
         this.status = status;
+        this.environment = Optional.ofNullable(environment);
     }
 
     /**
@@ -49,5 +52,13 @@ public abstract class AbstractGameState implements GameState {
      */
     void leavingState(final GameStatus nextStatus) {
         this.stateManager.switchState(nextStatus);
+    }
+
+    /**
+     * 
+     * @param environment
+     */
+    void setEnvironment(final Optional<Environment> environment) {
+        this.environment = environment;
     }
 }

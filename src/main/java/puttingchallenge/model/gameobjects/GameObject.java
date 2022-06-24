@@ -99,6 +99,11 @@ public interface GameObject {
     Vector2D getVelocity();
 
     /**
+     * @return the hit box of the object.
+     */
+    HitBox getHitBox();
+
+    /**
      * Update physic state of the object.
      * 
      * @param dt

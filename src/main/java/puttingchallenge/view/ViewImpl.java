@@ -1,6 +1,8 @@
 package puttingchallenge.view;
 
 import puttingchallenge.model.events.GameEvent;
+import puttingchallenge.model.events.GameEventImpl;
+import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.SceneController;
@@ -10,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 /**
@@ -37,11 +41,16 @@ public class ViewImpl implements View {
      */
     @Override
     public void buildView() {
-        this.loadScene(SceneType.MAIN_MENU, Collections.emptyList());
-        this.stage.setScene(scene.getScene());
-        this.stage.sizeToScene();
-        this.stage.setResizable(false);
-        this.stage.show();
+        Platform.runLater(() -> {
+            this.loadScene(SceneType.MAIN_MENU, Collections.emptyList());
+            this.stage.setScene(scene.getScene());
+            this.stage.sizeToScene();
+            this.stage.setResizable(false);
+            this.stage.setOnCloseRequest(
+                    (e) -> this.mediator.notifyColleagues(new GameEventImpl(GameEventType.QUIT), this)
+            );
+            this.stage.show();
+        });
     }
 
     private void loadScene(final SceneType typeScene, final List<GameObject> objs) {
@@ -49,6 +58,7 @@ public class ViewImpl implements View {
             this.mediator.removeColleague(scene);
             this.scene = SceneLoader.getLoader().getScene(typeScene, objs);
             this.mediator.addColleague(scene);
+            scene.setMediator(mediator);
             this.stage.setScene(scene.getScene());
         } catch (IOException e) {
             e.printStackTrace();

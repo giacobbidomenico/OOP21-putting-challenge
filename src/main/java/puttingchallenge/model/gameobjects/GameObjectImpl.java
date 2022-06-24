@@ -18,6 +18,7 @@ public class GameObjectImpl implements GameObject {
     private boolean isFlipped;
     private final GraphicComponent graph;
     private final PhysicsComponent phys;
+    private final HitBox hitBox;
 
     /**
      * Build a new {@link GameObjectImpl}.
@@ -30,16 +31,19 @@ public class GameObjectImpl implements GameObject {
      *                 graphic component of the object
      * @param phys
      *                 physical component of the object
+     * @param hitBox
+     *                  the hitbox of the object
      */
     public GameObjectImpl(final GameObjectType type,
                           final Point2D position,
                           final GraphicComponent graph,
-                          final PhysicsComponent phys) {
+                          final PhysicsComponent phys,
+                          final HitBox hitBox) {
         this.type = type;
         this.pos = position;
         this.graph = graph;
         this.phys = phys;
-        this.isFlipped = false;
+        this.hitBox = hitBox;
     }
 
     /**
@@ -110,16 +114,8 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public void setFlip(final boolean flip) {
-        this.isFlipped = flip;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isFlipped() {
-        return this.isFlipped;
+    public HitBox getHitBox() {
+        return this.hitBox;
     }
 
 }
