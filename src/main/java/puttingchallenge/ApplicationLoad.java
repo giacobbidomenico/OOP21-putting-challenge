@@ -2,7 +2,6 @@ package puttingchallenge;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import puttingchallenge.core.GameEngine;
 import puttingchallenge.core.GameLoopImpl;
 
 /**
@@ -15,8 +14,8 @@ public class ApplicationLoad extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final GameEngine gameEngine = new GameLoopImpl(primaryStage);
-        gameEngine.launch();
+        final GameLoopImpl gameEngine = new GameLoopImpl(primaryStage);
+        gameEngine.start();
     }
 
 }

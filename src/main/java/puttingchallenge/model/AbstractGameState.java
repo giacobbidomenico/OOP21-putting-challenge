@@ -1,23 +1,25 @@
 package puttingchallenge.model;
 
-import puttingchallenge.model.events.GameEventType;
-import puttingchallenge.model.events.ModelEventType;
+import java.util.Optional;
 
 /**
  * Abstract class that represent a {@link GameState}.
  */
 public abstract class AbstractGameState implements GameState {
-    private GameStatus status;
-    private GameStateManager stateManager;
-    private Environment environment;
+    private final GameStatus status;
+    private final GameStateManager stateManager;
+    private Optional<Environment> environment;
     /**
      * 
      * @param manager
      * @param status
      */
-    public AbstractGameState(final GameStateManager manager, final GameStatus status) {
+    public AbstractGameState(final GameStateManager manager,
+                             final GameStatus status,
+                             final Environment environment) {
         this.stateManager = manager;
         this.status = status;
+        this.environment = Optional.ofNullable(environment);
     }
 
     /**
@@ -40,7 +42,7 @@ public abstract class AbstractGameState implements GameState {
      * {@inheritDoc}
      */
     @Override
-    public Environment getEnvironment() {
+    public Optional<Environment> getEnvironment() {
         return this.environment;
     }
 
@@ -51,15 +53,12 @@ public abstract class AbstractGameState implements GameState {
     void leavingState(final GameStatus nextStatus) {
         this.stateManager.switchState(nextStatus);
     }
-    /**
-     * Notify the intercepted event.
-     * @param eventType
-     *          of the event intercepted
-     */
-    abstract void notifyEvents(ModelEventType eventType);
-    /**
-     * Reads the events sent by the {@link GameState}.
-     */
-    abstract void receiveEvents();
 
+    /**
+     * 
+     * @param environment
+     */
+    void setEnvironment(final Optional<Environment> environment) {
+        this.environment = environment;
+    }
 }

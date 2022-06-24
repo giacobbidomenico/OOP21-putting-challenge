@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
+import javafx.scene.layout.VBox;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -31,10 +31,8 @@ public final class SceneLoader {
     private static final SceneLoader SINGLETON = new SceneLoader();
 
     private static final String SEP = File.separator;
-    private static final String PATH_START = System.getProperty("user.dir")
-                                             + SEP + "res"
-                                             + SEP + "scenes"
-                                             + SEP;
+    private static final String PATH_START_LEVEL = SEP + "scenes" + SEP;
+    private static final String PATH_START_SCREEN = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
     private static final String PATH_LEVELS = "levels";
@@ -72,20 +70,18 @@ public final class SceneLoader {
 
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs) throws IOException {
-        final FXMLLoader loader = new FXMLLoader();
-        final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
-        final Parent parent;
-        parent = loader.load(new FileInputStream(path));
-
+        final String path = PATH_START_SCREEN + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        final VBox vbox = loader.load();
 
         final SceneController sc = loader.getController();
-        sc.init(new Scene(parent), objs);
+        sc.init(new Scene(vbox), objs);
         return sc;
     }
 
     private SceneController loadGameLevel(final SceneType sceneTag,
                                           final List<GameObject> objs) throws IOException {
-        String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+        String path = PATH_START_LEVEL + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
         final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
         final String background = jsonObj.getString("background");
@@ -94,7 +90,7 @@ public final class SceneLoader {
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
 
         final FXMLLoader loader = new FXMLLoader();
-        path = PATH_START + PATH_LEVELS + PATH_END_SCREEN;
+        path = PATH_START_LEVEL + PATH_LEVELS + PATH_END_SCREEN;
         final Parent parent = loader.load(new FileInputStream(path));
 
         final Group root = new Group();

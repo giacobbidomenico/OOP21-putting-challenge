@@ -57,7 +57,6 @@ public final class EnvironmentLoader {
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
-
             file.getJSONObject("scene");
             final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
             final double w = screenDim.getWidth() * (file.getDouble("wScale") / 100);

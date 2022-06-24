@@ -1,14 +1,15 @@
 package puttingchallenge.model;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
@@ -36,14 +37,38 @@ public class GamePlayGameState extends AbstractGameState {
      * @param status
      */
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
-        super(manager, status);
+        super(manager, status, null);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public void initState() {
         this.lives = MAX_LIVES;
         this.score = NO_SCORE;
-        this.environmentObservable = this.getEnvironment().getObservable();
+        this.loadNextEnvironment();
+    }
+    private void loadNextEnvironment() {
+        try {
+            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(MAPS.next()));
+        } catch (NoSuchElementException e) {
+            this.leavingState(GameStatus.GAME_OVER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.checkExceptionEnvironment();
+        this.environmentObservable = this.getEnvironment().get().getObservable();
         this.observer = new ObserverEventsImpl<>();
         this.environmentObservable.addObserver(this.observer);
         this.observable = new ObservableEventsImpl<>();
-        this.getEnvironment().configureObservable(this.observable);
+        this.getEnvironment().get().configureObservable(this.observable);
+    }
+    /**
+     * Check if the environment exists.
+     */
+    private void checkExceptionEnvironment() {
+        if (this.getEnvironment().isEmpty()) {
+            throw new IllegalStateException();
+        }
     }
     /**
      * Decrements the game score.
@@ -75,6 +100,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void handleWin() {
         this.incScore();
+        this.loadNextEnvironment();
     }
     /**
      * Method called when the ball stops or it is out of bound.
@@ -94,7 +120,8 @@ public class GamePlayGameState extends AbstractGameState {
     public void shoot(final Pair<Point2D, Point2D> points) {
         final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
         shootingVector.flipVector();
-        this.getEnvironment().getBall().setVelocity(shootingVector);
+        this.checkExceptionEnvironment();
+        this.getEnvironment().get().getBall().setVelocity(shootingVector);
     }
     /**
      * {@inheritDoc}
@@ -108,28 +135,29 @@ public class GamePlayGameState extends AbstractGameState {
      * {@inheritDoc}
      */
     @Override
-    void notifyEvents(final ModelEventType eventType) {
+    public void notifyEvents(final ModelEventType eventType) {
         this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    void receiveEvents() {
+    public void receiveEvents() {
         final List<ModelEventType> eventsReceived = this.environmentObservable.eventsRecieved();
-        eventsReceived.stream().forEach((event) -> {
-            switch (event) {
-            case BALL_IN_HOLE:
-                this.handleWin();
-                break;
-            case BALL_OUT_OF_BOUND:
-            case BALL_STOPPED:
-                this.handleMiss();
-                break;
-            default:
-                break;
-            }
-        });
-
+        if (!eventsReceived.isEmpty()) {
+            eventsReceived.stream().forEach((event) -> {
+                switch (event) {
+                case BALL_IN_HOLE:
+                    this.handleWin();
+                    break;
+                case BALL_OUT_OF_BOUND:
+                case BALL_STOPPED:
+                    this.handleMiss();
+                    break;
+                default:
+                    break;
+                }
+            });
+        }
     }
 }
