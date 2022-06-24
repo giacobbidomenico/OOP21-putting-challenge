@@ -57,7 +57,6 @@ public class GamePlayGameState extends AbstractGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.checkExceptionEnvironment();
         this.environmentObservable = this.getEnvironment().get().getObservable();
         this.observer = new ObserverEventsImpl<>();
         this.environmentObservable.addObserver(this.observer);
