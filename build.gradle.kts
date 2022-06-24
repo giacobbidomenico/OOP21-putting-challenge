@@ -11,7 +11,8 @@ plugins {
      * In order to create it, launch the "shadowJar" task.
      * The runnable jar will be found in build/libs/projectname-all.jar
      */
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("org.openjfx.javafxplugin") version "0.0.10"
 }
 
 repositories {
@@ -31,7 +32,8 @@ val jUnitVersion = "5.7.1"
 val javaFxVersion = 15
 
 dependencies {
-    // Maven dependencies are composed by a group name, a name and a version, separated by colons
+    // Example library: Guava. Add what you need (and remove Guava if you don't use it)
+    // implementation("com.google.guava:guava:28.1-jre")
 
     // JavaFX: comment out if you do not need them
     for (platform in supportedPlatforms) {
@@ -39,34 +41,22 @@ dependencies {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
-    
-    implementation("org.json:json:20220320")
-    implementation("commons-io:commons-io:2.6")	
 
     // JUnit API and testing engine
-    val jUnitVersion = "5.8.2"
-    // when dependencies share the same version, grouping in a val helps to keep them in sync
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
 }
 
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType<Test> {
+    // Enables JUnit 5 Jupiter module
+    useJUnitPlatform()
+}
+
 application {
-    // Define the main class for the application.
-    mainClass.set("puttingchallenge.App")
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-tasks {
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
-
-    withType<Test> {
-        // Enables JUnit 5 Jupiter module
-        useJUnitPlatform()
-    }
+    // Define the main class for the application
+    mainClass.set("it.unibo.samplejavafx.App")
 }
