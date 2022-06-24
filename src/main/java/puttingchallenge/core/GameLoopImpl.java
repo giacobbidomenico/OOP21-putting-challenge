@@ -3,7 +3,6 @@ package puttingchallenge.core;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import puttingchallenge.model.GameStateManager;
 import puttingchallenge.model.GameStateManagerImpl;
@@ -20,7 +19,7 @@ import puttingchallenge.view.ViewImpl;
 /**
  * Controller of the entire application.
  */
-public class GameLoopImpl implements GameEngine, Colleague {
+public class GameLoopImpl extends Thread implements GameEngine, Colleague {
 
     private static final long FRAME_TIME = 20;
     private Mediator mediator;
@@ -45,6 +44,14 @@ public class GameLoopImpl implements GameEngine, Colleague {
      * {@inheritDoc}
      */
     @Override
+    public void run() {
+        this.launch();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void launch() {
         this.isOver = false;
 
@@ -60,7 +67,7 @@ public class GameLoopImpl implements GameEngine, Colleague {
         this.gameState.initState();
         this.view.buildView();
 
-        Platform.runLater(() -> this.gameLoop());
+        this.gameLoop();
     }
 
     private void waitCycleTime(final long startTime) {
