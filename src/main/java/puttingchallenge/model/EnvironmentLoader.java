@@ -94,7 +94,7 @@ public final class EnvironmentLoader {
         final Iterator<Object> obstacles = file.getJSONArray("staticObstacles").iterator();
         while (obstacles.hasNext()) {
             final JSONObject obj = (JSONObject) obstacles.next();
-            final GameObjectType type = GameObjectType.getFromIndex(obj.getInt("type")).get();
+            final GameObjectType type = GameObjectType.valueOf(obj.getString("type"));
             final double x = w * (obj.getDouble("posX") / 100);
             final double y = h * (obj.getDouble("posY") / 100);
             final double wPerc = w * (obj.getDouble("wScale") / 100);
