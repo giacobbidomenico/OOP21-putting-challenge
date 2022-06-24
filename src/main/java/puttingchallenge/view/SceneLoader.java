@@ -31,7 +31,7 @@ public final class SceneLoader {
     private static final SceneLoader SINGLETON = new SceneLoader();
 
     private static final String SEP = File.separator;
-    private static final String PATH_START_LEVEL = SEP + "scenes" + SEP;
+    private static final String PATH_START_LEVEL = System.getProperty("user.dir") + SEP + "src" + SEP + "main" + SEP + "resources" + SEP + "scenes" + SEP;
     private static final String PATH_START_SCREEN = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
@@ -88,10 +88,11 @@ public final class SceneLoader {
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
-
-        final FXMLLoader loader = new FXMLLoader();
-        path = PATH_START_LEVEL + PATH_LEVELS + PATH_END_SCREEN;
-        final Parent parent = loader.load(new FileInputStream(path));
+        
+        final String path1 = PATH_START_SCREEN + PATH_LEVELS + PATH_END_SCREEN;
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource(path1));
+        
+        final Parent parent = loader.load();
 
         final Group root = new Group();
         final Scene scene = new Scene(root, w, h);
