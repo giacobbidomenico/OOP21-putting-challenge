@@ -107,7 +107,7 @@ public class GameStateManagerImpl implements GameStateManager {
     public void update(final long dt) {
         if (this.currentGameState.getEnvironment().isPresent()) {
             this.currentGameState.getEnvironment().get().update(dt);
+            this.currentGameState.receiveEvents();
         }
-        this.currentGameState.receiveEvents();
     }
 }
