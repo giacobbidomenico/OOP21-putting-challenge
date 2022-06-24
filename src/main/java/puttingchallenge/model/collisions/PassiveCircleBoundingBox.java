@@ -18,6 +18,6 @@ public interface PassiveCircleBoundingBox {
     /**
      * @return the radius of the bounding box
      */
-    Integer getRadius();
+    double getRadius();
 
 }
