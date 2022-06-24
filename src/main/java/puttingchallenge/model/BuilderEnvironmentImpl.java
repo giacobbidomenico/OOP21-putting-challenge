@@ -33,6 +33,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         this.container = Optional.empty();
         this.ball = Optional.empty();
         this.player = Optional.empty();
+        this.hole = Optional.empty();
     }
 
 
