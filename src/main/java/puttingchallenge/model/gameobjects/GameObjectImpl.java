@@ -1,5 +1,7 @@
 package puttingchallenge.model.gameobjects;
 
+import java.util.Objects;
+
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -10,15 +12,16 @@ import puttingchallenge.view.graphics.GraphicComponent;
 
 /**
  * Class that implements an element of the game.
+ * @param <H>
+ *      the type of the hitbox component of the object
  */
-public class GameObjectImpl implements GameObject {
+public class GameObjectImpl<H> implements GameObject<H> {
 
     private final GameObjectType type;
     private Point2D pos;
-    private boolean isFlipped;
     private final GraphicComponent graph;
     private final PhysicsComponent phys;
-    private final HitBox hitBox;
+    private final H hitBox;
 
     /**
      * Build a new {@link GameObjectImpl}.
@@ -38,12 +41,12 @@ public class GameObjectImpl implements GameObject {
                           final Point2D position,
                           final GraphicComponent graph,
                           final PhysicsComponent phys,
-                          final HitBox hitBox) {
-        this.type = type;
-        this.pos = position;
-        this.graph = graph;
-        this.phys = phys;
-        this.hitBox = hitBox;
+                          final H hitBox) {
+        this.type = Objects.requireNonNull(type);
+        this.pos = Objects.requireNonNull(position);
+        this.graph = Objects.requireNonNull(graph);
+        this.phys = Objects.requireNonNull(phys);
+        this.hitBox = Objects.requireNonNull(hitBox);
     }
 
     /**
@@ -114,7 +117,7 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public HitBox getHitBox() {
+    public H getHitBox() {
         return this.hitBox;
     }
 
