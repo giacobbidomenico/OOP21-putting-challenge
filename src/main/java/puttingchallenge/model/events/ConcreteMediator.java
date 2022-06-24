@@ -1,7 +1,9 @@
 package puttingchallenge.model.events;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -9,20 +11,20 @@ import java.util.Set;
  */
 public class ConcreteMediator implements Mediator {
 
-    private final Set<Colleague> colleagues;
+    private final List<Colleague> colleagues;
 
     /**
      * Build a new {@link ConcreteMediator}.
      */
     public ConcreteMediator() {
-        this.colleagues = new HashSet<>();
+        this.colleagues = new CopyOnWriteArrayList<>();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addColleague(final Colleague newColleague) {
+    public synchronized void addColleague(final Colleague newColleague) {
         this.colleagues.add(newColleague);
     }
 
@@ -30,7 +32,7 @@ public class ConcreteMediator implements Mediator {
      * {@inheritDoc}
      */
     @Override
-    public void removeColleague(final Colleague toRemove) {
+    public synchronized void removeColleague(final Colleague toRemove) {
         this.colleagues.remove(toRemove);
     }
 
@@ -38,7 +40,7 @@ public class ConcreteMediator implements Mediator {
      * {@inheritDoc}
      */
     @Override
-    public void notifyColleagues(final GameEvent event, final Colleague sender) {
+    public synchronized void notifyColleagues(final GameEvent event, final Colleague sender) {
         this.colleagues.stream().filter(x -> !x.equals(sender)).forEach(x -> x.notifyEvent(event));
     }
 
