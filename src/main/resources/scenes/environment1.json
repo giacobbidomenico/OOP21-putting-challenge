@@ -1,6 +1,6 @@
 {
     "scene": {
-        "background": "/background/AngkorWat.png",
+        "background": "/backgrounds/game_win.png",
         "wScale": "50",
         "hScale": "50"
     },
