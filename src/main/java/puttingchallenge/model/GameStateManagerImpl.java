@@ -31,7 +31,7 @@ public class GameStateManagerImpl implements GameStateManager {
      * {@inheritDoc}
      */
     public void initState() {
-        this.switchState(INITIAL_STATE);
+        this.currentGameState = new ScreenGameState(this, INITIAL_STATE);
     }
     /**
      * {@inheritDoc}
@@ -44,10 +44,12 @@ public class GameStateManagerImpl implements GameStateManager {
                 this.currentGameState.initState();
                 break;
             case GAME_OVER:
-            case MAIN_MENU:
                 this.currentGameState = new ScreenGameState(this, status);
                 final GameEvent event = new GameEventImpl(EVENT_TO_STATUS.get(status));
                 this.generalMediator.notifyColleagues(event, this);
+                break;
+            case MAIN_MENU:
+                this.currentGameState = new ScreenGameState(this, status);
                 break;
         default:
             break;
