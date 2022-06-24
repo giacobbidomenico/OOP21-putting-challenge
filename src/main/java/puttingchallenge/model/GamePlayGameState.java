@@ -38,7 +38,7 @@ public class GamePlayGameState extends AbstractGameState {
      * @param status
      */
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
-        super(manager, status, null);
+        super(manager, status);
     }
     /**
      * {@inheritDoc}
@@ -50,9 +50,10 @@ public class GamePlayGameState extends AbstractGameState {
     }
     private void loadNextEnvironment() {
         try {
-            EnvironmentLoader.getLoader().getEnvironment(MAPS.next());
-        } catch (NoSuchElementException e) {
-            this.leavingState(GameStatus.GAME_OVER);
+            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(MAPS.next()));
+            if (getEnvironment().isEmpty()) {
+                this.leavingState(GameStatus.GAME_OVER);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

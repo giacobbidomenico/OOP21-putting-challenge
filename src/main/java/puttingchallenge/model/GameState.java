@@ -30,6 +30,12 @@ public interface GameState {
      */
     Optional<Environment> getEnvironment();
     /**
+     * Sets the state's environment.
+     * @param environment
+     *          to set
+     */
+    void setEnvironment(Optional<Environment> environment);
+    /**
      * Notify the intercepted event.
      * @param eventType
      *          of the event intercepted
