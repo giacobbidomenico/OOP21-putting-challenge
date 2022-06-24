@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
+import javafx.scene.layout.VBox;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -72,14 +72,20 @@ public final class SceneLoader {
 
     private SceneController loadScreen(final SceneType sceneTag,
                                        final List<GameObject> objs) throws IOException {
-        final FXMLLoader loader = new FXMLLoader();
-        final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
-        final Parent parent;
-        parent = loader.load(new FileInputStream(path));
+        final String path = "/" + "scenes" + "/" + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
+        String path1 = "/scenes/main_menu.fxml";
+        System.out.println(path);
+        var a = getClass().getResource(path);
+        final FXMLLoader loader = new FXMLLoader(a);
+        //final Parent parent = loader.load();
+        final VBox vbox = loader.load();
+        //loader.setController();
+        //final Parent parent = FXMLLoader.load(getClass().getResource(path));
+        //parent = loader.load(new FileInputStream(path));
 
 
         final SceneController sc = loader.getController();
-        sc.init(new Scene(parent), objs);
+        sc.init(new Scene(vbox), objs);
         return sc;
     }
 
