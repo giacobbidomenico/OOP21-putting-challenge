@@ -37,11 +37,13 @@ public class ViewImpl implements View {
      */
     @Override
     public void buildView() {
-        this.loadScene(SceneType.MAIN_MENU, Collections.emptyList());
-        this.stage.setScene(scene.getScene());
-        this.stage.sizeToScene();
-        this.stage.setResizable(false);
-        this.stage.show();
+        Platform.runLater(() -> {
+            this.loadScene(SceneType.MAIN_MENU, Collections.emptyList());
+            this.stage.setScene(scene.getScene());
+            this.stage.sizeToScene();
+            this.stage.setResizable(false);
+            this.stage.show();
+        });
     }
 
     private void loadScene(final SceneType typeScene, final List<GameObject> objs) {
