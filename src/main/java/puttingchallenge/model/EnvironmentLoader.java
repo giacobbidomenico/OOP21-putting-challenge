@@ -26,11 +26,11 @@ public final class EnvironmentLoader {
 
     private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
-                                             + SEP + "src"
-                                             + SEP + "main"
-                                             + SEP + "resources"
-                                             + SEP + "scenes"
-                                             + SEP;
+                                            + SEP + "src"
+                                            + SEP + "main"
+                                            + SEP + "resources"
+                                            + SEP + "scenes"
+                                            + SEP;
     private static final String PATH_END = ".json";
 
     /**
@@ -67,11 +67,24 @@ public final class EnvironmentLoader {
 
             this.setBall(w, h, builder, file);
             this.setPlayer(w, h, builder, file);
+            this.setHole(w, h, builder, file);
             this.addObstacles(w, h, builder, file);
             return Optional.of(builder.build());
         } else {
             return Optional.empty();
         }
+    }
+
+    private void setHole(final double w,
+            final double h,
+            final BuilderEnvironment builder, 
+            final JSONObject file) {
+        final JSONObject hole = file.getJSONObject("hole");
+        final double x = w * (hole.getDouble("posX") / 100);
+        final double y = h * (hole.getDouble("posY") / 100);
+        final double wPerc = w * (hole.getDouble("wScale") / 100);
+        final double hPerc = h * (hole.getDouble("hScale") / 100);
+        builder.hole(new Point2D(x, y), wPerc, hPerc);
     }
 
     private void addObstacles(final double w, 
