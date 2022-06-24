@@ -3,6 +3,7 @@ package puttingchallenge.core;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import puttingchallenge.model.GameStateManager;
 import puttingchallenge.model.GameStateManagerImpl;
@@ -93,6 +94,7 @@ public class GameLoopImpl extends Thread implements GameEngine, Colleague {
             switch (event.getEventType()) {
                 case QUIT:
                     this.isOver = true;
+                    Platform.exit();
                     break;
                 case WIN:
                     final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.WIN, SceneType.GAME_WIN);
