@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
-import puttingchallenge.core.GameEngine;
 import puttingchallenge.core.GameFactory;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;

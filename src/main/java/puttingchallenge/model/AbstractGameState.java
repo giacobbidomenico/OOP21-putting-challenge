@@ -1,6 +1,9 @@
 package puttingchallenge.model;
 
+import java.util.Objects;
 import java.util.Optional;
+
+import puttingchallenge.core.GameLoopImpl;
 
 /**
  * Abstract class that represent a {@link GameState}.
@@ -8,18 +11,20 @@ import java.util.Optional;
 public abstract class AbstractGameState implements GameState {
     private final GameStatus status;
     private final GameStateManager stateManager;
-    private Optional<Environment> environment;
+    private final Optional<Environment> environment;
+
     /**
      * 
      * @param manager
      * @param status
+     * @param environment
      */
     public AbstractGameState(final GameStateManager manager,
                              final GameStatus status,
-                             final Environment environment) {
+                             final Optional<Environment> environment) {
         this.stateManager = manager;
         this.status = status;
-        this.environment = Optional.ofNullable(environment);
+        this.environment = environment;
     }
 
     /**
@@ -54,11 +59,4 @@ public abstract class AbstractGameState implements GameState {
         this.stateManager.switchState(nextStatus);
     }
 
-    /**
-     * 
-     * @param environment
-     */
-    void setEnvironment(final Optional<Environment> environment) {
-        this.environment = environment;
-    }
 }

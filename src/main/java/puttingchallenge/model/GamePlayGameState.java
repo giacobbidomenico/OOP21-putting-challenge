@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
@@ -49,7 +50,7 @@ public class GamePlayGameState extends AbstractGameState {
     }
     private void loadNextEnvironment() {
         try {
-            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(MAPS.next()));
+            EnvironmentLoader.getLoader().getEnvironment(MAPS.next());
         } catch (NoSuchElementException e) {
             this.leavingState(GameStatus.GAME_OVER);
         } catch (IOException e) {
@@ -62,6 +63,7 @@ public class GamePlayGameState extends AbstractGameState {
         this.observable = new ObservableEventsImpl<>();
         this.getEnvironment().get().configureObservable(this.observable);
     }
+
     /**
      * Check if the environment exists.
      */

@@ -26,7 +26,9 @@ public final class EnvironmentLoader {
 
     private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
-                                             + SEP + "res"
+                                             + SEP + "src"
+                                             + SEP + "main"
+                                             + SEP + "resources"
                                              + SEP + "scenes"
                                              + SEP;
     private static final String PATH_END = ".json";
@@ -57,10 +59,10 @@ public final class EnvironmentLoader {
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
-            file.getJSONObject("scene");
+            final JSONObject  dimScene = file.getJSONObject("scene");
             final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-            final double w = screenDim.getWidth() * (file.getDouble("wScale") / 100);
-            final double h = screenDim.getHeight() * (file.getDouble("hScale") / 100);
+            final double w = screenDim.getWidth() * (dimScene.getDouble("wScale") / 100);
+            final double h = screenDim.getHeight() * (dimScene.getDouble("hScale") / 100);
             builder.container(new Rectangle2D(0, 0, w, h));
 
             this.setBall(w, h, builder, file);
