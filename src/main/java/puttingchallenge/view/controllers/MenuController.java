@@ -1,6 +1,8 @@
 package puttingchallenge.view.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
@@ -17,6 +19,7 @@ public class MenuController extends AbstractSceneController {
      * @param e
      *          unused
      */
+    @FXML
     public void quitGame(final ActionEvent e) {
         final GameEvent event = new GameEventImpl(GameEventType.QUIT);
         super.getMediator().notifyColleagues(event, this);
@@ -28,6 +31,7 @@ public class MenuController extends AbstractSceneController {
      * @param e
      *          unused
      */
+    @FXML
     public void startGame(final ActionEvent e) {
         final GameEvent event = new GameEventImpl(GameEventType.START);
         super.getMediator().notifyColleagues(event, this);

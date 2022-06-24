@@ -10,9 +10,11 @@ public class WallGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
     private static final String TEXTURE_PATH_IMAGE = System.getProperty("user.dir")
-                                                     + SEP + "res"
+                                                     + SEP + "src"
+                                                     + SEP + "main"
+                                                     + SEP + "resources"
                                                      + SEP + "obstacles"
-                                                     + SEP + "wall.png";
+                                                     + SEP + "hole.png";
 
     /**
      * Build a new {@link GraphicComponent} for a wall in the game.
