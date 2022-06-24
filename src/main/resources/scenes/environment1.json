@@ -27,14 +27,14 @@
     },
 
     "staticObstacles": [{
-            "type": "4",
+            "type": "WALL",
             "posX": "13",
             "posY": "0",
             "wScale": "50",
             "hScale": "50"
         },
         {
-            "type": "5",
+            "type": "TREE",
             "posX": "21",
             "posY": "33",
             "wScale": "50",
