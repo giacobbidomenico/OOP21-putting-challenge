@@ -1,11 +1,10 @@
 package puttingchallenge.core;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import puttingchallenge.model.GameStateManager;
 import puttingchallenge.model.GameStateManagerImpl;
 import puttingchallenge.model.events.Colleague;
@@ -14,7 +13,6 @@ import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
-import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.SceneType;
 import puttingchallenge.view.View;
 import puttingchallenge.view.ViewImpl;
@@ -62,7 +60,7 @@ public class GameLoopImpl implements GameEngine, Colleague {
         this.gameState.initState();
         this.view.buildView();
 
-        this.gameLoop();
+        Platform.runLater(() -> this.gameLoop());
     }
 
     private void waitCycleTime(final long startTime) {
