@@ -1,38 +1,38 @@
 {
   "scene" : {
-    	"background": "/OOP21-putting-challenge/res/background/AngkorWat.png",
-      "wScale": "2",
-      "hScale": "2"
+    	"background": "/background/AngkorWat.png",
+        "wScale": "50",
+        "hScale": "50"
   },
 
   "player" : {
-      "posX": "",
-      "posY": "",
-      "wScale": "",
-      "hScale": "",
-      "skinPath": ""
+      "posX": "10",
+      "posY": "10",
+      "wScale": "12",
+      "hScale": "12",
+      "skinPath": "/skins/player.png"
   },
 
   "ball" : {
-    "posX": "",
-    "posY": "",
-    "radiusScale": ""
+    "posX": "12",
+    "posY": "34",
+    "radiusScale": "15"
   },
 
   "staticObstacles" : [
      {
-        "type": "",
-        "posX": "",
-        "posY": "",
-        "wScale": "",
-        "hScale": ""
+        "type": "wall",
+        "posX": "13",
+        "posY": "0",
+        "wScale": "50",
+        "hScale": "50"
      },
      {
-      "type": "",
-      "posX": "",
-      "posY": "",
-      "wScale": "",
-      "hScale": ""
+      "type": "tree",
+      "posX": "21",
+      "posY": "33",
+      "wScale": "50",
+      "hScale": "50"
       }
   ]
 }
