@@ -9,13 +9,7 @@ import java.io.File;
 public class WallGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-<<<<<<< HEAD
     private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "hole.png";
-=======
-    private static final String TEXTURE_PATH_IMAGE = SEP + "resources"
-                                                     + SEP + "obstacles"
-                                                     + SEP + "hole.png";
->>>>>>> 2f8b3b7bcb87180a838762cd99894fd6639b4e98
 
     /**
      * Build a new {@link GraphicComponent} for a wall in the game.
