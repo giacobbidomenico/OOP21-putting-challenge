@@ -3,7 +3,7 @@ package puttingchallenge.model.collisions;
 import puttingchallenge.common.Point2D;
 
 /**
- * Represents a rectangle bounding box whose sidea are parallel to the axis of the lane.
+ * Represents a rectangle bounding box whose sides are parallel to the axis of the lane.
  */
 public class AxisAlignedBoundingBox implements ActiveBoundingBox {
 
