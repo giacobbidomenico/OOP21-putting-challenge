@@ -1,8 +1,12 @@
 package puttingchallenge.model;
 
+import java.util.List;
 import java.util.Optional;
 
+import javafx.util.Pair;
 import puttingchallenge.model.events.ModelEventType;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.SceneType;
 
 /**
  * 
@@ -12,8 +16,9 @@ import puttingchallenge.model.events.ModelEventType;
 public interface GameState {
     /**
      * Sets the initial state.
+     * @return 
      */
-    void initState();
+    Pair<SceneType, List<GameObject>> initState();
     /**
      * @return
      *          the current {@link GameStatus} of the game
