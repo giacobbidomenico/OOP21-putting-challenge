@@ -9,12 +9,7 @@ import java.io.File;
 public class HoleGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-    private static final String IMAGE_OF_THE_HOLE = System.getProperty("user.dir")
-                                                    + SEP + "src"
-                                                    + SEP + "main"
-                                                    + SEP + "resources"
-                                                    + SEP + "obstacles"
-                                                    + SEP + "hole.png";
+    private static final String IMAGE_OF_THE_HOLE = SEP + "obstacles" + SEP + "hole.png";
 
     /**
      * Build a new {@link HoleGraphicComponent}.
