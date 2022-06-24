@@ -16,6 +16,7 @@ import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
+import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.SceneType;
 
 /**
@@ -32,6 +33,7 @@ public class GamePlayGameState extends AbstractGameState {
     private static final int NO_SCORE = 0;
     private static final int MAX_LIVES = 3;
     private static final Iterator<SceneType> MAPS = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
+    private SceneType currentScene;
     /**
      * 
      * @param manager
@@ -43,25 +45,29 @@ public class GamePlayGameState extends AbstractGameState {
     /**
      * {@inheritDoc}
      */
-    public void initState() {
+    public Pair<SceneType, List<GameObject>> initState() {
         this.lives = MAX_LIVES;
         this.score = NO_SCORE;
         this.loadNextEnvironment();
+        return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
     private void loadNextEnvironment() {
         try {
-            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(MAPS.next()));
+            this.currentScene = MAPS.next();
+            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
             if (getEnvironment().isEmpty()) {
                 this.leavingState(GameStatus.GAME_OVER);
+            } else {
+                System.out.println("caaasdda");
+                this.environmentObservable = this.getEnvironment().get().getObservable();
+                this.observer = new ObserverEventsImpl<>();
+                this.environmentObservable.addObserver(this.observer);
+                this.observable = new ObservableEventsImpl<>();
+                this.getEnvironment().get().configureObservable(this.observable);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.environmentObservable = this.getEnvironment().get().getObservable();
-        this.observer = new ObserverEventsImpl<>();
-        this.environmentObservable.addObserver(this.observer);
-        this.observable = new ObservableEventsImpl<>();
-        this.getEnvironment().get().configureObservable(this.observable);
     }
 
     /**
