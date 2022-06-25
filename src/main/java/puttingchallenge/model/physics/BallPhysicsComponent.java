@@ -5,8 +5,12 @@ import java.util.Optional;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.core.GameFactory;
+import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox.ConcreteCollisionTest;
+import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 
 /**
  * Describes the physical behavior of the ball.
@@ -49,16 +53,20 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
 
-            final Optional<Collision> infoOpt = env.checkCollison(obj.getHitBox(), clone, obj.getPosition());
+            final Optional<CollisionTest> infoOpt = env.checkCollison(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition());
             final Point2D nextPos;
-            if(infoOpt.isPresent()) {
-                // aggiornare velocità dopo la collisione
-                final Collision info = infoOpt.get();
-    
-                obj.setVelocity(info.getVelocity());
-                switch (info.getEdge()) {
-                case 
-                }
+            if (infoOpt.isPresent()) {
+                final CollisionTest info = infoOpt.get();
+
+                final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
+                nextPos = info.getEstimatedPointOfImpact().get();
+                nextPos.sumX(-radius);
+                nextPos.sumY(radius);
+
+                final Vector2D normale = info.getActiveBBSideNormal().get();
+                normale.sumX(this.getVelocity().getX());
+                normale.sumY(this.getVelocity().getY());
+                this.setVelocity(normale);
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
