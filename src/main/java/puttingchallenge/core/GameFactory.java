@@ -1,6 +1,9 @@
 package puttingchallenge.core;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
+import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
@@ -29,10 +32,14 @@ public class GameFactory {
      * @return an instance of {@link GameObject} representing the ball
      */
     public GameObject createBall(final Point2D pos, final double radius) {
-        return new GameObjectImpl(GameObjectType.BALL, 
+        final Point2D center = new Point2D(pos);
+        center.sumX(-radius);
+        center.sumY(-radius);
+        return new BallObjectImpl(GameObjectType.BALL, 
                                   pos, 
                                   new BallGraphicComponent(radius), 
-                                  new BallPhysicsComponent(radius));
+                                  new BallPhysicsComponent(radius),
+                                  new ConcretePassiveCircleBoundingBox(center, radius));
     }
 
     /**

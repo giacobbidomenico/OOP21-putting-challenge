@@ -10,10 +10,8 @@ import puttingchallenge.model.physics.PhysicsComponent;
 
 /**
  * Class that implements an element of the game.
- * @param <H>
- *      the type of the hitbox component of the object
  */
-public interface GameObject<H> {
+public interface GameObject {
 
     /**
      * Types of the game objects.
@@ -79,11 +77,6 @@ public interface GameObject<H> {
      * @return the velocity of the object.
      */
     Vector2D getVelocity();
-
-    /**
-     * @return the hit box of the object.
-     */
-    H getHitBox();
 
     /**
      * Update physic state of the object.
