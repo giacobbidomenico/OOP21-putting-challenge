@@ -123,7 +123,7 @@ public class GameFactory {
                                   pos, 
                                   new HoleGraphicComponent(w, h), 
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, 2, w)));
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, 2, 10)));
     }
 
 }
