@@ -84,13 +84,12 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      * 
      * @param dt
      *          delta time
-     * @param obj
+     * @param curPos
      *          starting position
      * @return the next expected position
      */
-    private Point2D nextPos(final long dt, final GameObject obj) {
+    public Point2D nextPos(final long dt, final Point2D curPos) {
         final double t = 0.001 * dt;
-        final Point2D curPos = obj.getPosition();
         final Vector2D vel = this.getVelocity();
 
         this.reduceVel(dt);
