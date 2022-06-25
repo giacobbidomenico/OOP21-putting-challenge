@@ -1,6 +1,6 @@
 {
     "scene": {
-        "background": "/backgrounds/sky.jpeg",
+        "background": "/backgrounds/sky.jpg",
         "wScale": "50",
         "hScale": "50"
     },
