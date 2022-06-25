@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,7 +26,7 @@ import puttingchallenge.model.gameobjects.GameObject;
  * Class that defines the controller that manages the {@link Scene} related to the loaded game level.
  * 
  */
-public class LevelController extends AbstractSceneController {
+public class LevelController extends AbstractSceneController implements EventHandler<Event> {
 
     private static final double UPPER_LEFT_X = 0.0;
     private static final double UPPER_LEFT_Y = 0.0;
@@ -79,9 +82,9 @@ public class LevelController extends AbstractSceneController {
     }
     /**
      * Handles mouse moved event.
+     * @param mouseMoved
      */
-    @FXML
-    public void handleMouseMoved() {
+    public void handleMouseMoved(final MouseEvent mouseMoved) {
 //        if (this.isAiming) {
 //            final Pair<Double, Double> coord = this.getCoord(event);
 //            final GameEventWithDetailsImpl<Pair<Double, Double>> movingEvent = new GameEventWithDetailsImpl<>(GameEventType.MOVING, coord);
@@ -92,7 +95,6 @@ public class LevelController extends AbstractSceneController {
      * Handles mouse pressed event.
      * @param event
      */
-    @FXML
     public void handleMousePressed(final MouseEvent event) {
         this.aimingPoint = Optional.of(this.getCoord(event));
     }
@@ -120,5 +122,24 @@ public class LevelController extends AbstractSceneController {
 
     private Point2D getCoord(final MouseEvent event) {
         return new Point2D(event.getScreenX(), event.getScreenY());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handle(final Event event) {
+        if (event.getEventType().getSuperType().equals(MouseEvent.MOUSE_MOVED)) {
+            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        }
+        if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
+            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        }
+        if (event.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
+            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        }
+        if (event.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
+            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        }
     }
 }

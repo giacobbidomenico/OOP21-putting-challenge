@@ -96,9 +96,9 @@ public final class SceneLoader {
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
         final Button button = new Button("Quit");
+        button.addEventHandler(MouseEvent.MOUSE_CLICKED, levelController);
         final var posWButton = w * (0.1);
         button.setLayoutX(w - posWButton);
-        //button.addEventHandler(MouseEvent.MOUSE_MOVED, levelController.handleMouseMoved());
         final Label score = new Label("Score");
         final var posWScore = w * (0.3);
         score.setLayoutX(posWScore);
@@ -109,6 +109,9 @@ public final class SceneLoader {
         layout.getChildren().add(button);
         layout.getChildren().add(score);
         layout.getChildren().add(lives);
+        layout.addEventHandler(MouseEvent.MOUSE_MOVED, levelController);
+        layout.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
+        layout.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
         final Scene scene = new Scene(layout, w, h);
         levelController.init(scene, objs);
         return levelController;
