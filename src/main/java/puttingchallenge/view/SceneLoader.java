@@ -12,20 +12,13 @@ import org.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -106,6 +99,7 @@ public final class SceneLoader {
         final var posWLives = w * (0.4);
         score.setLayoutX(posWLives);
         final AnchorPane layout = new AnchorPane();
+        final Canvas canvas = new Canvas();
         layout.getChildren().add(button);
         layout.getChildren().add(score);
         layout.getChildren().add(lives);
@@ -113,7 +107,7 @@ public final class SceneLoader {
         layout.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
         layout.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
         final Scene scene = new Scene(layout, w, h);
-        levelController.init(scene, objs);
+        levelController.init(scene, objs, canvas.getGraphicsContext2D());
         return levelController;
     }
 }

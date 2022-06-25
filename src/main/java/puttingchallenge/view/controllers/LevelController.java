@@ -1,6 +1,5 @@
 package puttingchallenge.view.controllers;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -8,12 +7,9 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
@@ -47,15 +43,12 @@ public class LevelController extends AbstractSceneController implements EventHan
      *            {@link GameObject} present in the {@link Scene}
      * @param gc
      *            the {@link GraphicsContext} in which the object has to be drawn
-     * @param backgroundPath
      */
     public void init(final Scene scene,
                      final List<GameObject> gameObjects,
-                     final GraphicsContext gc,
-                     final String backgroundPath) throws FileNotFoundException {
+                     final GraphicsContext gc) throws FileNotFoundException {
         super.init(scene, gameObjects);
         this.gc = gc;
-        this.backgroundPath = backgroundPath;
         this.isAiming = false;
         /*
         if (this.env.isEmpty()) {
