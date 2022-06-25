@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -128,8 +125,9 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-        //shootingVector.flipVector();
-        this.checkExceptionEnvironment();
+        shootingVector.setX(shootingVector.getX() * this.getEnvironment().get().getPlayer().getBat().getType().getStrength());
+        shootingVector.setY(shootingVector.getY() * this.getEnvironment().get().getPlayer().getBat().getType().getStrength());
+        //this.checkExceptionEnvironment();
         this.getEnvironment().get().getBall().setVelocity(shootingVector);
     }
     /**
