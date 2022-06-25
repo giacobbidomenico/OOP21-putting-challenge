@@ -13,6 +13,7 @@ import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
+import puttingchallenge.model.gameobjects.PlayerObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
@@ -34,7 +35,7 @@ public class EnvironmentImpl implements Environment {
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
-    private final GameObject player;
+    private final PlayerObject player;
     private final GameObject hole;
 
 
@@ -55,7 +56,7 @@ public class EnvironmentImpl implements Environment {
      */
     public EnvironmentImpl(final Rectangle2D container,
                            final GameObject ball, 
-                           final GameObject player,
+                           final PlayerObject player,
                            final List<GameObject> staticObstacles,
                            final GameObjectImpl hole) {
         this.observableGameState = Optional.empty();
@@ -99,7 +100,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public GameObject getPlayer() {
+    public PlayerObject getPlayer() {
         return this.player;
     }
 
