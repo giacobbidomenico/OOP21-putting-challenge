@@ -1,7 +1,5 @@
 package puttingchallenge.model.gameobjects;
 
-import java.util.Optional;
-
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -103,14 +101,15 @@ public interface GameObject {
     void draw(GraphicsContext graphicsContext);
 
     /**
+     * Sets the flip of the {@link GameObject}.
      * 
      * @param flip
+     *          flip of the {@link GameObject}
      */
     void setFlip(boolean flip);
 
     /**
-     * 
-     * @return
+     * @return the flip of the {@link GameObject}
      */
-    boolean isFlipped();
+    boolean isFlip();
 }

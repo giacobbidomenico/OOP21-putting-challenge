@@ -1,5 +1,6 @@
 package puttingchallenge.model;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -11,8 +12,13 @@ import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
+import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
+import puttingchallenge.model.collisions.PassiveCircleBBTrajectoryBuilder;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
 
 /**
@@ -51,7 +57,7 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final List<GameObject> staticObstacles,
-                           final GameObject hole) {
+                           final GameObjectImpl hole) {
         this.observableGameState = Optional.empty();
         this.observable = new ObservableEventsImpl<>();
         this.observer = new ObserverEventsImpl<>();
@@ -71,15 +77,6 @@ public class EnvironmentImpl implements Environment {
         bf.update(dt, ball, this);
         this.receiveEvents();
         this.notifyEvents();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkCollisions() {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     /**
@@ -242,6 +239,41 @@ public class EnvironmentImpl implements Environment {
         allGameObjects.addAll(staticObstacles);
         allGameObjects.add(hole);
         return allGameObjects;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws IllegalAccessException 
+     */
+    @Override
+    public Optional<CollisionTest> checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
+            final BallPhysicsComponent ballPhysics,
+            final Point2D ballPosition,
+            final long deltaT)  {
+
+        final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
+        final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
+                new Point2D(ballPosition.getX() + ballHitbox.getRadius(), 
+                        ballPosition.getY() - ballHitbox.getRadius()), 
+                ballHitbox.getRadius());
+
+        builder.setHitbox(box);
+        builder.setPhysic(ballPhysics);
+        builder.setPosition(box.getPosition());
+
+        CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder, deltaT);
+        if (result.isCollisionOccurred()) {
+            // Avvenuta collisione con la buca
+        }
+
+        result = null;
+        for (final GameObject gameObject : staticObstacles) {
+            final CollisionTest currentResult = ((GameObjectImpl) gameObject).getHitBox().collidesWith(builder, deltaT);
+            if (currentResult.isCollisionOccurred()) {
+                result = currentResult;
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
 }

@@ -1,6 +1,10 @@
 package puttingchallenge.core;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.AxisAlignedBoundingBox;
+import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox;
+import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
+import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
@@ -29,10 +33,14 @@ public class GameFactory {
      * @return an instance of {@link GameObject} representing the ball
      */
     public GameObject createBall(final Point2D pos, final double radius) {
-        return new GameObjectImpl(GameObjectType.BALL, 
+        final Point2D center = new Point2D(pos);
+        center.sumX(-radius);
+        center.sumY(-radius);
+        return new BallObjectImpl(GameObjectType.BALL, 
                                   pos, 
                                   new BallGraphicComponent(radius), 
-                                  new BallPhysicsComponent(radius));
+                                  new BallPhysicsComponent(radius),
+                                  new ConcretePassiveCircleBoundingBox(center, radius));
     }
 
     /**
@@ -52,7 +60,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.PLAYER,
                                   pos,
                                   new PlayerGraphicComponent(skinPath, w, h),
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  null);
     }
 
     /**
@@ -73,7 +82,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos, 
                                   new WallGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
     /**
@@ -94,7 +104,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
                                   new TreeGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
     /**
@@ -111,7 +122,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.HOLE, 
                                   pos, 
                                   new HoleGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, 2, w)));
     }
 
 }

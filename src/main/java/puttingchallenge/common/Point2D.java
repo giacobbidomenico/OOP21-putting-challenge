@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Point2D implements Serializable {
 
     private static final long serialVersionUID = -6448133475513092884L;
-    private final double x, y;
+    private double x, y;
 
     /**
      * Build a new {@link Point2D}.
@@ -59,6 +59,26 @@ public class Point2D implements Serializable {
     }
 
     /**
+     * Adds the supplied value to the abscissa of the point.
+     * 
+     * @param value
+     *          the value to sum
+     */
+    public void sumX(final double value) {
+        this.x += value;
+    }
+
+    /**
+     * Adds the supplied value to the ordinate of the point.
+     * 
+     * @param value
+     *          the value to sum
+     */
+    public void sumY(final double value) {
+        this.y += value;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -87,7 +107,7 @@ public class Point2D implements Serializable {
         }
         return false;
     }
-    // could be useless
+
     /**
      * Get the distance between two {@link Point2D}.
      * @param pointA
@@ -99,4 +119,12 @@ public class Point2D implements Serializable {
         return new Vector2D(pointA.getX() - pointB.getX(), pointA.getY() - pointB.getY()).getModule();
     }
 
+    /**
+     * @param pointA
+     * @param pointB
+     * @return the dot product between pointA and pointB
+     */
+    public static double dotProduct(final Point2D pointA, final Point2D pointB) {
+        return pointA.getX() * pointB.getX() + pointA.getY() * pointB.getY();
+    }
 }
