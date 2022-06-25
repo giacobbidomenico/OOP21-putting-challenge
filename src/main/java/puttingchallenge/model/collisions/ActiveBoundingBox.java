@@ -22,4 +22,10 @@ public interface ActiveBoundingBox {
      */
     Vector2D getNormal(Point2D pointOnActiveBoundingBox);
 
+    /**
+     * @param point 
+     * @return the closest point on the bounding box to points
+     */
+    Point2D closestPointOnBBToPoint(Point2D point);
+
 }
