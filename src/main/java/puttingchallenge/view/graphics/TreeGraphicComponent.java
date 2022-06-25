@@ -9,12 +9,7 @@ import java.io.File;
 public class TreeGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-    private static final String IMAGE_PATH = System.getProperty("user.dir")
-                                             + SEP + "src"
-                                             + SEP + "main"
-                                             + SEP + "resources"
-                                             + SEP + "obstacles"
-                                             + SEP + "tree.png";
+    private static final String IMAGE_PATH = SEP + "obstacles" + SEP + "tree.png";
 
     /**
      * Build a new {@link GraphicComponent} for a tree in the game.

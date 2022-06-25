@@ -1,0 +1,44 @@
+{
+    "scene": {
+        "background": "/backgrounds/game_over.png",
+        "wScale": "50",
+        "hScale": "50"
+    },
+
+    "player": {
+        "posX": "10",
+        "posY": "10",
+        "wScale": "12",
+        "hScale": "12",
+        "skinPath": "/skins/player.png"
+    },
+
+    "ball": {
+        "posX": "12",
+        "posY": "34",
+        "radiusScale": "15"
+    },
+
+    "hole": {
+        "posX": "20",
+        "posY": "20",
+        "wScale": "50",
+        "hScale": "50"
+    },
+
+    "staticObstacles": [{
+            "type": "WALL",
+            "posX": "13",
+            "posY": "0",
+            "wScale": "50",
+            "hScale": "50"
+        },
+        {
+            "type": "TREE",
+            "posX": "21",
+            "posY": "33",
+            "wScale": "50",
+            "hScale": "50"
+        }
+    ]
+}

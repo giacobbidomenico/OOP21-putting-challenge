@@ -1,7 +1,7 @@
 package puttingchallenge.model.events;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -9,13 +9,13 @@ import java.util.Set;
  */
 public class ConcreteMediator implements Mediator {
 
-    private final Set<Colleague> colleagues;
+    private final List<Colleague> colleagues;
 
     /**
      * Build a new {@link ConcreteMediator}.
      */
     public ConcreteMediator() {
-        this.colleagues = new HashSet<>();
+        this.colleagues = new CopyOnWriteArrayList<>();
     }
 
     /**

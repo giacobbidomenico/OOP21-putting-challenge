@@ -15,7 +15,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
-    
 
     private final double radius;
     private boolean isMoving;
@@ -23,8 +22,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     /**
      * Build a new {@link BallPhysicsComponent}.
      * 
-     * @param vel
-     *          initial velocity of the ball
      * @param radius
      *          radius of the ball
      */
@@ -32,7 +29,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
     }
-    
+
     /**
      * @return the radius of the ball.
      */
@@ -46,23 +43,24 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     @Override
     public void update(final long dt, final GameObject obj, final Environment env) {
         if (this.isMoving) {
-            final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
-            clone.setVelocity(new Vector2D(this.getVelocity()));
-
-            final Optional<Collision> infoOpt = env.checkCollison(obj.getHitBox(), clone, obj.getPosition());
-            final Point2D nextPos;
-            if(infoOpt.isPresent()) {
-                // aggiornare velocità dopo la collisione
-                final Collision info = infoOpt.get();
-    
-                obj.setVelocity(info.getVelocity());
-                switch (info.getEdge()) {
-                case 
-                }
-            } else {
-                nextPos = this.nextPos(dt, obj.getPosition());
-            }
-
+//            final GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()), this.radius);
+//            clone.setVelocity(new Vector2D(this.getVelocity()));
+//
+//            final Optional<Collision> infoOpt = env.checkCollison(clone);
+//            final Point2D nextPos;
+//            if(infoOpt.isPresent()) {
+//                // aggiornare velocità dopo la collisione
+//                final Collision info = infoOpt.get();
+ 
+//                obj.setVelocity(info.getVelocity());
+//                switch (info.getEdge()) {
+//                case 
+//                }
+//            } else {
+//                nextPos = this.nextPos(dt, obj);
+//            }
+            final Point2D nextPos = this.nextPos(dt, obj);
+            this.reduceVel(dt);
             if (obj.getPosition().equals(nextPos)) {
                 this.setVelocity(new Vector2D(0, 0));
             } else {
@@ -71,18 +69,21 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
     }
 
+
+
     /**
      * Given a delta time, it calculates the next position of the object, starting from an initial position.
      * Follow the formulas of the motion of the projectile in a viscous medium.
      * 
      * @param dt
      *          delta time
-     * @param curPos
+     * @param obj
      *          starting position
      * @return the next expected position
      */
-    public Point2D nextPos(final long dt, final Point2D curPos) {
-        final long t = (long) 0.001 * dt;
+    private Point2D nextPos(final long dt, final GameObject obj) {
+        final double t = 0.001 * dt;
+        final Point2D curPos = obj.getPosition();
         final Vector2D vel = this.getVelocity();
 
         this.reduceVel(dt);
@@ -96,7 +97,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private void reduceVel(final long dt) {
         double velX = Math.abs(this.getVelocity().getX());
         double velY = this.getVelocity().getY();
-        final long t = (long) 0.001 * dt;
+        final double t = 0.001 * dt;
 
         velY -= Y_ACCELERATION * t;
         if (velX != 0) {
@@ -123,11 +124,10 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     @Override
     public void setVelocity(final Vector2D vel) {
         super.setVelocity(vel);
-        if(this.getVelocity().equals(new Vector2D(0, 0))) {
+        if (this.getVelocity().equals(new Vector2D(0, 0))) {
             this.isMoving = false;
         } else {
             this.isMoving = true;
         }
     }
-    
 }

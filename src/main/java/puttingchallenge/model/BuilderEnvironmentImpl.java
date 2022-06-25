@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
-import puttingchallenge.core.GameEngine;
 import puttingchallenge.core.GameFactory;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
@@ -34,6 +33,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         this.container = Optional.empty();
         this.ball = Optional.empty();
         this.player = Optional.empty();
+        this.hole = Optional.empty();
     }
 
 
@@ -119,6 +119,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         return new EnvironmentImpl(this.container.get(), 
                                    this.ball.get(), 
                                    this.player.get(),
+                                   this.gameObjects,
                                    this.hole.get());
     }
 

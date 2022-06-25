@@ -12,12 +12,18 @@ import org.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
@@ -31,11 +37,10 @@ public final class SceneLoader {
     private static final SceneLoader SINGLETON = new SceneLoader();
 
     private static final String SEP = File.separator;
-    private static final String PATH_START_LEVEL = SEP + "scenes" + SEP;
+    private static final String PATH_START_LEVEL = System.getProperty("user.dir") + SEP + "src" + SEP + "main" + SEP + "resources" + SEP + "scenes" + SEP;
     private static final String PATH_START_SCREEN = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
-    private static final String PATH_LEVELS = "levels";
 
     /**
      * Returns the single instance of the {@link SceneLoader}.
@@ -81,29 +86,43 @@ public final class SceneLoader {
 
     private SceneController loadGameLevel(final SceneType sceneTag,
                                           final List<GameObject> objs) throws IOException {
-        String path = PATH_START_LEVEL + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+        final String path = PATH_START_LEVEL + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+        final LevelController levelController = new LevelController();
+        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
-        final String background = jsonObj.getString("background");
-        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        final String pathBackground = jsonObj.getString("background");
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
-
-        final FXMLLoader loader = new FXMLLoader();
-        path = PATH_START_LEVEL + PATH_LEVELS + PATH_END_SCREEN;
-        final Parent parent = loader.load(new FileInputStream(path));
-
-        final Group root = new Group();
-        final Scene scene = new Scene(root, w, h);
+        final Button button = new Button("Quit");
+        button.setOnAction(levelController::handle);
+        final var posWButton = w * (0.1);
+        button.setLayoutX(w - posWButton);
+        final Label score = new Label("Score");
+        final var posWScore = w * (0.3);
+        score.setLayoutX(posWScore);
+        final Label lives = new Label("Lives");
+        final var posWLives = w * (0.4);
+        score.setLayoutX(posWLives);
+        final AnchorPane layout = new AnchorPane();
         final Canvas canvas = new Canvas(w, h);
-        final GraphicsContext gc = canvas.getGraphicsContext2D();
-        root.getChildren().add(canvas);
-        root.getChildren().add(parent);
-        gc.drawImage(new Image(background), 0, 0, w, h);
-
-        final LevelController sc = loader.getController();
-        sc.init(scene, objs, gc, background);
-        return sc;
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
+        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
+        final Image backgroundImage = new Image(pathBackground);
+        final BackgroundImage bi = new BackgroundImage(backgroundImage, 
+                                                       BackgroundRepeat.NO_REPEAT, 
+                                                       BackgroundRepeat.NO_REPEAT, 
+                                                       BackgroundPosition.DEFAULT, 
+                                                       BackgroundSize.DEFAULT);
+        layout.setBackground(new Background(bi));
+        layout.getChildren().add(canvas);
+        layout.getChildren().add(button);
+        layout.getChildren().add(score);
+        layout.getChildren().add(lives);
+        final Scene scene = new Scene(layout, w, h);
+        levelController.init(scene, objs, canvas.getGraphicsContext2D(), pathBackground);
+        levelController.render();
+        return levelController;
     }
 }
 

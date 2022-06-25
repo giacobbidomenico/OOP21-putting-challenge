@@ -96,22 +96,7 @@ public class GameLoopImpl extends Thread implements GameEngine, Colleague {
                     this.isOver = true;
                     Platform.exit();
                     break;
-                case WIN:
-                    final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.WIN, SceneType.GAME_WIN);
-                    this.mediator.notifyColleagues(winEvent, this);
-                    break;
-                case GAMEOVER:
-                    final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.GAMEOVER, SceneType.GAME_OVER);
-                    this.mediator.notifyColleagues(gameOverEvent, this);
-                    break;
-                case SHOW_LEADERBOARD:
-                    final GameEvent leaderboardEvent = new GameEventWithDetailsImpl<>(GameEventType.SHOW_LEADERBOARD, SceneType.LEADEARBOARD);
-                    this.mediator.notifyColleagues(leaderboardEvent, this);
-                    break;
-                case SHOW_MAIN_MENU:
-                    final GameEvent mainMenuEvent = new GameEventWithDetailsImpl<>(GameEventType.SHOW_MAIN_MENU, SceneType.MAIN_MENU);
-                    this.mediator.notifyColleagues(mainMenuEvent, this);
-                    break;
+                
                 default: 
                     break;
             }

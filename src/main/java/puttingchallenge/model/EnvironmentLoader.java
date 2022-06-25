@@ -26,9 +26,11 @@ public final class EnvironmentLoader {
 
     private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
-                                             + SEP + "res"
-                                             + SEP + "scenes"
-                                             + SEP;
+                                            + SEP + "src"
+                                            + SEP + "main"
+                                            + SEP + "resources"
+                                            + SEP + "scenes"
+                                            + SEP;
     private static final String PATH_END = ".json";
 
     /**
@@ -57,19 +59,32 @@ public final class EnvironmentLoader {
             final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
-            file.getJSONObject("scene");
+            final JSONObject  dimScene = file.getJSONObject("scene");
             final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-            final double w = screenDim.getWidth() * (file.getDouble("wScale") / 100);
-            final double h = screenDim.getHeight() * (file.getDouble("hScale") / 100);
+            final double w = screenDim.getWidth() * (dimScene.getDouble("wScale") / 100);
+            final double h = screenDim.getHeight() * (dimScene.getDouble("hScale") / 100);
             builder.container(new Rectangle2D(0, 0, w, h));
 
             this.setBall(w, h, builder, file);
             this.setPlayer(w, h, builder, file);
+            this.setHole(w, h, builder, file);
             this.addObstacles(w, h, builder, file);
             return Optional.of(builder.build());
         } else {
             return Optional.empty();
         }
+    }
+
+    private void setHole(final double w,
+            final double h,
+            final BuilderEnvironment builder, 
+            final JSONObject file) {
+        final JSONObject hole = file.getJSONObject("hole");
+        final double x = w * (hole.getDouble("posX") / 100);
+        final double y = h * (hole.getDouble("posY") / 100);
+        final double wPerc = w * (hole.getDouble("wScale") / 100);
+        final double hPerc = h * (hole.getDouble("hScale") / 100);
+        builder.hole(new Point2D(x, y), wPerc, hPerc);
     }
 
     private void addObstacles(final double w, 
@@ -79,7 +94,7 @@ public final class EnvironmentLoader {
         final Iterator<Object> obstacles = file.getJSONArray("staticObstacles").iterator();
         while (obstacles.hasNext()) {
             final JSONObject obj = (JSONObject) obstacles.next();
-            final GameObjectType type = GameObjectType.getFromIndex(obj.getInt("type")).get();
+            final GameObjectType type = GameObjectType.valueOf(obj.getString("type"));
             final double x = w * (obj.getDouble("posX") / 100);
             final double y = h * (obj.getDouble("posY") / 100);
             final double wPerc = w * (obj.getDouble("wScale") / 100);

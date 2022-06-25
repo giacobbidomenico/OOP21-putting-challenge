@@ -12,7 +12,7 @@ public class ScreenGameState extends AbstractGameState {
      * @param status
      */
     public ScreenGameState(final GameStateManager manager, final GameStatus status) {
-        super(manager, status, null);
+        super(manager, status);
     }
 
     @Override

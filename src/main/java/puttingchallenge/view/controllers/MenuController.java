@@ -1,6 +1,5 @@
 package puttingchallenge.view.controllers;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import puttingchallenge.model.events.GameEvent;

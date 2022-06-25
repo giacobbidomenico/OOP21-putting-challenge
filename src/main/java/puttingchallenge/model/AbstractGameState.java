@@ -1,6 +1,11 @@
 package puttingchallenge.model;
 
+import java.util.List;
 import java.util.Optional;
+
+import javafx.util.Pair;
+import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.SceneType;
 
 /**
  * Abstract class that represent a {@link GameState}.
@@ -9,17 +14,21 @@ public abstract class AbstractGameState implements GameState {
     private final GameStatus status;
     private final GameStateManager stateManager;
     private Optional<Environment> environment;
+    
+    public Pair<SceneType, List<GameObject>> initState() {
+        return null;
+    }
+
     /**
      * 
      * @param manager
      * @param status
      */
     public AbstractGameState(final GameStateManager manager,
-                             final GameStatus status,
-                             final Environment environment) {
+                             final GameStatus status) {
+        this.environment = Optional.empty();
         this.stateManager = manager;
         this.status = status;
-        this.environment = Optional.ofNullable(environment);
     }
 
     /**
@@ -53,12 +62,11 @@ public abstract class AbstractGameState implements GameState {
     void leavingState(final GameStatus nextStatus) {
         this.stateManager.switchState(nextStatus);
     }
-
     /**
-     * 
-     * @param environment
+     * {@inheritDoc}
      */
-    void setEnvironment(final Optional<Environment> environment) {
+    public void setEnvironment(final Optional<Environment> environment) {
         this.environment = environment;
     }
+
 }

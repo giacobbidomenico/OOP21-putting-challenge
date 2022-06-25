@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
@@ -15,6 +16,7 @@ import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
+import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.SceneType;
 
 /**
@@ -22,46 +24,53 @@ import puttingchallenge.view.SceneType;
  *
  */
 public class GamePlayGameState extends AbstractGameState {
+
+    private static final int NO_LIVES = 0;
+    private static final int NO_SCORE = 0;
+    private static final int MAX_LIVES = 3;
+
     private int score;
     private int lives;
     private ObservableEvents<ModelEventType> environmentObservable;
     private ObservableEvents<ModelEventType> observable;
     private ObserverEvents<ModelEventType> observer;
-    private static final int NO_LIVES = 0;
-    private static final int NO_SCORE = 0;
-    private static final int MAX_LIVES = 3;
-    private static final Iterator<SceneType> MAPS = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
+    private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
+    private SceneType currentScene;
     /**
      * 
      * @param manager
      * @param status
      */
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
-        super(manager, status, null);
+        super(manager, status);
     }
     /**
      * {@inheritDoc}
      */
-    public void initState() {
+    public Pair<SceneType, List<GameObject>> initState() {
         this.lives = MAX_LIVES;
         this.score = NO_SCORE;
         this.loadNextEnvironment();
+        return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
     private void loadNextEnvironment() {
         try {
-            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(MAPS.next()));
-        } catch (NoSuchElementException e) {
-            this.leavingState(GameStatus.GAME_OVER);
+            this.currentScene = maps.next();
+            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
+            if (getEnvironment().isEmpty()) {
+                this.leavingState(GameStatus.GAME_OVER);
+            } else {
+                this.environmentObservable = this.getEnvironment().get().getObservable();
+                this.observer = new ObserverEventsImpl<>();
+                this.environmentObservable.addObserver(this.observer);
+                this.observable = new ObservableEventsImpl<>();
+                this.getEnvironment().get().configureObservable(this.observable);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.checkExceptionEnvironment();
-        this.environmentObservable = this.getEnvironment().get().getObservable();
-        this.observer = new ObserverEventsImpl<>();
-        this.environmentObservable.addObserver(this.observer);
-        this.observable = new ObservableEventsImpl<>();
-        this.getEnvironment().get().configureObservable(this.observable);
     }
+
     /**
      * Check if the environment exists.
      */
@@ -119,7 +128,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-        shootingVector.flipVector();
+        //shootingVector.flipVector();
         this.checkExceptionEnvironment();
         this.getEnvironment().get().getBall().setVelocity(shootingVector);
     }

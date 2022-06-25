@@ -23,51 +23,31 @@ public interface GameObject<H> {
         /**
          * The type of the game ball.
          */
-        BALL(1),
+        BALL,
 
         /**
          * The type of a generic static obstacle.
          */
-        STATIC_OBSTACLE(2),
+        STATIC_OBSTACLE,
 
         /**
          * The type of the game player.
          */
-        PLAYER(3),
+        PLAYER,
 
         /**
          * The type of a wall static obstacle.
          */
-        WALL(4),
+        WALL,
 
         /**
          * The type of a tree static obstacle.
          */
-        TREE(5),
+        TREE,
         /**
          * The type of the game hole.
          */
-        HOLE(6);
-
-        private final int index;
-
-        GameObjectType(final int index) {
-            this.index = index;
-        }
-
-        /**
-         * @param index
-         *              the index of the game object type
-         * @return a {@link GameObjectType} indexed by the {@code index}
-         */
-        public static Optional<GameObjectType> getFromIndex(final int index) {
-            for (final GameObjectType t : GameObjectType.values()) {
-                if (t.index == index) {
-                    return Optional.of(t);
-                }
-            }
-            return Optional.empty();
-        }
+        HOLE;
 
     }
 
