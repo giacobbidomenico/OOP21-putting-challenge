@@ -99,15 +99,17 @@ public final class SceneLoader {
         final var posWLives = w * (0.4);
         score.setLayoutX(posWLives);
         final AnchorPane layout = new AnchorPane();
-        final Canvas canvas = new Canvas();
+        final Canvas canvas = new Canvas(w, h);
         layout.getChildren().add(button);
         layout.getChildren().add(score);
         layout.getChildren().add(lives);
         layout.addEventHandler(MouseEvent.MOUSE_MOVED, levelController);
         layout.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
         layout.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
+        layout.getChildren().add(canvas);
         final Scene scene = new Scene(layout, w, h);
         levelController.init(scene, objs, canvas.getGraphicsContext2D());
+        levelController.render();
         return levelController;
     }
 }

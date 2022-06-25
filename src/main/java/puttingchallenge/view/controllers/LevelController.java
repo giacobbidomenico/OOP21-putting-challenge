@@ -7,7 +7,6 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -28,9 +27,6 @@ public class LevelController extends AbstractSceneController implements EventHan
     private static final double UPPER_LEFT_Y = 0.0;
 
     private GraphicsContext gc;
-    private String backgroundPath;
-    @FXML
-    //private ImageView env = Optional.empty();
     private boolean isAiming;
     private Optional<Point2D> aimingPoint;
 
@@ -50,29 +46,15 @@ public class LevelController extends AbstractSceneController implements EventHan
         super.init(scene, gameObjects);
         this.gc = gc;
         this.isAiming = false;
-        /*
-        if (this.env.isEmpty()) {
-            final var backImage = new Image(backgroundPath);
-            this.env.get().setImage(backImage);
-        }*/
     }
 
     /**
      * {@inheritDoc}
      */
     public void render() {
-        /*
-        this.gc.drawImage(background, 
-                          UPPER_LEFT_X, 
-                          UPPER_LEFT_Y, 
-                          super.getScene().getWidth(), 
-                          super.getScene().getHeight());
-        this.gc.clearRect(UPPER_LEFT_X,
-                          UPPER_LEFT_Y, 
-                          super.getScene().getWidth(), 
-                          super.getScene().getHeight());*/
         super.getGameObjects().stream().peek(e -> e.draw(gc));
     }
+
     /**
      * Handles mouse moved event.
      * @param mouseMoved
@@ -84,6 +66,7 @@ public class LevelController extends AbstractSceneController implements EventHan
 //            this.getMediator().notifyColleagues(movingEvent, this);
 //        }
     }
+
     /**
      * Handles mouse pressed event.
      * @param event
@@ -91,11 +74,11 @@ public class LevelController extends AbstractSceneController implements EventHan
     public void handleMousePressed(final MouseEvent event) {
         this.aimingPoint = Optional.of(this.getCoord(event));
     }
+
     /**
      * Handles mouse released event.
      * @param event
      */
-    @FXML
     public void handleMouseReleased(final MouseEvent event) {
         if (this.aimingPoint.isPresent()) {
             final Pair<Point2D, Point2D> points = new Pair<>(this.aimingPoint.get(), this.getCoord(event));
@@ -103,11 +86,11 @@ public class LevelController extends AbstractSceneController implements EventHan
             this.getMediator().notifyColleagues(shootingEvent, this);
         }
     }
+
     /**
      * Method that handle the action on the quit button.
      * @param event
      */
-    @FXML
     public void handleQuit(final ActionEvent event) {
         final GameEventImpl quitEvent = new GameEventImpl(GameEventType.SHOW_MAIN_MENU);
         this.getMediator().notifyColleagues(quitEvent, this);
