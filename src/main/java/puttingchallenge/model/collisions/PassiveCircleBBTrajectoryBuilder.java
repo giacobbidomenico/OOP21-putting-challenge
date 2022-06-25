@@ -31,14 +31,12 @@ public class PassiveCircleBBTrajectoryBuilder {
      * 
      * @param hitbox
      *          the hitbox to be trasleted
-     * @throws IllegalAccessException 
-     *          if the method is called and the hitbox is already set
      */
-    public void setHitbox(final PassiveCircleBoundingBox hitbox) throws IllegalAccessException {
+    public void setHitbox(final PassiveCircleBoundingBox hitbox) {
         if (this.hitBox.isEmpty()) {
             this.hitBox = Optional.of(Objects.requireNonNull(hitbox));
         } else {
-            throw new IllegalAccessException("Hitbox already set");
+            throw new IllegalStateException("Hitbox already set");
         }
     }
 
@@ -47,15 +45,13 @@ public class PassiveCircleBBTrajectoryBuilder {
      * 
      * @param phys
      *          the physic component to calculate the trajectory
-     * @throws IllegalAccessException 
-     *          if the method is called and the physic component is already set
      */
-    public void setPhysic(final BallPhysicsComponent phys) throws IllegalAccessException {
+    public void setPhysic(final BallPhysicsComponent phys) {
         if (this.physicComponent.isEmpty()) {
             this.physicComponent = Optional.of(Objects.requireNonNull(phys));
             this.initialVel = phys.getVelocity();
         } else {
-            throw new IllegalAccessException("Physic component already set");
+            throw new IllegalStateException("Physic component already set");
         }
     }
 
@@ -64,14 +60,12 @@ public class PassiveCircleBBTrajectoryBuilder {
      * 
      * @param position
      *          the initial position of the hitbox
-     * @throws IllegalAccessException 
-     *          if the method is called and the position is already set
      */
-    public void setPosition(final Point2D position) throws IllegalAccessException {
+    public void setPosition(final Point2D position) {
         if (this.position.isEmpty()) {
             this.position = Optional.of(Objects.requireNonNull(position));
         } else {
-            throw new IllegalAccessException("Position already set");
+            throw new IllegalStateException("Position already set");
         }
     }
 
