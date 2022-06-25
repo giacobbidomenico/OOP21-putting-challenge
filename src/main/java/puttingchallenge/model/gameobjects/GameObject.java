@@ -1,7 +1,5 @@
 package puttingchallenge.model.gameobjects;
 
-import java.util.Optional;
-
 import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -34,6 +32,11 @@ public interface GameObject {
         PLAYER,
 
         /**
+         * The type of the game land.
+         */
+        LAND,
+
+        /**
          * The type of a wall static obstacle.
          */
         WALL,
@@ -42,6 +45,7 @@ public interface GameObject {
          * The type of a tree static obstacle.
          */
         TREE,
+
         /**
          * The type of the game hole.
          */
