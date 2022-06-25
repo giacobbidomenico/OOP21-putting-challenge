@@ -10,6 +10,7 @@ import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.PlayerObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 
 /**
@@ -54,7 +55,7 @@ public interface Environment {
      * @return the {@link GameObject} corresponding to the player in the 
      *         game environment
      */
-    GameObject getPlayer();
+    PlayerObject getPlayer();
 
     /**
      * @return the {@link GameObject} corresponding to the hole in the 
