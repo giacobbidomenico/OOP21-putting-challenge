@@ -87,12 +87,32 @@ public class GameStateManagerImpl implements GameStateManager {
                 break;
             case SHOW_MAIN_MENU:
                 this.switchState(GameStatus.MAIN_MENU);
+                final GameEvent mainMenuEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+                                                                                  new Pair<>(SceneType.MAIN_MENU,
+                                                                                             Collections.emptyList()));
+                this.generalMediator.notifyColleagues(mainMenuEvent, this);
                 break;
             case SHOW_LEADERBOARD:
                 this.switchState(GameStatus.LEADERBOARD);
+                final GameEvent leaderboardEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+                                                                                  new Pair<>(SceneType.LEADEARBOARD,
+                                                                                             Collections.emptyList()));
+                this.generalMediator.notifyColleagues(leaderboardEvent, this);
                 break;
             case START:
                 this.switchState(GameStatus.PLAY);
+                break;
+            case WIN:
+                final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+                                                                          new Pair<>(SceneType.GAME_WIN,
+                                                                                     Collections.emptyList()));
+                this.generalMediator.notifyColleagues(winEvent, this);
+                break;
+            case GAMEOVER:
+                final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+                                                                               new Pair<>(SceneType.GAME_OVER,
+                                                                                          this.getCurrentEnvironment().get().getObjects()));
+                this.generalMediator.notifyColleagues(gameOverEvent, this);
                 break;
             default:
                 break;

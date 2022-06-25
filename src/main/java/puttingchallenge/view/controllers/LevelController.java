@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
@@ -33,6 +34,8 @@ public class LevelController extends AbstractSceneController implements EventHan
     //private ImageView env = Optional.empty();
     private boolean isAiming;
     private Optional<Point2D> aimingPoint;
+    @FXML
+    private Canvas canvas;
 
     /**
      * Initialize a new {@link LevelController}.
@@ -111,6 +114,13 @@ public class LevelController extends AbstractSceneController implements EventHan
     public void handleQuit(final ActionEvent event) {
         final GameEventImpl quitEvent = new GameEventImpl(GameEventType.SHOW_MAIN_MENU);
         this.getMediator().notifyColleagues(quitEvent, this);
+    }
+
+    /**
+     * @return the canvas of the fxml file
+     */
+    public Canvas getCanvas() {
+        return this.canvas;
     }
 
     private Point2D getCoord(final MouseEvent event) {

@@ -24,15 +24,17 @@ import puttingchallenge.view.SceneType;
  *
  */
 public class GamePlayGameState extends AbstractGameState {
+
+    private static final int NO_LIVES = 0;
+    private static final int NO_SCORE = 0;
+    private static final int MAX_LIVES = 3;
+
     private int score;
     private int lives;
     private ObservableEvents<ModelEventType> environmentObservable;
     private ObservableEvents<ModelEventType> observable;
     private ObserverEvents<ModelEventType> observer;
-    private static final int NO_LIVES = 0;
-    private static final int NO_SCORE = 0;
-    private static final int MAX_LIVES = 3;
-    private static final Iterator<SceneType> MAPS = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
+    private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
     /**
      * 
@@ -53,7 +55,7 @@ public class GamePlayGameState extends AbstractGameState {
     }
     private void loadNextEnvironment() {
         try {
-            this.currentScene = MAPS.next();
+            this.currentScene = maps.next();
             this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
             if (getEnvironment().isEmpty()) {
                 this.leavingState(GameStatus.GAME_OVER);
