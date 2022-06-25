@@ -39,7 +39,7 @@ public class GameObjectImpl extends AbstractGameObject {
               Objects.requireNonNull(position),
               Objects.requireNonNull(graph),
               Objects.requireNonNull(phys));
-        this.hitBox = Objects.requireNonNull(hitBox);
+        this.hitBox = hitBox;
     }
 
     /**
