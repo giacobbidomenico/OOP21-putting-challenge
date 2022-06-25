@@ -18,6 +18,7 @@ public abstract class AbstractGameObject implements GameObject {
     private Point2D pos;
     private final GraphicComponent graph;
     private final PhysicsComponent phys;
+    private boolean flip;
 
     /**
      * Set up a new {@link AbstractGameObject}.
@@ -39,6 +40,7 @@ public abstract class AbstractGameObject implements GameObject {
         this.pos = Objects.requireNonNull(position);
         this.graph = Objects.requireNonNull(graph);
         this.phys = Objects.requireNonNull(phys);
+        this.flip = false;
     }
 
     /**
@@ -103,6 +105,22 @@ public abstract class AbstractGameObject implements GameObject {
     @Override
     public PhysicsComponent getPhysicsComponent() {
         return this.phys;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFlip(final boolean flip) {
+        this.flip = flip;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFlip() {
+        return this.flip;
     }
 
 }

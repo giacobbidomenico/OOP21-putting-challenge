@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.model.collisions.ActiveBoundingBox;
+import puttingchallenge.model.collisions.DynamicBoundingBox;
 import puttingchallenge.model.physics.PhysicsComponent;
 import puttingchallenge.view.graphics.GraphicComponent;
 
@@ -13,7 +14,7 @@ import puttingchallenge.view.graphics.GraphicComponent;
  */
 public class GameObjectImpl extends AbstractGameObject {
 
-    private final ActiveBoundingBox hitBox;
+    private final DynamicBoundingBox hitBox;
 
     /**
      * Build a new {@link GameObjectImpl}.
@@ -33,7 +34,7 @@ public class GameObjectImpl extends AbstractGameObject {
                           final Point2D position,
                           final GraphicComponent graph,
                           final PhysicsComponent phys,
-                          final ActiveBoundingBox hitBox) {
+                          final DynamicBoundingBox hitBox) {
         super(Objects.requireNonNull(type),
               Objects.requireNonNull(position),
               Objects.requireNonNull(graph),
@@ -44,7 +45,7 @@ public class GameObjectImpl extends AbstractGameObject {
     /**
      * @return the hitbox of the object
      */
-    public ActiveBoundingBox getHitBox() {
+    public DynamicBoundingBox getHitBox() {
         return this.hitBox;
     }
 
