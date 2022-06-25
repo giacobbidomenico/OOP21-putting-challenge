@@ -128,7 +128,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-        shootingVector.flipVector();
+        //shootingVector.flipVector();
         this.checkExceptionEnvironment();
         this.getEnvironment().get().getBall().setVelocity(shootingVector);
     }
