@@ -12,7 +12,7 @@ public class Bat {
      * @return
      *      the bat type
      */
-    BatType getType() {
+    public BatType getType() {
         return this.type;
     }
 }
