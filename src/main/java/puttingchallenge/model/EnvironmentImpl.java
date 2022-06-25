@@ -12,6 +12,7 @@ import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
@@ -31,10 +32,10 @@ public class EnvironmentImpl implements Environment {
     private final ObservableEvents<ModelEventType> observable;
     private final ObserverEvents<ModelEventType> observer;
     private final Rectangle2D container;
-    private final List<GameObject> staticObstacles;
+    private final List<GameObjectImpl> staticObstacles;
     private final GameObject ball;
     private final GameObject player;
-    private final GameObject hole;
+    private final GameObjectImpl hole;
 
 
     /**
@@ -239,23 +240,34 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public CollisionTest checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
+    public Optional<CollisionTest> checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
             final BallPhysicsComponent ballPhysics,
-            final Point2D ballPosition) {
-        
+            final Point2D ballPosition,
+            final long deltaT) {
+
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
-        PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
+        final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
                 new Point2D(ballPosition.getX() + ballHitbox.getRadius(), 
                         ballPosition.getY() - ballHitbox.getRadius()), 
                 ballHitbox.getRadius());
-        
+
         builder.setHitbox(box);
         builder.setPhysic(ballPhysics);
         builder.setPosition(box.getPosition());
-        for (GameObject gameObject : staticObstacles) {
-            CollisionTest result = gameObject.getHitBox().collidingWith()
+
+        CollisionTest result = this.hole.getHitBox().collidesWith(builder, deltaT);
+        if (result.isCollisionOccurred()) {
+            // Avvenuta collisione con la buca
         }
-        return null;
+
+        result = null;
+        for (GameObjectImpl gameObject : staticObstacles) {
+            CollisionTest currentResult = gameObject.getHitBox().collidesWith(builder, deltaT);
+            if (currentResult.isCollisionOccurred()) {
+                result = currentResult;
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
 }
