@@ -1,5 +1,7 @@
 package puttingchallenge.view.controllers;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
@@ -26,7 +29,9 @@ public class LevelController extends AbstractSceneController {
     private static final double UPPER_LEFT_Y = 0.0;
 
     private GraphicsContext gc;
-    private String background;
+    private String backgroundPath;
+    @FXML
+    //private ImageView env = Optional.empty();
     private boolean isAiming;
     private Optional<Point2D> aimingPoint;
 
@@ -39,24 +44,29 @@ public class LevelController extends AbstractSceneController {
      *            {@link GameObject} present in the {@link Scene}
      * @param gc
      *            the {@link GraphicsContext} in which the object has to be drawn
-     * @param background
+     * @param backgroundPath
      */
     public void init(final Scene scene,
                      final List<GameObject> gameObjects,
                      final GraphicsContext gc,
-                     final String background) {
+                     final String backgroundPath) throws FileNotFoundException {
         super.init(scene, gameObjects);
         this.gc = gc;
-        this.background = background;
+        this.backgroundPath = backgroundPath;
         this.isAiming = false;
+        /*
+        if (this.env.isEmpty()) {
+            final var backImage = new Image(backgroundPath);
+            this.env.get().setImage(backImage);
+        }*/
     }
 
     /**
      * {@inheritDoc}
      */
     public void render() {
-        final Image backgrounImage = new Image(background);
-        this.gc.drawImage(backgrounImage, 
+        /*
+        this.gc.drawImage(background, 
                           UPPER_LEFT_X, 
                           UPPER_LEFT_Y, 
                           super.getScene().getWidth(), 
@@ -64,15 +74,14 @@ public class LevelController extends AbstractSceneController {
         this.gc.clearRect(UPPER_LEFT_X,
                           UPPER_LEFT_Y, 
                           super.getScene().getWidth(), 
-                          super.getScene().getHeight());
+                          super.getScene().getHeight());*/
         super.getGameObjects().stream().peek(e -> e.draw(gc));
     }
     /**
      * Handles mouse moved event.
-     * @param event
      */
     @FXML
-    public void handleMouseMoved(final MouseEvent event) {
+    public void handleMouseMoved() {
 //        if (this.isAiming) {
 //            final Pair<Double, Double> coord = this.getCoord(event);
 //            final GameEventWithDetailsImpl<Pair<Double, Double>> movingEvent = new GameEventWithDetailsImpl<>(GameEventType.MOVING, coord);

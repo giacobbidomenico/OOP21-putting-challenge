@@ -17,8 +17,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -81,30 +88,30 @@ public final class SceneLoader {
 
     private SceneController loadGameLevel(final SceneType sceneTag,
                                           final List<GameObject> objs) throws IOException {
-        String path = PATH_START_LEVEL + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+        final String path = PATH_START_LEVEL + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
+        final LevelController levelController = new LevelController();
+        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
-        final String background = jsonObj.getString("background");
-        final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
-        
-        final String path1 = PATH_START_SCREEN + PATH_LEVELS + PATH_END_SCREEN;
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource(path1));
-        
-        final Parent parent = loader.load();
-
-        final Group root = new Group();
-        final Scene scene = new Scene(root, w, h);
-        final Canvas canvas = new Canvas(w, h);
-        final GraphicsContext gc = canvas.getGraphicsContext2D();
-        root.getChildren().add(canvas);
-        root.getChildren().add(parent);
-        gc.drawImage(new Image(background), 0, 0, w, h);
-
-        final LevelController sc = loader.getController();
-        sc.init(scene, objs, gc, background);
-        return sc;
+        final Button button = new Button("Quit");
+        final var posWButton = w * (0.1);
+        button.setLayoutX(w - posWButton);
+        //button.addEventHandler(MouseEvent.MOUSE_MOVED, levelController.handleMouseMoved());
+        final Label score = new Label("Score");
+        final var posWScore = w * (0.3);
+        score.setLayoutX(posWScore);
+        final Label lives = new Label("Lives");
+        final var posWLives = w * (0.4);
+        score.setLayoutX(posWLives);
+        final AnchorPane layout = new AnchorPane();
+        layout.getChildren().add(button);
+        layout.getChildren().add(score);
+        layout.getChildren().add(lives);
+        final Scene scene = new Scene(layout, w, h);
+        levelController.init(scene, objs);
+        return levelController;
     }
 }
 
