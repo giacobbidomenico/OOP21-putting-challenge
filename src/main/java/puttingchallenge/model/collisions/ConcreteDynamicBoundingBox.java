@@ -30,24 +30,25 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
         if (!this.box.isColliding(lastPosition)) {
             return Optional.empty();
         }
-        long temp1 = t1;
-        long temp0 = t0;
-
-        while (temp1 - temp0 > INTERVAL_DELTA) {
-            final PassiveCircleBoundingBox leftHitbox = circleBuilder.build(((temp1 - temp0) / 2 - temp0) / 2);
-            final PassiveCircleBoundingBox rightHitbox = circleBuilder.build((temp1 - (temp1 - temp0) / 2) / 2);
-
-            if (!this.box.isColliding(rightHitbox)) {
-                lastPosition = rightHitbox;
-            } else {
-                temp0 = (temp1 - temp0) / 2;
-            }
-            if (!this.box.isColliding(leftHitbox)) {
-                lastPosition = leftHitbox;
-            } else {
-                temp1 = (temp1 - temp0) / 2;
-            }
-        }
+//        long temp1 = t1;
+//        long temp0 = t0;
+//
+//        while (temp1 - temp0 > INTERVAL_DELTA) {
+//            final PassiveCircleBoundingBox leftHitbox = circleBuilder.build(((temp1 - temp0) / 2 - temp0) / 2);
+//            final PassiveCircleBoundingBox rightHitbox = circleBuilder.build((temp1 - (temp1 - temp0) / 2) / 2);
+//
+//            if (!this.box.isColliding(rightHitbox)) {
+//                lastPosition = rightHitbox;
+//            } else {
+//                temp0 = (temp1 - temp0) / 2;
+//            }
+//            if (!this.box.isColliding(leftHitbox)) {
+//                lastPosition = leftHitbox;
+//            } else {
+//                temp1 = (temp1 - temp0) / 2;
+//            }
+//        }
+        lastPosition = circleBuilder.build(t0);
         return Optional.ofNullable(lastPosition.getPosition());
     }
 
