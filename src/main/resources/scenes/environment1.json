@@ -20,10 +20,10 @@
     },
 
     "hole": {
-        "posX": "98",
-        "posY": "0",
-        "wScale": "10",
-        "hScale": "10"
+        "posX": "60",
+        "posY": "50",
+        "wScale": "30",
+        "hScale": "40"
     },
 
     "staticObstacles": [{
@@ -35,10 +35,10 @@
         },
         {
             "type": "TREE",
-            "posX": "21",
-            "posY": "30",
-            "wScale": "50",
-            "hScale": "50"
+            "posX": "30",
+            "posY": "50",
+            "wScale": "40",
+            "hScale": "40"
         }
     ]
 }
