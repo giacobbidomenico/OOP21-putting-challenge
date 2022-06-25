@@ -1,6 +1,5 @@
 package puttingchallenge.model;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -57,7 +56,7 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final List<GameObject> staticObstacles,
-                           final GameObjectImpl hole) {
+                           final GameObject hole) {
         this.observableGameState = Optional.empty();
         this.observable = new ObservableEventsImpl<>();
         this.observer = new ObserverEventsImpl<>();
