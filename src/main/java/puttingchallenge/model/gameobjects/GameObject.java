@@ -10,8 +10,10 @@ import puttingchallenge.model.physics.PhysicsComponent;
 
 /**
  * Class that implements an element of the game.
+ * @param <H>
+ *      the type of the hitbox component of the object
  */
-public interface GameObject {
+public interface GameObject<H> {
 
     /**
      * Types of the game objects.
@@ -101,7 +103,7 @@ public interface GameObject {
     /**
      * @return the hit box of the object.
      */
-    HitBox getHitBox();
+    H getHitBox();
 
     /**
      * Update physic state of the object.
@@ -127,15 +129,4 @@ public interface GameObject {
      */
     void draw(GraphicsContext graphicsContext);
 
-    /**
-     * 
-     * @param flip
-     */
-    void setFlip(boolean flip);
-
-    /**
-     * 
-     * @return
-     */
-    boolean isFlipped();
 }
