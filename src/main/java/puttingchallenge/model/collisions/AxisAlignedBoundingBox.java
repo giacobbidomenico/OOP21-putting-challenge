@@ -1,6 +1,7 @@
 package puttingchallenge.model.collisions;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.common.Vector2D;
 
 /**
  * Represents a rectangle bounding box whose sides are parallel to the axis of the plane.
@@ -53,6 +54,26 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
     public boolean isColliding(final PassiveCircleBoundingBox circle) {
         final Point2D closestPointOnAABB = this.closestPointToPoint(circle.getPosition());
         return circle.getRadius() >= Point2D.getDistance(closestPointOnAABB, circle.getPosition());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2D getNormal(final Point2D pointOnActiveBoundingBox) {
+        if (pointOnActiveBoundingBox.getX() == minimumVertex.getX()) {
+            return new Vector2D(-1, 0);
+        }
+        if (pointOnActiveBoundingBox.getY() == minimumVertex.getY()) {
+            return new Vector2D(0, -1);
+        }
+        if (pointOnActiveBoundingBox.getX() == maximumVertex.getX()) {
+            return new Vector2D(1, 0);
+        }
+        if (pointOnActiveBoundingBox.getY() == maximumVertex.getY()) {
+            return new Vector2D(0, 1);
+        }
+        return null;
     }
 
 }
