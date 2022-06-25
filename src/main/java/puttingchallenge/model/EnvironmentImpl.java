@@ -14,7 +14,9 @@ import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
+import puttingchallenge.model.collisions.PassiveCircleBBTrajectoryBuilder;
 import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
 
@@ -245,6 +247,16 @@ public class EnvironmentImpl implements Environment {
     public CollisionTest checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
             final BallPhysicsComponent ballPhysics,
             final Point2D ballPosition) {
+        
+        final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
+        PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
+                new Point2D(ballPosition.getX() + ballHitbox.getRadius(), 
+                        ballPosition.getY() - ballHitbox.getRadius()), 
+                ballHitbox.getRadius());
+        
+        builder.setHitbox(box);
+        builder.setPhysic(ballPhysics);
+        builder.setPosition(box.getPosition());
         for (GameObject gameObject : staticObstacles) {
             CollisionTest result = gameObject.getHitBox().collidingWith()
         }
