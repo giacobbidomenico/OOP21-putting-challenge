@@ -4,7 +4,7 @@ package puttingchallenge.model.collisions;
  * Represents a bounding box which verify whether it collides with a passive bounding box
  * hence "active".
  */
-public interface ActiveBoundingBox {
+public interface ActiveBoundingBox extends Hitbox {
 
     /**
      * 
