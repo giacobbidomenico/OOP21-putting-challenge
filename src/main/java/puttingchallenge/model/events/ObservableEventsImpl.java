@@ -1,7 +1,7 @@
 package puttingchallenge.model.events;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +16,7 @@ public class ObservableEventsImpl<A> implements ObservableEvents<A> {
      * 
      */
     public ObservableEventsImpl() {
-        this.observers = new LinkedList<>();
+        this.observers = new CopyOnWriteArrayList<>();
     }
 
     /**
