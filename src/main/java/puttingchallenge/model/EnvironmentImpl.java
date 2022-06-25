@@ -32,7 +32,7 @@ public class EnvironmentImpl implements Environment {
     private final ObservableEvents<ModelEventType> observable;
     private final ObserverEvents<ModelEventType> observer;
     private final Rectangle2D container;
-    private final List<GameObjectImpl> staticObstacles;
+    private final List<GameObject> staticObstacles;
     private final GameObject ball;
     private final GameObject player;
     private final GameObjectImpl hole;
@@ -57,7 +57,7 @@ public class EnvironmentImpl implements Environment {
                            final GameObject ball, 
                            final GameObject player,
                            final List<GameObject> staticObstacles,
-                           final GameObject hole) {
+                           final GameObjectImpl hole) {
         this.observableGameState = Optional.empty();
         this.observable = new ObservableEventsImpl<>();
         this.observer = new ObserverEventsImpl<>();
@@ -266,8 +266,8 @@ public class EnvironmentImpl implements Environment {
         }
 
         result = null;
-        for (GameObjectImpl gameObject : staticObstacles) {
-            CollisionTest currentResult = gameObject.getHitBox().collidesWith(builder, deltaT);
+        for (final GameObject gameObject : staticObstacles) {
+            final CollisionTest currentResult = ((GameObjectImpl) gameObject).getHitBox().collidesWith(builder, deltaT);
             if (currentResult.isCollisionOccurred()) {
                 result = currentResult;
             }
