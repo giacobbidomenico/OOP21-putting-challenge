@@ -1,8 +1,9 @@
 package puttingchallenge.core;
 
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.AxisAlignedBoundingBox;
+import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
-import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
@@ -59,7 +60,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.PLAYER,
                                   pos,
                                   new PlayerGraphicComponent(skinPath, w, h),
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  null);
     }
 
     /**
@@ -80,7 +82,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos, 
                                   new WallGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
     /**
@@ -101,7 +104,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
                                   new TreeGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
     /**
@@ -118,7 +122,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.HOLE, 
                                   pos, 
                                   new HoleGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, 2, w)));
     }
 
 }

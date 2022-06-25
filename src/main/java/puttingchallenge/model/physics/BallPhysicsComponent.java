@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.core.GameFactory;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
@@ -50,7 +49,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
 
-            final Optional<CollisionTest> infoOpt = env.checkCollison(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition());
+            final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
             final Point2D nextPos;
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
@@ -67,6 +66,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
+
             if (obj.getPosition().equals(nextPos)) {
                 this.setVelocity(new Vector2D(0, 0));
             } else {
@@ -83,13 +83,12 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      * 
      * @param dt
      *          delta time
-     * @param obj
+     * @param curPos
      *          starting position
      * @return the next expected position
      */
-    private Point2D nextPos(final long dt, final GameObject obj) {
+    public Point2D nextPos(final long dt, final Point2D curPos) {
         final double t = 0.001 * dt;
-        final Point2D curPos = obj.getPosition();
         final Vector2D vel = this.getVelocity();
 
         this.reduceVel(dt);
