@@ -23,13 +23,13 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
     }
 
     /**
-     * @param minimumVertex bottom-left vertex
+     * @param upLeftVertex bottom-left vertex
      * @param height 
      * @param width
      */
-    public AxisAlignedBoundingBox(final Point2D minimumVertex, final double height, final double width) {
-        this.minimumVertex = minimumVertex;
-        this.maximumVertex = new Point2D(minimumVertex.getX() + height, minimumVertex.getY() + width);
+    public AxisAlignedBoundingBox(final Point2D upLeftVertex, final double height, final double width) {
+        this.minimumVertex = new Point2D(upLeftVertex.getX(), upLeftVertex.getY() - height);
+        this.maximumVertex = new Point2D(minimumVertex.getX() + width, upLeftVertex.getY());
     }
 
     /**
