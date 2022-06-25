@@ -6,14 +6,13 @@ import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.collisions.Hitbox;
 import puttingchallenge.model.physics.PhysicsComponent;
 
 /**
  * Class that implements an element of the game.
- * @param <H>
- *      the type of the hitbox component of the object
  */
-public interface GameObject<H> {
+public interface GameObject {
 
     /**
      * Types of the game objects.
@@ -103,7 +102,7 @@ public interface GameObject<H> {
     /**
      * @return the hit box of the object.
      */
-    H getHitBox();
+    Hitbox getHitBox();
 
     /**
      * Update physic state of the object.
