@@ -8,7 +8,11 @@ import java.io.File;
 public final class BallGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-    private static final String SKIN_PATH = SEP + "skins" + SEP + "ball.png";
+    private static final String SKIN_PATH = SEP + "src" 
+                                            + SEP + "main"
+                                            + SEP + "resources" 
+                                            + SEP + "skins" 
+                                            + SEP + "ball.png";
 
     /**
      * Build a new {@link GraphicComponent} for the game ball.
