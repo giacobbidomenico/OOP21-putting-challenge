@@ -15,7 +15,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
-    
 
     private final double radius;
     private boolean isMoving;
@@ -23,8 +22,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     /**
      * Build a new {@link BallPhysicsComponent}.
      * 
-     * @param vel
-     *          initial velocity of the ball
      * @param radius
      *          radius of the ball
      */
@@ -32,7 +29,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
     }
-    
+
     /**
      * @return the radius of the ball.
      */
@@ -73,7 +70,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     }
 
     private Point2D nextPos(final long dt, final GameObject obj) {
-        final long t = (long) 0.001 * dt;
+        final double t = 0.001 * dt;
         final Point2D curPos = obj.getPosition();
         final Vector2D vel = this.getVelocity();
 
@@ -87,7 +84,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private void reduceVel(final long dt) {
         double velX = Math.abs(this.getVelocity().getX());
         double velY = this.getVelocity().getY();
-        final long t = (long) 0.001 * dt;
+        final double t = 0.001 * dt;
 
         velY -= Y_ACCELERATION * t;
         if (velX != 0) {
