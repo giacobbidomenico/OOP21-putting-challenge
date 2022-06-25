@@ -12,12 +12,12 @@ public class LandGraphicComponent extends AbstractGraphicComponent {
     private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "land.jpg";
 
     /**
-     * Build a new {@link GraphicComponent} for a wall in the game.
+     * Build a new {@link GraphicComponent} for a land in the game.
      * 
      * @param w
-     *         the width of the {@link Image} where the wall is contained
+     *         the width of the {@link Image} where the land is contained
      * @param h
-     *         the height of the {@link Image} where the wall is contained
+     *         the height of the {@link Image} where the land is contained
      */
     public LandGraphicComponent(final double w, final double h) {
         super(TEXTURE_PATH_IMAGE, w, h);

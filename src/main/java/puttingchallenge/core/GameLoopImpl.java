@@ -10,10 +10,7 @@ import puttingchallenge.model.GameStateManagerImpl;
 import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.events.ConcreteMediator;
 import puttingchallenge.model.events.GameEvent;
-import puttingchallenge.model.events.GameEventType;
-import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
-import puttingchallenge.view.SceneType;
 import puttingchallenge.view.View;
 import puttingchallenge.view.ViewImpl;
 
