@@ -1,17 +1,13 @@
 package puttingchallenge.model.physics;
 
+import java.util.Optional;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-<<<<<<< HEAD
-=======
-import puttingchallenge.core.GameFactory;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
->>>>>>> master
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
-import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox.ConcreteCollisionTest;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
-import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 
 /**
  * Describes the physical behavior of the ball.
