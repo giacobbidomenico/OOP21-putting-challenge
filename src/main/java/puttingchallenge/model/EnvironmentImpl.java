@@ -41,12 +41,16 @@ public class EnvironmentImpl implements Environment {
      *           the {@link GameObject} corresponding to the ball in the game {@link Environment}
      * @param player
      *           the {@link GameObject} corresponding to the player in the game {@link Environment}
+     * @param staticObstacles
+     *           the {@link List} of {@link GameObject}s, corresponding to the static obstacles in
+     *           the game {@link Environment}
      * @param hole
      *           the {@link GameObject} corresponding to the hole in the game {@link Environment}
      */
     public EnvironmentImpl(final Rectangle2D container,
                            final GameObject ball, 
                            final GameObject player,
+                           final List<GameObject> staticObstacles,
                            final GameObject hole) {
         this.observableGameState = Optional.empty();
         this.observable = new ObservableEventsImpl<>();
@@ -55,7 +59,7 @@ public class EnvironmentImpl implements Environment {
         this.ball = Objects.requireNonNull(ball);
         this.player = Objects.requireNonNull(player);
         this.hole = Objects.requireNonNull(hole);
-        this.staticObstacles = new LinkedList<>();
+        this.staticObstacles = new LinkedList<>(staticObstacles);
     }
 
     /**

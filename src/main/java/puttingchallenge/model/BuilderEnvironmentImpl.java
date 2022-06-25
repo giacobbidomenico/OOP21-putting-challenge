@@ -119,6 +119,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         return new EnvironmentImpl(this.container.get(), 
                                    this.ball.get(), 
                                    this.player.get(),
+                                   this.gameObjects,
                                    this.hole.get());
     }
 
