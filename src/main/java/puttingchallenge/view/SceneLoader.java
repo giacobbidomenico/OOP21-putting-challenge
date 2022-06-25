@@ -11,7 +11,6 @@ import java.util.Locale;
 import org.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -36,7 +35,6 @@ public final class SceneLoader {
     private static final String PATH_START_SCREEN = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
     private static final String PATH_END_LEVEL = ".json";
-    private static final String PATH_LEVELS = "levels";
 
     /**
      * Returns the single instance of the {@link SceneLoader}.
@@ -87,6 +85,7 @@ public final class SceneLoader {
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
+        final String pathBackground = jsonObj.getString("background");
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
         final Button button = new Button("Quit");
@@ -108,7 +107,7 @@ public final class SceneLoader {
         layout.getChildren().add(score);
         layout.getChildren().add(lives);
         final Scene scene = new Scene(layout, w, h);
-        levelController.init(scene, objs, canvas.getGraphicsContext2D());
+        levelController.init(scene, objs, canvas.getGraphicsContext2D(), pathBackground);
         levelController.render();
         return levelController;
     }
