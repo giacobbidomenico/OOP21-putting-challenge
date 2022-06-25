@@ -60,6 +60,7 @@ public class LevelController extends AbstractSceneController implements EventHan
      */
     public void render() {
         final Image background = new Image(getClass().getResource(pathBackground).toExternalForm());
+        gc.clearRect(UPPER_LEFT_X, UPPER_LEFT_Y, super.getScene().getWidth(), getScene().getHeight());
         gc.drawImage(background, UPPER_LEFT_X, UPPER_LEFT_Y);
         super.getGameObjects().stream().forEach(e -> e.draw(gc));
     }
