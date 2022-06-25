@@ -90,7 +90,7 @@ public final class SceneLoader {
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
         final Button button = new Button("Quit");
-        button.addEventHandler(ActionEvent.ACTION, levelController);
+        button.setOnAction(levelController::handle);
         final var posWButton = w * (0.1);
         button.setLayoutX(w - posWButton);
         final Label score = new Label("Score");
@@ -101,13 +101,12 @@ public final class SceneLoader {
         score.setLayoutX(posWLives);
         final AnchorPane layout = new AnchorPane();
         final Canvas canvas = new Canvas(w, h);
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
+        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
+        layout.getChildren().add(canvas);
         layout.getChildren().add(button);
         layout.getChildren().add(score);
         layout.getChildren().add(lives);
-        layout.addEventHandler(MouseEvent.MOUSE_MOVED, levelController);
-        layout.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
-        layout.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
-        layout.getChildren().add(canvas);
         final Scene scene = new Scene(layout, w, h);
         levelController.init(scene, objs, canvas.getGraphicsContext2D());
         levelController.render();

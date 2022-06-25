@@ -60,7 +60,6 @@ public class GamePlayGameState extends AbstractGameState {
             if (getEnvironment().isEmpty()) {
                 this.leavingState(GameStatus.GAME_OVER);
             } else {
-                System.out.println("caaasdda");
                 this.environmentObservable = this.getEnvironment().get().getObservable();
                 this.observer = new ObserverEventsImpl<>();
                 this.environmentObservable.addObserver(this.observer);
