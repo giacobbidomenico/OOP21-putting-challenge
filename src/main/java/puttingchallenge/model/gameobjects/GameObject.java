@@ -6,7 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.Environment;
-import puttingchallenge.model.collisions.Hitbox;
 import puttingchallenge.model.physics.PhysicsComponent;
 
 /**
@@ -98,11 +97,6 @@ public interface GameObject {
      * @return the velocity of the object.
      */
     Vector2D getVelocity();
-
-    /**
-     * @return the hit box of the object.
-     */
-    Hitbox getHitBox();
 
     /**
      * Update physic state of the object.

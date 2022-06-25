@@ -50,9 +50,8 @@ public class BallObjectImpl extends AbstractGameObject {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the hitbox of the ball
      */
-    @Override
     public PassiveCircleBoundingBox getHitBox() {
         return this.hitBox;
     }

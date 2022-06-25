@@ -42,9 +42,8 @@ public class GameObjectImpl extends AbstractGameObject {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the hitbox of the object
      */
-    @Override
     public ActiveBoundingBox getHitBox() {
         return this.hitBox;
     }
