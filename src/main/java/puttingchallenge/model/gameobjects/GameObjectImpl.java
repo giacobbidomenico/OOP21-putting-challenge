@@ -55,6 +55,7 @@ public class GameObjectImpl<H> implements GameObject<H> {
     @Override
     public void setPosition(final Point2D position) {
         this.pos = position;
+        this.hitBox.setPosition(position);
     }
 
     /**
