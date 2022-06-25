@@ -34,7 +34,7 @@ public class GamePlayGameState extends AbstractGameState {
     private ObservableEvents<ModelEventType> environmentObservable;
     private ObservableEvents<ModelEventType> observable;
     private ObserverEvents<ModelEventType> observer;
-    private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
+    private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
     /**
      * 
