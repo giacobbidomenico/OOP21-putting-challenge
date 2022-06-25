@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.collisions.Hitbox;
 import puttingchallenge.model.physics.PhysicsComponent;
 
 /**
@@ -101,7 +102,7 @@ public interface GameObject {
     /**
      * @return the hit box of the object.
      */
-    HitBox getHitBox();
+    Hitbox getHitBox();
 
     /**
      * Update physic state of the object.
@@ -127,15 +128,4 @@ public interface GameObject {
      */
     void draw(GraphicsContext graphicsContext);
 
-    /**
-     * 
-     * @param flip
-     */
-    void setFlip(boolean flip);
-
-    /**
-     * 
-     * @return
-     */
-    boolean isFlipped();
 }

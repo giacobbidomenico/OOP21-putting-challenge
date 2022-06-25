@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Point2D implements Serializable {
 
     private static final long serialVersionUID = -6448133475513092884L;
-    private final double x, y;
+    private double x, y;
 
     /**
      * Build a new {@link Point2D}.
@@ -56,6 +56,26 @@ public class Point2D implements Serializable {
      */
     public double getY() {
         return y;
+    }
+
+    /**
+     * Adds the supplied value to the abscissa of the point.
+     * 
+     * @param value
+     *          the value to sum
+     */
+    public void sumX(final double value) {
+        this.x += value;
+    }
+
+    /**
+     * Adds the supplied value to the ordinate of the point.
+     * 
+     * @param value
+     *          the value to sum
+     */
+    public void sumY(final double value) {
+        this.y += value;
     }
 
     /**

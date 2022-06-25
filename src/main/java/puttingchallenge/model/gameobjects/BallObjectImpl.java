@@ -3,20 +3,19 @@ package puttingchallenge.model.gameobjects;
 import java.util.Objects;
 
 import puttingchallenge.common.Point2D;
-import puttingchallenge.model.collisions.ActiveBoundingBox;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.physics.PhysicsComponent;
 import puttingchallenge.view.graphics.GraphicComponent;
 
-
 /**
- * Class that implements an element of the game.
+ * Class that represent the ball game object.
  */
-public class GameObjectImpl extends AbstractGameObject {
+public class BallObjectImpl extends AbstractGameObject {
 
-    private final ActiveBoundingBox hitBox;
+    private final PassiveCircleBoundingBox hitBox;
 
     /**
-     * Build a new {@link GameObjectImpl}.
+     * Build a new {@link BallObjectImpl}.
      * 
      * @param type 
      *                 element type
@@ -29,15 +28,15 @@ public class GameObjectImpl extends AbstractGameObject {
      * @param hitBox
      *                  the hitbox of the object
      */
-    public GameObjectImpl(final GameObjectType type,
+    public BallObjectImpl(final GameObjectType type,
                           final Point2D position,
                           final GraphicComponent graph,
                           final PhysicsComponent phys,
-                          final ActiveBoundingBox hitBox) {
+                          final PassiveCircleBoundingBox hitBox) {
         super(Objects.requireNonNull(type),
-              Objects.requireNonNull(position),
-              Objects.requireNonNull(graph),
-              Objects.requireNonNull(phys));
+        Objects.requireNonNull(position),
+        Objects.requireNonNull(graph),
+        Objects.requireNonNull(phys));
         this.hitBox = Objects.requireNonNull(hitBox);
     }
 
@@ -45,7 +44,16 @@ public class GameObjectImpl extends AbstractGameObject {
      * {@inheritDoc}
      */
     @Override
-    public ActiveBoundingBox getHitBox() {
+    public void setPosition(final Point2D position) {
+        super.setPosition(position);
+        this.hitBox.setPosition(position);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PassiveCircleBoundingBox getHitBox() {
         return this.hitBox;
     }
 
