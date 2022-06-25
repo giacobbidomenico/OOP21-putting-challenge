@@ -1,5 +1,6 @@
 package puttingchallenge.model;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +14,8 @@ import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
 
 /**
@@ -67,15 +70,6 @@ public class EnvironmentImpl implements Environment {
         bf.update(dt, ball, this);
         this.receiveEvents();
         this.notifyEvents();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkCollisions() {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     /**
@@ -237,6 +231,19 @@ public class EnvironmentImpl implements Environment {
         allGameObjects.add(ball);
         allGameObjects.addAll(staticObstacles);
         return allGameObjects;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CollisionTest checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
+            final BallPhysicsComponent ballPhysics,
+            final Point2D ballPosition) {
+        for (GameObject gameObject : staticObstacles) {
+            CollisionTest result = gameObject.getHitBox().collidingWith()
+        }
+        return null;
     }
 
 }

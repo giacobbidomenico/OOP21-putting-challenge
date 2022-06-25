@@ -3,9 +3,13 @@ package puttingchallenge.model;
 import java.util.List;
 
 import javafx.geometry.Rectangle2D;
+import puttingchallenge.common.Point2D;
+import puttingchallenge.model.collisions.DynamicBoundingBox;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.physics.BallPhysicsComponent;
 
 /**
  * Interface that defines the game environment.
@@ -20,11 +24,14 @@ public interface Environment {
 
     /**
      * Check if there has been a collision between several {@link GameObject}.
-     * 
-     * @return true if a collision occurred,
-     *         false otherwise.
+     * @param ballHitbox 
+     * @param ballPhysics
+     * @param ballPosition
+     * @return a info about the collision tested.
      */
-    boolean checkCollisions();
+    DynamicBoundingBox.CollisionTest checkCollisions(PassiveCircleBoundingBox ballHitbox, 
+            BallPhysicsComponent ballPhysics, 
+            Point2D ballPosition);
 
     /**
      * Adds a static obstacle to the game environment.
