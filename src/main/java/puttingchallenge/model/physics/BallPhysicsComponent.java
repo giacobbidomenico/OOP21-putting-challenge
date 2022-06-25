@@ -7,9 +7,7 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
-import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox.ConcreteCollisionTest;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
-import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 
 /**
  * Describes the physical behavior of the ball.
