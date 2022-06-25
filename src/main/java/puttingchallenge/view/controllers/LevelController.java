@@ -129,17 +129,14 @@ public class LevelController extends AbstractSceneController implements EventHan
      */
     @Override
     public void handle(final Event event) {
-        if (event.getEventType().getSuperType().equals(MouseEvent.MOUSE_MOVED)) {
-            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        if (event.getEventType().getSuperType().equals(MouseEvent.MOUSE_RELEASED)) {
+            this.handleMouseMoved((MouseEvent) event);
         }
-        if (event.getEventType().equals(MouseEvent.MOUSE_DRAGGED)) {
-            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        if (event.getEventType().getSuperType().equals(MouseEvent.MOUSE_PRESSED)) {
+            this.handleMouseMoved((MouseEvent) event);
         }
-        if (event.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
-            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
-        }
-        if (event.getEventType().equals(MouseEvent.MOUSE_MOVED)) {
-            this.handleMouseMoved(MouseEvent.MOUSE_MOVED);
+        if (event.getEventType().getSuperType().equals(ActionEvent.ACTION)) {
+            this.handleQuit((ActionEvent) event);
         }
     }
 }
