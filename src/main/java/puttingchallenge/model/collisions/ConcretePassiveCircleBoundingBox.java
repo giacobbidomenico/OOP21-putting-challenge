@@ -20,8 +20,7 @@ public class ConcretePassiveCircleBoundingBox implements PassiveCircleBoundingBo
     }
 
     /**
-     * @param position of the center of the bounding box
-     * @return
+     * {@inheritDoc}
      */
     public void setPosition(final Point2D position) {
         this.position = position;
