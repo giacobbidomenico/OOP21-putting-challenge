@@ -16,8 +16,14 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
@@ -102,6 +108,13 @@ public final class SceneLoader {
         final Canvas canvas = new Canvas(w, h);
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
         canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
+        final Image backgroundImage = new Image(pathBackground);
+        final BackgroundImage bi = new BackgroundImage(backgroundImage, 
+                                                       BackgroundRepeat.NO_REPEAT, 
+                                                       BackgroundRepeat.NO_REPEAT, 
+                                                       BackgroundPosition.DEFAULT, 
+                                                       BackgroundSize.DEFAULT);
+        layout.setBackground(new Background(bi));
         layout.getChildren().add(canvas);
         layout.getChildren().add(button);
         layout.getChildren().add(score);

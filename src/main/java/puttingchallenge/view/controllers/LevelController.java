@@ -31,7 +31,6 @@ public class LevelController extends AbstractSceneController implements EventHan
     private GraphicsContext gc;
     private boolean isAiming;
     private Optional<Point2D> aimingPoint;
-    private String pathBackground;
 
     /**
      * Initialize a new {@link LevelController}.
@@ -42,26 +41,20 @@ public class LevelController extends AbstractSceneController implements EventHan
      *            {@link GameObject} present in the {@link Scene}
      * @param gc
      *            the {@link GraphicsContext} in which the object has to be drawn
-     * @param pathBackground
-     *            the path of the background
      */
     public void init(final Scene scene,
                      final List<GameObject> gameObjects,
-                     final GraphicsContext gc,
-                     final String pathBackground) throws FileNotFoundException {
+                     final GraphicsContext gc) throws FileNotFoundException {
         super.init(scene, gameObjects);
         this.gc = gc;
         this.isAiming = false;
-        this.pathBackground = pathBackground;
     }
 
     /**
      * {@inheritDoc}
      */
     public void render() {
-        final Image background = new Image(getClass().getResource(pathBackground).toExternalForm());
         gc.clearRect(UPPER_LEFT_X, UPPER_LEFT_Y, super.getScene().getWidth(), getScene().getHeight());
-        gc.drawImage(background, UPPER_LEFT_X, UPPER_LEFT_Y);
         super.getGameObjects().stream().forEach(e -> e.draw(gc));
     }
 
