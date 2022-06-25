@@ -1,5 +1,7 @@
 package puttingchallenge.model.collisions;
 
+import java.util.Optional;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 
@@ -30,7 +32,11 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
         this.maximumVertex = new Point2D(minimumVertex.getX() + height, minimumVertex.getY() + width);
     }
 
-    private Point2D closestPointToPoint(final Point2D point) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Point2D closestPointOnBBToPoint(final Point2D point) {
         Point2D closestPoint = new Point2D(point.getX(), point.getY());
         if (closestPoint.getX() < this.minimumVertex.getX()) {
                 closestPoint = new Point2D(this.minimumVertex.getX(), closestPoint.getY());
@@ -52,7 +58,7 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
      */
     @Override
     public boolean isColliding(final PassiveCircleBoundingBox circle) {
-        final Point2D closestPointOnAABB = this.closestPointToPoint(circle.getPosition());
+        final Point2D closestPointOnAABB = this.closestPointOnBBToPoint(circle.getPosition());
         return circle.getRadius() >= Point2D.getDistance(closestPointOnAABB, circle.getPosition());
     }
 
