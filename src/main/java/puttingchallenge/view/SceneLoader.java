@@ -11,6 +11,7 @@ import java.util.Locale;
 import org.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -89,7 +90,7 @@ public final class SceneLoader {
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
         final Button button = new Button("Quit");
-        button.addEventHandler(MouseEvent.MOUSE_CLICKED, levelController);
+        button.addEventHandler(ActionEvent.ACTION, levelController);
         final var posWButton = w * (0.1);
         button.setLayoutX(w - posWButton);
         final Label score = new Label("Score");
