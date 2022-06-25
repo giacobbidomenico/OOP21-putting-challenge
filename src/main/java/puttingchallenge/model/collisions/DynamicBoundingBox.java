@@ -16,26 +16,10 @@ public interface DynamicBoundingBox {
      */
     CollisionTest collidesWith(PassiveCircleBoundingBox circle);
 
-    protected default CollisionTest getCollisionOccurredInfo(final ActiveBoundingBox active, 
-                final PassiveCircleBoundingBox passive, 
-                final Point2D pointOfImpact, 
-                final Vector2D normal, 
-                final Point2D position) {
-        return new CollisionTest(active, passive, pointOfImpact, normal, position);
-    }
-
-    protected default CollisionTest getCollisionNotOccurredInfo(final ActiveBoundingBox active, 
-            final PassiveCircleBoundingBox passive, 
-            final Point2D pointOfImpact, 
-            final Vector2D normal, 
-            final Point2D position) {
-        return new CollisionTest(active, passive);
-    }
-
     /**
      * Represents a collision test between an active bounding box and a passive bounding box.
      */
-    class CollisionTest {
+    interface CollisionTest {
 
     }
 }
