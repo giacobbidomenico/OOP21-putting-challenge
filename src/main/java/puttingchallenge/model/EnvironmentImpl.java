@@ -240,6 +240,7 @@ public class EnvironmentImpl implements Environment {
         allGameObjects.add(player);
         allGameObjects.add(ball);
         allGameObjects.addAll(staticObstacles);
+        allGameObjects.add(hole);
         return allGameObjects;
     }
 
