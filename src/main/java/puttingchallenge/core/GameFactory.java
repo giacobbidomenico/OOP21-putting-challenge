@@ -83,7 +83,8 @@ public class GameFactory {
         return new GameObjectImpl(GameObjectType.LAND,
                                   pos, 
                                   new LandGraphicComponent(w, h), 
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
     /**
