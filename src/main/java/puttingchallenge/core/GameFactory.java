@@ -12,6 +12,7 @@ import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.physics.StaticPhysicsComponent;
 import puttingchallenge.view.graphics.BallGraphicComponent;
 import puttingchallenge.view.graphics.HoleGraphicComponent;
+import puttingchallenge.view.graphics.LandGraphicComponent;
 import puttingchallenge.view.graphics.PlayerGraphicComponent;
 import puttingchallenge.view.graphics.TreeGraphicComponent;
 import puttingchallenge.view.graphics.WallGraphicComponent;
@@ -51,9 +52,9 @@ public class GameFactory {
      * @param skinPath
      *          path of the player's skin
      * @param w
-     *          the width of the tree
+     *          the width of the player
      * @param h
-     *          the height of the tree
+     *          the height of the player
      * @return an instance of {@link GameObject} representing the player
      */
     public GameObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
@@ -62,6 +63,27 @@ public class GameFactory {
                                   new PlayerGraphicComponent(skinPath, w, h),
                                   new StaticPhysicsComponent(),
                                   null);
+    }
+
+    /**
+     * Build the land in the game.
+     * 
+     * @param pos
+     *          static position of the land
+     * @param w
+     *          the width of the land
+     * @param h
+     *          the height of the land
+     *
+     * @return an instance of {@link GameObject} representing a land.
+     */
+    public GameObject createLand(final Point2D pos,
+                                 final double w,
+                                 final double h) {
+        return new GameObjectImpl(GameObjectType.LAND,
+                                  pos, 
+                                  new LandGraphicComponent(w, h), 
+                                  new StaticPhysicsComponent());
     }
 
     /**
