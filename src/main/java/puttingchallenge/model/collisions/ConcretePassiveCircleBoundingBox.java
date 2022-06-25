@@ -26,7 +26,7 @@ public class ConcretePassiveCircleBoundingBox implements PassiveCircleBoundingBo
         final Point2D center = new Point2D(position);
         final double radius = this.getRadius();
         center.sumX(-radius);
-        center.sumY(-radius);
+        center.sumY(radius);
         this.position = center;
     }
 
