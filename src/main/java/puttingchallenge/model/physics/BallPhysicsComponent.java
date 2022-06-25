@@ -4,16 +4,17 @@ import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.core.GameFactory;
+import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 
 /**
  * Describes the physical behavior of the ball.
  */
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
-    private static final double Y_ACCELERATION = 9.81;
+    private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
 
     private final double radius;
@@ -43,24 +44,27 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     @Override
     public void update(final long dt, final GameObject obj, final Environment env) {
         if (this.isMoving) {
-//            final GameObject clone = new GameFactory().createBall(new Point2D(obj.getPosition()), this.radius);
-//            clone.setVelocity(new Vector2D(this.getVelocity()));
-//
-//            final Optional<Collision> infoOpt = env.checkCollison(clone);
-//            final Point2D nextPos;
-//            if(infoOpt.isPresent()) {
-//                // aggiornare velocità dopo la collisione
-//                final Collision info = infoOpt.get();
- 
-//                obj.setVelocity(info.getVelocity());
-//                switch (info.getEdge()) {
-//                case 
-//                }
-//            } else {
-//                nextPos = this.nextPos(dt, obj);
-//            }
-            final Point2D nextPos = this.nextPos(dt, obj);
-            this.reduceVel(dt);
+            final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
+            clone.setVelocity(new Vector2D(this.getVelocity()));
+
+            final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
+            final Point2D nextPos;
+            if (infoOpt.isPresent()) {
+                final CollisionTest info = infoOpt.get();
+
+                final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
+                nextPos = info.getEstimatedPointOfImpact().get();
+                nextPos.sumX(-radius);
+                nextPos.sumY(radius);
+
+                final Vector2D normale = info.getActiveBBSideNormal().get();
+                normale.sumX(this.getVelocity().getX());
+                normale.sumY(this.getVelocity().getY());
+                this.setVelocity(normale);
+            } else {
+                nextPos = this.nextPos(dt, obj.getPosition());
+            }
+
             if (obj.getPosition().equals(nextPos)) {
                 this.setVelocity(new Vector2D(0, 0));
             } else {
@@ -69,11 +73,23 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
     }
 
-    private Point2D nextPos(final long dt, final GameObject obj) {
+
+
+    /**
+     * Given a delta time, it calculates the next position of the object, starting from an initial position.
+     * Follow the formulas of the motion of the projectile in a viscous medium.
+     * 
+     * @param dt
+     *          delta time
+     * @param curPos
+     *          starting position
+     * @return the next expected position
+     */
+    public Point2D nextPos(final long dt, final Point2D curPos) {
         final double t = 0.001 * dt;
-        final Point2D curPos = obj.getPosition();
         final Vector2D vel = this.getVelocity();
 
+        this.reduceVel(dt);
         final double x = curPos.getX() + (vel.getX() * t);
         final double y = curPos.getY()
                          + (vel.getY() * t)
@@ -88,7 +104,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
         velY -= Y_ACCELERATION * t;
         if (velX != 0) {
-            velX -= 6 * Math.PI * FRICTION * velX * this.radius * t;
+            velX -= 3 * Math.PI * FRICTION * velX * this.radius * t;
             if (this.getVelocity().getX() < 0) {
                 velX *= -1;
             }
@@ -111,11 +127,10 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     @Override
     public void setVelocity(final Vector2D vel) {
         super.setVelocity(vel);
-        if(this.getVelocity().equals(new Vector2D(0, 0))) {
+        if (this.getVelocity().equals(new Vector2D(0, 0))) {
             this.isMoving = false;
         } else {
             this.isMoving = true;
         }
     }
-    
 }

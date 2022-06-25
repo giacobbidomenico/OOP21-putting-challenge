@@ -10,6 +10,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
@@ -95,8 +98,17 @@ public class LevelController extends AbstractSceneController implements EventHan
      * @param event
      */
     public void handleQuit(final ActionEvent event) {
-        final GameEventImpl quitEvent = new GameEventImpl(GameEventType.SHOW_MAIN_MENU);
-        this.getMediator().notifyColleagues(quitEvent, this);
+        final Alert alert = new Alert(AlertType.WARNING);
+        alert.setHeaderText("You are quitting the game!");
+        alert.setContentText("You will be redirect to the main menu and the game will be lost. Are you sure?");
+        final ButtonType okButton = new ButtonType("Ok");
+        final ButtonType cancelButton = new ButtonType("Cancel");
+        alert.getButtonTypes().setAll(okButton, cancelButton);
+        final Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == okButton) {
+            final GameEventImpl quitEvent = new GameEventImpl(GameEventType.SHOW_MAIN_MENU);
+            this.getMediator().notifyColleagues(quitEvent, this);
+        }
     }
 
     private Point2D getCoord(final MouseEvent event) {

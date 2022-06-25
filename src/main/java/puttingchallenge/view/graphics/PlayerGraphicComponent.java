@@ -32,7 +32,7 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
      */
     @Override
     public void draw(final GameObject obj, final GraphicsContext gc) {
-        if (obj.isFlipped()) {
+        if (obj.isFlip()) {
             obj.setPosition(new Point2D(-obj.getPosition().getX(), obj.getPosition().getY()));
         }
         if (this.show) {

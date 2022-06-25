@@ -79,6 +79,26 @@ public class Vector2D implements Serializable {
     }
 
     /**
+     * Adds the supplied value to the x-component of the vector.
+     * 
+     * @param value
+     *          the value to sum
+     */
+    public void sumX(final double value) {
+        this.x += value;
+    }
+
+    /**
+     * Adds the supplied value to the y-component of the vector.
+     * 
+     * @param value
+     *          the value to sum
+     */
+    public void sumY(final double value) {
+        this.y += value;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

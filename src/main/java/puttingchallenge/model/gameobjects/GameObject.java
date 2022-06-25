@@ -107,14 +107,15 @@ public interface GameObject {
     void draw(GraphicsContext graphicsContext);
 
     /**
+     * Sets the flip of the {@link GameObject}.
      * 
      * @param flip
+     *          flip of the {@link GameObject}
      */
     void setFlip(boolean flip);
 
     /**
-     * 
-     * @return
+     * @return the flip of the {@link GameObject}
      */
-    boolean isFlipped();
+    boolean isFlip();
 }
