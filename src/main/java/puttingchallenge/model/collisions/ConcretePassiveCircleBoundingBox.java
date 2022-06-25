@@ -20,11 +20,16 @@ public class ConcretePassiveCircleBoundingBox implements PassiveCircleBoundingBo
     }
 
     /**
-     * @param position of the center of the bounding box
-     * @return
+     * Set the position of the center of the bounding box, translated from the position of the left corner of the tangent rectangle.
+     * @param position
+     *          the position of the left corner of the tangent rectangle
      */
     public void setPosition(final Point2D position) {
-        this.position = position;
+        final Point2D center = new Point2D(position);
+        final double radius = this.getRadius();
+        center.sumX(-radius);
+        center.sumY(-radius);
+        this.position = center;
     }
 
     /**
