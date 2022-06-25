@@ -1,10 +1,7 @@
 package puttingchallenge.model.physics;
 
-import java.util.Optional;
-
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
-import puttingchallenge.core.GameFactory;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
 
@@ -13,7 +10,7 @@ import puttingchallenge.model.Environment;
  */
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
-    private static final double Y_ACCELERATION = 9.81;
+    private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
 
     private final double radius;
@@ -88,7 +85,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
         velY -= Y_ACCELERATION * t;
         if (velX != 0) {
-            velX -= 6 * Math.PI * FRICTION * velX * this.radius * t;
+            velX -= 3 * Math.PI * FRICTION * velX * this.radius * t;
             if (this.getVelocity().getX() < 0) {
                 velX *= -1;
             }
@@ -111,11 +108,10 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     @Override
     public void setVelocity(final Vector2D vel) {
         super.setVelocity(vel);
-        if(this.getVelocity().equals(new Vector2D(0, 0))) {
+        if (this.getVelocity().equals(new Vector2D(0, 0))) {
             this.isMoving = false;
         } else {
             this.isMoving = true;
         }
     }
-    
 }
