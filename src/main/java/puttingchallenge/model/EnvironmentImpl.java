@@ -35,7 +35,7 @@ public class EnvironmentImpl implements Environment {
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
     private final GameObject player;
-    private final GameObjectImpl hole;
+    private final GameObject hole;
 
 
     /**
@@ -243,12 +243,13 @@ public class EnvironmentImpl implements Environment {
 
     /**
      * {@inheritDoc}
+     * @throws IllegalAccessException 
      */
     @Override
     public Optional<CollisionTest> checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
             final BallPhysicsComponent ballPhysics,
             final Point2D ballPosition,
-            final long deltaT) {
+            final long deltaT)  {
 
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
         final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
@@ -260,7 +261,7 @@ public class EnvironmentImpl implements Environment {
         builder.setPhysic(ballPhysics);
         builder.setPosition(box.getPosition());
 
-        CollisionTest result = this.hole.getHitBox().collidesWith(builder, deltaT);
+        CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder, deltaT);
         if (result.isCollisionOccurred()) {
             // Avvenuta collisione con la buca
         }
