@@ -1,8 +1,8 @@
 {
     "scene": {
         "background": "/backgrounds/sky.jpg",
-        "wScale": "50",
-        "hScale": "50"
+        "wScale": "70",
+        "hScale": "70"
     },
 
     "player": {
@@ -27,7 +27,7 @@
     },
 
     "staticObstacles": [{
-            "type": "WALL",
+            "type": "LAND",
             "posX": "0",
             "posY": "90",
             "wScale": "100",
