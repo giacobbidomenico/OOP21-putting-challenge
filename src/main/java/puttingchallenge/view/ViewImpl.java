@@ -5,6 +5,7 @@ import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
 
 import java.io.IOException;
@@ -89,6 +90,10 @@ public class ViewImpl implements View {
                 final Pair<SceneType, List<GameObject>> wrapper = (Pair<SceneType, List<GameObject>>) event.getDetails().get();
                 this.loadScene(wrapper.getKey(), wrapper.getValue());
                 break;
+            case UPDATE_STATS:
+                final LevelController lc = (LevelController) this.scene;
+                lc.updateStats((Pair<Integer, Integer>) event.getDetails().get());
+            break;
             default:
                 break;
         }
