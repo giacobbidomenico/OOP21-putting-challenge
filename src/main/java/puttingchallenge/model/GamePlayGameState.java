@@ -8,6 +8,8 @@ import java.util.List;
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.model.events.GameEventType;
+import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
@@ -33,6 +35,7 @@ public class GamePlayGameState extends AbstractGameState {
     private ObserverEvents<ModelEventType> observer;
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
+    private int nShoots = 0;
     /**
      * Build a new {@link GamePlayGameState} object.
      * @param manager
@@ -135,6 +138,7 @@ public class GamePlayGameState extends AbstractGameState {
             final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
             //this.checkExceptionEnvironment();
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
+            this.nShoots++;
         }
     }
     /**
@@ -157,21 +161,40 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     public void receiveEvents() {
-        final List<ModelEventType> eventsReceived = this.environmentObservable.eventsRecieved();
+        final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
         if (!eventsReceived.isEmpty()) {
             eventsReceived.stream().forEach((event) -> {
                 switch (event) {
                 case BALL_IN_HOLE:
                     this.handleWin();
                     break;
-                case BALL_OUT_OF_BOUND:
                 case BALL_STOPPED:
+                    if (nShoots == 0) {
+                        break;
+                    }
+                case BALL_OUT_OF_BOUND:
                     this.handleMiss();
                     break;
                 default:
                     break;
                 }
+
+                this.getGameStateManager().notifyEvent(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())));
             });
         }
+    }
+    /**
+     * @return
+     *          the score of the current game
+     */
+    public int getScore() {
+        return score;
+    }
+    /**
+     * @return
+     *          the remaining lives
+     */
+    public int getLives() {
+        return lives;
     }
 }

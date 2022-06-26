@@ -106,12 +106,14 @@ public class GameStateManagerImpl implements GameStateManager {
                 this.switchState(GameStatus.PLAY);
                 break;
             case WIN:
+                this.switchState(GameStatus.GAME_WIN);
                 final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
                                                                           new Pair<>(SceneType.GAME_WIN,
                                                                                      Collections.emptyList()));
                 this.generalMediator.notifyColleagues(winEvent, this);
                 break;
             case GAMEOVER:
+                this.switchState(GameStatus.GAME_OVER);
                 final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
                                                                                new Pair<>(SceneType.GAME_OVER,
                                                                                           this.getCurrentEnvironment().get().getObjects()));
