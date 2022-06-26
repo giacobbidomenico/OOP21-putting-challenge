@@ -7,10 +7,12 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
@@ -30,8 +32,11 @@ public class LevelController extends AbstractSceneController implements EventHan
     private static final double UPPER_LEFT_Y = 0.0;
 
     private GraphicsContext gc;
-    private boolean isAiming;
     private Optional<Point2D> aimingPoint;
+    @FXML
+    private Label score;
+    @FXML
+    private Label lives;
 
     /**
      * Initialize a new {@link LevelController}.
@@ -45,10 +50,13 @@ public class LevelController extends AbstractSceneController implements EventHan
      */
     public void init(final Scene scene,
                      final List<GameObject> gameObjects,
-                     final GraphicsContext gc) throws FileNotFoundException {
+                     final GraphicsContext gc,
+                     final Label score,
+                     final Label lives) throws FileNotFoundException {
         super.init(scene, gameObjects);
         this.gc = gc;
-        this.isAiming = false;
+        this.score = score;
+        this.lives = lives;
     }
 
     /**
@@ -112,7 +120,15 @@ public class LevelController extends AbstractSceneController implements EventHan
     private Point2D getCoord(final MouseEvent event) {
         return new Point2D(event.getScreenX(), event.getScreenY());
     }
-
+    /**
+     * Updates the score and lives labels.
+     * @param stats
+     *          to update the labels with
+     */
+    public void updateStats(final Pair<Integer, Integer> stats) {
+        this.lives.setText(stats.getKey().toString());
+        this.score.setText(stats.getValue().toString());
+    }
     /**
      * {@inheritDoc}
      */
