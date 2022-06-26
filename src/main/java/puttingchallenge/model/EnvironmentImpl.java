@@ -38,7 +38,7 @@ public class EnvironmentImpl implements Environment {
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
-    private boolean isBallStoped;
+    private boolean notidiedBallStoped;
     private boolean collisionWithHole;
 
     /**
@@ -67,8 +67,8 @@ public class EnvironmentImpl implements Environment {
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
         this.initPosBall = ball.getPosition();
-        this.initPosPlayer = player.getPosition();
         this.player = Objects.requireNonNull(player);
+        this.initPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
     }
@@ -134,6 +134,7 @@ public class EnvironmentImpl implements Environment {
         }
         if (this.isBallOutOfBounds()) {
             this.ball.setPosition(initPosBall);
+            this.player.setPosition(initPosPlayer);
         }
         System.out.println("moved");
         final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
@@ -180,6 +181,8 @@ public class EnvironmentImpl implements Environment {
                                              bf.getRadius() * 2);
         if (!this.container.contains(rectBall)) {
             bf.setVelocity(new Vector2D(0, 0));
+            this.ball.setPosition(initPosBall);
+            this.player.setPosition(initPosPlayer);
         }
         return !this.container.contains(rectBall);
     }
@@ -211,9 +214,9 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && this.isBallStoped) {
+        if (this.isBallStationary() && this.notidiedBallStoped) {
             events.add(ModelEventType.BALL_STOPPED);
-            this.isBallStoped = true;
+            this.notidiedBallStoped = true;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
@@ -233,11 +236,18 @@ public class EnvironmentImpl implements Environment {
             throw new IllegalStateException();
         }
         final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
-        if (eventsReceived.stream()
-                .filter(e -> e.equals(ModelEventType.MOVE_PLAYER))
-                .count() != 0) {
-            this.movePlayer();
-        }
+        eventsReceived.stream().peek(event -> {
+            switch (event) {
+            case SHOOT:
+                this.notidiedBallStoped = false;
+                break;
+            case MOVE_PLAYER:
+                this.movePlayer();
+                break;
+            default:
+                break;
+            }
+        });
     }
 
     /**
