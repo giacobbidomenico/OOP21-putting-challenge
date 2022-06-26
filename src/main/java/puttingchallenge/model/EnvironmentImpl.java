@@ -252,7 +252,7 @@ public class EnvironmentImpl implements Environment {
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
         final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
                 new Point2D(ballPosition.getX() + ballHitbox.getRadius(), 
-                        ballPosition.getY() - ballHitbox.getRadius()), 
+                        ballPosition.getY() + ballHitbox.getRadius()), 
                 ballHitbox.getRadius());
 
         builder.setHitbox(box);
