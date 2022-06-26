@@ -28,7 +28,7 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
      * @param width
      */
     public AxisAlignedBoundingBox(final Point2D upLeftVertex, final double height, final double width) {
-        this.minimumVertex = new Point2D(upLeftVertex.getX(), upLeftVertex.getY() - height);
+        this.minimumVertex = new Point2D(upLeftVertex.getX(), upLeftVertex.getY() + height);
         this.maximumVertex = new Point2D(minimumVertex.getX() + width, upLeftVertex.getY());
     }
 
@@ -44,10 +44,10 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
         if (closestPoint.getX() > this.maximumVertex.getX()) {
                 closestPoint = new Point2D(this.maximumVertex.getX(), closestPoint.getY());
         }
-        if (closestPoint.getY() < this.minimumVertex.getY()) {
+        if (closestPoint.getY() > this.minimumVertex.getY()) {
                 closestPoint = new Point2D(closestPoint.getX(), this.minimumVertex.getY());
         }
-        if (closestPoint.getY() > this.maximumVertex.getY()) {
+        if (closestPoint.getY() < this.maximumVertex.getY()) {
                 closestPoint = new Point2D(closestPoint.getX(), this.maximumVertex.getY());
         }
         return closestPoint;
@@ -71,13 +71,13 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
             return new Vector2D(-1, 0);
         }
         if (pointOnActiveBoundingBox.getY() == minimumVertex.getY()) {
-            return new Vector2D(0, -1);
+            return new Vector2D(0, 1);
         }
         if (pointOnActiveBoundingBox.getX() == maximumVertex.getX()) {
             return new Vector2D(1, 0);
         }
         if (pointOnActiveBoundingBox.getY() == maximumVertex.getY()) {
-            return new Vector2D(0, 1);
+            return new Vector2D(0, -1);
         }
         return null;
     }

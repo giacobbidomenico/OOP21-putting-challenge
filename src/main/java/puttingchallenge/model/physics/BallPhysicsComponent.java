@@ -7,6 +7,7 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.collisions.ActiveBoundingBox;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 
 /**
@@ -19,6 +20,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private final double radius;
     private boolean isMoving;
+    private Optional<ActiveBoundingBox> lastCollision;
 
     /**
      * Build a new {@link BallPhysicsComponent}.
@@ -29,6 +31,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     public BallPhysicsComponent(final double radius) {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
+        this.lastCollision = Optional.empty();
     }
 
     /**
@@ -49,8 +52,11 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
             final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
             final Point2D nextPos;
+            Optional<ActiveBoundingBox> collision = Optional.empty();
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
+
+                collision = Optional.of(info.getActiveBoundingBox());
 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
                 nextPos = info.getPassiveBoxPositionBeforeCollisions().get();
@@ -59,15 +65,21 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
-                final double rate = normale.getX() / normale.getY();
-                final double y = lastVel.getModule() / Math.sqrt(rate * rate - 1);
-                final double x = rate * lastVel.getModule() / Math.sqrt(rate * rate - 1);
-                this.setVelocity(new Vector2D(x, y));
+                final double rate = lastVel.getModule() / normale.getModule();
+                final double y = normale.getY() * rate;
+                final double x = normale.getX() * rate;
+                this.setVelocity(new Vector2D(x + lastVel.getX(), y));
+                this.reduceVel(10 * dt);
+                obj.setPosition(nextPos);
             } else {
+                this.lastCollision = Optional.empty();
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
 
-            if (obj.getPosition().equals(nextPos)) {
+            obj.setPosition(nextPos);
+            if (this.lastCollision.isPresent()
+                && collision.isPresent()
+                && this.lastCollision.get().equals(collision.get())) {
                 this.setVelocity(new Vector2D(0, 0));
             } else {
                 obj.setPosition(nextPos);
