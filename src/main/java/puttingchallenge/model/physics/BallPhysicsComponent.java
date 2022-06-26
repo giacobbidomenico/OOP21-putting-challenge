@@ -14,6 +14,7 @@ import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
  */
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
+    private static final double PAR = 6;
     private static final double Y_ACCELERATION = 9.81;
     private static final double FRICTION = 17.1E-6;
 
@@ -104,7 +105,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
         velY -= Y_ACCELERATION * t;
         if (velX != 0) {
-            velX -= 6 * Math.PI * FRICTION * velX * this.radius * t;
+            velX -= PAR * Math.PI * FRICTION * velX * this.radius * t;
             if (this.getVelocity().getX() < 0) {
                 velX *= -1;
             }

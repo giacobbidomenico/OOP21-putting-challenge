@@ -25,9 +25,5 @@ public class ScreenGameState extends AbstractGameState {
         // TODO Auto-generated method stub
     }
 
-    @Override
-    public void initState() {
-        // TODO Auto-generated method stub
-    }
 
 }

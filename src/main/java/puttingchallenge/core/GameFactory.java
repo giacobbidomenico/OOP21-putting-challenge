@@ -63,7 +63,6 @@ public class GameFactory {
                                   pos,
                                   new PlayerGraphicComponent(skinPath, w, h),
                                   new StaticPhysicsComponent(),
-
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 

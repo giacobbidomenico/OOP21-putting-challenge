@@ -14,7 +14,10 @@ public abstract class AbstractGameState implements GameState {
     private final GameStatus status;
     private final GameStateManager stateManager;
     private Optional<Environment> environment;
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public Pair<SceneType, List<GameObject>> initState() {
         return null;
     }
