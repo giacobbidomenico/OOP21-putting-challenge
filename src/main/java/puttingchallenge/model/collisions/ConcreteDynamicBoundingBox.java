@@ -26,7 +26,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
             final long t0, 
             final long t1) {
 
-        PassiveCircleBoundingBox lastPosition = circleBuilder.build(t1);
+        PassiveCircleBoundingBox lastPosition = circleBuilder.build(1);
         if (!this.box.isColliding(lastPosition)) {
             return Optional.empty();
         }
@@ -72,16 +72,19 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
                 final Vector2D normal, 
                 final Point2D positionBeforeCollision) {
             this.hasCollided = hasCollisionOccurred;
-            this.estimatedPointOfImpact = estimatedPointOfImpact;
-            this.normal = normal;
-            this.positionBeforeCollision = positionBeforeCollision;
+            this.estimatedPointOfImpact = new Point2D(estimatedPointOfImpact);
+            this.normal = new Vector2D(normal);
+            this.positionBeforeCollision = new Point2D(positionBeforeCollision);
         }
 
         /**
          * Builds {@link ConcreteCollisionTest} in case no collision has occurred.
          */
         private ConcreteCollisionTest() {
-            this(false, null, null, null);
+            this.hasCollided = false;
+            this.estimatedPointOfImpact = null;
+            this.normal = null;
+            this.positionBeforeCollision = null;
         }
 
         /**
@@ -105,7 +108,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
          */
         @Override
         public Optional<Point2D> getEstimatedPointOfImpact() {
-            return Optional.ofNullable(new Point2D(this.estimatedPointOfImpact));
+            return Optional.ofNullable(this.estimatedPointOfImpact);
         }
 
         /**
@@ -113,7 +116,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
          */
         @Override
         public Optional<Vector2D> getActiveBBSideNormal() {
-            return Optional.ofNullable(new Vector2D(this.normal));
+            return Optional.ofNullable(this.normal);
         }
 
         /**
@@ -121,7 +124,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
          */
         @Override
         public Optional<Point2D> getPassiveBoxPositionBeforeCollisions() {
-            return Optional.ofNullable(new Point2D(this.positionBeforeCollision));
+            return Optional.ofNullable(this.positionBeforeCollision);
         }
 
     }
