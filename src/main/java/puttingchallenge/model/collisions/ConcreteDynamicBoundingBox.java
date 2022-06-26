@@ -105,7 +105,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
          */
         @Override
         public Optional<Point2D> getEstimatedPointOfImpact() {
-            return Optional.ofNullable(this.estimatedPointOfImpact);
+            return Optional.ofNullable(new Point2D(this.estimatedPointOfImpact));
         }
 
         /**
@@ -113,7 +113,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
          */
         @Override
         public Optional<Vector2D> getActiveBBSideNormal() {
-            return Optional.ofNullable(this.normal);
+            return Optional.ofNullable(new Vector2D(this.normal));
         }
 
         /**
@@ -121,7 +121,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
          */
         @Override
         public Optional<Point2D> getPassiveBoxPositionBeforeCollisions() {
-            return Optional.ofNullable(this.positionBeforeCollision);
+            return Optional.ofNullable(new Point2D(this.positionBeforeCollision));
         }
 
     }
