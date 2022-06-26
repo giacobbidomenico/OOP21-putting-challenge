@@ -22,9 +22,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
     }
 
     private Optional<Point2D> findFirstPointOfCollision(
-            final PassiveCircleBBTrajectoryBuilder circleBuilder, 
-            final long t0, 
-            final long t1) {
+            final PassiveCircleBBTrajectoryBuilder circleBuilder) {
 
         PassiveCircleBoundingBox lastPosition = circleBuilder.build(INTERVAL_DELTA);
         if (!this.box.isColliding(lastPosition)) {
@@ -38,8 +36,8 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
      * {@inheritDoc}
      */
     @Override
-    public CollisionTest collidesWith(final PassiveCircleBBTrajectoryBuilder circleBuilder, final long deltaT) {
-        final Optional<Point2D> lastPosition = this.findFirstPointOfCollision(circleBuilder, 0, deltaT);
+    public CollisionTest collidesWith(final PassiveCircleBBTrajectoryBuilder circleBuilder) {
+        final Optional<Point2D> lastPosition = this.findFirstPointOfCollision(circleBuilder);
 
         if (lastPosition.isEmpty()) {
             return new ConcreteCollisionTest();

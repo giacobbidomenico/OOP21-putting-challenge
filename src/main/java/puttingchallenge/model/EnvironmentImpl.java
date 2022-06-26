@@ -259,14 +259,14 @@ public class EnvironmentImpl implements Environment {
         builder.setPhysic(ballPhysics);
         builder.setPosition(box.getPosition());
 
-        CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder, deltaT);
+        CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder);
         if (result.isCollisionOccurred()) {
             this.collisionWithHole = true;
         }
 
         result = null;
         for (final GameObject gameObject : staticObstacles) {
-            final CollisionTest currentResult = ((GameObjectImpl) gameObject).getHitBox().collidesWith(builder, deltaT);
+            final CollisionTest currentResult = ((GameObjectImpl) gameObject).getHitBox().collidesWith(builder);
             if (currentResult.isCollisionOccurred()) {
                 result = currentResult;
             }
