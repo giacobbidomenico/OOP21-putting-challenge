@@ -26,11 +26,11 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
             final long t0, 
             final long t1) {
 
-        PassiveCircleBoundingBox lastPosition = circleBuilder.build(1);
+        PassiveCircleBoundingBox lastPosition = circleBuilder.build(INTERVAL_DELTA);
         if (!this.box.isColliding(lastPosition)) {
             return Optional.empty();
         }
-        lastPosition = circleBuilder.build(t0);
+        lastPosition = circleBuilder.build(0);
         return Optional.ofNullable(lastPosition.getPosition());
     }
 

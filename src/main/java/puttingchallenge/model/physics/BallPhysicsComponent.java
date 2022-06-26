@@ -18,6 +18,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double PAR = 6;
     private static final double FRICTION = 17.1E-6;
+    private static final double INCREASE = 1.1;
 
     private final double radius;
     private boolean isMoving;
@@ -65,8 +66,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 final Vector2D lastVel = this.getVelocity();
 
                 nextPos = info.getEstimatedPointOfImpact().get();
-                nextPos.sumX(normale.getX() * radius * 1.1);
-                nextPos.sumY(normale.getY() * radius * 1.1);
+                nextPos.sumX(normale.getX() * radius * INCREASE);
+                nextPos.sumY(normale.getY() * radius * INCREASE);
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
 
