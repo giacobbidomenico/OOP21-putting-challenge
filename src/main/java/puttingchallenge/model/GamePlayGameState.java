@@ -180,7 +180,6 @@ public class GamePlayGameState extends AbstractGameState {
                 default:
                     break;
                 }
-
                 this.getGameStateManager().notifyEvent(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())));
             });
         }

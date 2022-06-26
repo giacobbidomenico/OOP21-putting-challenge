@@ -218,7 +218,7 @@ public class EnvironmentImpl implements Environment {
         if (this.observableGameState.isEmpty()) {
             throw new IllegalStateException();
         }
-        final List<ModelEventType> eventsReceived = this.observableGameState.get().eventsRecieved();
+        final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
         if (eventsReceived.stream()
                 .filter(e -> e.equals(ModelEventType.MOVE_PLAYER))
                 .count() != 0) {
