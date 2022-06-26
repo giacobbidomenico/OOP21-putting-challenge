@@ -24,7 +24,8 @@ public class ObserverEventsImpl<A> implements ObserverEvents<A> {
     */
    @Override
    public List<A> getEvents() {
+       final List<A> copy = List.copyOf(this.events);
        this.events.clear();
-       return this.events;
+       return copy;
    }
 }
