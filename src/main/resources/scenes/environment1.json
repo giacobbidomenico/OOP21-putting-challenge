@@ -35,7 +35,11 @@
         },
         {
             "type": "TREE",
+<<<<<<< HEAD
             "posX": "50",
+=======
+            "posX": "30",
+>>>>>>> f8e1224e1d2d9ec77be2388ad501db67d511050b
             "posY": "10",
             "wScale": "50",
             "hScale": "90"

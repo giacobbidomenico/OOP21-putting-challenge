@@ -17,6 +17,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
+    private static final double INCREASE = 1.1;
     private static final int BOUNCING_FACTOR = 5;
     private static final double VEL_ZERO_PRECISION = 50;
 
@@ -61,12 +62,17 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 collision = Optional.of(info.getActiveBoundingBox());
 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
-                nextPos = info.getPassiveBoxPositionBeforeCollisions().get();
-                nextPos.sumX(-radius);
-                nextPos.sumY(radius);
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
+
+                nextPos = info.getEstimatedPointOfImpact().get();
+                nextPos.sumX(normale.getX() * radius * INCREASE);
+                nextPos.sumY(normale.getY() * radius * INCREASE);
+                nextPos.sumX(-radius);
+                nextPos.sumY(-radius);
+                obj.setPosition(nextPos);
+
                 double y = 0;
                 double x = 0;
 //                if (normale.getX() == 1 || normale.getX() == -1) {
