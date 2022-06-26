@@ -21,6 +21,10 @@ public enum ModelEventType {
      * The player shot the ball.
      */
     SHOOT,
+    /** 
+     * The player can shoot.
+     */
+    WAITING,
     /**
      * The player has to move next to the ball in order to re-try.
      */
