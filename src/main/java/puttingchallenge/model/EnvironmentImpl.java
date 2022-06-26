@@ -14,6 +14,7 @@ import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
@@ -35,6 +36,9 @@ public class EnvironmentImpl implements Environment {
     private final GameObject ball;
     private final GameObject player;
     private final GameObject hole;
+    private final Point2D initPosBall;
+    private final Point2D initPosPlayer;
+    private boolean notidiedBallStoped;
     private boolean collisionWithHole;
 
     /**
@@ -62,7 +66,9 @@ public class EnvironmentImpl implements Environment {
         this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
+        this.initPosBall = ball.getPosition();
         this.player = Objects.requireNonNull(player);
+        this.initPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
     }
@@ -126,6 +132,8 @@ public class EnvironmentImpl implements Environment {
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
+        System.out.println("moved");
+        this.notidiedBallStoped = false;
         final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
                                          this.container.getHeight() * (PERC_DISTANCE / 100));
         final var pos = this.ball.getPosition();
@@ -168,6 +176,12 @@ public class EnvironmentImpl implements Environment {
                                              posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
+        if (!this.container.contains(rectBall)) {
+            bf.setVelocity(new Vector2D(0, 0));
+            this.ball.setPosition(initPosBall);
+            this.player.setPosition(initPosPlayer);
+            this.notidiedBallStoped = false;
+        }
         return !this.container.contains(rectBall);
     }
 
@@ -198,8 +212,9 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary()) {
+        if (this.isBallStationary() && this.notidiedBallStoped) {
             events.add(ModelEventType.BALL_STOPPED);
+            this.notidiedBallStoped = true;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
@@ -218,12 +233,19 @@ public class EnvironmentImpl implements Environment {
         if (this.observableGameState.isEmpty()) {
             throw new IllegalStateException();
         }
-        final List<ModelEventType> eventsReceived = this.observableGameState.get().eventsRecieved();
-        if (eventsReceived.stream()
-                .filter(e -> e.equals(ModelEventType.MOVE_PLAYER))
-                .count() != 0) {
-            this.movePlayer();
-        }
+        final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
+        eventsReceived.stream().peek(event -> {
+            switch (event) {
+            case SHOOT:
+                this.notidiedBallStoped = false;
+                break;
+            case MOVE_PLAYER:
+                this.movePlayer();
+                break;
+            default:
+                break;
+            }
+        });
     }
 
     /**

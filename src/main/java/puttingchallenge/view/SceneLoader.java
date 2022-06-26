@@ -120,7 +120,7 @@ public final class SceneLoader {
         layout.getChildren().add(score);
         layout.getChildren().add(lives);
         final Scene scene = new Scene(layout, w, h);
-        levelController.init(scene, objs, canvas.getGraphicsContext2D());
+        levelController.init(scene, objs, canvas.getGraphicsContext2D(), score, lives);
         levelController.render();
         return levelController;
     }

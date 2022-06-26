@@ -47,6 +47,12 @@ public enum GameEventType {
     SET_SCENE,
 
     /**
+     * Require to update the game statistics (lives and score).
+     */
+
+    UPDATE_STATS,
+
+    /**
      * Require to shutdown the entire application.
      */
     QUIT;
