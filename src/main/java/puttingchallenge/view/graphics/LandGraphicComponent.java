@@ -12,6 +12,7 @@ public class LandGraphicComponent extends AbstractGraphicComponent {
     private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "land.jpg";
 
     /**
+<<<<<<< HEAD
      * Build a new {@link GraphicComponent} for a land in the game.
      * 
      * @param w

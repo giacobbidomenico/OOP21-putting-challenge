@@ -112,8 +112,8 @@ public final class SceneLoader {
         final BackgroundImage bi = new BackgroundImage(backgroundImage, 
                                                        BackgroundRepeat.NO_REPEAT, 
                                                        BackgroundRepeat.NO_REPEAT, 
-                                                       BackgroundPosition.DEFAULT, 
-                                                       BackgroundSize.DEFAULT);
+                                                       BackgroundPosition.DEFAULT,
+                                                       new BackgroundSize(w, h, false, false, false, false));
         layout.setBackground(new Background(bi));
         layout.getChildren().add(canvas);
         layout.getChildren().add(button);

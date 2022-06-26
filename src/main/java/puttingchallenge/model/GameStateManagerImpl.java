@@ -85,7 +85,8 @@ public class GameStateManagerImpl implements GameStateManager {
         switch (event.getEventType()) {
             case SHOOT:
                 if (this.getCurrentState().getStatus() == GameStatus.PLAY) {
-                    ((GamePlayGameState) this.getCurrentState()).shoot((Pair<Point2D, Point2D>) event.getDetails().get());
+                    final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
+                    ((GamePlayGameState) this.getCurrentState()).shoot(points);
                 }
                 break;
             case SHOW_MAIN_MENU:

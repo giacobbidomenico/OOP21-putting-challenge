@@ -24,6 +24,10 @@ public final class EnvironmentLoader {
 
     private static final EnvironmentLoader SINGLETON = new EnvironmentLoader();
 
+    private static final String WSCALE = "wScale";
+    private static final String HSCALE = "hScale";
+    private static final String POSX = "posX";
+    private static final String POSY = "posY";
     private static final String SEP = File.separator;
     private static final String PATH_START = System.getProperty("user.dir")
                                             + SEP + "src"
@@ -61,8 +65,8 @@ public final class EnvironmentLoader {
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
             final JSONObject  dimScene = file.getJSONObject("scene");
             final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-            final double w = screenDim.getWidth() * (dimScene.getDouble("wScale") / 100);
-            final double h = screenDim.getHeight() * (dimScene.getDouble("hScale") / 100);
+            final double w = screenDim.getWidth() * (dimScene.getDouble(WSCALE) / 100);
+            final double h = screenDim.getHeight() * (dimScene.getDouble(HSCALE) / 100);
             builder.container(new Rectangle2D(0, 0, w, h));
 
             this.setBall(w, h, builder, file);
@@ -80,10 +84,10 @@ public final class EnvironmentLoader {
             final BuilderEnvironment builder, 
             final JSONObject file) {
         final JSONObject hole = file.getJSONObject("hole");
-        final double x = w * (hole.getDouble("posX") / 100);
-        final double y = h * (hole.getDouble("posY") / 100);
-        final double wPerc = w * (hole.getDouble("wScale") / 100);
-        final double hPerc = h * (hole.getDouble("hScale") / 100);
+        final double x = w * (hole.getDouble(POSX) / 100);
+        final double y = h * (hole.getDouble(POSY) / 100);
+        final double wPerc = w * (hole.getDouble(WSCALE) / 100);
+        final double hPerc = h * (hole.getDouble(HSCALE) / 100);
         builder.hole(new Point2D(x, y), wPerc, hPerc);
     }
 
@@ -95,10 +99,10 @@ public final class EnvironmentLoader {
         while (obstacles.hasNext()) {
             final JSONObject obj = (JSONObject) obstacles.next();
             final GameObjectType type = GameObjectType.valueOf(obj.getString("type"));
-            final double x = w * (obj.getDouble("posX") / 100);
-            final double y = h * (obj.getDouble("posY") / 100);
-            final double wPerc = w * (obj.getDouble("wScale") / 100);
-            final double hPerc = h * (obj.getDouble("hScale") / 100);
+            final double x = w * (obj.getDouble(POSX) / 100);
+            final double y = h * (obj.getDouble(POSY) / 100);
+            final double wPerc = w * (obj.getDouble(WSCALE) / 100);
+            final double hPerc = h * (obj.getDouble(HSCALE) / 100);
             builder.addStaticObstacle(type, new Point2D(x, y), new Rectangle2D(0, 0, wPerc, hPerc));
         }
     }
@@ -107,10 +111,10 @@ public final class EnvironmentLoader {
                            final double h,
                            final BuilderEnvironment builder, final JSONObject file) {
         final JSONObject player = file.getJSONObject("player");
-        final double x = w * (player.getDouble("posX") / 100);
-        final double y = h * (player.getDouble("posY") / 100);
-        final double wPerc = w * (player.getDouble("wScale") / 100);
-        final double hPerc = h * (player.getDouble("hScale") / 100);
+        final double x = w * (player.getDouble(POSX) / 100);
+        final double y = h * (player.getDouble(POSY) / 100);
+        final double wPerc = w * (player.getDouble(WSCALE) / 100);
+        final double hPerc = h * (player.getDouble(HSCALE) / 100);
         final String path = player.getString("skinPath");
         builder.player(new Point2D(x, y), path, wPerc, hPerc);
     }
@@ -120,8 +124,8 @@ public final class EnvironmentLoader {
                          final BuilderEnvironment builder, 
                          final JSONObject file) {
         final JSONObject ball = file.getJSONObject("ball");
-        final double x = w * (ball.getDouble("posX") / 100);
-        final double y = h * (ball.getDouble("posY") / 100);
+        final double x = w * (ball.getDouble(POSX) / 100);
+        final double y = h * (ball.getDouble(POSY) / 100);
         final double radius = w * (ball.getDouble("radiusScale") / 100);
         builder.ball(new Point2D(x, y), radius);
     }

@@ -16,7 +16,7 @@ import puttingchallenge.view.SceneType;
 public interface GameState {
     /**
      * Sets the initial state.
-     * @return 
+     * @return .
      */
     Pair<SceneType, List<GameObject>> initState();
     /**
