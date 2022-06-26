@@ -169,7 +169,9 @@ public class EnvironmentImpl implements Environment {
                                              posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
-        bf.setVelocity(new Vector2D(0, 0));
+        if(!this.container.contains(rectBall)) {
+            bf.setVelocity(new Vector2D(0, 0));
+        }
         return !this.container.contains(rectBall);
     }
 
