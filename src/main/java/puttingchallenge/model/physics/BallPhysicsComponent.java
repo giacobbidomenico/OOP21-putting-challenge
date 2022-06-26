@@ -59,19 +59,23 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
-                final double rate = normale.getX() / normale.getY();
-                final double y = lastVel.getModule() / Math.sqrt(rate * rate - 1);
-                final double x = rate * lastVel.getModule() / Math.sqrt(rate * rate - 1);
+//                final double rate = normale.getX() / normale.getY();
+//                final double y = lastVel.getModule() / Math.sqrt(rate * rate - 1);
+//                final double x = rate * lastVel.getModule() / Math.sqrt(rate * rate - 1);
+                final double y = lastVel.getY() + normale.getY() * lastVel.getModule();
+                final double x = lastVel.getX() + normale.getX() * lastVel.getModule();
                 this.setVelocity(new Vector2D(x, y));
+                obj.setPosition(nextPos);
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
+                if (obj.getPosition().equals(nextPos)) {
+                    this.setVelocity(new Vector2D(0, 0));
+                } else {
+                    obj.setPosition(nextPos);
+                }
             }
 
-            if (obj.getPosition().equals(nextPos)) {
-                this.setVelocity(new Vector2D(0, 0));
-            } else {
-                obj.setPosition(nextPos);
-            }
+
         }
     }
 
