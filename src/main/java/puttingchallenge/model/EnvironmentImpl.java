@@ -14,6 +14,7 @@ import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
@@ -168,6 +169,7 @@ public class EnvironmentImpl implements Environment {
                                              posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
+        bf.setVelocity(new Vector2D(0, 0));
         return !this.container.contains(rectBall);
     }
 
@@ -218,7 +220,7 @@ public class EnvironmentImpl implements Environment {
         if (this.observableGameState.isEmpty()) {
             throw new IllegalStateException();
         }
-        final List<ModelEventType> eventsReceived = this.observableGameState.get().eventsRecieved();
+        final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
         if (eventsReceived.stream()
                 .filter(e -> e.equals(ModelEventType.MOVE_PLAYER))
                 .count() != 0) {
