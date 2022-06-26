@@ -84,7 +84,8 @@ public class PassiveCircleBBTrajectoryBuilder {
         } else {
             this.physicComponent.get().setVelocity(initialVel);
             final Point2D pos = this.physicComponent.get().nextPos(dt, this.position.get());
-            final double radius = Point2D.getDistance(pos, this.position.get());
+            double radius = Point2D.getDistance(pos, this.position.get());
+            radius += this.hitBox.get().getRadius();
             return new ConcretePassiveCircleBoundingBox(pos, radius);
         }
     }
