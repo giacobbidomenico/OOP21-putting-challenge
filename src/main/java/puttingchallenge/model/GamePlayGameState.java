@@ -72,7 +72,6 @@ public class GamePlayGameState extends AbstractGameState {
                 this.environmentObservable.addObserver(this.observer);
                 this.observable = new ObservableEventsImpl<>();
                 this.getEnvironment().get().configureObservable(this.observable);
-                this.notifyEvents(ModelEventType.WAITING);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,7 +127,6 @@ public class GamePlayGameState extends AbstractGameState {
             this.leavingState(GameStatus.GAME_OVER);
         } else {
             this.notifyEvents(ModelEventType.MOVE_PLAYER);
-            this.notifyEvents(ModelEventType.WAITING);
         }
     }
     /**
@@ -143,6 +141,7 @@ public class GamePlayGameState extends AbstractGameState {
             //this.checkExceptionEnvironment();
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
             this.nShoots++;
+            this.notifyEvents(ModelEventType.SHOOT);
         }
     }
     /**
