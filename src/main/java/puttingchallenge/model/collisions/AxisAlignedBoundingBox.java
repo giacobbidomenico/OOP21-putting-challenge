@@ -28,7 +28,7 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
      * @param width
      */
     public AxisAlignedBoundingBox(final Point2D upLeftVertex, final double height, final double width) {
-        this.minimumVertex = new Point2D(upLeftVertex.getX(), upLeftVertex.getY() - height);
+        this.minimumVertex = new Point2D(upLeftVertex.getX(), upLeftVertex.getY() + height);
         this.maximumVertex = new Point2D(minimumVertex.getX() + width, upLeftVertex.getY());
     }
 
