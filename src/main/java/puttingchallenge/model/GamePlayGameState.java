@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -17,6 +14,7 @@ import puttingchallenge.model.events.ObservableEventsImpl;
 import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.view.SceneType;
 
 /**
@@ -127,10 +125,13 @@ public class GamePlayGameState extends AbstractGameState {
      * @param points
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
-        final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-        //shootingVector.flipVector();
-        this.checkExceptionEnvironment();
-        this.getEnvironment().get().getBall().setVelocity(shootingVector);
+        final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
+        if (!ballPhysicsComponent.isMoving()) {
+            final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            //shootingVector.flipVector();
+            this.checkExceptionEnvironment();
+            this.getEnvironment().get().getBall().setVelocity(shootingVector);
+        }
     }
     /**
      * {@inheritDoc}
