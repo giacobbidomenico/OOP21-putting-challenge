@@ -35,10 +35,10 @@
         },
         {
             "type": "TREE",
-            "posX": "30",
-            "posY": "50",
-            "wScale": "40",
-            "hScale": "40"
+            "posX": "20",
+            "posY": "10",
+            "wScale": "50",
+            "hScale": "90"
         }
     ]
 }
