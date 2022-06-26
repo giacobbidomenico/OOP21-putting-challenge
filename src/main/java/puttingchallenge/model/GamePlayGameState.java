@@ -19,7 +19,6 @@ import puttingchallenge.view.SceneType;
 
 /**
  * Class that represent the in-game {@link GameState}.
- *
  */
 public class GamePlayGameState extends AbstractGameState {
 
@@ -35,9 +34,11 @@ public class GamePlayGameState extends AbstractGameState {
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
     /**
-     * 
+     * Build a new {@link GamePlayGameState} object.
      * @param manager
+     *          of the states
      * @param status
+     *          associated with the {@link GamePlayGameState} state
      */
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
         super(manager, status);
@@ -51,12 +52,15 @@ public class GamePlayGameState extends AbstractGameState {
         this.loadNextEnvironment();
         return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
+    /**
+     * Sets the next {@link Environment} according to the map list.
+     */
     private void loadNextEnvironment() {
         try {
             this.currentScene = maps.next();
             this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
             if (getEnvironment().isEmpty()) {
-                this.leavingState(GameStatus.GAME_OVER);
+                this.leavingState(GameStatus.GAME_WIN);
             } else {
                 this.environmentObservable = this.getEnvironment().get().getObservable();
                 this.observer = new ObserverEventsImpl<>();
@@ -121,15 +125,15 @@ public class GamePlayGameState extends AbstractGameState {
         }
     }
     /**
-     * 
+     * Sets the velocity of the ball according to the aiming {@link Vector2D} created from the the {@link Point2D}s.
      * @param points
+     *          where the mouse was pressed and released during the aiming phase
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
         if (!ballPhysicsComponent.isMoving()) {
             final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-            //shootingVector.flipVector();
-            this.checkExceptionEnvironment();
+            //this.checkExceptionEnvironment();
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
         }
     }
