@@ -1,8 +1,8 @@
 {
     "scene": {
         "background": "/backgrounds/sky.jpg",
-        "wScale": "70",
-        "hScale": "70"
+        "wScale": "40",
+        "hScale": "40"
     },
 
     "player": {
@@ -35,14 +35,10 @@
         },
         {
             "type": "TREE",
-<<<<<<< HEAD
-            "posX": "50",
-=======
             "posX": "30",
->>>>>>> f8e1224e1d2d9ec77be2388ad501db67d511050b
-            "posY": "10",
-            "wScale": "50",
-            "hScale": "90"
+            "posY": "60",
+            "wScale": "30",
+            "hScale": "70"
         }
     ]
 }
