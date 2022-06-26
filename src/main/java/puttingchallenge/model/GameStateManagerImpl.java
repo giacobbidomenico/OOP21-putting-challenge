@@ -26,10 +26,12 @@ public class GameStateManagerImpl implements GameStateManager {
     private static final Map<GameStatus, GameEventType> EVENT_TO_STATUS = createMap();
 
     private static Map<GameStatus, GameEventType> createMap() {
-        final Map<GameStatus, GameEventType> result = new HashMap<>();
-        result.put(GameStatus.MAIN_MENU, GameEventType.SHOW_MAIN_MENU);
-        result.put(GameStatus.LEADERBOARD, GameEventType.SHOW_LEADERBOARD);
-        return Collections.unmodifiableMap(result);
+        final Map<GameStatus, GameEventType> associativeMap = new HashMap<>();
+        associativeMap.put(GameStatus.MAIN_MENU, GameEventType.SHOW_MAIN_MENU);
+        associativeMap.put(GameStatus.LEADERBOARD, GameEventType.SHOW_LEADERBOARD);
+        associativeMap.put(GameStatus.GAME_WIN, GameEventType.WIN);
+        associativeMap.put(GameStatus.GAME_OVER, GameEventType.GAMEOVER);
+        return Collections.unmodifiableMap(associativeMap);
     }
     /**
      * {@inheritDoc}
@@ -49,6 +51,7 @@ public class GameStateManagerImpl implements GameStateManager {
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<SceneType, List<GameObject>>>(GameEventType.SET_SCENE, pair), this);
                 break;
             case GAME_OVER:
+            case GAME_WIN:
                 this.currentGameState = new ScreenGameState(this, status);
                 final GameEvent event = new GameEventImpl(EVENT_TO_STATUS.get(status));
                 this.generalMediator.notifyColleagues(event, this);

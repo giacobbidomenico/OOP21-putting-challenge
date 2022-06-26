@@ -22,6 +22,10 @@ public enum GameStatus {
      */
     GAME_OVER,
     /**
+     * The player won every single map in the game.
+     */
+    GAME_WIN,
+    /**
      * The user consults the leaderboard.
      */
     LEADERBOARD,
