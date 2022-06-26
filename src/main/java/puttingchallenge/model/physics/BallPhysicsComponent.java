@@ -16,9 +16,9 @@ import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
-    private static final double PAR = 6;
     private static final double FRICTION = 17.1E-6;
-    private static final int BOUNCING_FACTOR = 10;
+    private static final int BOUNCING_FACTOR = 5;
+    private static final double VEL_ZERO_PRECISION = 50;
 
     private final double radius;
     private boolean isMoving;
@@ -67,15 +67,30 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
-                final double y = normale.getY() * lastVel.getModule();
-                final double x = normale.getX() * lastVel.getModule();
-                this.setVelocity(new Vector2D(2 * x + lastVel.getX(), 2 * y + lastVel.getY()));
+                double y = 0;
+                double x = 0;
+                if (normale.getX() == 1 || normale.getX() == -1) {
+                    x = lastVel.getX() * -1;
+                    y = lastVel.getY();
+                } else if (normale.getY() == 1 || normale.getY() == -1) {
+                    x = lastVel.getX();
+                    y = lastVel.getY() * -1;
+                }
+//                double y = normale.getY() * lastVel.getModule() + lastVel.getY();
+//                double x = normale.getX() * lastVel.getModule() + lastVel.getX();
+//                if (Math.abs(y) < VEL_ZERO_PRECISION) {
+//                    y = -lastVel.getY();
+//                }
+//                if (Math.abs(x) < VEL_ZERO_PRECISION) {
+//                    x = -lastVel.getX();
+//                }
+                this.setVelocity(new Vector2D(x, y));
                 this.reduceVel(BOUNCING_FACTOR * dt);
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
 
-            //obj.setPosition(nextPos);
+            obj.setPosition(nextPos);
             if (this.lastCollision.isPresent()
                 && collision.isPresent()
                 && this.lastCollision.get().equals(collision.get())) {
@@ -84,7 +99,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             } else {
                 obj.setPosition(nextPos);
             }
-            
+
             this.lastCollision = collision;
         }
     }
