@@ -53,14 +53,16 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 final CollisionTest info = infoOpt.get();
 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
-                nextPos = info.getEstimatedPointOfImpact().get();
+                nextPos = info.getPassiveBoxPositionBeforeCollisions().get();
                 nextPos.sumX(-radius);
                 nextPos.sumY(radius);
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
-                normale.sumX(this.getVelocity().getX());
-                normale.sumY(this.getVelocity().getY());
-                this.setVelocity(normale);
+                final Vector2D lastVel = this.getVelocity();
+                final double rate = normale.getX() / normale.getY();
+                final double y = lastVel.getModule() / Math.sqrt(rate * rate - 1);
+                final double x = rate * lastVel.getModule() / Math.sqrt(rate * rate - 1);
+                this.setVelocity(new Vector2D(x, y));
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
