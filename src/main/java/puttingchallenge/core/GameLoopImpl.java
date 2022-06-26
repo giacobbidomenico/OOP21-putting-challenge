@@ -73,7 +73,9 @@ public class GameLoopImpl extends Thread implements GameEngine, Colleague {
         if (delta < FRAME_TIME) {
             try {
                 Thread.sleep(FRAME_TIME - delta);
-            } catch (Exception ex) { }
+            } catch (IllegalArgumentException | InterruptedException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -93,8 +95,7 @@ public class GameLoopImpl extends Thread implements GameEngine, Colleague {
                     this.isOver = true;
                     Platform.exit();
                     break;
-                
-                default: 
+                default:
                     break;
             }
         }

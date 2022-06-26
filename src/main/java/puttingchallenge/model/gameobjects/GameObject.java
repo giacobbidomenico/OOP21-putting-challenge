@@ -32,7 +32,11 @@ public interface GameObject {
         PLAYER,
 
         /**
+<<<<<<< HEAD
          * The type of the land in the game.
+=======
+         * The type of the game land.
+>>>>>>> master
          */
         LAND,
 
@@ -47,10 +51,14 @@ public interface GameObject {
         TREE,
 
         /**
+         * The type of an iceberg static obstacle. 
+         */
+        ICEBERG,
+
+        /**
          * The type of the game hole.
          */
         HOLE;
-
     }
 
     /**

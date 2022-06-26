@@ -79,11 +79,17 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
                                                 final Point2D pos, 
                                                 final Rectangle2D dimensions) {
         switch (gameObjectType) {
+        case LAND:
+            gameObjects.add(factory.createLand(pos, dimensions.getWidth(), dimensions.getHeight()));
+            break;
         case WALL:
             gameObjects.add(factory.createWall(pos, dimensions.getWidth(), dimensions.getHeight()));
             break;
         case TREE:
             gameObjects.add(factory.createTree(pos, dimensions.getWidth(), dimensions.getHeight()));
+            break;
+        case ICEBERG:
+            gameObjects.add(factory.createIceberg(pos, dimensions.getWidth(), dimensions.getHeight()));
             break;
         default:
             throw new IllegalArgumentException();

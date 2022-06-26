@@ -1,7 +1,5 @@
 package puttingchallenge.model.collisions;
 
-import java.util.Optional;
-
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 

@@ -16,6 +16,7 @@ import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
+    private static final double PAR = 6;
     private static final double FRICTION = 17.1E-6;
 
     private final double radius;

@@ -3,7 +3,6 @@ package puttingchallenge.model.gameobjects;
 import java.util.Objects;
 
 import puttingchallenge.common.Point2D;
-import puttingchallenge.model.collisions.ActiveBoundingBox;
 import puttingchallenge.model.collisions.DynamicBoundingBox;
 import puttingchallenge.model.physics.PhysicsComponent;
 import puttingchallenge.view.graphics.GraphicComponent;
