@@ -8,6 +8,7 @@ import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.physics.StaticPhysicsComponent;
 import puttingchallenge.view.graphics.BallGraphicComponent;
 import puttingchallenge.view.graphics.HoleGraphicComponent;
+import puttingchallenge.view.graphics.IcebergGraphicComponent;
 import puttingchallenge.view.graphics.LandGraphicComponent;
 import puttingchallenge.view.graphics.PlayerGraphicComponent;
 import puttingchallenge.view.graphics.TreeGraphicComponent;
@@ -118,6 +119,27 @@ public class GameFactory {
                                   new TreeGraphicComponent(w, h), 
                                   new StaticPhysicsComponent());
     }
+
+    /**
+     * Build a new iceberg in the game.
+     *
+     * @param pos
+     *          position of the iceberg
+     * @param w
+     *          width of the iceberg
+     * @param h
+     *          height of the iceberg
+     *
+     * @return an instance of {@link GameObject} representing a iceberg.
+     */
+    public GameObject createIceberg(final Point2D pos,
+                                    final double w,
+                                    final double h) {
+        return new GameObjectImpl(GameObjectType.ICEBERG, 
+                                  pos, 
+                                  new IcebergGraphicComponent(w, h),
+                                  new StaticPhysicsComponent());
+    };
 
     /**
      * Build a new hole in the game.
