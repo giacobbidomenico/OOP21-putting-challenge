@@ -10,10 +10,7 @@ import puttingchallenge.model.GameStateManagerImpl;
 import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.events.ConcreteMediator;
 import puttingchallenge.model.events.GameEvent;
-import puttingchallenge.model.events.GameEventType;
-import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
-import puttingchallenge.view.SceneType;
 import puttingchallenge.view.View;
 import puttingchallenge.view.ViewImpl;
 
@@ -76,7 +73,9 @@ public class GameLoopImpl extends Thread implements GameEngine, Colleague {
         if (delta < FRAME_TIME) {
             try {
                 Thread.sleep(FRAME_TIME - delta);
-            } catch (Exception ex) { }
+            } catch (IllegalArgumentException | InterruptedException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -96,8 +95,7 @@ public class GameLoopImpl extends Thread implements GameEngine, Colleague {
                     this.isOver = true;
                     Platform.exit();
                     break;
-                
-                default: 
+                default:
                     break;
             }
         }

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import javafx.geometry.Rectangle2D;
 import puttingchallenge.common.Point2D;
-import puttingchallenge.model.collisions.DynamicBoundingBox;
+import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
@@ -25,13 +25,13 @@ public interface Environment {
 
     /**
      * Check if there has been a collision between several {@link GameObject}.
-     * @param ballHitbox hitbox to collide with
-     * @param ballPhysics physics to move the hitbox
+     * @param ballHitbox {@link Hitbox} to collide with
+     * @param ballPhysics physics to move the {@link Hitbox}
      * @param ballPosition previous position of the ball
      * @param deltaT time from last frame
      * @return a info about the collision occurred, empty if no collision has occurred.
      */
-    Optional<DynamicBoundingBox.CollisionTest> checkCollisions(PassiveCircleBoundingBox ballHitbox, 
+    Optional<CollisionTest> checkCollisions(PassiveCircleBoundingBox ballHitbox, 
             BallPhysicsComponent ballPhysics, 
             Point2D ballPosition,
             long deltaT);

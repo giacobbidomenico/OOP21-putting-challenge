@@ -53,7 +53,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
     /**
      * Represents a concrete collision test between a {@link PassiveCircleBoundingBox} and a {@link ActiveBoundingBox}.
      */
-    public class ConcreteCollisionTest implements CollisionTest {
+    public final class ConcreteCollisionTest implements CollisionTest {
 
         private final boolean hasCollided;
         private final Point2D estimatedPointOfImpact;

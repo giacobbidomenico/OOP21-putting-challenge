@@ -14,11 +14,11 @@ import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
-import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
-import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
-import puttingchallenge.model.collisions.PassiveCircleBBTrajectoryBuilder;
-import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
 import puttingchallenge.model.events.ModelEventType;
+import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
+import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
+import puttingchallenge.model.collisions.PassiveCircleBBTrajectoryBuilder;
+import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 
 /**
  * Class that implements the game environment.
@@ -35,7 +35,7 @@ public class EnvironmentImpl implements Environment {
     private final GameObject ball;
     private final GameObject player;
     private final GameObject hole;
-
+    private boolean collisionWithHole;
 
     /**
      * Build a new {@link EnvironmentImpl}.
@@ -172,8 +172,7 @@ public class EnvironmentImpl implements Environment {
     }
 
     private boolean isBallInTheHole() {
-        // TODO Auto-generated method stub
-        return false;
+        return this.collisionWithHole;
     }
 
     /**
@@ -262,7 +261,7 @@ public class EnvironmentImpl implements Environment {
 
         CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder, deltaT);
         if (result.isCollisionOccurred()) {
-            // Avvenuta collisione con la buca
+            this.collisionWithHole = true;
         }
 
         result = null;
