@@ -36,6 +36,8 @@ public class EnvironmentImpl implements Environment {
     private final GameObject ball;
     private final GameObject player;
     private final GameObject hole;
+    private final Point2D initPosBall;
+    private final Point2D initPosPlayer;
     private boolean collisionWithHole;
 
     /**
@@ -63,6 +65,8 @@ public class EnvironmentImpl implements Environment {
         this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
+        this.initPosBall = ball.getPosition();
+        this.initPosPlayer = player.getPosition();
         this.player = Objects.requireNonNull(player);
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
@@ -127,6 +131,11 @@ public class EnvironmentImpl implements Environment {
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
+        if (this.isBallOutOfBounds()) {
+            this.ball.setPosition(initPosBall);
+            this.player.setPosition(initPosPlayer);
+            return;
+        }
         final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
                                          this.container.getHeight() * (PERC_DISTANCE / 100));
         final var pos = this.ball.getPosition();
@@ -169,7 +178,7 @@ public class EnvironmentImpl implements Environment {
                                              posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
-        if(!this.container.contains(rectBall)) {
+        if (!this.container.contains(rectBall)) {
             bf.setVelocity(new Vector2D(0, 0));
         }
         return !this.container.contains(rectBall);
