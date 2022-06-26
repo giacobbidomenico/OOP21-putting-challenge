@@ -1,8 +1,8 @@
 {
     "scene": {
         "background": "/backgrounds/sky.jpg",
-        "wScale": "50",
-        "hScale": "50"
+        "wScale": "70",
+        "hScale": "70"
     },
 
     "player": {
