@@ -27,7 +27,7 @@
     },
 
     "staticObstacles": [{
-            "type": "WALL",
+            "type": "LAND",
             "posX": "0",
             "posY": "90",
             "wScale": "100",
