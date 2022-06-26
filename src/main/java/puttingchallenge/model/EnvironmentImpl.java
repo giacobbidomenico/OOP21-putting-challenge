@@ -132,11 +132,8 @@ public class EnvironmentImpl implements Environment {
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
-        if (this.isBallOutOfBounds()) {
-            this.ball.setPosition(initPosBall);
-            this.player.setPosition(initPosPlayer);
-        }
         System.out.println("moved");
+        this.notidiedBallStoped = false;
         final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
                                          this.container.getHeight() * (PERC_DISTANCE / 100));
         final var pos = this.ball.getPosition();
@@ -183,6 +180,7 @@ public class EnvironmentImpl implements Environment {
             bf.setVelocity(new Vector2D(0, 0));
             this.ball.setPosition(initPosBall);
             this.player.setPosition(initPosPlayer);
+            this.notidiedBallStoped = false;
         }
         return !this.container.contains(rectBall);
     }
@@ -275,8 +273,8 @@ public class EnvironmentImpl implements Environment {
 
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
         final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
-                new Point2D(ballPosition.getX() + ballHitbox.getRadius(), 
-                        ballPosition.getY() - ballHitbox.getRadius()), 
+                new Point2D(ballPosition.getX() + ballHitbox.getRadius(),
+                ballPosition.getY() - ballHitbox.getRadius()), 
                 ballHitbox.getRadius());
 
         builder.setHitbox(box);
