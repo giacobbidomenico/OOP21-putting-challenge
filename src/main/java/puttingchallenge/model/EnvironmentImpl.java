@@ -38,6 +38,7 @@ public class EnvironmentImpl implements Environment {
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
+    private boolean isBallStoped;
     private boolean collisionWithHole;
 
     /**
@@ -133,9 +134,8 @@ public class EnvironmentImpl implements Environment {
         }
         if (this.isBallOutOfBounds()) {
             this.ball.setPosition(initPosBall);
-            this.player.setPosition(initPosPlayer);
-            return;
         }
+        System.out.println("moved");
         final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
                                          this.container.getHeight() * (PERC_DISTANCE / 100));
         final var pos = this.ball.getPosition();
@@ -211,8 +211,9 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary()) {
+        if (this.isBallStationary() && this.isBallStoped) {
             events.add(ModelEventType.BALL_STOPPED);
+            this.isBallStoped = true;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
