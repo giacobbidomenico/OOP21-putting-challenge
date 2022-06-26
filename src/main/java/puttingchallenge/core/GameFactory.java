@@ -127,7 +127,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
-                                  new TreeGraphicComponent(w, h), 
+                                  new TreeGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
@@ -148,9 +148,10 @@ public class GameFactory {
                                     final double w,
                                     final double h) {
         return new GameObjectImpl(GameObjectType.ICEBERG, 
-                                  pos, 
+                                  pos,
                                   new IcebergGraphicComponent(w, h),
-                                  new StaticPhysicsComponent());
+                                  new StaticPhysicsComponent(),
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     };
 
     /**
