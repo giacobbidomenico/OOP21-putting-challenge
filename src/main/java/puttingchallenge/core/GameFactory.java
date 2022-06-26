@@ -65,6 +65,27 @@ public class GameFactory {
     }
 
     /**
+     * Build the land in the game.
+     * 
+     * @param pos
+     *          static position of the land
+     * @param w
+     *          the width of the land
+     * @param h
+     *          the height of the land
+     *
+     * @return an instance of {@link GameObject} representing a land.
+     */
+    public GameObject createLand(final Point2D pos,
+                                 final double w,
+                                 final double h) {
+        return new GameObjectImpl(GameObjectType.LAND,
+                                  pos, 
+                                  new LandGraphicComponent(w, h), 
+                                  new StaticPhysicsComponent());
+    }
+
+    /**
      * Build a new wall in the game.
      * 
      * @param pos

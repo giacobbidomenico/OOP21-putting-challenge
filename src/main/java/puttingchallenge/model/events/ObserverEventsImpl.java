@@ -16,7 +16,6 @@ public class ObserverEventsImpl<A> implements ObserverEvents<A> {
     */
    @Override
    public void notifyEvents(final List<A> types) {
-       this.events.clear();
        this.events.addAll(types);
    }
 
@@ -25,6 +24,8 @@ public class ObserverEventsImpl<A> implements ObserverEvents<A> {
     */
    @Override
    public List<A> getEvents() {
-       return this.events;
+       final List<A> copy = List.copyOf(this.events);
+       this.events.clear();
+       return copy;
    }
 }
