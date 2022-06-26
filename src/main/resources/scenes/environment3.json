@@ -1,44 +1,65 @@
 {
     "scene": {
-        "background": "/backgrounds/AngkorWat.png",
+        "background": "/backgrounds/white.jpg",
         "wScale": "50",
         "hScale": "50"
     },
 
     "player": {
         "posX": "10",
-        "posY": "10",
-        "wScale": "12",
-        "hScale": "12",
+        "posY": "60",
+        "wScale": "15",
+        "hScale": "30",
         "skinPath": "/skins/player.png"
     },
 
     "ball": {
-        "posX": "12",
-        "posY": "34",
-        "radiusScale": "15"
+        "posX": "23",
+        "posY": "80",
+        "radiusScale": "1.5"
     },
 
     "hole": {
-        "posX": "20",
-        "posY": "20",
-        "wScale": "50",
-        "hScale": "50"
+        "posX": "60",
+        "posY": "50",
+        "wScale": "30",
+        "hScale": "40"
     },
 
     "staticObstacles": [{
-            "type": "WALL",
-            "posX": "13",
-            "posY": "0",
-            "wScale": "50",
-            "hScale": "50"
+            "type": "LAND",
+            "posX": "0",
+            "posY": "90",
+            "wScale": "100",
+            "hScale": "10"
         },
         {
-            "type": "TREE",
-            "posX": "21",
-            "posY": "33",
-            "wScale": "50",
-            "hScale": "50"
+            "type": "ICEBERG",
+            "posX": "2",
+            "posY": "10",
+            "wScale": "25",
+            "hScale": "35"
+        },
+        {
+            "type": "ICEBERG",
+            "posX": "33",
+            "posY": "10",
+            "wScale": "25",
+            "hScale": "35"
+        },
+        {
+            "type": "ICEBERG",
+            "posX": "33",
+            "posY": "54",
+            "wScale": "25",
+            "hScale": "35"
+        },
+        {
+            "type": "ICEBERG",
+            "posX": "65",
+            "posY": "10",
+            "wScale": "25",
+            "hScale": "35"
         }
     ]
 }
