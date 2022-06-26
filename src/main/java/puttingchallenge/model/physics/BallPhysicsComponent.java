@@ -69,6 +69,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 final double y = normale.getY() * rate;
                 final double x = normale.getX() * rate;
                 this.setVelocity(new Vector2D(x, y));
+                obj.setPosition(nextPos);
             } else {
                 this.lastCollision = Optional.empty();
                 nextPos = this.nextPos(dt, obj.getPosition());
