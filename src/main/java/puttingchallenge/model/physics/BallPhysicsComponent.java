@@ -17,6 +17,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
+    private static final int BOUNCING_FACTOR = 10;
 
     private final double radius;
     private boolean isMoving;
@@ -65,25 +66,25 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
-                final double rate = lastVel.getModule() / normale.getModule();
-                final double y = normale.getY() * rate;
-                final double x = normale.getX() * rate;
-                this.setVelocity(new Vector2D(x + lastVel.getX(), y));
-                this.reduceVel(10 * dt);
-                obj.setPosition(nextPos);
+                final double y = normale.getY() * lastVel.getModule();
+                final double x = normale.getX() * lastVel.getModule();
+                this.setVelocity(new Vector2D(2 * x + lastVel.getX(), 2 * y + lastVel.getY()));
+                this.reduceVel(BOUNCING_FACTOR * dt);
             } else {
-                this.lastCollision = Optional.empty();
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
 
-            obj.setPosition(nextPos);
+            //obj.setPosition(nextPos);
             if (this.lastCollision.isPresent()
                 && collision.isPresent()
                 && this.lastCollision.get().equals(collision.get())) {
+                System.out.println("daglieee");
                 this.setVelocity(new Vector2D(0, 0));
             } else {
                 obj.setPosition(nextPos);
             }
+            
+            this.lastCollision = collision;
         }
     }
 
@@ -100,7 +101,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      * @return the next expected position
      */
     public Point2D nextPos(final long dt, final Point2D curPos) {
-        final double t = 0.001 * dt;
+        final double t = 0.001 * dt * 1.5;
         final Vector2D vel = this.getVelocity();
 
         this.reduceVel(dt);
