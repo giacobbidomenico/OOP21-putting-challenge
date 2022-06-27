@@ -14,8 +14,8 @@
     },
 
     "ball": {
-        "posX": "23",
-        "posY": "70",
+        "posX": "25",
+        "posY": "85",
         "radiusScale": "1.5"
     },
 
