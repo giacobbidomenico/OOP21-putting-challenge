@@ -36,4 +36,16 @@ public class MenuController extends AbstractSceneController {
         super.getMediator().notifyColleagues(event, this);
     }
 
+    /**
+     * Request the leaderboard screen.
+     * 
+     * @param e
+     *          unused
+     */
+    @FXML
+    public void showLeaderboard(final ActionEvent e) {
+        final GameEvent event = new GameEventImpl(GameEventType.SHOW_LEADERBOARD);
+        super.getMediator().notifyColleagues(event, this);
+    }
+
 }
