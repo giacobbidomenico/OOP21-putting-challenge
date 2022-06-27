@@ -10,7 +10,7 @@ import puttingchallenge.common.Vector2D;
  */
 public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
 
-    private static final long INTERVAL_DELTA = 1;
+    private static final long INTERVAL_DELTA = 21;
     private final ActiveBoundingBox box;
 
     /**
@@ -37,14 +37,24 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
      */
     @Override
     public CollisionTest collidesWith(final PassiveCircleBBTrajectoryBuilder circleBuilder) {
-        final Optional<Point2D> lastPosition = this.findFirstPointOfCollision(circleBuilder);
+        Optional<PassiveCircleBoundingBox> lastPos = Optional.of(circleBuilder.build(INTERVAL_DELTA));
+        final Optional<Point2D> lastPosition;
+        if (this.box.isColliding(lastPos.get())) {
+            lastPosition = Optional.ofNullable(circleBuilder.build(0).getPosition());
+        } else {
+            lastPosition = Optional.empty();
+        }
+
+
+//        final Optional<Point2D> lastPosition = this.findFirstPointOfCollision(circleBuilder);
 
         if (lastPosition.isEmpty()) {
             return new ConcreteCollisionTest();
         }
 
         final Point2D closestPoint = this.box.closestPointOnBBToPoint(lastPosition.get());
-        final Vector2D normal = this.box.getNormal(closestPoint);
+        final Vector2D normal;
+        normal = this.box.getNormal(closestPoint);
         return new ConcreteCollisionTest(true, closestPoint, normal, lastPosition.get());
     }
 
