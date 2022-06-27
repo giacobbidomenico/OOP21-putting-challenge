@@ -130,10 +130,15 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
-        if (!this.isBallStationary()) {
-            throw new IllegalStateException();
-        }
         System.out.println("moved");
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        if (this.isBallOutOfBounds()) {
+            bf.setVelocity(new Vector2D(0, 0));
+            this.ball.setPosition(initPosBall);
+            this.player.setPosition(initPosPlayer);
+            this.notidiedBallStoped = false;
+            return;
+        }
         this.notidiedBallStoped = false;
         final var posBall = this.ball.getPosition();
         var newPos = new Point2D(posBall.getX() + player.getWidth(), 
@@ -172,17 +177,12 @@ public class EnvironmentImpl implements Environment {
      */
     private boolean isBallOutOfBounds() {
         final var posBall = this.ball.getPosition();
+        System.out.println(this.ball);
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
-        if (!this.container.contains(rectBall)) {
-            bf.setVelocity(new Vector2D(0, 0));
-            this.ball.setPosition(initPosBall);
-            this.player.setPosition(initPosPlayer);
-            this.notidiedBallStoped = false;
-        }
         return !this.container.contains(rectBall);
     }
 
