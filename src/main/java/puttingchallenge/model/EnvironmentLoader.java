@@ -29,13 +29,9 @@ public final class EnvironmentLoader {
     private static final String POSX = "posX";
     private static final String POSY = "posY";
     private static final String SEP = File.separator;
-    private static final String PATH_START = System.getProperty("user.dir")
-                                            + SEP + "src"
-                                            + SEP + "main"
-                                            + SEP + "resources"
-                                            + SEP + "scenes"
-                                            + SEP;
-    private static final String PATH_END = ".json";
+    private static final String PATH_START_SCREEN = "/scenes/";
+    private static final String PATH_END_SCREEN = ".json";
+
 
     /**
      * Returns the single instance of the {@link EnvironmentLoader}.
@@ -59,8 +55,8 @@ public final class EnvironmentLoader {
      */
     public Optional<Environment> getEnvironment(final SceneType sceneTag) throws IOException {
         if (sceneTag.isLevel()) {
-            final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
-            final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
+            final String path = PATH_START_SCREEN + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
+            final String jsonString = IOUtils.toString(getClass().getResource(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
             final JSONObject  dimScene = file.getJSONObject("scene");
