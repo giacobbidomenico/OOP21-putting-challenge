@@ -169,7 +169,7 @@ public class GameFactory {
                                   pos, 
                                   new HoleGraphicComponent(w, h), 
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, w, h)));
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
 }
