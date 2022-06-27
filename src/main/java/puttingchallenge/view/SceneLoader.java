@@ -2,7 +2,6 @@ package puttingchallenge.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -36,10 +35,9 @@ public final class SceneLoader {
 
     private static final SceneLoader SINGLETON = new SceneLoader();
 
-    private static final String SEP = File.separator;
-    private static final String PATH_START_LEVEL = SEP + "scenes" + SEP;
+    private static final String PATH_START_LEVEL = "/scenes/";
     private static final String PATH_END_LEVEL = ".json";
-    private static final String PATH_START_SCREEN = SEP + "scenes" + SEP;
+    private static final String PATH_START_SCREEN = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
 
     /**
@@ -98,10 +96,10 @@ public final class SceneLoader {
         button.setOnAction(levelController::handle);
         final var posWButton = w * (0.1);
         button.setLayoutX(w - posWButton);
-        final Label score = new Label("Score");
+        final Label score = new Label();
         final var posWScore = w * (0.3);
         score.setLayoutX(posWScore);
-        final Label lives = new Label("Lives");
+        final Label lives = new Label();
         final var posWLives = w * (0.4);
         score.setLayoutX(posWLives);
         final AnchorPane layout = new AnchorPane();

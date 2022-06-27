@@ -76,6 +76,7 @@ public class GamePlayGameState extends AbstractGameState {
                 this.observable = new ObservableEventsImpl<>();
                 this.getEnvironment().get().configureObservable(this.observable);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
+                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -186,7 +187,7 @@ public class GamePlayGameState extends AbstractGameState {
                 default:
                     break;
                 }
-                this.generalMediator.notifyColleagues((new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore()))), this);
+                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             });
         }
     }

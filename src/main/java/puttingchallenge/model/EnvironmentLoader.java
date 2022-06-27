@@ -2,7 +2,6 @@ package puttingchallenge.model;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
@@ -27,7 +26,6 @@ public final class EnvironmentLoader {
     private static final String HSCALE = "hScale";
     private static final String POSX = "posX";
     private static final String POSY = "posY";
-    private static final String SEP = File.separator;
     private static final String PATH_START = "/scenes/";
     private static final String PATH_END = ".json";
 
