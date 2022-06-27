@@ -1,5 +1,10 @@
 package puttingchallenge.model;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +13,7 @@ import java.util.Optional;
 
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.core.FileManager;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
@@ -33,6 +39,27 @@ public class GameStateManagerImpl implements GameStateManager {
         associativeMap.put(GameStatus.GAME_OVER, GameEventType.GAMEOVER);
         return Collections.unmodifiableMap(associativeMap);
     }
+
+    /**
+     * 
+     * @return saved scores
+     */
+    private List<String> getScores() {
+        List<String> scores = new ArrayList<>();
+        try (BufferedReader f = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(
+                                FileManager.LEADERBOARD_FILE)))) {
+            String line;
+            while ((line = f.readLine()) != null) {
+                scores.add(line);
+            }
+        } catch (IOException e) {
+            return List.of();
+        }
+        return scores;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -100,7 +127,7 @@ public class GameStateManagerImpl implements GameStateManager {
                 this.switchState(GameStatus.LEADERBOARD);
                 final GameEvent leaderboardEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
                                                                                   new Pair<>(SceneType.LEADEARBOARD,
-                                                                                             Collections.emptyList()));
+                                                                                          this.getScores()));
                 this.generalMediator.notifyColleagues(leaderboardEvent, this);
                 break;
             case START:
