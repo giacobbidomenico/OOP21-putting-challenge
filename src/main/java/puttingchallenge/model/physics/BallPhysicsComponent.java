@@ -22,7 +22,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private static final double FRICTION = 17.1E-6;
     private static final double INCREASE = 1.001;
     private static final int BOUNCING_FACTOR = 5;
-    private static final int CONSECUTIVE_COLLISIONS = 8;
+    private static final int CONSECUTIVE_COLLISIONS = 16;
 
     private final double radius;
     private boolean isMoving;
@@ -63,13 +63,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
                 final ActiveBoundingBox collision = info.getActiveBoundingBox();
                 if (this.lastCollisions.size() == CONSECUTIVE_COLLISIONS) {
-                    boolean f = true;
-                    for (final ActiveBoundingBox c : this.lastCollisions) {
-                        if (c.equals(collision)) {
-                            f = !f;
-                        }
-                    }
-                    if (f) {
+                    if (this.lastCollisions.stream().allMatch((c) -> c.equals(collision))) {
                         this.setVelocity(new Vector2D(0, 0));
                     }
                 } else {
