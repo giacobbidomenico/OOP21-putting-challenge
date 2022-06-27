@@ -17,6 +17,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
+    private static final double INCREASE = 1.1;
     private static final int BOUNCING_FACTOR = 5;
     private static final double VEL_ZERO_PRECISION = 50;
 
@@ -61,29 +62,47 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 collision = Optional.of(info.getActiveBoundingBox());
 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
-                nextPos = info.getPassiveBoxPositionBeforeCollisions().get();
-                nextPos.sumX(-radius);
-                nextPos.sumY(radius);
 
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
-                double y = 0;
-                double x = 0;
-                if (normale.getX() == 1 || normale.getX() == -1) {
-                    x = lastVel.getX() * -1;
-                    y = lastVel.getY();
-                } else if (normale.getY() == 1 || normale.getY() == -1) {
-                    x = lastVel.getX();
-                    y = lastVel.getY() * -1;
+
+                nextPos = info.getEstimatedPointOfImpact().get();
+                nextPos.sumX(normale.getX() * radius * INCREASE);
+                nextPos.sumY(normale.getY() * radius * INCREASE);
+                nextPos.sumX(-radius);
+                nextPos.sumY(-radius);
+                obj.setPosition(nextPos);
+
+//                double y = 0;
+//                double x = 0;
+               
+                
+//                if (normale.getX() == 1 || normale.getX() == -1) {
+//                    x = lastVel.getX() * -1;
+//                    y = lastVel.getY();
+//                } else if (normale.getY() == 1 || normale.getY() == -1) {
+//                    x = lastVel.getX();
+//                    y = lastVel.getY() * -1;
+//                }
+                
+//                double rate = 1 / lastVel.getModule();
+//                y = rate * lastVel.getY() + normale.getY();
+//                x = rate * lastVel.getX() + normale.getX();
+//                rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
+//                y *= rate;
+//                x *= rate;
+                
+
+                
+                double y = normale.getY() * lastVel.getModule() + lastVel.getY();
+                double x = normale.getX() * lastVel.getModule() + lastVel.getX();
+                if (Math.abs(y) < VEL_ZERO_PRECISION) {
+                    y = -lastVel.getY();
                 }
-//                double y = normale.getY() * lastVel.getModule() + lastVel.getY();
-//                double x = normale.getX() * lastVel.getModule() + lastVel.getX();
-//                if (Math.abs(y) < VEL_ZERO_PRECISION) {
-//                    y = -lastVel.getY();
-//                }
-//                if (Math.abs(x) < VEL_ZERO_PRECISION) {
-//                    x = -lastVel.getX();
-//                }
+                if (Math.abs(x) < VEL_ZERO_PRECISION) {
+                    x = -lastVel.getX();
+                }
+                
                 this.setVelocity(new Vector2D(x, y));
                 this.reduceVel(BOUNCING_FACTOR * dt);
             } else {
