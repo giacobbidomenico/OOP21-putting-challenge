@@ -24,6 +24,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
+
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -38,7 +39,7 @@ public final class SceneLoader {
     private static final String SEP = File.separator;
     private static final String PATH_START_LEVEL = SEP + "scenes" + SEP;
     private static final String PATH_END_LEVEL = ".json";
-    private static final String PATH_START_SCREEN = "/scenes/";
+    private static final String PATH_START_SCREEN = SEP + "scenes" + SEP;
     private static final String PATH_END_SCREEN = ".fxml";
 
     /**
