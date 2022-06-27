@@ -1,5 +1,8 @@
 package puttingchallenge.model.physics;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
@@ -17,13 +20,13 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE = 1.1;
+    private static final double INCREASE = 1.001;
     private static final int BOUNCING_FACTOR = 5;
-    private static final double VEL_ZERO_PRECISION = 50;
+    private static final int CONSECUTIVE_COLLISIONS = 8;
 
     private final double radius;
     private boolean isMoving;
-    private Optional<ActiveBoundingBox> lastCollision;
+    private List<ActiveBoundingBox> lastCollisions;
 
     /**
      * Build a new {@link BallPhysicsComponent}.
@@ -34,7 +37,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     public BallPhysicsComponent(final double radius) {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
-        this.lastCollision = Optional.empty();
+        this.lastCollisions = new LinkedList<>();
     }
 
     /**
@@ -55,14 +58,25 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
             final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
             final Point2D nextPos;
-            Optional<ActiveBoundingBox> collision = Optional.empty();
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
 
-                collision = Optional.of(info.getActiveBoundingBox());
+                final ActiveBoundingBox collision = info.getActiveBoundingBox();
+                if (this.lastCollisions.size() == CONSECUTIVE_COLLISIONS) {
+                    boolean f = true;
+                    for (final ActiveBoundingBox c : this.lastCollisions) {
+                        if (c.equals(collision)) {
+                            f = !f;
+                        }
+                    }
+                    if (f) {
+                        this.setVelocity(new Vector2D(0, 0));
+                    }
+                } else {
+                    this.lastCollisions.add(collision);
+                }
 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
-
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
 
@@ -71,55 +85,20 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 nextPos.sumY(normale.getY() * radius * INCREASE);
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
-                obj.setPosition(nextPos);
 
-//                double y = 0;
-//                double x = 0;
-               
-                
-//                if (normale.getX() == 1 || normale.getX() == -1) {
-//                    x = lastVel.getX() * -1;
-//                    y = lastVel.getY();
-//                } else if (normale.getY() == 1 || normale.getY() == -1) {
-//                    x = lastVel.getX();
-//                    y = lastVel.getY() * -1;
-//                }
-                
-//                double rate = 1 / lastVel.getModule();
-//                y = rate * lastVel.getY() + normale.getY();
-//                x = rate * lastVel.getX() + normale.getX();
-//                rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
-//                y *= rate;
-//                x *= rate;
-                
+                final double y = 2 * normale.getY() * lastVel.getModule() + lastVel.getY();
+                final double x = 2 * normale.getX() * lastVel.getModule() + lastVel.getX();
+                final double rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
+                final Vector2D finalVel = new Vector2D(x * rate, y * rate);
 
-                
-                double y = normale.getY() * lastVel.getModule() + lastVel.getY();
-                double x = normale.getX() * lastVel.getModule() + lastVel.getX();
-                if (Math.abs(y) < VEL_ZERO_PRECISION) {
-                    y = -lastVel.getY();
-                }
-                if (Math.abs(x) < VEL_ZERO_PRECISION) {
-                    x = -lastVel.getX();
-                }
-                
-                this.setVelocity(new Vector2D(x, y));
+                this.setVelocity(finalVel);
                 this.reduceVel(BOUNCING_FACTOR * dt);
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
+                this.lastCollisions = new LinkedList<>();
             }
 
             obj.setPosition(nextPos);
-            if (this.lastCollision.isPresent()
-                && collision.isPresent()
-                && this.lastCollision.get().equals(collision.get())) {
-                System.out.println("daglieee");
-                this.setVelocity(new Vector2D(0, 0));
-            } else {
-                obj.setPosition(nextPos);
-            }
-
-            this.lastCollision = collision;
         }
     }
 
