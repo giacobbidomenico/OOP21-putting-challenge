@@ -12,6 +12,7 @@ import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
+import puttingchallenge.model.gameobjects.PlayerObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -34,7 +35,7 @@ public class EnvironmentImpl implements Environment {
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
-    private final GameObject player;
+    private final PlayerObject player;
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
@@ -58,7 +59,7 @@ public class EnvironmentImpl implements Environment {
      */
     public EnvironmentImpl(final Rectangle2D container,
                            final GameObject ball, 
-                           final GameObject player,
+                           final PlayerObject player,
                            final List<GameObject> staticObstacles,
                            final GameObject hole) {
         this.observableGameState = Optional.empty();
@@ -104,7 +105,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public GameObject getPlayer() {
+    public PlayerObject getPlayer() {
         return this.player;
     }
 
@@ -129,23 +130,28 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
-        if (!this.isBallStationary()) {
-            throw new IllegalStateException();
-        }
         System.out.println("moved");
-        this.notidiedBallStoped = false;
-        final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
-                                         this.container.getHeight() * (PERC_DISTANCE / 100));
-        final var pos = this.ball.getPosition();
-        if ((pos.getX() - calcDist.getX()) >= 0) {
-            this.player.setFlip(false);
-            this.player.setPosition(new Point2D(pos.getX() - calcDist.getX(), pos.getY()));
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        if (this.isBallOutOfBounds()) {
+            bf.setVelocity(new Vector2D(0, 0));
+            this.ball.setPosition(initPosBall);
+            this.player.setPosition(initPosPlayer);
+            this.notidiedBallStoped = false;
             return;
         }
-        if ((pos.getX() + calcDist.getX()) < this.container.getWidth()) {
-            this.player.setFlip(true);
-            this.player.setPosition(new Point2D(pos.getX() + calcDist.getX(), pos.getY()));
-            return;
+        this.notidiedBallStoped = false;
+        final var posBall = this.ball.getPosition();
+        var newPos = new Point2D(posBall.getX() + player.getWidth(), 
+                                 posBall.getY() + player.getHeight());
+        if (newPos.getX() >= 0) {
+            player.setFlip(false);
+            player.setPosition(newPos);
+        }
+        newPos = new Point2D(posBall.getX() - player.getWidth(), 
+                             posBall.getY() - player.getHeight());
+        if (newPos.getX() < this.container.getWidth()) {
+            player.setFlip(true);
+            player.setPosition(newPos);
         }
     }
 
@@ -171,17 +177,12 @@ public class EnvironmentImpl implements Environment {
      */
     private boolean isBallOutOfBounds() {
         final var posBall = this.ball.getPosition();
+        System.out.println(this.ball);
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(),
                                              bf.getRadius() * 2, 
                                              bf.getRadius() * 2);
-        if (!this.container.contains(rectBall)) {
-            bf.setVelocity(new Vector2D(0, 0));
-            this.ball.setPosition(initPosBall);
-            this.player.setPosition(initPosPlayer);
-            this.notidiedBallStoped = false;
-        }
         return !this.container.contains(rectBall);
     }
 
@@ -234,7 +235,7 @@ public class EnvironmentImpl implements Environment {
             throw new IllegalStateException();
         }
         final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
-        eventsReceived.stream().peek(event -> {
+        eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
                 this.notidiedBallStoped = false;

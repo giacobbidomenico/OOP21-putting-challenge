@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -33,6 +34,7 @@ public class ViewImpl implements View {
      */
     public ViewImpl(final Stage stage) {
         this.stage = Objects.requireNonNull(stage);
+        this.stage.getIcons().add(new Image("/skins/icon.png"));
     }
 
     /**
