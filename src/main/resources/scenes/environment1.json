@@ -1,8 +1,8 @@
 {
     "scene": {
         "background": "/backgrounds/sky.jpg",
-        "wScale": "40",
-        "hScale": "40"
+        "wScale": "50",
+        "hScale": "50"
     },
 
     "player": {
@@ -20,10 +20,10 @@
     },
 
     "hole": {
-        "posX": "60",
-        "posY": "50",
-        "wScale": "30",
-        "hScale": "40"
+        "posX": "80",
+        "posY": "55",
+        "wScale": "10",
+        "hScale": "35"
     },
 
     "staticObstacles": [{
@@ -35,10 +35,10 @@
         },
         {
             "type": "TREE",
-            "posX": "30",
-            "posY": "60",
-            "wScale": "30",
-            "hScale": "70"
+            "posX": "40",
+            "posY": "45",
+            "wScale": "20",
+            "hScale": "50"
         }
     ]
 }

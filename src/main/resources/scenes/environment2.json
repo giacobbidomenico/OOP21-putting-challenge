@@ -20,10 +20,10 @@
     },
 
     "hole": {
-        "posX": "60",
-        "posY": "50",
-        "wScale": "30",
-        "hScale": "40"
+        "posX": "80",
+        "posY": "55",
+        "wScale": "10",
+        "hScale": "35"
     },
 
     "staticObstacles": [{

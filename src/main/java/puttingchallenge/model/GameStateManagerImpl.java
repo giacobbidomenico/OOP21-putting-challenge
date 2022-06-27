@@ -47,14 +47,24 @@ public class GameStateManagerImpl implements GameStateManager {
         switch (status) {
             case PLAY:
                 this.currentGameState = new GamePlayGameState(this, status);
+                this.currentGameState.setMediator(generalMediator);
+                this.generalMediator.addColleague(currentGameState);
                 final Pair<SceneType, List<GameObject>> pair = this.currentGameState.initState();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<SceneType, List<GameObject>>>(GameEventType.SET_SCENE, pair), this);
                 break;
             case GAME_OVER:
+                this.currentGameState = new ScreenGameState(this, status);
+                final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+                        new Pair<>(SceneType.GAME_OVER,
+                                   Collections.emptyList()));
+                this.generalMediator.notifyColleagues(gameOverEvent, this);
+                break;
             case GAME_WIN:
                 this.currentGameState = new ScreenGameState(this, status);
-                final GameEvent event = new GameEventImpl(EVENT_TO_STATUS.get(status));
-                this.generalMediator.notifyColleagues(event, this);
+                final GameEvent gameWinEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+                        new Pair<>(SceneType.GAME_WIN,
+                                   Collections.emptyList()));
+                this.generalMediator.notifyColleagues(gameWinEvent, this);
                 break;
             case MAIN_MENU:
                 this.currentGameState = new ScreenGameState(this, status);
@@ -83,12 +93,6 @@ public class GameStateManagerImpl implements GameStateManager {
     @Override
     public void notifyEvent(final GameEvent event) {
         switch (event.getEventType()) {
-            case SHOOT:
-                if (this.getCurrentState().getStatus() == GameStatus.PLAY) {
-                    final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
-                    ((GamePlayGameState) this.getCurrentState()).shoot(points);
-                }
-                break;
             case SHOW_MAIN_MENU:
                 this.switchState(GameStatus.MAIN_MENU);
                 final GameEvent mainMenuEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
@@ -106,20 +110,20 @@ public class GameStateManagerImpl implements GameStateManager {
             case START:
                 this.switchState(GameStatus.PLAY);
                 break;
-            case WIN:
-                this.switchState(GameStatus.GAME_WIN);
-                final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
-                                                                          new Pair<>(SceneType.GAME_WIN,
-                                                                                     Collections.emptyList()));
-                this.generalMediator.notifyColleagues(winEvent, this);
-                break;
-            case GAMEOVER:
-                this.switchState(GameStatus.GAME_OVER);
-                final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
-                                                                               new Pair<>(SceneType.GAME_OVER,
-                                                                                          this.getCurrentEnvironment().get().getObjects()));
-                this.generalMediator.notifyColleagues(gameOverEvent, this);
-                break;
+//            case WIN:
+//                this.switchState(GameStatus.GAME_WIN);
+//                final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+//                                                                          new Pair<>(SceneType.GAME_WIN,
+//                                                                                     Collections.emptyList()));
+//                this.generalMediator.notifyColleagues(winEvent, this);
+//                break;
+//            case GAMEOVER:
+//                this.switchState(GameStatus.GAME_OVER);
+//                final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+//                                                                               new Pair<>(SceneType.GAME_OVER,
+//                                                                                          Collections.emptyList()));
+//                this.generalMediator.notifyColleagues(gameOverEvent, this);
+//                break;
             default:
                 break;
         }

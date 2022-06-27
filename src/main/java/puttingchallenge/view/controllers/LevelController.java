@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -33,9 +33,7 @@ public class LevelController extends AbstractSceneController implements EventHan
 
     private GraphicsContext gc;
     private Optional<Point2D> aimingPoint;
-    @FXML
     private Label score;
-    @FXML
     private Label lives;
 
     /**
@@ -47,6 +45,8 @@ public class LevelController extends AbstractSceneController implements EventHan
      *            {@link GameObject} present in the {@link Scene}
      * @param gc
      *            the {@link GraphicsContext} in which the object has to be drawn
+     * @param score
+     * @param lives
      */
     public void init(final Scene scene,
                      final List<GameObject> gameObjects,
@@ -120,15 +120,21 @@ public class LevelController extends AbstractSceneController implements EventHan
     private Point2D getCoord(final MouseEvent event) {
         return new Point2D(event.getScreenX(), event.getScreenY());
     }
+
     /**
      * Updates the score and lives labels.
      * @param stats
      *          to update the labels with
      */
     public void updateStats(final Pair<Integer, Integer> stats) {
-        this.lives.setText(stats.getKey().toString());
-        this.score.setText(stats.getValue().toString());
+        Platform.runLater(() -> {
+            final String scoreLabel = String.valueOf(stats.getValue().intValue());
+            final String livesLabel = String.valueOf(stats.getKey().intValue());
+            this.lives.setText("Lives:" + livesLabel);
+            this.score.setText("Score:" + scoreLabel);
+        });
     }
+
     /**
      * {@inheritDoc}
      */
