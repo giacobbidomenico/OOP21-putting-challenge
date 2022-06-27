@@ -5,11 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> player
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -144,7 +139,6 @@ public class GamePlayGameState extends AbstractGameState {
      *          where the mouse was pressed and released during the aiming phase
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
-<<<<<<< HEAD
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
         if (!ballPhysicsComponent.isMoving()) {
             final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
@@ -153,13 +147,6 @@ public class GamePlayGameState extends AbstractGameState {
             this.nShoots++;
             this.sendModelEvent(ModelEventType.SHOOT);
         }
-=======
-        final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-        shootingVector.setX(shootingVector.getX() * this.getEnvironment().get().getPlayer().getBat().getType().getStrength());
-        shootingVector.setY(shootingVector.getY() * this.getEnvironment().get().getPlayer().getBat().getType().getStrength());
-        //this.checkExceptionEnvironment();
-        this.getEnvironment().get().getBall().setVelocity(shootingVector);
->>>>>>> player
     }
     /**
      * {@inheritDoc}
