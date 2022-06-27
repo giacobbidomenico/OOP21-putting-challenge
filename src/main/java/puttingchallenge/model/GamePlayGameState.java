@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,6 +12,7 @@ import java.util.List;
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
+import puttingchallenge.core.FileManager;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.ModelEventType;
@@ -149,7 +152,14 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     void leavingState(final GameStatus nextStatus) {
-        // write on file
+        try (BufferedWriter f = new BufferedWriter(
+                new FileWriter(FileManager.LEADERBOARD_FILE))) {
+
+            f.write(score);
+            f.newLine();
+        } catch (Exception e) {
+            FileManager.deleteIfPresent(FileManager.LEADERBOARD_FILE);
+        }
         super.leavingState(nextStatus);
     }
     /**
