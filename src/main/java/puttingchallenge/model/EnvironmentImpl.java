@@ -284,6 +284,7 @@ public class EnvironmentImpl implements Environment {
         CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder);
         if (result.isCollisionOccurred()) {
             this.collisionWithHole = true;
+            System.out.println("Hole hit");
         }
 
         result = null;
