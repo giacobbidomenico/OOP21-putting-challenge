@@ -181,7 +181,6 @@ public class GamePlayGameState extends AbstractGameState {
                         break;
                     }
                 case BALL_OUT_OF_BOUND:
-                    System.out.println("miss");
                     this.handleMiss();
                     break;
                 default:

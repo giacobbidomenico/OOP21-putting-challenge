@@ -52,12 +52,20 @@ public class GameStateManagerImpl implements GameStateManager {
                 final Pair<SceneType, List<GameObject>> pair = this.currentGameState.initState();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<SceneType, List<GameObject>>>(GameEventType.SET_SCENE, pair), this);
                 break;
-            case GAME_OVER:
-            case GAME_WIN:
-                this.currentGameState = new ScreenGameState(this, status);
-                final GameEvent event = new GameEventImpl(EVENT_TO_STATUS.get(status));
-                this.generalMediator.notifyColleagues(event, this);
-                break;
+//            case GAME_OVER:
+//                this.currentGameState = new ScreenGameState(this, status);
+//                final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+//                        new Pair<>(SceneType.GAME_OVER,
+//                                   Collections.emptyList()));
+//                this.generalMediator.notifyColleagues(gameOverEvent, this);
+//                break;
+//            case GAME_WIN:
+//                this.currentGameState = new ScreenGameState(this, status);
+//                final GameEvent gameWinEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
+//                        new Pair<>(SceneType.GAME_WIN,
+//                                   Collections.emptyList()));
+//                this.generalMediator.notifyColleagues(gameWinEvent, this);
+//                break;
             case MAIN_MENU:
                 this.currentGameState = new ScreenGameState(this, status);
                 break;
