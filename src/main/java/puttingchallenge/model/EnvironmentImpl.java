@@ -129,6 +129,7 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
+        /*
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
@@ -137,16 +138,25 @@ public class EnvironmentImpl implements Environment {
         final var calcDist = new Point2D(this.container.getWidth() *  (PERC_DISTANCE / 100),
                                          this.container.getHeight() * (PERC_DISTANCE / 100));
         final var pos = this.ball.getPosition();
+        this.player.getPhysicsComponent();
+
         if ((pos.getX() - calcDist.getX()) >= 0) {
             this.player.setFlip(false);
             this.player.setPosition(new Point2D(pos.getX() - calcDist.getX(), pos.getY()));
             return;
         }
+
         if ((pos.getX() + calcDist.getX()) < this.container.getWidth()) {
             this.player.setFlip(true);
             this.player.setPosition(new Point2D(pos.getX() + calcDist.getX(), pos.getY()));
             return;
+        }*/
+        if (!this.isBallStationary()) {
+            throw new IllegalStateException();
         }
+        this.notidiedBallStoped = false;
+        final var pos = this.ball.getPosition();
+        
     }
 
     /**
@@ -161,8 +171,7 @@ public class EnvironmentImpl implements Environment {
      *         false otherwise
      */
     private boolean isBallStationary() {
-        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
-        return !bf.isMoving();
+        return this.ball.getVelocity().equals(new Vector2D(0, 0));
     }
 
     /**
@@ -212,7 +221,7 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && this.notidiedBallStoped) {
+        if (this.isBallStationary() && !this.notidiedBallStoped) {
             events.add(ModelEventType.BALL_STOPPED);
             this.notidiedBallStoped = true;
         }
@@ -234,7 +243,7 @@ public class EnvironmentImpl implements Environment {
             throw new IllegalStateException();
         }
         final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
-        eventsReceived.stream().peek(event -> {
+        eventsReceived.stream().forEach(event -> {
             switch (event) {
             case SHOOT:
                 this.notidiedBallStoped = false;
