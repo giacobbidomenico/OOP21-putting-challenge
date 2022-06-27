@@ -2,8 +2,6 @@ package puttingchallenge.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +23,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
+
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
@@ -36,11 +35,10 @@ public final class SceneLoader {
 
     private static final SceneLoader SINGLETON = new SceneLoader();
 
-    private static final String SEP = File.separator;
-    private static final String PATH_START_LEVEL = System.getProperty("user.dir") + SEP + "src" + SEP + "main" + SEP + "resources" + SEP + "scenes" + SEP;
+    private static final String PATH_START_LEVEL = "/scenes/";
+    private static final String PATH_END_LEVEL = ".json";
     private static final String PATH_START_SCREEN = "/scenes/";
     private static final String PATH_END_SCREEN = ".fxml";
-    private static final String PATH_END_LEVEL = ".json";
 
     /**
      * Returns the single instance of the {@link SceneLoader}.
@@ -89,7 +87,7 @@ public final class SceneLoader {
         final String path = PATH_START_LEVEL + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_LEVEL;
         final LevelController levelController = new LevelController();
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        final String jsonString = IOUtils.toString(new FileInputStream(path), "UTF-8");
+        final String jsonString = IOUtils.toString(getClass().getResource(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
         final String pathBackground = jsonObj.getString("background");
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
@@ -98,10 +96,10 @@ public final class SceneLoader {
         button.setOnAction(levelController::handle);
         final var posWButton = w * (0.1);
         button.setLayoutX(w - posWButton);
-        final Label score = new Label("Score");
+        final Label score = new Label();
         final var posWScore = w * (0.3);
         score.setLayoutX(posWScore);
-        final Label lives = new Label("Lives");
+        final Label lives = new Label();
         final var posWLives = w * (0.4);
         score.setLayoutX(posWLives);
         final AnchorPane layout = new AnchorPane();

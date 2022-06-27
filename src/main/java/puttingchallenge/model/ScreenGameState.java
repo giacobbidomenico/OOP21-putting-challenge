@@ -1,5 +1,7 @@
 package puttingchallenge.model;
 
+import puttingchallenge.model.events.GameEvent;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.events.ModelEventType;
 
 /**
@@ -23,6 +25,18 @@ public class ScreenGameState extends AbstractGameState {
     @Override
     public void receiveEvents() {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void notifyEvent(GameEvent event) {
+        // TODO Auto-generated method stub
+        
     }
 
 

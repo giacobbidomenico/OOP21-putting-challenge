@@ -13,8 +13,10 @@ import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.core.FileManager;
+import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
+import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.events.ObservableEvents;
 import puttingchallenge.model.events.ObservableEventsImpl;
@@ -40,6 +42,7 @@ public class GamePlayGameState extends AbstractGameState {
     private ObserverEvents<ModelEventType> observer;
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
+    private Mediator generalMediator;
     private int nShoots = 0;
     /**
      * Build a new {@link GamePlayGameState} object.
@@ -75,6 +78,8 @@ public class GamePlayGameState extends AbstractGameState {
                 this.environmentObservable.addObserver(this.observer);
                 this.observable = new ObservableEventsImpl<>();
                 this.getEnvironment().get().configureObservable(this.observable);
+                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
+                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -192,7 +197,7 @@ public class GamePlayGameState extends AbstractGameState {
                 default:
                     break;
                 }
-                this.getGameStateManager().notifyEvent(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())));
+                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             });
         }
     }
@@ -209,5 +214,28 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public int getLives() {
         return lives;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMediator(final Mediator mediator) {
+        this.generalMediator = mediator;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) {
+        switch (event.getEventType()) {
+            case SHOOT:
+                if (this.getStatus() == GameStatus.PLAY) {
+                    final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
+                    this.shoot(points);
+                }
+                break;
+        default:
+            break;
+        }
     }
 }

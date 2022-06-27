@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.util.Pair;
+import puttingchallenge.model.events.Colleague;
 import puttingchallenge.model.events.ModelEventType;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.SceneType;
@@ -13,7 +14,7 @@ import puttingchallenge.view.SceneType;
  * Interface for maintaining and handling the states of the game.
  *
  */
-public interface GameState {
+public interface GameState extends Colleague {
     /**
      * Sets the initial state.
      * @return .
