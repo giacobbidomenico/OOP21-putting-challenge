@@ -58,7 +58,9 @@ public class ViewImpl implements View {
             this.scene = SceneLoader.getLoader().getScene(typeScene, objs);
             this.mediator.addColleague(scene);
             scene.setMediator(mediator);
-            this.stage.setScene(scene.getScene());
+            Platform.runLater(() -> {
+                this.stage.setScene(scene.getScene());
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
