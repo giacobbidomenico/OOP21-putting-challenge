@@ -47,6 +47,8 @@ public class GameStateManagerImpl implements GameStateManager {
         switch (status) {
             case PLAY:
                 this.currentGameState = new GamePlayGameState(this, status);
+                this.currentGameState.setMediator(generalMediator);
+                this.generalMediator.addColleague(currentGameState);
                 final Pair<SceneType, List<GameObject>> pair = this.currentGameState.initState();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<SceneType, List<GameObject>>>(GameEventType.SET_SCENE, pair), this);
                 break;
@@ -83,12 +85,6 @@ public class GameStateManagerImpl implements GameStateManager {
     @Override
     public void notifyEvent(final GameEvent event) {
         switch (event.getEventType()) {
-            case SHOOT:
-                if (this.getCurrentState().getStatus() == GameStatus.PLAY) {
-                    final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
-                    ((GamePlayGameState) this.getCurrentState()).shoot(points);
-                }
-                break;
             case SHOW_MAIN_MENU:
                 this.switchState(GameStatus.MAIN_MENU);
                 final GameEvent mainMenuEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
