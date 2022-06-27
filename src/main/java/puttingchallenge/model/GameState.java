@@ -46,7 +46,7 @@ public interface GameState extends Colleague {
      * @param eventType
      *          of the event intercepted
      */
-    void notifyEvents(ModelEventType eventType);
+    void sendModelEvent(ModelEventType eventType);
     /**
      * Reads the events sent by the {@link GameState}.
      */

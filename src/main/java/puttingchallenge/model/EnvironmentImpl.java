@@ -222,7 +222,7 @@ public class EnvironmentImpl implements Environment {
         if (this.isBallInTheHole()) {
             events.add(ModelEventType.BALL_IN_HOLE);
         }
-        this.observer.notifyEvents(events);
+        this.observer.sendModelEvents(events);
     }
 
     /**
@@ -234,7 +234,7 @@ public class EnvironmentImpl implements Environment {
             throw new IllegalStateException();
         }
         final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
-        eventsReceived.stream().peek(event -> {
+        eventsReceived.stream().forEach((event) -> {
             switch (event) {
             case SHOOT:
                 this.notidiedBallStoped = false;
