@@ -65,11 +65,9 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void loadNextEnvironment() {
         try {
-            this.currentScene = maps.next();
-            this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
-            if (getEnvironment().isEmpty()) {
-                this.leavingState(GameStatus.GAME_WIN);
-            } else {
+            if (maps.hasNext()) {
+                this.currentScene = maps.next();
+                this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
                 this.environmentObservable = this.getEnvironment().get().getObservable();
                 this.observer = new ObserverEventsImpl<>();
                 this.environmentObservable.addObserver(this.observer);
@@ -77,6 +75,8 @@ public class GamePlayGameState extends AbstractGameState {
                 this.getEnvironment().get().configureObservable(this.observable);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
+            } else {
+                this.leavingState(GameStatus.GAME_WIN);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -163,6 +163,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     public void notifyEvents(final ModelEventType eventType) {
+        System.out.println(eventType);
         this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**
