@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,7 +31,7 @@ public class LeaderboardController extends AbstractSceneController {
     /**
      * Builds {@link LeaderboardController} and initializes the table.
      */
-    public LeaderboardController() {
+    public void init() {
 
         this.attempts.setCellValueFactory(new PropertyValueFactory<Score, Integer>("Attempt"));
         this.scores.setCellValueFactory(new PropertyValueFactory<Score, String>("Score"));
@@ -54,9 +55,10 @@ public class LeaderboardController extends AbstractSceneController {
 
     /**
      * Request the interruption of application execution.
+     * @param e unused
      */
     @FXML
-    public void quitGame() {
+    public void quitGame(final ActionEvent e) {
         final GameEvent event = new GameEventImpl(GameEventType.QUIT);
         super.getMediator().notifyColleagues(event, this);
     }
