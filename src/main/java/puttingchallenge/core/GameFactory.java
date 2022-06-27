@@ -7,6 +7,7 @@ import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
+import puttingchallenge.model.gameobjects.PlayerObject;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.physics.StaticPhysicsComponent;
@@ -58,12 +59,14 @@ public class GameFactory {
      *          the height of the player
      * @return an instance of {@link GameObject} representing the player
      */
-    public GameObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
-        return new GameObjectImpl(GameObjectType.PLAYER,
-                                  pos,
-                                  new PlayerGraphicComponent(skinPath, w, h),
-                                  new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
+    public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
+        return new PlayerObject(GameObjectType.PLAYER, 
+                                pos, 
+                                new PlayerGraphicComponent(skinPath, w, h), 
+                                new StaticPhysicsComponent(), 
+                                new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)),
+                                w,
+                                h);
     }
 
     /**

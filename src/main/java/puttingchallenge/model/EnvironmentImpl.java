@@ -12,6 +12,7 @@ import puttingchallenge.model.events.ObserverEvents;
 import puttingchallenge.model.events.ObserverEventsImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObjectImpl;
+import puttingchallenge.model.gameobjects.PlayerObject;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -34,7 +35,7 @@ public class EnvironmentImpl implements Environment {
     private final Rectangle2D container;
     private final List<GameObject> staticObstacles;
     private final GameObject ball;
-    private final GameObject player;
+    private final PlayerObject player;
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
@@ -58,7 +59,7 @@ public class EnvironmentImpl implements Environment {
      */
     public EnvironmentImpl(final Rectangle2D container,
                            final GameObject ball, 
-                           final GameObject player,
+                           final PlayerObject player,
                            final List<GameObject> staticObstacles,
                            final GameObject hole) {
         this.observableGameState = Optional.empty();
@@ -104,7 +105,7 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public GameObject getPlayer() {
+    public PlayerObject getPlayer() {
         return this.player;
     }
 
@@ -234,7 +235,7 @@ public class EnvironmentImpl implements Environment {
             throw new IllegalStateException();
         }
         final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
-        eventsReceived.stream().peek(event -> {
+        eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
                 this.notidiedBallStoped = false;
