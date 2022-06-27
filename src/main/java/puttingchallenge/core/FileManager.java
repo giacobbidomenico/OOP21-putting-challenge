@@ -35,6 +35,16 @@ public class FileManager {
     private FileManager() { }
 
     /**
+     * @param file to delete
+     */
+    public static void deleteIfPresent(String file) {
+        File f = new File(file);
+        try {
+            f.delete();
+        } catch (Exception e) { }
+    }
+
+    /**
      * Sets up file necessary to the application.
      * @return true if every file is created, false otherwise
      */
