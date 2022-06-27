@@ -130,6 +130,7 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
+        /*
         if (!this.isBallStationary()) {
             throw new IllegalStateException();
         }
@@ -147,6 +148,24 @@ public class EnvironmentImpl implements Environment {
             this.player.setFlip(true);
             this.player.setPosition(new Point2D(pos.getX() + calcDist.getX(), pos.getY()));
             return;
+        }*/
+        if (!this.isBallStationary()) {
+            throw new IllegalStateException();
+        }
+        System.out.println("moved");
+        this.notidiedBallStoped = false;
+        final var posBall = this.ball.getPosition();
+        var newPos = new Point2D(posBall.getX() + player.getWidth(), 
+                                 posBall.getY() + player.getHeight());
+        if (newPos.getX() >= 0) {
+            player.setFlip(false);
+            player.setPosition(newPos);
+        }
+        newPos = new Point2D(posBall.getX() - player.getWidth(), 
+                             posBall.getY() - player.getHeight());
+        if (newPos.getX() < this.container.getWidth()) {
+            player.setFlip(true);
+            player.setPosition(newPos);
         }
     }
 
