@@ -29,12 +29,11 @@ public final class EnvironmentLoader {
     private static final String POSX = "posX";
     private static final String POSY = "posY";
     private static final String SEP = File.separator;
-    private static final String PATH_START = System.getProperty("user.dir")
-                                            + SEP + "src"
-                                            + SEP + "main"
-                                            + SEP + "resources"
-                                            + SEP + "scenes"
-                                            + SEP;
+    private static final String PATH_START = System.getProperty("user.dir") + SEP
+                                             + "src" + SEP
+                                             + "main" + SEP
+                                             + "resources" + SEP
+                                             + "scenes" + SEP;
     private static final String PATH_END = ".json";
 
     /**
