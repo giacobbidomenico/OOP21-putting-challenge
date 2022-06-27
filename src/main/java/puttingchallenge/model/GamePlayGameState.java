@@ -27,8 +27,7 @@ import puttingchallenge.view.SceneType;
  */
 public class GamePlayGameState extends AbstractGameState {
 
-    private static final int NO_LIVES = 0;
-    private static final int NO_SCORE = 0;
+    private static final int NONE = 0;
     private static final int MAX_LIVES = 3;
 
     private int score;
@@ -39,7 +38,8 @@ public class GamePlayGameState extends AbstractGameState {
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
     private Mediator generalMediator;
-    private int nShoots = 0;
+    private int nShoots;
+
     /**
      * Build a new {@link GamePlayGameState} object.
      * @param manager
@@ -55,7 +55,8 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public Pair<SceneType, List<GameObject>> initState() {
         this.lives = MAX_LIVES;
-        this.score = NO_SCORE;
+        this.score = NONE;
+        this.nShoots = NONE;
         this.loadNextEnvironment();
         return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
@@ -127,7 +128,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     private void handleMiss() {
         this.decLives();
-        if (this.lives == NO_LIVES) {
+        if (this.lives == NONE) {
             this.leavingState(GameStatus.GAME_OVER);
         } else {
             this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
