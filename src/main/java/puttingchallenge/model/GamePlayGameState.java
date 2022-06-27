@@ -134,6 +134,7 @@ public class GamePlayGameState extends AbstractGameState {
         if (this.lives == NO_LIVES) {
             this.leavingState(GameStatus.GAME_OVER);
         } else {
+            this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             this.notifyEvents(ModelEventType.MOVE_PLAYER);
         }
     }
@@ -191,13 +192,11 @@ public class GamePlayGameState extends AbstractGameState {
                         break;
                     }
                 case BALL_OUT_OF_BOUND:
-                    System.out.println("miss");
                     this.handleMiss();
                     break;
                 default:
                     break;
                 }
-                this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             });
         }
     }
