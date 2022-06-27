@@ -163,6 +163,7 @@ public class GamePlayGameState extends AbstractGameState {
 
             f.write(score);
             f.newLine();
+            f.flush();
         } catch (Exception e) {
             FileManager.deleteIfPresent(FileManager.LEADERBOARD_FILE);
         }
