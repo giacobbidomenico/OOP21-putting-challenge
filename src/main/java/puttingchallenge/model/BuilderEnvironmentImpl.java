@@ -9,6 +9,7 @@ import puttingchallenge.common.Point2D;
 import puttingchallenge.core.GameFactory;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
+import puttingchallenge.model.gameobjects.PlayerObject;
 
 /**
  * Class that implements the builder of the game environment.
@@ -20,7 +21,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
     private final List<GameObject> gameObjects;
     private Optional<Rectangle2D> container;
     private Optional<GameObject> ball;
-    private Optional<GameObject> player;
+    private Optional<PlayerObject> player;
     private Optional<GameObject> hole;
 
     /**

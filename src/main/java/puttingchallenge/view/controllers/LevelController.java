@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
@@ -151,6 +152,20 @@ public class LevelController extends AbstractSceneController implements EventHan
         if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
             this.handleMousePressed((MouseEvent) event);
             event.consume();
+        }
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) { 
+        switch (event.getEventType()) {
+            case UPDATE_STATS:
+                this.updateStats((Pair<Integer, Integer>) event.getDetails().get());
+                System.out.println(event.getDetails().get());
+            break;
+            default:
+                break;
         }
     }
 }

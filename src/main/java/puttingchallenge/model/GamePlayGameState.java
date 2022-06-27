@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -132,7 +130,7 @@ public class GamePlayGameState extends AbstractGameState {
             this.leavingState(GameStatus.GAME_OVER);
         } else {
             this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
-            this.notifyEvents(ModelEventType.MOVE_PLAYER);
+            this.sendModelEvent(ModelEventType.MOVE_PLAYER);
         }
     }
     /**
@@ -147,7 +145,7 @@ public class GamePlayGameState extends AbstractGameState {
             //this.checkExceptionEnvironment();
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
             this.nShoots++;
-            this.notifyEvents(ModelEventType.SHOOT);
+            this.sendModelEvent(ModelEventType.SHOOT);
         }
     }
     /**
@@ -162,8 +160,8 @@ public class GamePlayGameState extends AbstractGameState {
      * {@inheritDoc}
      */
     @Override
-    public void notifyEvents(final ModelEventType eventType) {
-        this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
+    public void sendModelEvent(final ModelEventType eventType) {
+        this.observer.sendModelEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**
      * {@inheritDoc}
