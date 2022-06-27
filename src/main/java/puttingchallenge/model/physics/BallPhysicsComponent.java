@@ -73,23 +73,36 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 nextPos.sumY(-radius);
                 obj.setPosition(nextPos);
 
-                double y = 0;
-                double x = 0;
-                if (normale.getX() == 1 || normale.getX() == -1) {
-                    x = lastVel.getX() * -1;
-                    y = lastVel.getY();
-                } else if (normale.getY() == 1 || normale.getY() == -1) {
-                    x = lastVel.getX();
-                    y = lastVel.getY() * -1;
+//                double y = 0;
+//                double x = 0;
+               
+                
+//                if (normale.getX() == 1 || normale.getX() == -1) {
+//                    x = lastVel.getX() * -1;
+//                    y = lastVel.getY();
+//                } else if (normale.getY() == 1 || normale.getY() == -1) {
+//                    x = lastVel.getX();
+//                    y = lastVel.getY() * -1;
+//                }
+                
+//                double rate = 1 / lastVel.getModule();
+//                y = rate * lastVel.getY() + normale.getY();
+//                x = rate * lastVel.getX() + normale.getX();
+//                rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
+//                y *= rate;
+//                x *= rate;
+                
+
+                
+                double y = normale.getY() * lastVel.getModule() + lastVel.getY();
+                double x = normale.getX() * lastVel.getModule() + lastVel.getX();
+                if (Math.abs(y) < VEL_ZERO_PRECISION) {
+                    y = -lastVel.getY();
                 }
-//                double y = normale.getY() * lastVel.getModule() + lastVel.getY();
-//                double x = normale.getX() * lastVel.getModule() + lastVel.getX();
-//                if (Math.abs(y) < VEL_ZERO_PRECISION) {
-//                    y = -lastVel.getY();
-//                }
-//                if (Math.abs(x) < VEL_ZERO_PRECISION) {
-//                    x = -lastVel.getX();
-//                }
+                if (Math.abs(x) < VEL_ZERO_PRECISION) {
+                    x = -lastVel.getX();
+                }
+                
                 this.setVelocity(new Vector2D(x, y));
                 this.reduceVel(BOUNCING_FACTOR * dt);
             } else {
