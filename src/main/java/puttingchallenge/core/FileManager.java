@@ -7,7 +7,7 @@ import java.io.File;
  */
 public class FileManager {
 
-    private static final String SEPARATOR = System.getProperty("user.separator");
+    private static final String SEPARATOR = System.getProperty("file.separator");
 
     private static final String USER_HOME = System.getProperty("user.home");
 
