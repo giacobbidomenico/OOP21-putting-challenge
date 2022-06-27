@@ -28,7 +28,7 @@ public enum SceneType {
     /**
      * The scene with the third game environment.
      */
-    LEADEARBOARD(false),
+    LEADERBOARD(false),
  
     /**
      * The game over scene.

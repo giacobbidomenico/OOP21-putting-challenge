@@ -130,7 +130,7 @@ public class GameStateManagerImpl implements GameStateManager {
             case SHOW_LEADERBOARD:
                 this.switchState(GameStatus.LEADERBOARD);
                 final GameEvent leaderboardEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
-                                                                                  new Pair<>(SceneType.LEADEARBOARD,
+                                                                                  new Pair<>(SceneType.LEADERBOARD,
                                                                                           this.getScores()));
                 this.generalMediator.notifyColleagues(leaderboardEvent, this);
                 break;
