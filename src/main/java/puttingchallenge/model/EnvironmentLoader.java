@@ -3,7 +3,6 @@ package puttingchallenge.model;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
@@ -29,8 +28,8 @@ public final class EnvironmentLoader {
     private static final String POSX = "posX";
     private static final String POSY = "posY";
     private static final String SEP = File.separator;
-    private static final String PATH_START_SCREEN = "/scenes/";
-    private static final String PATH_END_SCREEN = ".json";
+    private static final String PATH_START = "/scenes/";
+    private static final String PATH_END = ".json";
 
 
     /**
@@ -55,7 +54,7 @@ public final class EnvironmentLoader {
      */
     public Optional<Environment> getEnvironment(final SceneType sceneTag) throws IOException {
         if (sceneTag.isLevel()) {
-            final String path = PATH_START_SCREEN + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END_SCREEN;
+            final String path = PATH_START + sceneTag.toString().toLowerCase(Locale.ROOT) + PATH_END;
             final String jsonString = IOUtils.toString(getClass().getResource(path), "UTF-8");
             final JSONObject file = new JSONObject(jsonString);
             final BuilderEnvironment builder = new BuilderEnvironmentImpl();
@@ -64,7 +63,6 @@ public final class EnvironmentLoader {
             final double w = screenDim.getWidth() * (dimScene.getDouble(WSCALE) / 100);
             final double h = screenDim.getHeight() * (dimScene.getDouble(HSCALE) / 100);
             builder.container(new Rectangle2D(0, 0, w, h));
-
             this.setBall(w, h, builder, file);
             this.setPlayer(w, h, builder, file);
             this.setHole(w, h, builder, file);
