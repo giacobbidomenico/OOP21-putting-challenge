@@ -27,7 +27,7 @@ import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    private static final int PERC_DISTANCE = 2;
+    //private static final int PERC_DISTANCE = 2;
 
     private Optional<ObservableEvents<ModelEventType>> observableGameState;
     private final ObservableEvents<ModelEventType> observable;
@@ -311,24 +311,21 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
+        }
         if (obj instanceof Environment) {
             final Environment env = (Environment) obj;
-            
+            return ball.equals(env.getBall()) 
+                   && staticObstacles.equals(env.getStaticObstacles())
+                   && container.equals(env.getContainer()) 
+                   && hole.equals(env.getHole());
         }
-            return false;
-        EnvironmentImpl other = (EnvironmentImpl) obj;
-        return Objects.equals(ball, other.ball) && collisionWithHole == other.collisionWithHole
-                && Objects.equals(container, other.container) && Objects.equals(hole, other.hole)
-                && Objects.equals(initPosBall, other.initPosBall) && Objects.equals(initPosPlayer, other.initPosPlayer)
-                && notidiedBallStoped == other.notidiedBallStoped && Objects.equals(observable, other.observable)
-                && Objects.equals(observableGameState, other.observableGameState)
-                && Objects.equals(observer, other.observer) && Objects.equals(player, other.player)
-                && Objects.equals(staticObstacles, other.staticObstacles);
+        return false;
     }
 
 }

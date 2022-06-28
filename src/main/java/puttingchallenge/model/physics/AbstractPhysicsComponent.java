@@ -8,6 +8,7 @@ import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Abstract class that describes the physics of moving {@link GameObject}.
+ * 
  */
 public abstract class AbstractPhysicsComponent implements PhysicsComponent {
 
