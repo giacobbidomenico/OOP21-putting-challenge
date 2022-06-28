@@ -131,7 +131,6 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
-        this.notifiedBallStopped = false;
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
             this.ball.setPosition(initPosBall);
