@@ -1,10 +1,10 @@
 package puttingchallenge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,24 +22,27 @@ import puttingchallenge.model.BuilderEnvironment;
 import puttingchallenge.model.BuilderEnvironmentImpl;
 import puttingchallenge.model.Environment;
 import puttingchallenge.model.EnvironmentImpl;
+import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.model.gameobjects.PlayerObject;
+import puttingchallenge.model.physics.BallPhysicsComponent;
 
 /**
  *
  */
 class EnvironmentTest {
-    private static final String SEP = File.separator;
-    private static final double NUM1 = 23;
-    private static final double NUM2 = 3;
-    private static final double NUM3 = 10;
-    private static final double NUM4 = 2;
+    private static final double NUM1 = 20;
+    private static final double NUM2 = 30;
+    private static final double NUM3 = 40;
+    private static final double NUM4 = 50;
+    private static final double NUM5 = 100;
+    private static final double NUM6 = 80;
     private static final Point2D MAIN_POSITION = new Point2D(NUM1, NUM2);
     private static final Point2D ANOTHER_POSITION = new Point2D(NUM3, NUM4);
 
     private Rectangle2D container;
-    private GameObject ball;
+    private BallObjectImpl ball;
     private PlayerObject player;
     private GameObject land;
     private GameObject wall;
@@ -47,6 +50,7 @@ class EnvironmentTest {
     private GameObject iceberg;
     private GameObject hole;
     private List<GameObject>  staticObstacles;
+    private final GameFactory factory = new GameFactory();
 
     /**
      * 
@@ -54,7 +58,7 @@ class EnvironmentTest {
      */
     private Environment initEnvironment() {
         return new EnvironmentImpl(container, 
-                                   ball, 
+                                   (BallObjectImpl) ball,
                                    player, 
                                    staticObstacles, 
                                    hole);
@@ -65,14 +69,13 @@ class EnvironmentTest {
         final JFrame frame = new JFrame();
         final JFXPanel jFx = new JFXPanel();
         frame.add(jFx);
-        final GameFactory factory = new GameFactory();
         this.container = new Rectangle2D(0, 0, NUM1, NUM2);
-        this.ball = factory.createBall(MAIN_POSITION, NUM1);
+        this.ball = (BallObjectImpl) factory.createBall(ANOTHER_POSITION, NUM1);
         this.player = factory.createPlayer(MAIN_POSITION, "/skins/player.png", NUM1, NUM2);
         this.land = factory.createLand(MAIN_POSITION, NUM1, NUM2);
         this.wall = factory.createWall(MAIN_POSITION, NUM1, NUM2);
         this.tree = factory.createTree(MAIN_POSITION, NUM1, NUM2);
-        this.iceberg = factory.createIceberg(ANOTHER_POSITION, NUM1, NUM2);
+        this.iceberg = factory.createIceberg(MAIN_POSITION, NUM1, NUM2);
         this.hole = factory.createHole(MAIN_POSITION, NUM1, NUM2);
         this.staticObstacles = List.of(this.land,
                                        this.wall,
@@ -85,20 +88,24 @@ class EnvironmentTest {
      */
     @Test void testEnvironment() {
         final Environment env = this.initEnvironment();
-        assertEquals(env.getBall().getPosition(), MAIN_POSITION);
+
+        assertEquals(env.getBall().getPosition(), ANOTHER_POSITION);
         assertEquals(env.getPlayer().getPosition(), MAIN_POSITION);
         assertEquals(env.getHole().getPosition(), MAIN_POSITION);
+
         final List<Point2D> obstaclesPosition =  env.getStaticObstacles().stream()
                 .map(e -> e.getPosition())
                 .collect(Collectors.toList());
         assertEquals(obstaclesPosition, List.of(MAIN_POSITION,
                                                 MAIN_POSITION,
                                                 MAIN_POSITION,
-                                                ANOTHER_POSITION));
-        assertNotEquals(obstaclesPosition, List.of(MAIN_POSITION,
+                                                MAIN_POSITION));
+
+        assertNotEquals(obstaclesPosition, List.of(ANOTHER_POSITION,
                                                    MAIN_POSITION,
                                                    MAIN_POSITION,
                                                    MAIN_POSITION));
+
         assertEquals(this.land.getVelocity(), new Vector2D(0, 0));
         assertEquals(this.tree.getVelocity(), new Vector2D(0, 0));
         assertEquals(this.wall.getVelocity(), new Vector2D(0, 0));
@@ -110,15 +117,50 @@ class EnvironmentTest {
      */
     @Test void testBuilderEnvironment() {
         final BuilderEnvironment buildEnv = new BuilderEnvironmentImpl();
-        final Environment env =  buildEnv.addBall(MAIN_POSITION, NUM1)
+        final Environment env =  buildEnv.addBall(ANOTHER_POSITION, NUM1)
                                          .addContainer(container)
                                          .addPlayer(MAIN_POSITION, "/skins/player.png", NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.LAND, MAIN_POSITION, NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.WALL, MAIN_POSITION, NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.TREE, MAIN_POSITION, NUM1, NUM2)
-                                         .addStaticObstacle(GameObjectType.ICEBERG, ANOTHER_POSITION, NUM1, NUM2)
+                                         .addStaticObstacle(GameObjectType.ICEBERG, MAIN_POSITION, NUM1, NUM2)
                                          .addHole(MAIN_POSITION, NUM1, NUM2)
                                          .build();
         assertEquals(this.initEnvironment(), env);
+    }
+
+    /**
+     * 
+     */
+    @Test void checkCollisions() {
+        final var env = this.initEnvironment();
+        assertFalse(env.checkCollisions(ball.getHitBox(),
+                                       (BallPhysicsComponent) ball.getPhysicsComponent(), 
+                                       ball.getPosition()).isPresent());
+
+        final GameObject landCopy = factory.createHole(new Point2D(NUM5, NUM6),
+                this.land.getGraphicComponent().getWidth(), 
+                this.land.getGraphicComponent().getHeight());
+        assertFalse(env.checkCollisions(ball.getHitBox(), 
+                                        (BallPhysicsComponent) ball.getPhysicsComponent(), 
+                                        landCopy.getPosition()).isPresent());
+    }
+
+    /**
+     * 
+     */
+    @Test void checkCollisionWithHole() {
+        final var env = this.initEnvironment();
+
+        assertTrue(env.checkCollisions(ball.getHitBox(), 
+                                       (BallPhysicsComponent) ball.getPhysicsComponent(), 
+                                       this.hole.getPosition()).isPresent());
+
+        final GameObject holeCopy = factory.createHole(new Point2D(NUM5, NUM6),
+                this.hole.getGraphicComponent().getWidth(), 
+                this.hole.getGraphicComponent().getHeight());
+        assertFalse(env.checkCollisions(ball.getHitBox(), 
+                                        (BallPhysicsComponent) ball.getPhysicsComponent(), 
+                                        holeCopy.getPosition()).isPresent());
     }
 }
