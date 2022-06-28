@@ -1,6 +1,9 @@
 package puttingchallenge.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Class that manages all files used.
@@ -16,7 +19,7 @@ public class FileManager {
      */
     public static final String APP_DIRECTORY = USER_HOME 
             + SEPARATOR 
-            + "PuttinChallenge";
+            + "PuttingChallenge";
 
     /**
      * Path to the leaderboard directory.
@@ -37,7 +40,7 @@ public class FileManager {
     /**
      * @param file to delete
      */
-    public static void deleteIfPresent(String file) {
+    public static void deleteIfPresent(final String file) {
         File f = new File(file);
         try {
             f.delete();
@@ -49,10 +52,13 @@ public class FileManager {
      * @return true if every file is created, false otherwise
      */
     public static boolean init() {
-        File f = new File(LEADERBOARD_FILE);
         try {
-            f.createNewFile();
-        } catch (Exception e) {
+            Files.createDirectories(Paths.get(APP_DIRECTORY));
+            Files.createDirectories(Paths.get(LEADERBOARD_DIRECTORY));
+            if (!Files.exists(Paths.get(LEADERBOARD_FILE))) {
+                Files.createFile(Paths.get(LEADERBOARD_FILE));
+            }
+        } catch (IOException e) {
             return false;
         }
         return true;
