@@ -1,5 +1,7 @@
 package puttingchallenge.view.graphics;
 
+import java.util.Objects;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import puttingchallenge.model.gameobjects.GameObject;
@@ -41,6 +43,55 @@ public class AbstractGraphicComponent implements GraphicComponent {
         final double x = obj.getPosition().getX();
         final double y = obj.getPosition().getY();
         gc.drawImage(skin, x, y, w, h);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Image getSkin() {
+        return this.skin;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public double getWidth() {
+        return this.w;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public double getHeight() {
+        return this.h;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(h, skin, w);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof GraphicComponent) {
+            final GraphicComponent graph = (GraphicComponent) obj;
+            return this.skin.equals(graph.getSkin()) 
+                    && this.w == graph.getWidth()
+                    && this.h == graph.getHeight();
+        }
+        return false;
     }
 
 }
