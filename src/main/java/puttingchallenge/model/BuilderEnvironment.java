@@ -18,7 +18,7 @@ public interface BuilderEnvironment {
      * @return an instance of {@link BuilderEnvironment},the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment container(Rectangle2D container);
+    BuilderEnvironment addContainer(Rectangle2D container);
 
     /**
      * Sets the ball configuration.
@@ -30,7 +30,7 @@ public interface BuilderEnvironment {
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment ball(Point2D pos, double radius);
+    BuilderEnvironment addBall(Point2D pos, double radius);
 
     /**
      * Sets the player configuration.
@@ -46,7 +46,7 @@ public interface BuilderEnvironment {
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment player(Point2D pos, String skinPath, double w, double h);
+    BuilderEnvironment addPlayer(Point2D pos, String skinPath, double w, double h);
 
     /**
      * Sets the configuration of a new static obstacle.
@@ -55,13 +55,15 @@ public interface BuilderEnvironment {
      *          type of the static obstacle
      * @param pos
      *          position of the obstacle
-     * @param dimensions
-     *          rectangle where the obstacle will be contained
+     * @param w
+     *          width of the obstacle
+     * @param h
+     *          height of the obstacle
 
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment addStaticObstacle(GameObjectType typeOfObstacle, Point2D pos, Rectangle2D dimensions);
+    BuilderEnvironment addStaticObstacle(GameObjectType typeOfObstacle, Point2D pos, double w, double h);
 
     /**
      * Sets the hole configuration.
@@ -76,7 +78,7 @@ public interface BuilderEnvironment {
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment hole(Point2D pos, double w, double h);
+    BuilderEnvironment addHole(Point2D pos, double w, double h);
 
     /**
      * Builds the game {@link Environment}.
