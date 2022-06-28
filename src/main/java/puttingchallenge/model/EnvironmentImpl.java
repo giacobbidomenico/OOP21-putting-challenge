@@ -73,7 +73,6 @@ public class EnvironmentImpl implements Environment {
         this.initPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
-        this.notifiedBallStopped = true;
     }
 
     /**
@@ -142,16 +141,16 @@ public class EnvironmentImpl implements Environment {
             return;
         }
         final var posBall = this.ball.getPosition();
-        var newPos = new Point2D(posBall.getX() + player.getWidth(), 
-                                 posBall.getY() + player.getHeight());
-        if (newPos.getX() >= 0) {
+        final var newPos = new Point2D(posBall.getX() - player.getWidth(), 
+                                       posBall.getY() - player.getHeight());
+
+        if (newPos.getX() >= 0 && newPos.getX() <= this.hole.getPosition().getX()) {
             player.setFlip(false);
             player.setPosition(newPos);
         }
-        newPos = new Point2D(posBall.getX() + player.getWidth(), 
-                             posBall.getY() + player.getHeight());
-        if (newPos.getX() < this.container.getWidth()) {
-            //player.setFlip(true);
+
+        if (newPos.getX() > this.hole.getGraphicComponent().getWidth() && newPos.getX() < this.container.getWidth()) {
+            player.setFlip(true);
             player.setPosition(newPos);
         }
     }
