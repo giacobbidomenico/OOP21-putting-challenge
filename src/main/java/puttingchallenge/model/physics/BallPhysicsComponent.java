@@ -48,7 +48,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
 
-            final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
+            final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition());
             Point2D nextPos;
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
