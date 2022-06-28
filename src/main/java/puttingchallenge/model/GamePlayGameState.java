@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
+
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -28,6 +30,7 @@ public class GamePlayGameState extends AbstractGameState {
 
     private static final int NONE = 0;
     private static final int MAX_LIVES = 3;
+    private static final int MAX_STRENGTH = 600;
 
     private int score;
     private int lives;
@@ -147,7 +150,12 @@ public class GamePlayGameState extends AbstractGameState {
     public void shoot(final Pair<Point2D, Point2D> points) {
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
         if (!ballPhysicsComponent.isMoving()) {
-            final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            if (shootingVector.getModule() > MAX_STRENGTH) {
+                final Double newXComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getX();
+                final Double newYComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getY();
+                shootingVector = new Vector2D(newXComponent, newYComponent);
+            }
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
             this.notifyEvents(ModelEventType.SHOOT);
         }
