@@ -2,6 +2,7 @@ package puttingchallenge.core;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.model.collisions.AxisAlignedBoundingBox;
+import puttingchallenge.model.collisions.CircleBoundingBox;
 import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
@@ -24,6 +25,8 @@ import puttingchallenge.view.graphics.WallGraphicComponent;
  */
 public class GameFactory {
 
+    private static final double BALL_GRAPHIC_FACTOR = 1.27;
+
     /**
      * Build the ball of the game.
      * 
@@ -40,7 +43,7 @@ public class GameFactory {
         center.sumY(-radius);
         return new BallObjectImpl(GameObjectType.BALL, 
                                   pos, 
-                                  new BallGraphicComponent(radius), 
+                                  new BallGraphicComponent(radius * BALL_GRAPHIC_FACTOR),
                                   new BallPhysicsComponent(radius),
                                   new ConcretePassiveCircleBoundingBox(center, radius));
     }
@@ -127,9 +130,9 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
-                                  new TreeGraphicComponent(w, h),
+                                  new TreeGraphicComponent(w, w),
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
+                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX()+w/2, pos.getY()+w/2), w/2)));
     }
 
     /**
