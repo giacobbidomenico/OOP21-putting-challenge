@@ -134,22 +134,26 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
             this.ball.setPosition(initPosBall);
             this.player.setPosition(initPosPlayer);
             return;
         }
+
         final var posBall = this.ball.getPosition();
         final var newPos = new Point2D(posBall.getX() - player.getWidth(), 
                                        posBall.getY() - player.getHeight());
 
-        if (newPos.getX() >= 0 && newPos.getX() <= this.hole.getPosition().getX()) {
+        if (newPos.getX() >= 0 
+                && newPos.getX() <= this.hole.getPosition().getX()) {
             player.setFlip(false);
             player.setPosition(newPos);
         }
 
-        if (newPos.getX() > this.hole.getGraphicComponent().getWidth() && newPos.getX() < this.container.getWidth()) {
+        if (newPos.getX() > this.hole.getPosition().getX() 
+                && newPos.getX() < this.container.getWidth()) {
             player.setFlip(true);
             player.setPosition(newPos);
         }

@@ -14,6 +14,8 @@ import puttingchallenge.model.gameobjects.GameObjectImpl;
  */
 public class PlayerGraphicComponent extends AbstractGraphicComponent {
 
+    private final double width;
+    private final double height;
     private boolean show;
     /**
      * Create a new {@link GraphicComponent} for the player.
@@ -25,6 +27,8 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
     public PlayerGraphicComponent(final String imagePath, final double width, final double height) {
         super(imagePath, width, height);
         this.show = true;
+        this.width = width;
+        this.height = height;
     }
     /**
      * Change the player visibility in the game.
@@ -37,10 +41,6 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
      */
     @Override
     public void draw(final GameObject obj, final GraphicsContext gc) {
-        if (obj.isFlip()) {
-            //obj.setPosition(new Point2D(-obj.getPosition().getX(), obj.getPosition().getY()));
-            System.out.println("flip");
-        }
         if (this.show) {
             super.draw(obj, gc);
         }
