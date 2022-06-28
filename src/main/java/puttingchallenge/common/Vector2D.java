@@ -123,7 +123,8 @@ public class Vector2D implements Serializable {
         }
         if (obj instanceof Vector2D) {
             final var v = (Vector2D) obj;
-            return this.x == v.x && this.y == v.y;
+            return Double.compare(this.x, v.getX()) == 0 
+                    && Double.compare(this.y, v.getY()) == 0;
         }
         return false;
     }

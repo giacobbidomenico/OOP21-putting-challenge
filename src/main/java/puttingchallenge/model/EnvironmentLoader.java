@@ -2,7 +2,6 @@ package puttingchallenge.model;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
@@ -27,7 +26,6 @@ public final class EnvironmentLoader {
     private static final String HSCALE = "hScale";
     private static final String POSX = "posX";
     private static final String POSY = "posY";
-    private static final String SEP = File.separator;
     private static final String PATH_START = "/scenes/";
     private static final String PATH_END = ".json";
 
@@ -62,7 +60,7 @@ public final class EnvironmentLoader {
             final Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
             final double w = screenDim.getWidth() * (dimScene.getDouble(WSCALE) / 100);
             final double h = screenDim.getHeight() * (dimScene.getDouble(HSCALE) / 100);
-            builder.container(new Rectangle2D(0, 0, w, h));
+            builder.addContainer(new Rectangle2D(0, 0, w, h));
             this.setBall(w, h, builder, file);
             this.setPlayer(w, h, builder, file);
             this.setHole(w, h, builder, file);
@@ -82,7 +80,7 @@ public final class EnvironmentLoader {
         final double y = h * (hole.getDouble(POSY) / 100);
         final double wPerc = w * (hole.getDouble(WSCALE) / 100);
         final double hPerc = h * (hole.getDouble(HSCALE) / 100);
-        builder.hole(new Point2D(x, y), wPerc, hPerc);
+        builder.addHole(new Point2D(x, y), wPerc, hPerc);
     }
 
     private void addObstacles(final double w, 
@@ -97,7 +95,7 @@ public final class EnvironmentLoader {
             final double y = h * (obj.getDouble(POSY) / 100);
             final double wPerc = w * (obj.getDouble(WSCALE) / 100);
             final double hPerc = h * (obj.getDouble(HSCALE) / 100);
-            builder.addStaticObstacle(type, new Point2D(x, y), new Rectangle2D(0, 0, wPerc, hPerc));
+            builder.addStaticObstacle(type, new Point2D(x, y), wPerc, hPerc);
         }
     }
 
@@ -110,7 +108,7 @@ public final class EnvironmentLoader {
         final double wPerc = w * (player.getDouble(WSCALE) / 100);
         final double hPerc = h * (player.getDouble(HSCALE) / 100);
         final String path = player.getString("skinPath");
-        builder.player(new Point2D(x, y), path, wPerc, hPerc);
+        builder.addPlayer(new Point2D(x, y), path, wPerc, hPerc);
     }
 
     private void setBall(final double w,
@@ -121,7 +119,7 @@ public final class EnvironmentLoader {
         final double x = w * (ball.getDouble(POSX) / 100);
         final double y = h * (ball.getDouble(POSY) / 100);
         final double radius = w * (ball.getDouble("radiusScale") / 100);
-        builder.ball(new Point2D(x, y), radius);
+        builder.addBall(new Point2D(x, y), radius);
     }
 
 }

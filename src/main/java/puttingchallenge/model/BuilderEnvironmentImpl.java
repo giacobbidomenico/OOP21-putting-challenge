@@ -42,7 +42,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment container(final Rectangle2D container) {
+    public BuilderEnvironment addContainer(final Rectangle2D container) {
         if (this.container.isEmpty()) {
             this.container = Optional.of(container);
         }
@@ -53,7 +53,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment ball(final Point2D pos,
+    public BuilderEnvironment addBall(final Point2D pos,
                                    final double radius) {
         if (ball.isEmpty()) {
             ball = Optional.of(factory.createBall(pos, radius));
@@ -65,7 +65,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment player(final Point2D pos, final String skinPath, final double w, final double h) {
+    public BuilderEnvironment addPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
         if (player.isEmpty()) {
             player = Optional.of(factory.createPlayer(pos, skinPath, w, h));
         }
@@ -77,20 +77,21 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      */
     @Override
     public BuilderEnvironment addStaticObstacle(final GameObjectType gameObjectType, 
-                                                final Point2D pos, 
-                                                final Rectangle2D dimensions) {
+                                                final Point2D pos,
+                                                final double w,
+                                                final double h) {
         switch (gameObjectType) {
         case LAND:
-            gameObjects.add(factory.createLand(pos, dimensions.getWidth(), dimensions.getHeight()));
+            gameObjects.add(factory.createLand(pos, w, h));
             break;
         case WALL:
-            gameObjects.add(factory.createWall(pos, dimensions.getWidth(), dimensions.getHeight()));
+            gameObjects.add(factory.createWall(pos, w, h));
             break;
         case TREE:
-            gameObjects.add(factory.createTree(pos, dimensions.getWidth(), dimensions.getHeight()));
+            gameObjects.add(factory.createTree(pos, w, h));
             break;
         case ICEBERG:
-            gameObjects.add(factory.createIceberg(pos, dimensions.getWidth(), dimensions.getHeight()));
+            gameObjects.add(factory.createIceberg(pos, w, h));
             break;
         default:
             throw new IllegalArgumentException();
@@ -103,9 +104,9 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment hole(final Point2D pos, 
-                                   final double w, 
-                                   final double h) {
+    public BuilderEnvironment addHole(final Point2D pos, 
+                                      final double w, 
+                                      final double h) {
         if (this.hole.isEmpty()) {
             this.hole = Optional.of(this.factory.createHole(pos, w, h));
         }

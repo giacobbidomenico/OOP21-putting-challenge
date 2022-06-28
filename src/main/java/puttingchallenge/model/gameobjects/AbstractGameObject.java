@@ -102,10 +102,18 @@ public abstract class AbstractGameObject implements GameObject {
     /**
      * {@inheritDoc}
      */
+    public GraphicComponent getGraphicComponent() {
+        return this.graph;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PhysicsComponent getPhysicsComponent() {
         return this.phys;
     }
+
 
     /**
      * {@inheritDoc}
@@ -122,5 +130,36 @@ public abstract class AbstractGameObject implements GameObject {
     public boolean isFlip() {
         return this.flip;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(flip, graph, phys, pos, type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof GameObject) {
+            final GameObject gameObject = (GameObject) obj;
+            return flip == gameObject.isFlip() 
+                   && graph.equals(gameObject.getGraphicComponent()) 
+                   && phys.equals(gameObject.getPhysicsComponent())
+                   && pos.equals(gameObject.getPosition()) 
+                   && type.equals(gameObject.getType());
+        }
+        return false;
+    }
+
 
 }

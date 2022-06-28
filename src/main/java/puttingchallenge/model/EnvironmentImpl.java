@@ -27,7 +27,7 @@ import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    private static final int PERC_DISTANCE = 2;
+    //private static final int PERC_DISTANCE = 2;
 
     private Optional<ObservableEvents<ModelEventType>> observableGameState;
     private final ObservableEvents<ModelEventType> observable;
@@ -296,6 +296,36 @@ public class EnvironmentImpl implements Environment {
             }
         }
         return Optional.ofNullable(result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notidiedBallStoped,
+                observable, observableGameState, observer, player, staticObstacles);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Environment) {
+            final Environment env = (Environment) obj;
+            return ball.equals(env.getBall()) 
+                   && staticObstacles.containsAll(env.getStaticObstacles())
+                   && container.equals(env.getContainer()) 
+                   && hole.equals(env.getHole());
+        }
+        return false;
     }
 
 }
