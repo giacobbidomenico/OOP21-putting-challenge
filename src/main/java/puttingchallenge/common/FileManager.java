@@ -1,4 +1,4 @@
-package puttingchallenge.core;
+package puttingchallenge.common;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 /**
  * Class that manages all files used.
  */
-public class FileManager {
+public final class FileManager {
 
     private static final String SEPARATOR = System.getProperty("file.separator");
 
@@ -35,16 +35,46 @@ public class FileManager {
             + SEPARATOR 
             + "leaderboard.txt";
 
+    /**
+     * Relative path for game levels and application screens directory. 
+     */
+    public static final String PATH_START_SCENES = "/scenes/";
+
+    /**
+     * Extension of game levels files.
+     */
+    public static final String PATH_END_LEVEL = ".json";
+
+    /**
+     * Extension of application screens files.
+     */
+    public static final String PATH_END_SCREEN = ".fxml";
+
+    /**
+     * Path of general application skins.
+     */
+    public static final String GENERAL_SKINS_PATH = SEPARATOR + "skins" + SEPARATOR;
+
+    /**
+     * Path of game obstacles skins.
+     */
+    public static final String OBSTACLES_SKINS_PATH = GENERAL_SKINS_PATH
+                                                      + SEPARATOR + "obstacles" + SEPARATOR;
+
+
+
     private FileManager() { }
 
     /**
      * @param file to delete
      */
     public static void deleteIfPresent(final String file) {
-        File f = new File(file);
+        final File f = new File(file);
         try {
             f.delete();
-        } catch (Exception e) { }
+        } catch (SecurityException e) { 
+            e.printStackTrace();
+        }
     }
 
     /**
