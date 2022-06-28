@@ -48,9 +48,9 @@ public interface GameObject {
         TREE,
 
         /**
-         * The type of an iceberg static obstacle. 
+         * The type of a football ball static obstacle. 
          */
-        ICEBERG,
+        FOOTBALL,
 
         /**
          * The type of the game hole.

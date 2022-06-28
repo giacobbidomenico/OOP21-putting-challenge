@@ -3,23 +3,23 @@ package puttingchallenge.view.graphics;
 import java.io.File;
 
 /**
- * Class that implements the graphical representation of an iceberg in the game.
+ * Class that implements the graphical representation of a football ball in the game.
  * 
  */
-public class IcebergGraphicComponent extends AbstractGraphicComponent {
+public class FootballGraphicComponent extends AbstractGraphicComponent {
 
     private static final String SEP = File.separator;
-    private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "iceberg.png";
+    private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "football.png";
 
     /**
-     * Build a new {@link GraphicComponent} for an iceberg in the game.
+     * Build a new {@link GraphicComponent} for a football ball in the game.
      * 
      * @param w
-     *         the width of the {@link Image} where the iceberg is contained
+     *         the width of the {@link Image} where the football ball is contained
      * @param h
-     *         the height of the {@link Image} where the iceberg is contained
+     *         the height of the {@link Image} where the football ball is contained
      */
-    public IcebergGraphicComponent(final double w, final double h) {
+    public FootballGraphicComponent(final double w, final double h) {
         super(TEXTURE_PATH_IMAGE, w, h);
     }
 

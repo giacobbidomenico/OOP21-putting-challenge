@@ -14,7 +14,7 @@ import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.physics.StaticPhysicsComponent;
 import puttingchallenge.view.graphics.BallGraphicComponent;
 import puttingchallenge.view.graphics.HoleGraphicComponent;
-import puttingchallenge.view.graphics.IcebergGraphicComponent;
+import puttingchallenge.view.graphics.FootballGraphicComponent;
 import puttingchallenge.view.graphics.LandGraphicComponent;
 import puttingchallenge.view.graphics.PlayerGraphicComponent;
 import puttingchallenge.view.graphics.TreeGraphicComponent;
@@ -135,29 +135,29 @@ public class GameFactory {
                                   pos, 
                                   new TreeGraphicComponent(w, w),
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX()+w/2, pos.getY()+w/2), w/2)));
+                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
     }
 
     /**
      * Build a new iceberg in the game.
      *
      * @param pos
-     *          position of the iceberg
+     *          position of the football ball
      * @param w
-     *          width of the iceberg
+     *          width of the football ball
      * @param h
-     *          height of the iceberg
+     *          height of the football ball
      *
-     * @return an instance of {@link GameObject} representing a iceberg.
+     * @return an instance of {@link GameObject} representing a football ball.
      */
-    public GameObject createIceberg(final Point2D pos,
-                                    final double w,
-                                    final double h) {
-        return new GameObjectImpl(GameObjectType.ICEBERG, 
+    public GameObject createFootball(final Point2D pos,
+                                     final double w,
+                                     final double h) {
+        return new GameObjectImpl(GameObjectType.FOOTBALL, 
                                   pos,
-                                  new IcebergGraphicComponent(w, h),
+                                  new FootballGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
+                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
     };
 
     /**
