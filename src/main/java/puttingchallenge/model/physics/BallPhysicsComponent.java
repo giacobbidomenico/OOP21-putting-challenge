@@ -3,6 +3,7 @@ package puttingchallenge.model.physics;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -19,13 +20,13 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE = 1.001;
-    private static final int BOUNCING_FACTOR = 5;
-    private static final int CONSECUTIVE_COLLISIONS = 16;
+    private static final double INCREASE = 1.5;
+    private static final int CONSECUTIVE_COLLISIONS = 6;
 
     private final double radius;
     private boolean isMoving;
-    private List<ActiveBoundingBox> lastCollisions;
+    private Queue<Double> lastVelsY;
+    private Point2D lastP;
 
     /**
      * Build a new {@link BallPhysicsComponent}.
@@ -36,7 +37,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     public BallPhysicsComponent(final double radius) {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
-        this.lastCollisions = new LinkedList<>();
+        this.lastVelsY = new LinkedList<>();
+        this.lastP = new Point2D(0, 0);
     }
 
     /**
@@ -57,17 +59,18 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
             final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
             final Point2D nextPos;
+            final double vel;
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
 
-                final ActiveBoundingBox collision = info.getActiveBoundingBox();
-                if (this.lastCollisions.size() == CONSECUTIVE_COLLISIONS) {
-                    if (this.lastCollisions.stream().allMatch((c) -> c.equals(collision))) {
-                        this.setVelocity(new Vector2D(0, 0));
-                    }
-                } else {
-                    this.lastCollisions.add(collision);
-                }
+//                final ActiveBoundingBox collision = info.getActiveBoundingBox();
+//                if (this.lastCollisions.size() == CONSECUTIVE_COLLISIONS) {
+//                    if (this.lastCollisions.stream().allMatch((c) -> c.equals(collision))) {
+//                        this.setVelocity(new Vector2D(0, 0));
+//                    }
+//                } else {
+//                    this.lastCollisions.add(collision);
+//                }
 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
                 final Vector2D normale = info.getActiveBBSideNormal().get();
@@ -79,19 +82,60 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
 
-                final double y = 2 * normale.getY() * lastVel.getModule() + lastVel.getY();
-                final double x = 2 * normale.getX() * lastVel.getModule() + lastVel.getX();
-                final double rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
-                final Vector2D finalVel = new Vector2D(x * rate, y * rate);
+//                final double y = 2 * normale.getY() * lastVel.getModule() + lastVel.getY();
+//                final double x = 2 * normale.getX() * lastVel.getModule() + lastVel.getX();
+//                final double rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
+//                final Vector2D finalVel = new Vector2D(x * rate, y * rate);
+                
+//                Vector2D finalVel = new Vector2D(-lastVel.getX(), -lastVel.getY());
+//                final double cos = normale.getX() * finalVel.getX() + normale.getY() * finalVel.getY() / normale.getModule() * finalVel.getModule();
+//                final double angle = Math.acos(cos);
+//                finalVel = new Vector2D(lastVel.getX() * Math.cos(angle), lastVel.getY() * Math.cos(angle));
+                
+//                double rate = 1 / lastVel.getModule();
+//                final double y = 2 * normale.getY() + lastVel.getY() * rate;
+//                final double x = 2 * normale.getX() + lastVel.getX() * rate;
+//                rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
+//                final Vector2D finalVel = new Vector2D(x * rate, y * rate);
+                
+                System.out.println("x: " + normale.getX() + " y: " + normale.getY() + " lastX: " + lastVel.getX() + " lastY: " + lastVel.getY()); 
+                double y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY()) * 0.9;
+                double x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX()) * 0.9;
 
-                this.setVelocity(finalVel);
-                this.reduceVel(BOUNCING_FACTOR * dt);
+                Vector2D finVel = new  Vector2D(x, y);
+                this.setVelocity(finVel);
+                System.out.println(" finalX: " + nextPos.getX() + " finalY: " + nextPos.getY());       
+                vel = y;
+//                if (Point2D.getDistance(nextPos, this.lastP) < radius 
+//                    && Point2D.getDistance(nextPos, this.lastP) > radius * 0.001) {
+//                    this.setVelocity(new Vector2D(0, 0));
+//                }
+                
+                if ((-Y_ACCELERATION * (1 / nextPos.getY()) * 10) < 10
+                    && (Math.abs(finVel.getX()) * Math.abs(finVel.getY())) < 1000) {
+                    this.setVelocity(new Vector2D(0, 0));
+                }
+                this.lastP = nextPos;
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
-                this.lastCollisions = new LinkedList<>();
+                vel = this.getVelocity().getY();
             }
 
             obj.setPosition(nextPos);
+            
+            
+            
+//            if (this.lastVelsY.size() == CONSECUTIVE_COLLISIONS) {
+//                if (this.lastVelsY.stream().allMatch((y) -> Math.abs(y - vel) < 20)) {
+//                    this.setVelocity(new Vector2D(0, 0));
+//                } else {
+//                    this.lastVelsY.poll();
+//                    this.lastVelsY.add(vel);
+//                }
+//            } else {
+//                this.lastVelsY.add(vel);
+//            }
+            
         }
     }
 
