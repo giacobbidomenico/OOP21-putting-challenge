@@ -55,7 +55,6 @@ public class GamePlayGameState extends AbstractGameState {
     public Pair<SceneType, List<GameObject>> initState() {
         this.lives = MAX_LIVES;
         this.score = NONE;
-        this.nShoots = NONE;
         this.loadNextEnvironment();
         return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
@@ -78,6 +77,7 @@ public class GamePlayGameState extends AbstractGameState {
                 this.initModelComunication();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
+                this.nShoots = NONE;
             } else {
                 this.leavingState(GameStatus.GAME_WIN);
             }
