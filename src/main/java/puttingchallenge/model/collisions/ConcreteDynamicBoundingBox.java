@@ -125,6 +125,14 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
             return Optional.ofNullable(this.positionBeforeCollision);
         }
 
+        @Override
+        public Optional<Vector2D> getActiveBBSideTanget() {
+            if (this.normal != null) {
+                return Optional.ofNullable(new Vector2D(-normal.getY(), normal.getX()));
+            }
+            return Optional.empty();
+        }
+
     }
 
 }
