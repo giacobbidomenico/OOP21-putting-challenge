@@ -14,9 +14,15 @@
     },
 
     "ball": {
+<<<<<<< HEAD
         "posX": "23",
         "posY": "70",
         "radiusScale": "1.3"
+=======
+        "posX": "25",
+        "posY": "85",
+        "radiusScale": "1.5"
+>>>>>>> e83ec7d05535faf51710d7f01e82d09ec1d404ed
     },
 
     "hole": {

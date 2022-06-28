@@ -110,6 +110,13 @@ public abstract class AbstractGameObject implements GameObject {
     /**
      * {@inheritDoc}
      */
+    public GraphicComponent getGraphicComponent() {
+        return this.graph;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFlip(final boolean flip) {
         this.flip = flip;

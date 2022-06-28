@@ -5,6 +5,7 @@ import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.Environment;
 import puttingchallenge.model.physics.PhysicsComponent;
+import puttingchallenge.view.graphics.GraphicComponent;
 
 /**
  * Class that implements an element of the game.
@@ -32,11 +33,7 @@ public interface GameObject {
         PLAYER,
 
         /**
-<<<<<<< HEAD
          * The type of the land in the game.
-=======
-         * The type of the game land.
->>>>>>> master
          */
         LAND,
 
@@ -104,6 +101,11 @@ public interface GameObject {
      * @return the {@link PhysicsComponent} of the object.
      */
     PhysicsComponent getPhysicsComponent();
+
+    /**
+     * @return the {@link GraphicComponent} of the object
+     */
+    GraphicComponent getGraphicComponent();
 
     /**
      * Draw the game object skin in the actual scene.
