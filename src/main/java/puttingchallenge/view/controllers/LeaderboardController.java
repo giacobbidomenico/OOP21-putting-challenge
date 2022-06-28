@@ -7,9 +7,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,6 +19,7 @@ import puttingchallenge.core.FileManager;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
+import puttingchallenge.model.gameobjects.GameObject;
 
 /**
  * Class that defines the controller that manages the {@link Scene} related to the leader board.
@@ -31,12 +34,13 @@ public class LeaderboardController extends AbstractSceneController {
     /**
      * Builds {@link LeaderboardController} and initializes the table.
      */
-    public void init() {
-
-        this.attempts.setCellValueFactory(new PropertyValueFactory<Score, Integer>("Attempt"));
+    @Override
+    public void init(final Scene scene, final List<GameObject> gameObjects) {
+        super.init(scene, gameObjects);
+        this.attempts.setCellValueFactory(new PropertyValueFactory<Score, Integer>("number"));
         this.scores.setCellValueFactory(new PropertyValueFactory<Score, String>("Score"));
 
-        final List<Score> scores = new ArrayList<>();
+        final ObservableList<Score> scores = FXCollections.observableArrayList();
         try (BufferedReader f = new BufferedReader(
                 new InputStreamReader(
                         new FileInputStream(FileManager.LEADERBOARD_FILE)))) {
@@ -50,7 +54,7 @@ public class LeaderboardController extends AbstractSceneController {
         } catch (IOException e) {
             scores.clear();
         }
-        table.getItems().setAll(scores);
+        table.setItems(scores);
     }
 
     /**
@@ -59,14 +63,14 @@ public class LeaderboardController extends AbstractSceneController {
      */
     @FXML
     public void quitGame(final ActionEvent e) {
-        final GameEvent event = new GameEventImpl(GameEventType.QUIT);
+        final GameEvent event = new GameEventImpl(GameEventType.SHOW_MAIN_MENU);
         super.getMediator().notifyColleagues(event, this);
     }
 
     /**
      * Simple class that models the score.
      */
-    private class Score {
+    public class Score {
         private final String scoreValue;
         private final Integer number;
 
