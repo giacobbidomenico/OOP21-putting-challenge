@@ -17,6 +17,12 @@ public interface ActiveBoundingBox {
     boolean isColliding(PassiveCircleBoundingBox circle);
 
     /**
+     * @return true if an object colliding would bounce along the tangent,
+     *          false otherwise
+     */
+    boolean bounceAlongTanget();
+
+    /**
      * @param pointOnActiveBoundingBox
      * @return the normal vector to the ActiveBoundingBox at the point passed
      */
