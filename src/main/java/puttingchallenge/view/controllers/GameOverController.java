@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
+
 /**
  * Class that defines the controller that manages the {@link Scene} shown at the game over.
  * 

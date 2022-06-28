@@ -1,6 +1,7 @@
 package puttingchallenge.view.graphics;
 
-import java.io.File;
+
+import puttingchallenge.common.FileManager;
 
 /**
  * Class that implements the graphical representation of a tree in the game.
@@ -8,8 +9,7 @@ import java.io.File;
  */
 public class TreeGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String SEP = File.separator;
-    private static final String IMAGE_PATH = SEP + "obstacles" + SEP + "tree.png";
+    private static final String IMAGE_PATH = FileManager.OBSTACLES_SKINS_PATH + "tree.png";
 
     /**
      * Build a new {@link GraphicComponent} for a tree in the game.

@@ -37,7 +37,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
      */
     @Override
     public CollisionTest collidesWith(final PassiveCircleBBTrajectoryBuilder circleBuilder) {
-        Optional<PassiveCircleBoundingBox> lastPos = Optional.of(circleBuilder.build(INTERVAL_DELTA));
+        final Optional<PassiveCircleBoundingBox> lastPos = Optional.of(circleBuilder.build(INTERVAL_DELTA));
         final Optional<Point2D> lastPosition;
         if (this.box.isColliding(lastPos.get())) {
             lastPosition = Optional.ofNullable(circleBuilder.build(0).getPosition());

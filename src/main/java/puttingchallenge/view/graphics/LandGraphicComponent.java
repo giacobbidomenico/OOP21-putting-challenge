@@ -1,6 +1,7 @@
 package puttingchallenge.view.graphics;
 
-import java.io.File;
+
+import puttingchallenge.common.FileManager;
 
 /**
  * Class that implements the graphical representation of the land in the game.
@@ -8,11 +9,9 @@ import java.io.File;
  */
 public class LandGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String SEP = File.separator;
-    private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "land.jpg";
+    private static final String TEXTURE_PATH_IMAGE = FileManager.OBSTACLES_SKINS_PATH + "land.jpg";
 
     /**
-<<<<<<< HEAD
      * Build a new {@link GraphicComponent} for a land in the game.
      * 
      * @param w

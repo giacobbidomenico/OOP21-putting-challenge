@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -15,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import puttingchallenge.core.FileManager;
+import puttingchallenge.common.FileManager;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;

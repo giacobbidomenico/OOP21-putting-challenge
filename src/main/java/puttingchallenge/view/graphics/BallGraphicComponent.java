@@ -1,14 +1,13 @@
 package puttingchallenge.view.graphics;
 
-import java.io.File;
+import puttingchallenge.common.FileManager;
 
 /**
  * Represent the graphic behavior of the game ball.
  */
 public final class BallGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String SEP = File.separator;
-    private static final String SKIN_PATH = SEP + "skins" + SEP + "ball.png";
+    private static final String SKIN_PATH = FileManager.GENERAL_SKINS_PATH + "ball.png";
 
     /**
      * Build a new {@link GraphicComponent} for the game ball.

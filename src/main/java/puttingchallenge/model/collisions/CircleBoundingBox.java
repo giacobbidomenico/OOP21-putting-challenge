@@ -1,7 +1,5 @@
 package puttingchallenge.model.collisions;
 
-import java.util.Optional;
-
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 
@@ -35,8 +33,8 @@ public class CircleBoundingBox implements ActiveBoundingBox {
      */
     @Override
     public Vector2D getNormal(final Point2D pointOnActiveBoundingBox) {
-        final double x = - this.position.getX() + pointOnActiveBoundingBox.getX();
-        final double y = - this.position.getY() + pointOnActiveBoundingBox.getY();
+        final double x = -this.position.getX() + pointOnActiveBoundingBox.getX();
+        final double y = -this.position.getY() + pointOnActiveBoundingBox.getY();
         return new Vector2D(x / Math.sqrt(y * y + x * x), y / Math.sqrt(y * y + x * x));
     }
 

@@ -2,7 +2,6 @@ package puttingchallenge.core;
 
 import puttingchallenge.common.Point2D;
 import puttingchallenge.model.collisions.AxisAlignedBoundingBox;
-import puttingchallenge.model.collisions.CircleBoundingBox;
 import puttingchallenge.model.collisions.ConcreteDynamicBoundingBox;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
@@ -135,7 +134,7 @@ public class GameFactory {
                                   pos, 
                                   new TreeGraphicComponent(w, w),
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX()+w/2, pos.getY()+w/2), w/2)));
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
 
     /**

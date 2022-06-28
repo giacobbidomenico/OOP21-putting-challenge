@@ -1,6 +1,6 @@
 package puttingchallenge.view.graphics;
 
-import java.io.File;
+import puttingchallenge.common.FileManager;
 
 /**
  * Class that implements the graphical representation of an iceberg in the game.
@@ -8,8 +8,7 @@ import java.io.File;
  */
 public class IcebergGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String SEP = File.separator;
-    private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "iceberg.png";
+    private static final String TEXTURE_PATH_IMAGE = FileManager.OBSTACLES_SKINS_PATH + "iceberg.png";
 
     /**
      * Build a new {@link GraphicComponent} for an iceberg in the game.

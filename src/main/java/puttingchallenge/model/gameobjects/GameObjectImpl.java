@@ -7,7 +7,6 @@ import puttingchallenge.model.collisions.DynamicBoundingBox;
 import puttingchallenge.model.physics.PhysicsComponent;
 import puttingchallenge.view.graphics.GraphicComponent;
 
-
 /**
  * Class that implements an element of the game.
  */
