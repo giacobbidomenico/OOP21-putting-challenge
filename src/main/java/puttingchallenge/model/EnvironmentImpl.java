@@ -175,7 +175,6 @@ public class EnvironmentImpl implements Environment {
      */
     private boolean isBallOutOfBounds() {
         final var posBall = this.ball.getPosition();
-        System.out.println(this.ball);
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(),
@@ -282,7 +281,6 @@ public class EnvironmentImpl implements Environment {
         CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder);
         if (result.isCollisionOccurred()) {
             this.collisionWithHole = true;
-            System.out.println("Hole hit");
         }
 
         result = null;

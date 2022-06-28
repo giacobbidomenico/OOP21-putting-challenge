@@ -18,25 +18,23 @@ public class ScreenGameState extends AbstractGameState {
     }
 
     @Override
-    public void sendModelEvent(final ModelEventType eventType) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public void receiveEvents() {
         // TODO Auto-generated method stub
     }
 
     @Override
     public void setMediator(final Mediator mediator) {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void notifyEvent(final GameEvent event) {
+
+    }
+
+    @Override
+    public void notifyEvents(ModelEventType eventType) {
         // TODO Auto-generated method stub
-        
     }
 
 

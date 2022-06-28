@@ -59,6 +59,14 @@ public class GamePlayGameState extends AbstractGameState {
         this.loadNextEnvironment();
         return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
+
+    private void initModelComunication() {
+        this.environmentObservable = this.getEnvironment().get().getObservable();
+        this.observer = new ObserverEventsImpl<>();
+        this.environmentObservable.addObserver(this.observer);
+        this.observable = new ObservableEventsImpl<>();
+        this.getEnvironment().get().configureObservable(this.observable);
+    }
     /**
      * Sets the next {@link Environment} according to the map list.
      */
@@ -67,11 +75,7 @@ public class GamePlayGameState extends AbstractGameState {
             if (maps.hasNext()) {
                 this.currentScene = maps.next();
                 this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
-                this.environmentObservable = this.getEnvironment().get().getObservable();
-                this.observer = new ObserverEventsImpl<>();
-                this.environmentObservable.addObserver(this.observer);
-                this.observable = new ObservableEventsImpl<>();
-                this.getEnvironment().get().configureObservable(this.observable);
+                this.initModelComunication();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             } else {
@@ -162,8 +166,12 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     public void notifyEvents(final ModelEventType eventType) {
+<<<<<<< HEAD
+        this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
+=======
         System.out.println(eventType);
         this.observer.sendModelEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
+>>>>>>> 03ea686334f09c2c218455ad1e3039d1e33c3164
     }
     /**
      * {@inheritDoc}

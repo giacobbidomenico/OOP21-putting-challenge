@@ -114,14 +114,6 @@ public abstract class AbstractGameObject implements GameObject {
         return this.phys;
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    public GraphicComponent getGraphicComponent() {
-        return this.graph;
-    }
-
     /**
      * {@inheritDoc}
      */
