@@ -10,7 +10,7 @@ import puttingchallenge.common.Vector2D;
  */
 public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
 
-    private static final long INTERVAL_DELTA = 1;
+    private static final long INTERVAL_DELTA = 21;
     private final ActiveBoundingBox box;
 
     /**
