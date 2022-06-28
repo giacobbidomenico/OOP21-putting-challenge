@@ -42,6 +42,11 @@ public interface DynamicBoundingBox {
         Optional<Vector2D> getActiveBBSideNormal();
 
         /**
+         * @return the tangent to the point of collision
+         */
+        Optional<Vector2D> getActiveBBSideTanget();
+
+        /**
          * @return the estimated position of the passive bounding box at the first time of collision
          * empty if the collision has not occurred
          */
