@@ -114,7 +114,6 @@ public abstract class AbstractGameObject implements GameObject {
         return this.phys;
     }
 
-
     /**
      * {@inheritDoc}
      */

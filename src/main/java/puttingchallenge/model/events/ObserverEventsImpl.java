@@ -15,7 +15,7 @@ public class ObserverEventsImpl<A> implements ObserverEvents<A> {
     * {@inheritDoc}
     */
    @Override
-   public void notifyEvents(final List<A> types) {
+   public void sendModelEvents(final List<A> types) {
        this.events.addAll(types);
    }
 
