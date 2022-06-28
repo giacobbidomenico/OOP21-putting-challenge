@@ -269,8 +269,7 @@ public class EnvironmentImpl implements Environment {
     @Override
     public Optional<CollisionTest> checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
             final BallPhysicsComponent ballPhysics,
-            final Point2D ballPosition,
-            final long deltaT)  {
+            final Point2D ballPosition)  {
 
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
         final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
