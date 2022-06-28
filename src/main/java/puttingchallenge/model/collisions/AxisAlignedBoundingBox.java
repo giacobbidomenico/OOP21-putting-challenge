@@ -80,4 +80,12 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean bounceAlongTanget() {
+        return false;
+    }
+
 }
