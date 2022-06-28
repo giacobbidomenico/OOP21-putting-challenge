@@ -9,9 +9,11 @@ import puttingchallenge.view.graphics.GraphicComponent;
  */
 public class PlayerObject extends AbstractGameObject {
     private Bat bat;
+
     private final ConcreteDynamicBoundingBox hitbox;
     private final double width;
     private final double height;
+
     /**
      * Create a new {@link GameObjectImpl} representing the player.
      * @param type

@@ -13,7 +13,7 @@ public interface ObserverEvents<A> {
      * @param types
      *         types of the events which must be notified.
      */
-    void notifyEvents(List<A> types);
+    void sendModelEvents(List<A> types);
 
     /**
      * @return a {@link List} of the events which must be notified.

@@ -33,7 +33,7 @@ public interface GameObject {
         PLAYER,
 
         /**
-         * The type of the game land.
+         * The type of the land in the game.
          */
         LAND,
 

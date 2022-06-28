@@ -35,7 +35,9 @@ public class CircleBoundingBox implements ActiveBoundingBox {
      */
     @Override
     public Vector2D getNormal(final Point2D pointOnActiveBoundingBox) {
-        return new Vector2D(this.position.getX() - pointOnActiveBoundingBox.getX(), this.position.getY() - pointOnActiveBoundingBox.getY());
+        final double x = - this.position.getX() + pointOnActiveBoundingBox.getX();
+        final double y = - this.position.getY() + pointOnActiveBoundingBox.getY();
+        return new Vector2D(x / Math.sqrt(y * y + x * x), y / Math.sqrt(y * y + x * x));
     }
 
     /**

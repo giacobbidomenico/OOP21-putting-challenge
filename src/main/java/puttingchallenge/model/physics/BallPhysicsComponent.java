@@ -1,7 +1,5 @@
 package puttingchallenge.model.physics;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 import puttingchallenge.common.Point2D;
@@ -9,7 +7,6 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
-import puttingchallenge.model.collisions.ActiveBoundingBox;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 
 /**
@@ -19,13 +16,10 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE = 1.001;
-    private static final int BOUNCING_FACTOR = 5;
-    private static final int CONSECUTIVE_COLLISIONS = 16;
+    private static final double INCREASE = 1.5;
 
     private final double radius;
     private boolean isMoving;
-    private List<ActiveBoundingBox> lastCollisions;
 
     /**
      * Build a new {@link BallPhysicsComponent}.
@@ -36,7 +30,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     public BallPhysicsComponent(final double radius) {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
-        this.lastCollisions = new LinkedList<>();
     }
 
     /**
@@ -56,19 +49,10 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             clone.setVelocity(new Vector2D(this.getVelocity()));
 
             final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
-            final Point2D nextPos;
+            Point2D nextPos;
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
-
-                final ActiveBoundingBox collision = info.getActiveBoundingBox();
-                if (this.lastCollisions.size() == CONSECUTIVE_COLLISIONS) {
-                    if (this.lastCollisions.stream().allMatch((c) -> c.equals(collision))) {
-                        this.setVelocity(new Vector2D(0, 0));
-                    }
-                } else {
-                    this.lastCollisions.add(collision);
-                }
-
+ 
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
                 final Vector2D normale = info.getActiveBBSideNormal().get();
                 final Vector2D lastVel = this.getVelocity();
@@ -79,23 +63,30 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
 
-                final double y = 2 * normale.getY() * lastVel.getModule() + lastVel.getY();
-                final double x = 2 * normale.getX() * lastVel.getModule() + lastVel.getX();
-                final double rate = lastVel.getModule() / Math.sqrt(x * x + y * y);
-                final Vector2D finalVel = new Vector2D(x * rate, y * rate);
-
-                this.setVelocity(finalVel);
-                this.reduceVel(BOUNCING_FACTOR * dt);
+                final Vector2D finVel = this.velAfterCollision(normale, lastVel);
+                this.setVelocity(finVel);
+                this.isStopping(nextPos, finVel);
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
-                this.lastCollisions = new LinkedList<>();
             }
 
             obj.setPosition(nextPos);
         }
     }
 
+    private Vector2D velAfterCollision(final Vector2D normale, final Vector2D lastVel) {
+        final double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
+        final double y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * 0.9;
+        final double x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX()) * 0.9;
+        return new  Vector2D(x, y);
+    }
 
+    private void isStopping(final Point2D pos, final Vector2D vel) {
+        if ((-Y_ACCELERATION * (1 / pos.getY()) * 100) < 4
+             || (Math.abs(vel.getX()) + Math.abs(vel.getY())) < 100) {
+            this.setVelocity(new Vector2D(0, 0));
+        }
+    }
 
     /**
      * Given a delta time, it calculates the next position of the object, starting from an initial position.
