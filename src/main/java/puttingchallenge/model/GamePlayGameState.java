@@ -43,7 +43,7 @@ public class GamePlayGameState extends AbstractGameState {
     /**
      * Build a new {@link GamePlayGameState} object.
      * @param manager
-     *          of the states
+     *          of the state
      * @param status
      *          associated with the {@link GamePlayGameState} state
      */
