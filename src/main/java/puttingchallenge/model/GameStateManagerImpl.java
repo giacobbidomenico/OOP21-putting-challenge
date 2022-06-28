@@ -45,7 +45,7 @@ public class GameStateManagerImpl implements GameStateManager {
      * @return saved scores
      */
     private List<String> getScores() {
-        List<String> scores = new ArrayList<>();
+        final List<String> scores = new ArrayList<>();
         try (BufferedReader f = new BufferedReader(
                 new InputStreamReader(
                         new FileInputStream(
