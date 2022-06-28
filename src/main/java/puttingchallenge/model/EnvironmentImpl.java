@@ -27,7 +27,6 @@ import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    //private static final int PERC_DISTANCE = 2;
 
     private Optional<ObservableEvents<ModelEventType>> observableGameState;
     private final ObservableEvents<ModelEventType> observable;

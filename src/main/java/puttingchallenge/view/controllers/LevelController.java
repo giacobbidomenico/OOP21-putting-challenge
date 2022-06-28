@@ -152,7 +152,6 @@ public class LevelController extends AbstractSceneController implements EventHan
         switch (event.getEventType()) {
             case UPDATE_STATS:
                 this.updateStats((Pair<Integer, Integer>) event.getDetails().get());
-                System.out.println(event.getDetails().get());
             break;
             default:
                 break;
