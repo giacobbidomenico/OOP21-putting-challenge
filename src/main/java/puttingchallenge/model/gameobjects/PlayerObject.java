@@ -9,16 +9,21 @@ import puttingchallenge.view.graphics.GraphicComponent;
  */
 public class PlayerObject extends AbstractGameObject {
     private Bat bat;
+
     private final ConcreteDynamicBoundingBox hitbox;
     private final double width;
     private final double height;
+
     /**
-     * Create a new {@link GameObjectImpl} representing the player.
+     * Create a new {@link GameObject} representing the player.
      * @param type
      * @param position
      * @param graph
+     *          the {@link GraphicComponent} of the object
      * @param phys
+     *          the {@link PhysicsComponent} of the object
      * @param concreteDynamicBoundingBox
+     *          the hit-box of the object
      * @param width
      * @param height
      */
@@ -54,21 +59,24 @@ public class PlayerObject extends AbstractGameObject {
     }
 
     /**
-     * @return .
+     * @return 
+     *          the hit-box of the player
      */
     public ConcreteDynamicBoundingBox getHitBox() {
         return this.hitbox;
     }
 
     /**
-     * @return .
+     * @return
+     *          the width of the player
      */
     public double getWidth() {
         return this.width;
     }
 
     /**
-     * @return .
+     * @return
+     *          the height of the player
      */
     public double getHeight() {
         return this.height;

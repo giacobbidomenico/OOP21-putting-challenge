@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
+import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
@@ -65,18 +66,6 @@ public class LevelController extends AbstractSceneController implements EventHan
     public void render() {
         gc.clearRect(UPPER_LEFT_X, UPPER_LEFT_Y, super.getScene().getWidth(), getScene().getHeight());
         super.getGameObjects().stream().forEach(e -> e.draw(gc));
-    }
-
-    /**
-     * Handles mouse moved event.
-     * @param mouseMoved
-     */
-    public void handleMouseMoved(final MouseEvent mouseMoved) {
-//        if (this.isAiming) {
-//            final Pair<Double, Double> coord = this.getCoord(event);
-//            final GameEventWithDetailsImpl<Pair<Double, Double>> movingEvent = new GameEventWithDetailsImpl<>(GameEventType.MOVING, coord);
-//            this.getMediator().notifyColleagues(movingEvent, this);
-//        }
     }
 
     /**
@@ -132,7 +121,9 @@ public class LevelController extends AbstractSceneController implements EventHan
             final String livesLabel = String.valueOf(stats.getKey().intValue());
             this.lives.setText("Lives:" + livesLabel);
             this.score.setText("Score:" + scoreLabel);
+            this.render();
         });
+        this.render();
     }
 
     /**
@@ -151,6 +142,20 @@ public class LevelController extends AbstractSceneController implements EventHan
         if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
             this.handleMousePressed((MouseEvent) event);
             event.consume();
+        }
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyEvent(final GameEvent event) { 
+        switch (event.getEventType()) {
+            case UPDATE_STATS:
+                this.updateStats((Pair<Integer, Integer>) event.getDetails().get());
+                System.out.println(event.getDetails().get());
+            break;
+            default:
+                break;
         }
     }
 }

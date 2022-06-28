@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -48,7 +47,7 @@ public class GamePlayGameState extends AbstractGameState {
     /**
      * Build a new {@link GamePlayGameState} object.
      * @param manager
-     *          of the states
+     *          of the state
      * @param status
      *          associated with the {@link GamePlayGameState} state
      */
@@ -65,6 +64,14 @@ public class GamePlayGameState extends AbstractGameState {
         this.loadNextEnvironment();
         return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
+
+    private void initModelComunication() {
+        this.environmentObservable = this.getEnvironment().get().getObservable();
+        this.observer = new ObserverEventsImpl<>();
+        this.environmentObservable.addObserver(this.observer);
+        this.observable = new ObservableEventsImpl<>();
+        this.getEnvironment().get().configureObservable(this.observable);
+    }
     /**
      * Sets the next {@link Environment} according to the map list.
      */
@@ -73,11 +80,7 @@ public class GamePlayGameState extends AbstractGameState {
             if (maps.hasNext()) {
                 this.currentScene = maps.next();
                 this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
-                this.environmentObservable = this.getEnvironment().get().getObservable();
-                this.observer = new ObserverEventsImpl<>();
-                this.environmentObservable.addObserver(this.observer);
-                this.observable = new ObservableEventsImpl<>();
-                this.getEnvironment().get().configureObservable(this.observable);
+                this.initModelComunication();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             } else {
@@ -176,7 +179,7 @@ public class GamePlayGameState extends AbstractGameState {
     @Override
     public void notifyEvents(final ModelEventType eventType) {
         System.out.println(eventType);
-        this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
+        this.observer.sendModelEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**
      * {@inheritDoc}

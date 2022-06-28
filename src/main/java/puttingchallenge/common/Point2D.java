@@ -102,8 +102,9 @@ public class Point2D implements Serializable {
             return true;
         }
         if (obj instanceof Point2D) {
-            final var p = (Point2D) obj;
-            return this.x == p.x && this.y == p.y;
+            final Point2D p = (Point2D) obj;
+            return Double.compare(this.x, p.getX()) == 0 
+                   && Double.compare(this.y, p.getY()) == 0;
         }
         return false;
     }

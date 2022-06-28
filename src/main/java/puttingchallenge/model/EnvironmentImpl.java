@@ -27,7 +27,7 @@ import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    private static final int PERC_DISTANCE = 2;
+    //private static final int PERC_DISTANCE = 2;
 
     private Optional<ObservableEvents<ModelEventType>> observableGameState;
     private final ObservableEvents<ModelEventType> observable;
@@ -39,7 +39,8 @@ public class EnvironmentImpl implements Environment {
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
-    private boolean notidiedBallStoped;
+    private boolean notifiedBallStopped;
+    private boolean notifiedBallOutOfBounds;
     private boolean collisionWithHole;
 
     /**
@@ -72,6 +73,7 @@ public class EnvironmentImpl implements Environment {
         this.initPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
+        this.notifiedBallStopped = true;
     }
 
     /**
@@ -81,6 +83,8 @@ public class EnvironmentImpl implements Environment {
     public void update(final long dt) {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         bf.update(dt, ball, this);
+
+        System.out.println(this.player.getPosition());
         this.receiveEvents();
         this.notifyEvents();
     }
@@ -130,16 +134,13 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public void movePlayer() {
-        System.out.println("moved");
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
             this.ball.setPosition(initPosBall);
             this.player.setPosition(initPosPlayer);
-            this.notidiedBallStoped = false;
             return;
         }
-        this.notidiedBallStoped = false;
         final var posBall = this.ball.getPosition();
         var newPos = new Point2D(posBall.getX() + player.getWidth(), 
                                  posBall.getY() + player.getHeight());
@@ -147,10 +148,10 @@ public class EnvironmentImpl implements Environment {
             player.setFlip(false);
             player.setPosition(newPos);
         }
-        newPos = new Point2D(posBall.getX() - player.getWidth(), 
-                             posBall.getY() - player.getHeight());
+        newPos = new Point2D(posBall.getX() + player.getWidth(), 
+                             posBall.getY() + player.getHeight());
         if (newPos.getX() < this.container.getWidth()) {
-            player.setFlip(true);
+            //player.setFlip(true);
             player.setPosition(newPos);
         }
     }
@@ -177,7 +178,6 @@ public class EnvironmentImpl implements Environment {
      */
     private boolean isBallOutOfBounds() {
         final var posBall = this.ball.getPosition();
-        System.out.println(this.ball);
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         final var rectBall = new Rectangle2D(posBall.getX(), 
                                              posBall.getY(),
@@ -213,17 +213,18 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && this.notidiedBallStoped) {
+        if (this.isBallStationary() && !this.notifiedBallStopped && !this.notifiedBallOutOfBounds) {
             events.add(ModelEventType.BALL_STOPPED);
-            this.notidiedBallStoped = true;
+            this.notifiedBallStopped = true;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
+            this.notifiedBallOutOfBounds = true;
         }
         if (this.isBallInTheHole()) {
             events.add(ModelEventType.BALL_IN_HOLE);
         }
-        this.observer.notifyEvents(events);
+        this.observer.sendModelEvents(events);
     }
 
     /**
@@ -238,7 +239,8 @@ public class EnvironmentImpl implements Environment {
         eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
-                this.notidiedBallStoped = false;
+                this.notifiedBallStopped = false;
+                this.notifiedBallOutOfBounds = false;
                 break;
             case MOVE_PLAYER:
                 this.movePlayer();
@@ -269,8 +271,7 @@ public class EnvironmentImpl implements Environment {
     @Override
     public Optional<CollisionTest> checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
             final BallPhysicsComponent ballPhysics,
-            final Point2D ballPosition,
-            final long deltaT)  {
+            final Point2D ballPosition)  {
 
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
         final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
@@ -285,7 +286,6 @@ public class EnvironmentImpl implements Environment {
         CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder);
         if (result.isCollisionOccurred()) {
             this.collisionWithHole = true;
-            System.out.println("Hole hit");
         }
 
         result = null;
@@ -296,6 +296,36 @@ public class EnvironmentImpl implements Environment {
             }
         }
         return Optional.ofNullable(result);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notifiedBallStopped,
+                observable, observableGameState, observer, player, staticObstacles);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Environment) {
+            final Environment env = (Environment) obj;
+            return ball.equals(env.getBall()) 
+                   && staticObstacles.containsAll(env.getStaticObstacles())
+                   && container.equals(env.getContainer()) 
+                   && hole.equals(env.getHole());
+        }
+        return false;
     }
 
 }
