@@ -10,20 +10,23 @@
         "posY": "60",
         "wScale": "15",
         "hScale": "30",
-        "skinPath": "/skins/player.png"
+        "skinPath": "/skins/player.png",
+        "flip" : "false"
     },
 
     "ball": {
         "posX": "23",
         "posY": "80",
-        "radiusScale": "1.5"
+        "radiusScale": "1.5",
+        "flip" : "false"
     },
 
     "hole": {
         "posX": "80",
         "posY": "55",
         "wScale": "10",
-        "hScale": "35"
+        "hScale": "35",
+        "flip" : "false"
     },
 
     "staticObstacles": [{
@@ -31,28 +34,32 @@
             "posX": "0",
             "posY": "90",
             "wScale": "100",
-            "hScale": "10"
+            "hScale": "10",
+            "flip" : "false"
         },
         {
             "type": "WALL",
             "posX": "10",
             "posY": "30",
             "wScale": "20",
-            "hScale": "20"
+            "hScale": "20",
+            "flip" : "false"
         },
         {
             "type": "WALL",
             "posX": "40",
             "posY": "60",
             "wScale": "20",
-            "hScale": "20"
+            "hScale": "20",
+            "flip" : "false"
         },
         {
             "type": "WALL",
             "posX": "70",
             "posY": "20",
             "wScale": "20",
-            "hScale": "20"
+            "hScale": "20",
+            "flip" : "false"
         }
     ]
 }
