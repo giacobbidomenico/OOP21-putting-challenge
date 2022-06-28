@@ -39,9 +39,8 @@ public class EnvironmentImpl implements Environment {
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
-    private boolean notifiedBallStopped;
-    private boolean notifiedBallOutOfBounds;
     private boolean collisionWithHole;
+    private boolean notifiable;
 
     /**
      * Build a new {@link EnvironmentImpl}.
@@ -83,7 +82,6 @@ public class EnvironmentImpl implements Environment {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         bf.update(dt, ball, this);
 
-        System.out.println(this.player.getPosition());
         this.receiveEvents();
         this.notifyEvents();
     }
@@ -216,13 +214,13 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && !this.notifiedBallStopped && !this.notifiedBallOutOfBounds) {
+        if (this.isBallStationary() && this.notifiable) {
             events.add(ModelEventType.BALL_STOPPED);
-            this.notifiedBallStopped = true;
+            this.notifiable = false;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
-            this.notifiedBallOutOfBounds = true;
+            this.notifiable = false;
         }
         if (this.isBallInTheHole()) {
             events.add(ModelEventType.BALL_IN_HOLE);
@@ -242,8 +240,7 @@ public class EnvironmentImpl implements Environment {
         eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
-                this.notifiedBallStopped = false;
-                this.notifiedBallOutOfBounds = false;
+                this.notifiable = true; 
                 break;
             case MOVE_PLAYER:
                 this.movePlayer();
@@ -306,7 +303,7 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notifiedBallStopped,
+        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notifiable,
                 observable, observableGameState, observer, player, staticObstacles);
     }
 
