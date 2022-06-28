@@ -39,7 +39,7 @@ public class EnvironmentImpl implements Environment {
     private final GameObject hole;
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
-    private boolean notidiedBallStoped;
+    private boolean notifiedBallStopped;
     private boolean collisionWithHole;
 
     /**
@@ -131,14 +131,13 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        this.notifiedBallStopped = false;
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
             this.ball.setPosition(initPosBall);
             this.player.setPosition(initPosPlayer);
-            this.notidiedBallStoped = false;
             return;
         }
-        this.notidiedBallStoped = false;
         final var posBall = this.ball.getPosition();
         var newPos = new Point2D(posBall.getX() + player.getWidth(), 
                                  posBall.getY() + player.getHeight());
@@ -166,7 +165,8 @@ public class EnvironmentImpl implements Environment {
      *         false otherwise
      */
     private boolean isBallStationary() {
-        return this.ball.getVelocity().equals(new Vector2D(0, 0));
+        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        return !bf.isMoving();
     }
 
     /**
@@ -210,9 +210,9 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && !this.notidiedBallStoped) {
+        if (this.isBallStationary() && !this.notifiedBallStopped) {
             events.add(ModelEventType.BALL_STOPPED);
-            this.notidiedBallStoped = true;
+            this.notifiedBallStopped = true;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
@@ -235,7 +235,7 @@ public class EnvironmentImpl implements Environment {
         eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
-                this.notidiedBallStoped = false;
+                this.notifiedBallStopped = false;
                 break;
             case MOVE_PLAYER:
                 this.movePlayer();
@@ -298,7 +298,7 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notidiedBallStoped,
+        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notifiedBallStopped,
                 observable, observableGameState, observer, player, staticObstacles);
     }
 
