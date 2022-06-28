@@ -2,8 +2,7 @@
     "scene": {
         "background": "/backgrounds/white.jpg",
         "wScale": "50",
-        "hScale": "50",
-        "flip" : "false"
+        "hScale": "50"
     },
 
     "player": {
@@ -12,22 +11,20 @@
         "wScale": "15",
         "hScale": "30",
         "skinPath": "/skins/player.png",
-        "flip" : "false"
+        "flip" : "true"
     },
 
     "ball": {
         "posX": "23",
         "posY": "80",
-        "radiusScale": "1.5",
-        "flip" : "false"
+        "radiusScale": "1.5"
     },
 
     "hole": {
         "posX": "60",
         "posY": "55",
         "wScale": "10",
-        "hScale": "35",
-        "flip" : "false"
+        "hScale": "35"
     },
 
     "staticObstacles": [{
@@ -35,16 +32,14 @@
             "posX": "0",
             "posY": "90",
             "wScale": "100",
-            "hScale": "10",
-            "flip" : "false"
+            "hScale": "10"
         },
         {
             "type": "FOOTBALL",
             "posX": "2",
             "posY": "10",
             "wScale": "25",
-            "hScale": "35",
-            "flip" : "false"
+            "hScale": "35"
         },
      ]
 }
