@@ -1,7 +1,6 @@
 package puttingchallenge.view.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import puttingchallenge.model.gameobjects.GameObject;
 
 /**
@@ -10,9 +9,9 @@ import puttingchallenge.model.gameobjects.GameObject;
 public interface GraphicComponent {
 
     /**
-     * @return the {@link Image} of the {@link GameObject} skin.
+     * @return the path of the {@link Image} corresponding to the {@link GameObject} skin.
      */
-    Image getSkin();
+    String getPathSkin();
 
     /**
      * @return the width of the {@link GameObject}.

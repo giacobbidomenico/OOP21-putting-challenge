@@ -321,7 +321,7 @@ public class EnvironmentImpl implements Environment {
         if (obj instanceof Environment) {
             final Environment env = (Environment) obj;
             return ball.equals(env.getBall()) 
-                   && staticObstacles.equals(env.getStaticObstacles())
+                   && staticObstacles.containsAll(env.getStaticObstacles())
                    && container.equals(env.getContainer()) 
                    && hole.equals(env.getHole());
         }

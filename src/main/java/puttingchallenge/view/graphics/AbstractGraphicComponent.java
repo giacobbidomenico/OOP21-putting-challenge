@@ -12,6 +12,7 @@ import puttingchallenge.model.gameobjects.GameObject;
 public class AbstractGraphicComponent implements GraphicComponent {
 
     private final Image skin;
+    private final String pathSkin;
     private final double w;
     private final double h;
 
@@ -29,6 +30,7 @@ public class AbstractGraphicComponent implements GraphicComponent {
                                        final double w,
                                        final double h) {
         this.skin = new Image(imagePath);
+        this.pathSkin = imagePath;
         this.w = w;
         this.h = h;
     }
@@ -48,8 +50,9 @@ public class AbstractGraphicComponent implements GraphicComponent {
     /**
      * {@inheritDoc}
      */
-    public Image getSkin() {
-        return this.skin;
+    @Override
+    public String getPathSkin() {
+        return this.pathSkin;
     }
 
     /**
@@ -87,7 +90,7 @@ public class AbstractGraphicComponent implements GraphicComponent {
         }
         if (obj instanceof GraphicComponent) {
             final GraphicComponent graph = (GraphicComponent) obj;
-            return this.skin.equals(graph.getSkin()) 
+            return pathSkin.equals(graph.getPathSkin())
                     && this.w == graph.getWidth()
                     && this.h == graph.getHeight();
         }
