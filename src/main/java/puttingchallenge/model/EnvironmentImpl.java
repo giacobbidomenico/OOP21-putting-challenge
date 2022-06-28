@@ -40,6 +40,7 @@ public class EnvironmentImpl implements Environment {
     private final Point2D initPosBall;
     private final Point2D initPosPlayer;
     private boolean notifiedBallStopped;
+    private boolean notifiedBallOutOfBounds;
     private boolean collisionWithHole;
 
     /**
@@ -72,6 +73,7 @@ public class EnvironmentImpl implements Environment {
         this.initPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
+        this.notifiedBallStopped = true;
     }
 
     /**
@@ -81,6 +83,8 @@ public class EnvironmentImpl implements Environment {
     public void update(final long dt) {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         bf.update(dt, ball, this);
+
+        System.out.println(this.player.getPosition());
         this.receiveEvents();
         this.notifyEvents();
     }
@@ -131,7 +135,6 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
-        this.notifiedBallStopped = false;
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
             this.ball.setPosition(initPosBall);
@@ -145,10 +148,10 @@ public class EnvironmentImpl implements Environment {
             player.setFlip(false);
             player.setPosition(newPos);
         }
-        newPos = new Point2D(posBall.getX() - player.getWidth(), 
-                             posBall.getY() - player.getHeight());
+        newPos = new Point2D(posBall.getX() + player.getWidth(), 
+                             posBall.getY() + player.getHeight());
         if (newPos.getX() < this.container.getWidth()) {
-            player.setFlip(true);
+            //player.setFlip(true);
             player.setPosition(newPos);
         }
     }
@@ -210,12 +213,13 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && !this.notifiedBallStopped) {
+        if (this.isBallStationary() && !this.notifiedBallStopped && !this.notifiedBallOutOfBounds) {
             events.add(ModelEventType.BALL_STOPPED);
             this.notifiedBallStopped = true;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
+            this.notifiedBallOutOfBounds = true;
         }
         if (this.isBallInTheHole()) {
             events.add(ModelEventType.BALL_IN_HOLE);
@@ -236,6 +240,7 @@ public class EnvironmentImpl implements Environment {
             switch (event) {
             case SHOOT:
                 this.notifiedBallStopped = false;
+                this.notifiedBallOutOfBounds = false;
                 break;
             case MOVE_PLAYER:
                 this.movePlayer();
