@@ -94,10 +94,6 @@ public class ViewImpl implements View {
                 final Pair<SceneType, List<GameObject>> wrapper = (Pair<SceneType, List<GameObject>>) event.getDetails().get();
                 this.loadScene(wrapper.getKey(), wrapper.getValue());
                 break;
-            case UPDATE_STATS:
-                final LevelController lc = (LevelController) this.scene;
-                lc.updateStats((Pair<Integer, Integer>) event.getDetails().get());
-            break;
             default:
                 break;
         }

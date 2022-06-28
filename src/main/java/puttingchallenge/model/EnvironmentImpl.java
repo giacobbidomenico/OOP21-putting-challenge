@@ -166,8 +166,7 @@ public class EnvironmentImpl implements Environment {
      *         false otherwise
      */
     private boolean isBallStationary() {
-        final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
-        return !bf.isMoving();
+        return this.ball.getVelocity().equals(new Vector2D(0, 0));
     }
 
     /**
@@ -211,7 +210,7 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && this.notidiedBallStoped) {
+        if (this.isBallStationary() && !this.notidiedBallStoped) {
             events.add(ModelEventType.BALL_STOPPED);
             this.notidiedBallStoped = true;
         }
@@ -221,7 +220,7 @@ public class EnvironmentImpl implements Environment {
         if (this.isBallInTheHole()) {
             events.add(ModelEventType.BALL_IN_HOLE);
         }
-        this.observer.notifyEvents(events);
+        this.observer.sendModelEvents(events);
     }
 
     /**

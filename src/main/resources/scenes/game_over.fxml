@@ -24,8 +24,6 @@
                   <Font name="Algerian" size="58.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="244.0" layoutY="180.0" prefHeight="40.0" prefWidth="76.0" text="SCORE" textFill="#ff9900" />
-            <Label alignment="CENTER" layoutX="320.0" layoutY="180.0" prefHeight="40.0" prefWidth="76.0" text="YOUR SCORE" textFill="#2fff00" />
       </children>
     </AnchorPane>
   </children>
