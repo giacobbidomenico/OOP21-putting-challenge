@@ -60,16 +60,21 @@ public class GameFactory {
      *          the width of the player
      * @param h
      *          the height of the player
+     * @param flip
+     *          fit of the player
+
      * @return an instance of {@link GameObject} representing the player
      */
-    public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
-        return new PlayerObject(GameObjectType.PLAYER, 
-                                pos, 
-                                new PlayerGraphicComponent(skinPath, w, h), 
-                                new StaticPhysicsComponent(), 
-                                new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)),
-                                w,
-                                h);
+    public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h, final boolean flip) {
+        final var player = new PlayerObject(GameObjectType.PLAYER, 
+                                            pos, 
+                                            new PlayerGraphicComponent(skinPath, w, h), 
+                                            new StaticPhysicsComponent(), 
+                                            new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)),
+                                            w,
+                                            h);
+        player.setFlip(flip);
+        return player;
     }
 
     /**
@@ -110,8 +115,8 @@ public class GameFactory {
                                  final double w,
                                  final double h) {
         return new GameObjectImpl(GameObjectType.WALL,
-                                  pos, 
-                                  new WallGraphicComponent(w, h), 
+                                  pos,
+                                  new WallGraphicComponent(w, h * BALL_GRAPHIC_FACTOR), 
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
