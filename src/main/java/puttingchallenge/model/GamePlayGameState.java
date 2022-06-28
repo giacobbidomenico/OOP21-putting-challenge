@@ -163,7 +163,6 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     public void notifyEvents(final ModelEventType eventType) {
-        System.out.println(eventType);
         this.observer.notifyEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
     /**
