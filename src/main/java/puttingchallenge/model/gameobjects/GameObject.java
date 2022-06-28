@@ -103,7 +103,7 @@ public interface GameObject {
     PhysicsComponent getPhysicsComponent();
 
     /**
-     * @return the {@link GraphicComponent} of the object
+     * @return the {@link GraphicComponent} of the object.
      */
     GraphicComponent getGraphicComponent();
 

@@ -3,6 +3,7 @@ package puttingchallenge.model;
 import java.util.Optional;
 
 import puttingchallenge.model.events.Colleague;
+import puttingchallenge.model.events.GameEvent;
 
 /**
  * Interface that defines the {@link GameState} manager.
@@ -13,7 +14,7 @@ public interface GameStateManager extends Colleague {
      */
     void initState();
     /**
-     * Sets a new current{@link GameState}.
+     * Sets a new current {@link GameState} and send the {@link GameEvent} to sets the appropriate scene.
      * @param status
      *          to switch to
      */
@@ -31,7 +32,7 @@ public interface GameStateManager extends Colleague {
      */
     Optional<Environment> getCurrentEnvironment();
     /**
-     * Method that updates the physics state of the {@link GameObject}.
+     * Method that updates the physics state of the {@link GameObject}s.
      * @param dt
      *          time elapsed since the last frame
      */

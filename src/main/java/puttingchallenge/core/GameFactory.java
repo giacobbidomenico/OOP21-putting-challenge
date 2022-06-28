@@ -63,11 +63,13 @@ public class GameFactory {
      * @return an instance of {@link GameObject} representing the player
      */
     public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h) {
-        return new PlayerObject(GameObjectType.PLAYER,
-                                  pos,
-                                  new PlayerGraphicComponent(skinPath, w, h),
-                                  new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
+        return new PlayerObject(GameObjectType.PLAYER, 
+                                pos, 
+                                new PlayerGraphicComponent(skinPath, w, h), 
+                                new StaticPhysicsComponent(), 
+                                new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)),
+                                w,
+                                h);
     }
 
     /**

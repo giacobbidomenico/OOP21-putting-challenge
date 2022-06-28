@@ -1,15 +1,11 @@
 package puttingchallenge.model;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javafx.util.Pair;
-import puttingchallenge.common.Point2D;
 import puttingchallenge.model.events.GameEvent;
-import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
 import puttingchallenge.model.events.Mediator;
@@ -23,22 +19,14 @@ public class GameStateManagerImpl implements GameStateManager {
     private GameState currentGameState;
     private Mediator generalMediator;
     private static final GameStatus INITIAL_STATE = GameStatus.MAIN_MENU;
-    private static final Map<GameStatus, GameEventType> EVENT_TO_STATUS = createMap();
 
-    private static Map<GameStatus, GameEventType> createMap() {
-        final Map<GameStatus, GameEventType> associativeMap = new HashMap<>();
-        associativeMap.put(GameStatus.MAIN_MENU, GameEventType.SHOW_MAIN_MENU);
-        associativeMap.put(GameStatus.LEADERBOARD, GameEventType.SHOW_LEADERBOARD);
-        associativeMap.put(GameStatus.GAME_WIN, GameEventType.WIN);
-        associativeMap.put(GameStatus.GAME_OVER, GameEventType.GAMEOVER);
-        return Collections.unmodifiableMap(associativeMap);
-    }
     /**
      * {@inheritDoc}
      */
     public void initState() {
         this.currentGameState = new ScreenGameState(this, INITIAL_STATE);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -73,6 +61,7 @@ public class GameStateManagerImpl implements GameStateManager {
             break;
         }
     }
+
     /**
      * {@inheritDoc}
      */
@@ -80,6 +69,7 @@ public class GameStateManagerImpl implements GameStateManager {
     public GameState getCurrentState() {
         return this.currentGameState;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -87,6 +77,7 @@ public class GameStateManagerImpl implements GameStateManager {
     public void setMediator(final Mediator mediator) {
         this.generalMediator = mediator;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -110,24 +101,11 @@ public class GameStateManagerImpl implements GameStateManager {
             case START:
                 this.switchState(GameStatus.PLAY);
                 break;
-//            case WIN:
-//                this.switchState(GameStatus.GAME_WIN);
-//                final GameEvent winEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
-//                                                                          new Pair<>(SceneType.GAME_WIN,
-//                                                                                     Collections.emptyList()));
-//                this.generalMediator.notifyColleagues(winEvent, this);
-//                break;
-//            case GAMEOVER:
-//                this.switchState(GameStatus.GAME_OVER);
-//                final GameEvent gameOverEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
-//                                                                               new Pair<>(SceneType.GAME_OVER,
-//                                                                                          Collections.emptyList()));
-//                this.generalMediator.notifyColleagues(gameOverEvent, this);
-//                break;
             default:
                 break;
         }
     }
+
     /**
      * {@inheritDoc}
      */
@@ -135,6 +113,7 @@ public class GameStateManagerImpl implements GameStateManager {
     public Optional<Environment> getCurrentEnvironment() {
         return this.getCurrentState().getEnvironment();
     }
+
     /**
      * {@inheritDoc}
      */

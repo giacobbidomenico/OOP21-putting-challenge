@@ -1,5 +1,7 @@
 package puttingchallenge.view.graphics;
 
+import java.util.Objects;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import puttingchallenge.model.gameobjects.GameObject;
@@ -10,6 +12,7 @@ import puttingchallenge.model.gameobjects.GameObject;
 public class AbstractGraphicComponent implements GraphicComponent {
 
     private final Image skin;
+    private final String pathSkin;
     private final double w;
     private final double h;
 
@@ -27,6 +30,7 @@ public class AbstractGraphicComponent implements GraphicComponent {
                                        final double w,
                                        final double h) {
         this.skin = new Image(imagePath);
+        this.pathSkin = imagePath;
         this.w = w;
         this.h = h;
     }
@@ -41,6 +45,56 @@ public class AbstractGraphicComponent implements GraphicComponent {
         final double x = obj.getPosition().getX();
         final double y = obj.getPosition().getY();
         gc.drawImage(skin, x, y, w, h);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPathSkin() {
+        return this.pathSkin;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public double getWidth() {
+        return this.w;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public double getHeight() {
+        return this.h;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(h, skin, w);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof GraphicComponent) {
+            final GraphicComponent graph = (GraphicComponent) obj;
+            return pathSkin.equals(graph.getPathSkin())
+                    && this.w == graph.getWidth()
+                    && this.h == graph.getHeight();
+        }
+        return false;
     }
 
 }
