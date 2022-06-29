@@ -17,7 +17,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE_TANGENT = 2;
+    private static final double INCREASE_TANGENT = 1.7;
     private static final double INCREASE_NORMAL = 1.5;
     private static final double REDUCE_Y = 0.7;
     private static final double REDUCE_X = 0.9;
