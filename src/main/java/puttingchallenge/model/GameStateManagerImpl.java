@@ -36,7 +36,7 @@ public class GameStateManagerImpl implements GameStateManager {
         try (BufferedReader f = new BufferedReader(
                 new InputStreamReader(
                         new FileInputStream(
-                                FileManager.LEADERBOARD_FILE)))) {
+                                FileManager.STATS_FILE)))) {
             String line;
             while ((line = f.readLine()) != null) {
                 scores.add(line);

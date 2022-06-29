@@ -42,7 +42,7 @@ public class LeaderboardController extends AbstractSceneController {
         final ObservableList<Score> scores = FXCollections.observableArrayList();
         try (BufferedReader f = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream(FileManager.LEADERBOARD_FILE)))) {
+                        new FileInputStream(FileManager.STATS_FILE)))) {
             String line;
             int counter = 1;
             while ((line = f.readLine()) != null) {

@@ -24,16 +24,16 @@ public final class FileManager {
     /**
      * Path to the leaderboard directory.
      */
-    public static final String LEADERBOARD_DIRECTORY = APP_DIRECTORY 
+    public static final String STATS_DIRECTORY = APP_DIRECTORY 
             + SEPARATOR 
             + "Saves";
 
     /**
-     * The file used to store leaderboard.
+     * The file used to store statistics.
      */
-    public static final String LEADERBOARD_FILE = LEADERBOARD_DIRECTORY 
+    public static final String STATS_FILE = STATS_DIRECTORY 
             + SEPARATOR 
-            + "leaderboard.txt";
+            + "stats.txt";
 
     /**
      * Relative path for game levels and application screens directory. 
@@ -84,9 +84,9 @@ public final class FileManager {
     public static boolean init() {
         try {
             Files.createDirectories(Paths.get(APP_DIRECTORY));
-            Files.createDirectories(Paths.get(LEADERBOARD_DIRECTORY));
-            if (!Files.exists(Paths.get(LEADERBOARD_FILE))) {
-                Files.createFile(Paths.get(LEADERBOARD_FILE));
+            Files.createDirectories(Paths.get(STATS_DIRECTORY));
+            if (!Files.exists(Paths.get(STATS_FILE))) {
+                Files.createFile(Paths.get(STATS_FILE));
             }
         } catch (IOException e) {
             return false;
