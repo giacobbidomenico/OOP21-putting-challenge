@@ -10,7 +10,8 @@
         "posY": "60",
         "wScale": "15",
         "hScale": "30",
-        "skinPath": "/skins/player.png"
+        "skinPath": "/skins/player.png",
+        "flip" : false
     },
 
     "ball": {

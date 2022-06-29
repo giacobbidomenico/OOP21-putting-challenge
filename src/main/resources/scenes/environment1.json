@@ -11,7 +11,7 @@
         "wScale": "15",
         "hScale": "30",
         "skinPath": "/skins/player.png",
-        "flip" : "boolean"
+        "flip" : false
     },
 
     "ball": {

@@ -27,8 +27,6 @@ import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
  * 
  */
 public class EnvironmentImpl implements Environment {
-    //private static final int PERC_DISTANCE = 2;
-
     private Optional<ObservableEvents<ModelEventType>> observableGameState;
     private final ObservableEvents<ModelEventType> observable;
     private final ObserverEvents<ModelEventType> observer;
@@ -143,19 +141,37 @@ public class EnvironmentImpl implements Environment {
         }
 
         final var posBall = this.ball.getPosition();
-        final var newPos = new Point2D(posBall.getX() - player.getWidth(), 
+
+        var newPos = new Point2D(posBall.getX() - player.getWidth(), 
                                        posBall.getY() - player.getHeight());
+        if (!this.player.isFlip()) {
+            if (newPos.getX() >= 0 
+                    && newPos.getX() <= this.hole.getPosition().getX()) {
+                player.setFlip(false);
+                player.setPosition(newPos);
+            }
 
-        if (newPos.getX() >= 0 
-                && newPos.getX() <= this.hole.getPosition().getX()) {
-            player.setFlip(false);
-            player.setPosition(newPos);
-        }
+            if (newPos.getX() > this.hole.getPosition().getX() 
+                    && newPos.getX() < this.container.getWidth()) {
+                newPos = new Point2D(posBall.getX() + player.getWidth(), 
+                        posBall.getY() + player.getHeight());
+                player.setFlip(true);
+                player.setPosition(newPos);
+            }
+        } else {
+            newPos = new Point2D(posBall.getX() + player.getWidth(), posBall.getY() - player.getHeight());
+            if (newPos.getX() > this.hole.getPosition().getX()) {
+                player.setFlip(false);
+                player.setPosition(newPos);
+            }
 
-        if (newPos.getX() > this.hole.getPosition().getX() 
-                && newPos.getX() < this.container.getWidth()) {
-            player.setFlip(true);
-            player.setPosition(newPos);
+            if (newPos.getX() >= 0 
+                    && newPos.getX() <= this.hole.getPosition().getX()) {
+                newPos = new Point2D(posBall.getX() - player.getWidth(), 
+                        posBall.getY() - player.getHeight());
+                player.setFlip(true);
+                player.setPosition(newPos);
+            }
         }
     }
 

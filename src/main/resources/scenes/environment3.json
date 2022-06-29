@@ -6,22 +6,22 @@
     },
 
     "player": {
-        "posX": "10",
+        "posX": "80",
         "posY": "60",
         "wScale": "15",
         "hScale": "30",
         "skinPath": "/skins/player.png",
-        "flip" : "true"
+        "flip" : true
     },
 
     "ball": {
-        "posX": "23",
-        "posY": "80",
+        "posX": "80",
+        "posY": "83",
         "radiusScale": "1.5"
     },
 
     "hole": {
-        "posX": "60",
+        "posX": "10",
         "posY": "55",
         "wScale": "10",
         "hScale": "35"
@@ -36,10 +36,24 @@
         },
         {
             "type": "FOOTBALL",
-            "posX": "2",
+            "posX": "5",
             "posY": "10",
-            "wScale": "25",
-            "hScale": "35"
+            "wScale": "20",
+            "hScale": "30"
+        },
+        {
+            "type": "FOOTBALL",
+            "posX": "70",
+            "posY": "10",
+            "wScale": "20",
+            "hScale": "30"
+        },
+        {
+            "type": "FOOTBALL",
+            "posX": "38",
+            "posY": "56",
+            "wScale": "20",
+            "hScale": "30"
         },
      ]
 }
