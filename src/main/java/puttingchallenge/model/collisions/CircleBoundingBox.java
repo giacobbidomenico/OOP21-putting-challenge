@@ -64,4 +64,26 @@ public class CircleBoundingBox implements ActiveBoundingBox {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Point2D intersectionToSegment(final Point2D pointA, final Point2D pointB) {
+        final Vector2D m = new Vector2D(pointA.getX() - this.position.getX(), 
+                pointA.getY() -  this.position.getY());
+
+        final Vector2D segmentVector = new Vector2D(pointB.getX() - pointA.getX(),
+                pointB.getY() - pointA.getY());
+
+        final Vector2D normalizedSegmentVector = new Vector2D(segmentVector.getX() / segmentVector.getModule(), 
+                segmentVector.getY() / segmentVector.getModule());
+
+        final double b = m.dotProduct(normalizedSegmentVector);
+        final double c = m.dotProduct(m) - Math.pow(this.radius, 2);
+        final double t1 = -b - Math.sqrt(Math.pow(b, 2) - c);
+        final double resultX = pointA.getX() + normalizedSegmentVector.getX() * t1;
+        final double resultY = pointA.getY() + normalizedSegmentVector.getY() * t1;
+        return new Point2D(resultX, resultY);
+    }
+
 }
