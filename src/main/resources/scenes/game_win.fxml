@@ -12,7 +12,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <ImageView blendMode="DIFFERENCE" fitHeight="407.0" fitWidth="641.0" layoutY="-1.0">
+            <ImageView fitHeight="407.0" fitWidth="641.0" layoutY="-1.0">
                <image>
                   <Image url="@/backgrounds/game_win.png" />
                </image>
@@ -23,8 +23,6 @@
                   <Font name="Algerian" size="51.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="411.0" layoutY="203.0" prefHeight="40.0" prefWidth="76.0" text="SCORE" textFill="#ff9900" />
-            <Label alignment="CENTER" layoutX="487.0" layoutY="203.0" prefHeight="40.0" prefWidth="76.0" text="YOUR SCORE" textFill="#2fff00" />
       </children>
     </AnchorPane>
   </children>

@@ -27,8 +27,8 @@ public class GameEventWithDetailsImpl<B> extends GameEventImpl {
      * {@inheritDoc}
      */
     @Override
-    public Optional<B> getDetails() {
-        return Optional.of(this.details);
+    public <T> Optional<T> getDetails() {
+        return Optional.of((T) this.details);
     }
 
 }

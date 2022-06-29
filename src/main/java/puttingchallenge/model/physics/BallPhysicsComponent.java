@@ -7,6 +7,7 @@ import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.gameobjects.BallObjectImpl;
 import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.model.Environment;
+import puttingchallenge.model.collisions.ActiveBoundingBox;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 
 /**
@@ -18,9 +19,13 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private static final double FRICTION = 17.1E-6;
     private static final double INCREASE = 2;
     private static final double REDUCE = 0.9;
+    private static final double MIN_POTENTIAL_ENERGY = 70;
+    private static final double MIN_BOUNCING_DIFFERENCE_FACTOR = 0.8;
 
     private final double radius;
     private boolean isMoving;
+    private Optional<Point2D> lastPos;
+    private Optional<ActiveBoundingBox> lastHitbox;
 
     /**
      * Build a new {@link BallPhysicsComponent}.
@@ -31,6 +36,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     public BallPhysicsComponent(final double radius) {
         this.setVelocity(new Vector2D(0, 0));
         this.radius = radius;
+        this.lastPos = Optional.empty();
+        this.lastHitbox = Optional.empty();
     }
 
     /**
@@ -74,7 +81,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 normale = bTangent ? tangent : normale;
                 final Vector2D finVel = this.velAfterCollision(normale, lastVel, info.getActiveBoundingBox().bounceAlongTanget());
                 this.setVelocity(finVel);
-                this.isStopping(nextPos, finVel);
+                this.isStopping(nextPos, info.getActiveBoundingBox());
             } else {
                 nextPos = this.nextPos(dt, obj.getPosition());
             }
@@ -103,11 +110,18 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         return new  Vector2D(x, y);
     }
 
-    private void isStopping(final Point2D pos, final Vector2D vel) {
-//        if ((-Y_ACCELERATION * (1 / pos.getY()) * 100) < 4
-//             || (Math.abs(vel.getX()) + Math.abs(vel.getY())) < 100) {
-//            this.setVelocity(new Vector2D(0, 0));
-//        }
+    private void isStopping(final Point2D pos, final ActiveBoundingBox hitbox) {
+        if (this.lastHitbox.isPresent() && this.lastPos.isPresent()) {
+            final Vector2D vel = this.getVelocity();
+            if (Point2D.getDistance(pos, this.lastPos.get()) < radius * MIN_BOUNCING_DIFFERENCE_FACTOR
+                && hitbox.equals(this.lastHitbox.get())
+                && (-Y_ACCELERATION * (1 / pos.getY()) * 100) < MIN_POTENTIAL_ENERGY
+                && Math.abs(vel.getX()) + Math.abs(vel.getY()) < 100) {
+                this.setVelocity(new Vector2D(0, 0));
+            }
+        }
+        this.lastPos = Optional.of(pos);
+        this.lastHitbox = Optional.of(hitbox);
     }
 
     /**

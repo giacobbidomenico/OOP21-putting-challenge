@@ -17,19 +17,14 @@ public enum GameEventType {
     GAMEOVER,
 
     /**
-     * Notify the application that the game is won.
-     */
-    WIN,
-
-    /**
-     * Notify that the player started aiming.
-     */
-    AIM,
-
-    /**
      * Notify that the player shot the ball.
      */
     SHOOT,
+
+    /**
+     * Notify the application that the game is won.
+     */
+    WIN,
 
     /**
      * Require to the application to show the leaderboard.
@@ -49,7 +44,6 @@ public enum GameEventType {
     /**
      * Require to update the game statistics (lives and score).
      */
-
     UPDATE_STATS,
 
     /**

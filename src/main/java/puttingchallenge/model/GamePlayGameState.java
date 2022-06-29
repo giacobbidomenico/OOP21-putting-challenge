@@ -1,13 +1,16 @@
 package puttingchallenge.model;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javafx.util.Pair;
+import puttingchallenge.common.FileManager;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
 import puttingchallenge.model.events.GameEvent;
@@ -34,7 +37,6 @@ public class GamePlayGameState extends AbstractGameState {
 
     private int score;
     private int lives;
-    private ObservableEvents<ModelEventType> environmentObservable;
     private ObservableEvents<ModelEventType> observable;
     private ObserverEvents<ModelEventType> observer;
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
@@ -66,9 +68,10 @@ public class GamePlayGameState extends AbstractGameState {
      * Initialize the communication between the {@link GameState} and its {@link Environment}.
      */
     private void initModelComunication() {
-        this.environmentObservable = this.getEnvironment().get().getObservable();
+        ObservableEvents<ModelEventType> environmentObservable;
+        environmentObservable = this.getEnvironment().get().getObservable();
         this.observer = new ObserverEventsImpl<>();
-        this.environmentObservable.addObserver(this.observer);
+        environmentObservable.addObserver(this.observer);
         this.observable = new ObservableEventsImpl<>();
         this.getEnvironment().get().configureObservable(this.observable);
     }
@@ -96,6 +99,7 @@ public class GamePlayGameState extends AbstractGameState {
      * Decrements the game score.
      * Note that in game score could become negative in case the player takes penalties
      */
+    @SuppressWarnings("unused")
     private void decScore() {
         this.score--;
     }
@@ -117,6 +121,7 @@ public class GamePlayGameState extends AbstractGameState {
     /**
      * Increments lives due to in game boosts.
      */
+    @SuppressWarnings("unused")
     private void incLives() {
         this.lives++;
     }
@@ -149,12 +154,14 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
+        final double batStrength = this.getEnvironment().get().getPlayer().getBat().getType().getStrength();
         if (!ballPhysicsComponent.isMoving()) {
             Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            shootingVector.setX(shootingVector.getX() * batStrength);
+            shootingVector.setY(shootingVector.getY() * batStrength);
             if (shootingVector.getModule() > MAX_STRENGTH) {
-                final Double newXComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getX();
-                final Double newYComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getY();
-                shootingVector = new Vector2D(newXComponent, newYComponent);
+                final Double moduleRate = MAX_STRENGTH / shootingVector.getModule();
+                shootingVector = new Vector2D(moduleRate * shootingVector.getX(), moduleRate * shootingVector.getY());
             }
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
             this.notifyEvents(ModelEventType.SHOOT);
@@ -165,8 +172,15 @@ public class GamePlayGameState extends AbstractGameState {
      * {@inheritDoc}
      */
     @Override
-    public void leavingState(final GameStatus nextStatus) {
-        // write on file
+    void leavingState(final GameStatus nextStatus) {
+        new File(FileManager.LEADERBOARD_DIRECTORY).mkdirs();
+        try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.LEADERBOARD_FILE, true))) {
+            pt.println(Integer.toString(score));
+            pt.flush();
+            pt.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         super.leavingState(nextStatus);
     }
 
@@ -233,7 +247,7 @@ public class GamePlayGameState extends AbstractGameState {
         switch (event.getEventType()) {
             case SHOOT:
                 if (this.getStatus() == GameStatus.PLAY) {
-                    final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
+                    final Pair<Point2D, Point2D> points = event.<Pair<Point2D, Point2D>>getDetails().get();
                     this.shoot(points);
                 }
                 break;

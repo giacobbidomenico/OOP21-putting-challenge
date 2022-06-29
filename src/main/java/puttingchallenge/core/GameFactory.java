@@ -27,6 +27,7 @@ import puttingchallenge.view.graphics.WallGraphicComponent;
 public class GameFactory {
 
     private static final double BALL_GRAPHIC_FACTOR = 1.27;
+    private static final double RECT_GRAPHIC_FACTOR = 1.05;
 
     /**
      * Build the ball of the game.
@@ -120,7 +121,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos,
-                                  new WallGraphicComponent(w, h * BALL_GRAPHIC_FACTOR), 
+                                  new WallGraphicComponent(w, h * RECT_GRAPHIC_FACTOR), 
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }

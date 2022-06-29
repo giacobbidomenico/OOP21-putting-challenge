@@ -1,4 +1,5 @@
 package puttingchallenge.model.gameobjects;
+
 /**
  * Class that represent the bat that a player can use.
  */
