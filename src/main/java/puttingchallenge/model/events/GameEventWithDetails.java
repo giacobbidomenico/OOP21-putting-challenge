@@ -12,8 +12,11 @@ import java.util.Optional;
 public interface GameEventWithDetails<B> extends GameEvent {
 
     /**
-     * @return the details about the event
+     * @param <T>
+     *          the expected type for the detail return
+     * @return an optional containing the details about the event, or an empty optional if the param <code>T</code> 
+     *         do not correspond to the type of the detail
      */
-    Optional<B> getDetails();
+    <T> Optional<T> getDetails();
 
 }

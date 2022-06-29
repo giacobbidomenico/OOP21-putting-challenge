@@ -31,7 +31,7 @@ public class GameEventImpl implements GameEvent {
      * {@inheritDoc}
      */
     @Override
-    public Optional<?> getDetails() {
+    public <T> Optional<T> getDetails() {
         return Optional.empty();
     }
 
