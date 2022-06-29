@@ -69,18 +69,6 @@ public class LevelController extends AbstractSceneController implements EventHan
     }
 
     /**
-     * Handles mouse moved event.
-     * @param mouseMoved
-     */
-    public void handleMouseMoved(final MouseEvent mouseMoved) {
-//        if (this.isAiming) {
-//            final Pair<Double, Double> coord = this.getCoord(event);
-//            final GameEventWithDetailsImpl<Pair<Double, Double>> movingEvent = new GameEventWithDetailsImpl<>(GameEventType.MOVING, coord);
-//            this.getMediator().notifyColleagues(movingEvent, this);
-//        }
-    }
-
-    /**
      * Handles mouse pressed event.
      * @param event
      */
@@ -133,7 +121,9 @@ public class LevelController extends AbstractSceneController implements EventHan
             final String livesLabel = String.valueOf(stats.getKey().intValue());
             this.lives.setText("Lives:" + livesLabel);
             this.score.setText("Score:" + scoreLabel);
+            this.render();
         });
+        this.render();
     }
 
     /**
@@ -162,7 +152,6 @@ public class LevelController extends AbstractSceneController implements EventHan
         switch (event.getEventType()) {
             case UPDATE_STATS:
                 this.updateStats((Pair<Integer, Integer>) event.getDetails().get());
-                System.out.println(event.getDetails().get());
             break;
             default:
                 break;

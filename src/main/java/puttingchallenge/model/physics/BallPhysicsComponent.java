@@ -18,7 +18,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private static final double FRICTION = 17.1E-6;
     private static final double INCREASE = 2;
     private static final double REDUCE = 0.9;
-    
+
     private final double radius;
     private boolean isMoving;
 
@@ -48,9 +48,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         if (this.isMoving) {
             final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
-
             final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
-            Point2D nextPos;
+            final Point2D nextPos;
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
  

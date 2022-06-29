@@ -6,21 +6,22 @@
     },
 
     "player": {
-        "posX": "10",
-        "posY": "60",
+        "posX": "82.6",
+        "posY": "60.3",
         "wScale": "15",
         "hScale": "30",
-        "skinPath": "/skins/player.png"
+        "skinPath": "/skins/player.png",
+        "flip" : true
     },
 
     "ball": {
-        "posX": "23",
-        "posY": "80",
+        "posX": "80",
+        "posY": "85",
         "radiusScale": "1.5"
     },
 
     "hole": {
-        "posX": "80",
+        "posX": "10",
         "posY": "55",
         "wScale": "10",
         "hScale": "35"
@@ -34,32 +35,25 @@
             "hScale": "10"
         },
         {
-            "type": "ICEBERG",
-            "posX": "2",
+            "type": "FOOTBALL",
+            "posX": "5",
             "posY": "10",
-            "wScale": "25",
-            "hScale": "35"
+            "wScale": "20",
+            "hScale": "30"
         },
         {
-            "type": "ICEBERG",
-            "posX": "33",
+            "type": "FOOTBALL",
+            "posX": "70",
             "posY": "10",
-            "wScale": "25",
-            "hScale": "35"
+            "wScale": "20",
+            "hScale": "30"
         },
         {
-            "type": "ICEBERG",
-            "posX": "33",
-            "posY": "54",
-            "wScale": "25",
-            "hScale": "35"
+            "type": "FOOTBALL",
+            "posX": "38",
+            "posY": "56",
+            "wScale": "20",
+            "hScale": "30"
         },
-        {
-            "type": "ICEBERG",
-            "posX": "65",
-            "posY": "10",
-            "wScale": "25",
-            "hScale": "35"
-        }
-    ]
+     ]
 }

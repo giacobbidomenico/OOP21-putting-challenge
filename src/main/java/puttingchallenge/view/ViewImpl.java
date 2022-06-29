@@ -5,7 +5,6 @@ import puttingchallenge.model.events.GameEventImpl;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.Mediator;
 import puttingchallenge.model.gameobjects.GameObject;
-import puttingchallenge.view.controllers.LevelController;
 import puttingchallenge.view.controllers.SceneController;
 
 import java.io.IOException;

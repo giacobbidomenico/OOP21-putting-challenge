@@ -108,7 +108,8 @@ public final class EnvironmentLoader {
         final double wPerc = w * (player.getDouble(WSCALE) / 100);
         final double hPerc = h * (player.getDouble(HSCALE) / 100);
         final String path = player.getString("skinPath");
-        builder.addPlayer(new Point2D(x, y), path, wPerc, hPerc);
+        final boolean fit = player.getBoolean("flip");
+        builder.addPlayer(new Point2D(x, y), path, wPerc, hPerc, fit);
     }
 
     private void setBall(final double w,

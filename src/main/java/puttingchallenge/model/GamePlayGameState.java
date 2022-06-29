@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
+
 import javafx.util.Pair;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
@@ -28,6 +30,7 @@ public class GamePlayGameState extends AbstractGameState {
 
     private static final int NONE = 0;
     private static final int MAX_LIVES = 3;
+    private static final int MAX_STRENGTH = 600;
 
     private int score;
     private int lives;
@@ -37,7 +40,6 @@ public class GamePlayGameState extends AbstractGameState {
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
     private SceneType currentScene;
     private Mediator generalMediator;
-    private int nShoots;
 
     /**
      * Build a new {@link GamePlayGameState} object.
@@ -49,16 +51,28 @@ public class GamePlayGameState extends AbstractGameState {
     public GamePlayGameState(final GameStateManager manager, final GameStatus status) {
         super(manager, status);
     }
+
     /**
      * {@inheritDoc}
      */
     public Pair<SceneType, List<GameObject>> initState() {
         this.lives = MAX_LIVES;
         this.score = NONE;
-        this.nShoots = NONE;
         this.loadNextEnvironment();
         return new Pair<SceneType, List<GameObject>>(this.currentScene, this.getEnvironment().get().getObjects());
     }
+
+    /**
+     * Initialize the communication between the {@link GameState} and its {@link Environment}.
+     */
+    private void initModelComunication() {
+        this.environmentObservable = this.getEnvironment().get().getObservable();
+        this.observer = new ObserverEventsImpl<>();
+        this.environmentObservable.addObserver(this.observer);
+        this.observable = new ObservableEventsImpl<>();
+        this.getEnvironment().get().configureObservable(this.observable);
+    }
+
     /**
      * Sets the next {@link Environment} according to the map list.
      */
@@ -67,11 +81,7 @@ public class GamePlayGameState extends AbstractGameState {
             if (maps.hasNext()) {
                 this.currentScene = maps.next();
                 this.setEnvironment(EnvironmentLoader.getLoader().getEnvironment(currentScene));
-                this.environmentObservable = this.getEnvironment().get().getObservable();
-                this.observer = new ObserverEventsImpl<>();
-                this.environmentObservable.addObserver(this.observer);
-                this.observable = new ObservableEventsImpl<>();
-                this.getEnvironment().get().configureObservable(this.observable);
+                this.initModelComunication();
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE, new Pair<SceneType, List<GameObject>>(this.currentScene, getEnvironment().get().getObjects())), this);
                 this.generalMediator.notifyColleagues(new GameEventWithDetailsImpl<Pair<Integer, Integer>>(GameEventType.UPDATE_STATS, new Pair<Integer, Integer>(this.getLives(), this.getScore())), this);
             } else {
@@ -83,38 +93,34 @@ public class GamePlayGameState extends AbstractGameState {
     }
 
     /**
-     * Check if the environment exists.
-     */
-    private void checkExceptionEnvironment() {
-        if (this.getEnvironment().isEmpty()) {
-            throw new IllegalStateException();
-        }
-    }
-    /**
      * Decrements the game score.
      * Note that in game score could become negative in case the player takes penalties
      */
     private void decScore() {
         this.score--;
     }
+
     /**
      * Increments the game score.
      */
     private void incScore() {
         this.score++;
     }
+
     /**
      * Decrements lives.
      */
     private void decLives() {
         this.lives--;
     }
+
     /**
      * Increments lives due to in game boosts.
      */
     private void incLives() {
         this.lives++;
     }
+
     /**
      * Method called when the ball enters the hole.
      */
@@ -122,6 +128,7 @@ public class GamePlayGameState extends AbstractGameState {
         this.incScore();
         this.loadNextEnvironment();
     }
+
     /**
      * Method called when the ball stops or it is out of bound.
      */
@@ -134,6 +141,7 @@ public class GamePlayGameState extends AbstractGameState {
             this.notifyEvents(ModelEventType.MOVE_PLAYER);
         }
     }
+
     /**
      * Sets the velocity of the ball according to the aiming {@link Vector2D} created from the the {@link Point2D}s.
      * @param points
@@ -142,29 +150,34 @@ public class GamePlayGameState extends AbstractGameState {
     public void shoot(final Pair<Point2D, Point2D> points) {
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
         if (!ballPhysicsComponent.isMoving()) {
-            final Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
-            //this.checkExceptionEnvironment();
+            Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            if (shootingVector.getModule() > MAX_STRENGTH) {
+                final Double newXComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getX();
+                final Double newYComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getY();
+                shootingVector = new Vector2D(newXComponent, newYComponent);
+            }
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
-            this.nShoots++;
             this.notifyEvents(ModelEventType.SHOOT);
         }
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    void leavingState(final GameStatus nextStatus) {
+    public void leavingState(final GameStatus nextStatus) {
         // write on file
         super.leavingState(nextStatus);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void notifyEvents(final ModelEventType eventType) {
-        System.out.println(eventType);
         this.observer.sendModelEvents(Collections.unmodifiableList(Arrays.asList(eventType)));
     }
+
     /**
      * {@inheritDoc}
      */
@@ -178,9 +191,6 @@ public class GamePlayGameState extends AbstractGameState {
                     this.handleWin();
                     break;
                 case BALL_STOPPED:
-                    if (nShoots == 0) {
-                        break;
-                    }
                 case BALL_OUT_OF_BOUND:
                     this.handleMiss();
                     break;
@@ -190,6 +200,7 @@ public class GamePlayGameState extends AbstractGameState {
             });
         }
     }
+
     /**
      * @return
      *          the score of the current game
@@ -197,6 +208,7 @@ public class GamePlayGameState extends AbstractGameState {
     public int getScore() {
         return score;
     }
+
     /**
      * @return
      *          the remaining lives
@@ -204,6 +216,7 @@ public class GamePlayGameState extends AbstractGameState {
     public int getLives() {
         return lives;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -211,6 +224,7 @@ public class GamePlayGameState extends AbstractGameState {
     public void setMediator(final Mediator mediator) {
         this.generalMediator = mediator;
     }
+
     /**
      * {@inheritDoc}
      */
