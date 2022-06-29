@@ -83,7 +83,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private Vector2D velAfterCollision(final Vector2D normale, final Vector2D lastVel) {
         double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
-        final double y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * 0.9;
+        final double y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * 0.7;
         sign = Math.signum(normale.getX()) == -1 ? 1 : -1;
         final double x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * 0.9;
         return new  Vector2D(x, y);

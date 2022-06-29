@@ -15,7 +15,9 @@ public interface GameEvent {
     GameEventType getEventType();
 
     /**
+     * @param <T>
+     *          unused
      * @return an empty {@link Optional}
      */
-    Optional<?> getDetails();
+    <T> Optional<T> getDetails();
 }

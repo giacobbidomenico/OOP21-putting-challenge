@@ -151,7 +151,7 @@ public class LevelController extends AbstractSceneController implements EventHan
     public void notifyEvent(final GameEvent event) { 
         switch (event.getEventType()) {
             case UPDATE_STATS:
-                this.updateStats((Pair<Integer, Integer>) event.getDetails().get());
+                this.updateStats(event.<Pair<Integer, Integer>>getDetails().get());
             break;
             default:
                 break;

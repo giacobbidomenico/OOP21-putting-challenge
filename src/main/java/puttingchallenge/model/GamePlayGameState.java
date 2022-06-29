@@ -247,8 +247,7 @@ public class GamePlayGameState extends AbstractGameState {
         switch (event.getEventType()) {
             case SHOOT:
                 if (this.getStatus() == GameStatus.PLAY) {
-                    @SuppressWarnings("unchecked")
-                    final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
+                    final Pair<Point2D, Point2D> points = event.<Pair<Point2D, Point2D>>getDetails().get();
                     this.shoot(points);
                 }
                 break;

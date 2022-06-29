@@ -3,7 +3,6 @@ package puttingchallenge.model;
 import java.util.Optional;
 
 import puttingchallenge.model.events.Colleague;
-import puttingchallenge.model.events.GameEvent;
 
 /**
  * Interface that defines the {@link GameState} manager.
