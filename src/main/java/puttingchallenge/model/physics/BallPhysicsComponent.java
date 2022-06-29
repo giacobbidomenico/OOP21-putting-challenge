@@ -17,10 +17,13 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE = 2;
-    private static final double REDUCE = 0.9;
+    private static final double INCREASE_TANGENT = 1.7;
+    private static final double INCREASE_NORMAL = 1.5;
+    private static final double REDUCE_Y = 0.7;
+    private static final double REDUCE_X = 0.9;
     private static final double MIN_POTENTIAL_ENERGY = 70;
     private static final double MIN_BOUNCING_DIFFERENCE_FACTOR = 0.8;
+    private static final double MIN_KINETICS_ENERGY = 100;
 
     private final double radius;
     private boolean isMoving;
@@ -55,6 +58,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         if (this.isMoving) {
             final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
+
             final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
             final Point2D nextPos;
             if (infoOpt.isPresent()) {
@@ -69,15 +73,15 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 final boolean bTangent = info.getActiveBoundingBox().bounceAlongTanget();
                 if (bTangent) {
                     final double cat = Math.sqrt(Math.pow(radius, 2) / 2);
-                    nextPos.sumX(normale.getX() * cat * INCREASE);
-                    nextPos.sumY(normale.getY() * cat * INCREASE);
+                    nextPos.sumX(normale.getX() * cat * INCREASE_TANGENT);
+                    nextPos.sumY(normale.getY() * cat * INCREASE_TANGENT);
                 } else {
-                    nextPos.sumX(normale.getX() * radius * INCREASE);
-                    nextPos.sumY(normale.getY() * radius * INCREASE);
+                    nextPos.sumX(normale.getX() * radius * INCREASE_NORMAL);
+                    nextPos.sumY(normale.getY() * radius * INCREASE_NORMAL);
                 }
-
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
+
                 normale = bTangent ? tangent : normale;
                 final Vector2D finVel = this.velAfterCollision(normale, lastVel, info.getActiveBoundingBox().bounceAlongTanget());
                 this.setVelocity(finVel);
@@ -103,9 +107,9 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             y = dot * tangentY;
         } else {
             double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
-            y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * REDUCE;
+            y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * REDUCE_Y;
             sign = Math.signum(normale.getX()) == -1 ? 1 : -1;
-            x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * REDUCE;
+            x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * REDUCE_X;
         }
         return new  Vector2D(x, y);
     }
@@ -116,7 +120,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             if (Point2D.getDistance(pos, this.lastPos.get()) < radius * MIN_BOUNCING_DIFFERENCE_FACTOR
                 && hitbox.equals(this.lastHitbox.get())
                 && (-Y_ACCELERATION * (1 / pos.getY()) * 100) < MIN_POTENTIAL_ENERGY
-                && Math.abs(vel.getX()) + Math.abs(vel.getY()) < 100) {
+                && Math.abs(vel.getX()) + Math.abs(vel.getY()) < MIN_KINETICS_ENERGY) {
                 this.setVelocity(new Vector2D(0, 0));
             }
         }
