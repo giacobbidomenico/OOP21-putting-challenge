@@ -157,12 +157,14 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
+        final double batStrength = this.getEnvironment().get().getPlayer().getBat().getType().getStrength();
         if (!ballPhysicsComponent.isMoving()) {
             Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            shootingVector.setX(shootingVector.getX() * batStrength);
+            shootingVector.setY(shootingVector.getY() * batStrength);
             if (shootingVector.getModule() > MAX_STRENGTH) {
-                final Double newXComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getX();
-                final Double newYComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getY();
-                shootingVector = new Vector2D(newXComponent, newYComponent);
+                final Double moduleRate = MAX_STRENGTH / shootingVector.getModule();
+                shootingVector = new Vector2D(moduleRate * shootingVector.getX(), moduleRate * shootingVector.getY());
             }
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
             this.notifyEvents(ModelEventType.SHOOT);
