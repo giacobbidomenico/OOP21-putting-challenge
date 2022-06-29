@@ -14,9 +14,8 @@ public interface GameEventWithDetails<B> extends GameEvent {
     /**
      * @param <T>
      *          the expected type for the detail return
-     * @throws ClassCastException
-     *          if <code>T</code> do not correspond to the detail type
-     * @return an optional containing the details about the event
+     * @return an optional containing the details about the event, or an empty optional 
+     *         if the type <code>T</code> mismatch the type of the detail
      */
     <T> Optional<T> getDetails();
 
