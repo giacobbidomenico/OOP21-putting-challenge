@@ -90,7 +90,7 @@ public class ViewImpl implements View {
     public void notifyEvent(final GameEvent event) {
         switch (event.getEventType()) {
             case SET_SCENE:
-                final Pair<SceneType, List<GameObject>> wrapper = (Pair<SceneType, List<GameObject>>) event.getDetails().get();
+                final Pair<SceneType, List<GameObject>> wrapper = event.<Pair<SceneType, List<GameObject>>>getDetails().get();
                 this.loadScene(wrapper.getKey(), wrapper.getValue());
                 break;
             default:
