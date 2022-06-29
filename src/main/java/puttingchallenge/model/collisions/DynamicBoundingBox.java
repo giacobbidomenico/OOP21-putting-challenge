@@ -15,7 +15,7 @@ public interface DynamicBoundingBox {
      * @param deltaT time from last frame
      * @return details about the collision
      */
-    CollisionTest collidesWith(PassiveCircleBBTrajectoryBuilder circle);
+    CollisionTest collidesWith(PassiveCircleBBTrajectoryBuilder circle, long dt);
 
     /**
      * Represents a collision test between an active bounding box and a passive bounding box.
