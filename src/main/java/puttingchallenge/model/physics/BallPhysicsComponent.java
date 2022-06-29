@@ -16,8 +16,9 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE = 1.5;
-
+    private static final double INCREASE = 2;
+    private static final double REDUCE = 0.9;
+    
     private final double radius;
     private boolean isMoving;
 
@@ -54,16 +55,25 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 final CollisionTest info = infoOpt.get();
  
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
-                final Vector2D normale = info.getActiveBBSideNormal().get();
+                Vector2D normale = info.getActiveBBSideNormal().get();
+                final Vector2D tangent = info.getActiveBBSideTanget().get();
                 final Vector2D lastVel = this.getVelocity();
 
                 nextPos = info.getEstimatedPointOfImpact().get();
-                nextPos.sumX(normale.getX() * radius * INCREASE);
-                nextPos.sumY(normale.getY() * radius * INCREASE);
+                final boolean bTangent = info.getActiveBoundingBox().bounceAlongTanget();
+                if (bTangent) {
+                    final double cat = Math.sqrt(Math.pow(radius, 2) / 2);
+                    nextPos.sumX(normale.getX() * cat * INCREASE);
+                    nextPos.sumY(normale.getY() * cat * INCREASE);
+                } else {
+                    nextPos.sumX(normale.getX() * radius * INCREASE);
+                    nextPos.sumY(normale.getY() * radius * INCREASE);
+                }
+
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
-
-                final Vector2D finVel = this.velAfterCollision(normale, lastVel);
+                normale = bTangent ? tangent : normale;
+                final Vector2D finVel = this.velAfterCollision(normale, lastVel, info.getActiveBoundingBox().bounceAlongTanget());
                 this.setVelocity(finVel);
                 this.isStopping(nextPos, finVel);
             } else {
@@ -74,18 +84,31 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
     }
 
-    private Vector2D velAfterCollision(final Vector2D normale, final Vector2D lastVel) {
-        final double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
-        final double y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * 0.9;
-        final double x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX()) * 0.9;
+    private Vector2D velAfterCollision(final Vector2D normale, final Vector2D lastVel, final boolean usesTangent) {
+        double x;
+        double y;
+        if (usesTangent) {
+            double sign = Math.signum(lastVel.getX()) != Math.signum(normale.getX()) ? 1 : 1;
+            final double tangentX = normale.getX() * sign;
+            sign = Math.signum(lastVel.getY()) != Math.signum(normale.getY()) ? 1 : 1;
+            final double tangentY = normale.getY() * sign;
+            final double dot = tangentX * lastVel.getX() + tangentY * lastVel.getY();
+            x = dot * tangentX;
+            y = dot * tangentY;
+        } else {
+            double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
+            y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * REDUCE;
+            sign = Math.signum(normale.getX()) == -1 ? 1 : -1;
+            x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * REDUCE;
+        }
         return new  Vector2D(x, y);
     }
 
     private void isStopping(final Point2D pos, final Vector2D vel) {
-        if ((-Y_ACCELERATION * (1 / pos.getY()) * 100) < 4
-             || (Math.abs(vel.getX()) + Math.abs(vel.getY())) < 100) {
-            this.setVelocity(new Vector2D(0, 0));
-        }
+//        if ((-Y_ACCELERATION * (1 / pos.getY()) * 100) < 4
+//             || (Math.abs(vel.getX()) + Math.abs(vel.getY())) < 100) {
+//            this.setVelocity(new Vector2D(0, 0));
+//        }
     }
 
     /**
