@@ -1,9 +1,14 @@
 package puttingchallenge.model;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -169,13 +174,13 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     void leavingState(final GameStatus nextStatus) {
-        try (BufferedWriter f = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(FileManager.LEADERBOARD_FILE, true)))) {
-            f.write(Integer.toString(score));
-            f.newLine();
-            f.flush();
+        //new File(FileManager.LEADERBOARD_DIRECTORY).mkdirs();
+        try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.LEADERBOARD_FILE, true))) {
+            pt.println(Integer.toString(score));
+            pt.flush();
+            pt.close();
         } catch (IOException e) {
-            FileManager.deleteIfPresent(FileManager.LEADERBOARD_FILE);
+            e.printStackTrace();
         }
         super.leavingState(nextStatus);
     }
