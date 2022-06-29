@@ -1,14 +1,9 @@
 package puttingchallenge.model;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -42,7 +37,6 @@ public class GamePlayGameState extends AbstractGameState {
 
     private int score;
     private int lives;
-    private ObservableEvents<ModelEventType> environmentObservable;
     private ObservableEvents<ModelEventType> observable;
     private ObserverEvents<ModelEventType> observer;
     private final Iterator<SceneType> maps = Collections.unmodifiableList(Arrays.asList(SceneType.ENVIRONMENT1, SceneType.ENVIRONMENT2, SceneType.ENVIRONMENT3)).iterator();
@@ -74,9 +68,10 @@ public class GamePlayGameState extends AbstractGameState {
      * Initialize the communication between the {@link GameState} and its {@link Environment}.
      */
     private void initModelComunication() {
-        this.environmentObservable = this.getEnvironment().get().getObservable();
+        ObservableEvents<ModelEventType> environmentObservable;
+        environmentObservable = this.getEnvironment().get().getObservable();
         this.observer = new ObserverEventsImpl<>();
-        this.environmentObservable.addObserver(this.observer);
+        environmentObservable.addObserver(this.observer);
         this.observable = new ObservableEventsImpl<>();
         this.getEnvironment().get().configureObservable(this.observable);
     }
@@ -104,6 +99,7 @@ public class GamePlayGameState extends AbstractGameState {
      * Decrements the game score.
      * Note that in game score could become negative in case the player takes penalties
      */
+    @SuppressWarnings("unused")
     private void decScore() {
         this.score--;
     }
@@ -125,6 +121,7 @@ public class GamePlayGameState extends AbstractGameState {
     /**
      * Increments lives due to in game boosts.
      */
+    @SuppressWarnings("unused")
     private void incLives() {
         this.lives++;
     }
@@ -176,7 +173,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     void leavingState(final GameStatus nextStatus) {
-        //new File(FileManager.LEADERBOARD_DIRECTORY).mkdirs();
+        new File(FileManager.LEADERBOARD_DIRECTORY).mkdirs();
         try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.LEADERBOARD_FILE, true))) {
             pt.println(Integer.toString(score));
             pt.flush();
@@ -250,6 +247,7 @@ public class GamePlayGameState extends AbstractGameState {
         switch (event.getEventType()) {
             case SHOOT:
                 if (this.getStatus() == GameStatus.PLAY) {
+                    @SuppressWarnings("unchecked")
                     final Pair<Point2D, Point2D> points = (Pair<Point2D, Point2D>) event.getDetails().get();
                     this.shoot(points);
                 }
