@@ -28,11 +28,7 @@ public class GameEventWithDetailsImpl<B> extends GameEventImpl {
      */
     @Override
     public <T> Optional<T> getDetails() {
-        try {
-            return Optional.of((T) this.details);
-        } catch (ClassCastException e) {
-            return Optional.empty();
-        }
+        return Optional.of((T) this.details);
     }
 
 }

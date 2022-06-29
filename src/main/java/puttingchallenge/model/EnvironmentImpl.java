@@ -267,7 +267,7 @@ public class EnvironmentImpl implements Environment {
     @Override
     public Optional<CollisionTest> checkCollisions(final PassiveCircleBoundingBox ballHitbox, 
             final BallPhysicsComponent ballPhysics,
-            final Point2D ballPosition)  {
+            final Point2D ballPosition, final long dt)  {
 
         final PassiveCircleBBTrajectoryBuilder builder = new PassiveCircleBBTrajectoryBuilder();
         final PassiveCircleBoundingBox box = new ConcretePassiveCircleBoundingBox(
@@ -279,14 +279,14 @@ public class EnvironmentImpl implements Environment {
         builder.setPhysic(ballPhysics);
         builder.setPosition(box.getPosition());
 
-        CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder);
+        CollisionTest result = ((GameObjectImpl) this.hole).getHitBox().collidesWith(builder, dt);
         if (result.isCollisionOccurred()) {
             this.collisionWithHole = true;
         }
 
         result = null;
         for (final GameObject gameObject : staticObstacles) {
-            final CollisionTest currentResult = ((GameObjectImpl) gameObject).getHitBox().collidesWith(builder);
+            final CollisionTest currentResult = ((GameObjectImpl) gameObject).getHitBox().collidesWith(builder, dt);
             if (currentResult.isCollisionOccurred()) {
                 result = currentResult;
             }

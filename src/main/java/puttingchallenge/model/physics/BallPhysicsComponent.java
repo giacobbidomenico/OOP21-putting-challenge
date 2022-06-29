@@ -17,7 +17,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private static final double Y_ACCELERATION = 30 * -9.81;
     private static final double FRICTION = 17.1E-6;
-    private static final double INCREASE = 1.5;
+    private static final double INCREASE = 2;
+    private static final double REDUCE = 0.9;
     private static final double MIN_POTENTIAL_ENERGY = 70;
     private static final double MIN_BOUNCING_DIFFERENCE_FACTOR = 0.8;
 
@@ -54,23 +55,31 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         if (this.isMoving) {
             final BallPhysicsComponent clone = new BallPhysicsComponent(radius);
             clone.setVelocity(new Vector2D(this.getVelocity()));
-
-            final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition());
+            final Optional<CollisionTest> infoOpt = env.checkCollisions(((BallObjectImpl) obj).getHitBox(), clone, obj.getPosition(), dt);
             final Point2D nextPos;
             if (infoOpt.isPresent()) {
                 final CollisionTest info = infoOpt.get();
  
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
-                final Vector2D normale = info.getActiveBBSideNormal().get();
+                Vector2D normale = info.getActiveBBSideNormal().get();
+                final Vector2D tangent = info.getActiveBBSideTanget().get();
                 final Vector2D lastVel = this.getVelocity();
 
                 nextPos = info.getEstimatedPointOfImpact().get();
-                nextPos.sumX(normale.getX() * radius * INCREASE);
-                nextPos.sumY(normale.getY() * radius * INCREASE);
+                final boolean bTangent = info.getActiveBoundingBox().bounceAlongTanget();
+                if (bTangent) {
+                    final double cat = Math.sqrt(Math.pow(radius, 2) / 2);
+                    nextPos.sumX(normale.getX() * cat * INCREASE);
+                    nextPos.sumY(normale.getY() * cat * INCREASE);
+                } else {
+                    nextPos.sumX(normale.getX() * radius * INCREASE);
+                    nextPos.sumY(normale.getY() * radius * INCREASE);
+                }
+
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
-
-                final Vector2D finVel = this.velAfterCollision(normale, lastVel);
+                normale = bTangent ? tangent : normale;
+                final Vector2D finVel = this.velAfterCollision(normale, lastVel, info.getActiveBoundingBox().bounceAlongTanget());
                 this.setVelocity(finVel);
                 this.isStopping(nextPos, info.getActiveBoundingBox());
             } else {
@@ -81,11 +90,23 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         }
     }
 
-    private Vector2D velAfterCollision(final Vector2D normale, final Vector2D lastVel) {
-        double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
-        final double y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * 0.7;
-        sign = Math.signum(normale.getX()) == -1 ? 1 : -1;
-        final double x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * 0.9;
+    private Vector2D velAfterCollision(final Vector2D normale, final Vector2D lastVel, final boolean usesTangent) {
+        double x;
+        double y;
+        if (usesTangent) {
+            double sign = Math.signum(lastVel.getX()) != Math.signum(normale.getX()) ? 1 : 1;
+            final double tangentX = normale.getX() * sign;
+            sign = Math.signum(lastVel.getY()) != Math.signum(normale.getY()) ? 1 : 1;
+            final double tangentY = normale.getY() * sign;
+            final double dot = tangentX * lastVel.getX() + tangentY * lastVel.getY();
+            x = dot * tangentX;
+            y = dot * tangentY;
+        } else {
+            double sign = Math.signum(normale.getY()) == -1 ? 1 : -1;
+            y = lastVel.getY() * (normale.getY() == 0 ? 1 : normale.getY() * sign) * REDUCE;
+            sign = Math.signum(normale.getX()) == -1 ? 1 : -1;
+            x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * REDUCE;
+        }
         return new  Vector2D(x, y);
     }
 
