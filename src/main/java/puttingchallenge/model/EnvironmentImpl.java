@@ -35,8 +35,8 @@ public class EnvironmentImpl implements Environment {
     private final GameObject ball;
     private final PlayerObject player;
     private final GameObject hole;
-    private final Point2D initPosBall;
-    private final Point2D initPosPlayer;
+    private Point2D precPosBall;
+    private Point2D precPosPlayer;
     private boolean collisionWithHole;
     private boolean notifiable;
 
@@ -65,9 +65,9 @@ public class EnvironmentImpl implements Environment {
         this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
-        this.initPosBall = ball.getPosition();
+        this.precPosBall = ball.getPosition();
         this.player = Objects.requireNonNull(player);
-        this.initPosPlayer = player.getPosition();
+        this.precPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
     }
@@ -133,44 +133,53 @@ public class EnvironmentImpl implements Environment {
 
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
-            this.ball.setPosition(initPosBall);
-            this.player.setPosition(initPosPlayer);
+            this.ball.setPosition(precPosBall);
+            this.player.setPosition(precPosPlayer);
             return;
         }
 
         final var posBall = this.ball.getPosition();
-
-        var newPos = new Point2D(posBall.getX() - player.getWidth(), 
-                                       posBall.getY() - player.getHeight());
+        var newPos = this.leftBallPos();
         if (!this.player.isFlip()) {
-            if (newPos.getX() >= 0 
-                    && newPos.getX() <= this.hole.getPosition().getX()) {
+            if (posBall.getX() >= 0 
+                    && posBall.getX() <= this.hole.getPosition().getX()) {
                 player.setFlip(false);
                 player.setPosition(newPos);
             }
 
-            if (newPos.getX() > this.hole.getPosition().getX() 
-                    && newPos.getX() < this.container.getWidth()) {
-                newPos = new Point2D(posBall.getX() + player.getWidth(), 
-                        posBall.getY() + player.getHeight());
+            if (posBall.getX() > this.hole.getPosition().getX() 
+                    && posBall.getX() < this.container.getWidth()) {
+                newPos = this.rightBallPos();
                 player.setFlip(true);
                 player.setPosition(newPos);
             }
         } else {
-            newPos = new Point2D(posBall.getX() + player.getWidth(), posBall.getY() - player.getHeight());
-            if (newPos.getX() > this.hole.getPosition().getX()) {
-                player.setFlip(false);
-                player.setPosition(newPos);
-            }
-
-            if (newPos.getX() >= 0 
-                    && newPos.getX() <= this.hole.getPosition().getX()) {
-                newPos = new Point2D(posBall.getX() - player.getWidth(), 
-                        posBall.getY() - player.getHeight());
+            if (posBall.getX() > this.hole.getPosition().getX()) {
+                newPos = this.rightBallPos();
                 player.setFlip(true);
                 player.setPosition(newPos);
             }
+
+            if (posBall.getX() >= 0 
+                    && posBall.getX() <= this.hole.getPosition().getX()) {
+                player.setFlip(false);
+                player.setPosition(newPos);
+            }
         }
+        precPosBall = this.ball.getPosition();
+        precPosPlayer = this.player.getPosition();
+    }
+
+    private Point2D leftBallPos() {
+        final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        return new Point2D(this.ball.getPosition().getX() - player.getWidth(), 
+                           this.ball.getPosition().getY() - player.getHeight() + (bf.getRadius() * 2));
+    }
+
+    private Point2D rightBallPos() {
+        final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        return new Point2D(this.ball.getPosition().getX() + (bf.getRadius() * 2), 
+                           this.ball.getPosition().getY() - player.getHeight() + (bf.getRadius() * 2));
     }
 
     /**
@@ -319,7 +328,7 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notifiable,
+        return Objects.hash(ball, collisionWithHole, container, hole, precPosBall, precPosPlayer, notifiable,
                 observable, observableGameState, observer, player, staticObstacles);
     }
 
