@@ -12,7 +12,7 @@ public interface ActiveBoundingBox {
     /**
      * 
      * @param circle
-     * @return whether this boounding box and circle collide
+     * @return whether this bounding box and circle collide
      */
     boolean isColliding(PassiveCircleBoundingBox circle);
 
@@ -33,5 +33,12 @@ public interface ActiveBoundingBox {
      * @return the closest point on the bounding box to points
      */
     Point2D closestPointOnBBToPoint(Point2D point);
+
+    /**
+     * @param pointA point of the segment being outside the bounding box
+     * @param pointB point of the segment being inside the bounding box
+     * @return the point of intersection with the segment
+     */
+    Point2D intersectionToSegment(Point2D pointA, Point2D pointB);
 
 }
