@@ -15,7 +15,7 @@ public interface DynamicBoundingBox {
      * @param deltaT time from last frame
      * @return details about the collision
      */
-    CollisionTest collidesWith(PassiveCircleBBTrajectoryBuilder circle);
+    CollisionTest collidesWith(PassiveCircleBBTrajectoryBuilder circle, long dt);
 
     /**
      * Represents a collision test between an active bounding box and a passive bounding box.
@@ -40,6 +40,11 @@ public interface DynamicBoundingBox {
          * @return the normal of the colliding side of the passive bounding box
          */
         Optional<Vector2D> getActiveBBSideNormal();
+
+        /**
+         * @return the tangent to the point of collision
+         */
+        Optional<Vector2D> getActiveBBSideTanget();
 
         /**
          * @return the estimated position of the passive bounding box at the first time of collision

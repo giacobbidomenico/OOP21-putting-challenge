@@ -10,7 +10,7 @@ import puttingchallenge.common.Vector2D;
  */
 public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
 
-    private static final long INTERVAL_DELTA = 21;
+    private static final long INTERVAL_DELTA = 2;
     private final ActiveBoundingBox box;
 
     /**
@@ -21,41 +21,42 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
         this.box = box;
     }
 
-    private Optional<Point2D> findFirstPointOfCollision(
-            final PassiveCircleBBTrajectoryBuilder circleBuilder) {
-
-        PassiveCircleBoundingBox lastPosition = circleBuilder.build(INTERVAL_DELTA);
-        if (!this.box.isColliding(lastPosition)) {
+    private Optional<Long> testMovingCircle(final PassiveCircleBBTrajectoryBuilder circleBuilder, 
+            final long t1, 
+            final long t2) {
+        final long mid = (t2 + t1) / 2;
+        if (!this.box.isColliding(circleBuilder.build(mid))) {
             return Optional.empty();
         }
-        lastPosition = circleBuilder.build(0);
-        return Optional.ofNullable(lastPosition.getPosition());
+
+        if (t2 - t1 < INTERVAL_DELTA) {
+            return Optional.ofNullable(t1);
+        }
+        final Optional<Long> leftResult = testMovingCircle(circleBuilder, t1, mid);
+        if (leftResult.isPresent()) {
+            return leftResult;
+        }
+        return testMovingCircle(circleBuilder, mid, t2);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public CollisionTest collidesWith(final PassiveCircleBBTrajectoryBuilder circleBuilder) {
-        final Optional<PassiveCircleBoundingBox> lastPos = Optional.of(circleBuilder.build(INTERVAL_DELTA));
-        final Optional<Point2D> lastPosition;
-        if (this.box.isColliding(lastPos.get())) {
-            lastPosition = Optional.ofNullable(circleBuilder.build(0).getPosition());
-        } else {
-            lastPosition = Optional.empty();
-        }
-
-
-//        final Optional<Point2D> lastPosition = this.findFirstPointOfCollision(circleBuilder);
-
-        if (lastPosition.isEmpty()) {
+    public CollisionTest collidesWith(final PassiveCircleBBTrajectoryBuilder circleBuilder, final long dt) {
+        final Optional<Long> timeOfCollision = this.testMovingCircle(circleBuilder, 0, dt);
+        if (timeOfCollision.isEmpty()) {
             return new ConcreteCollisionTest();
         }
-
-        final Point2D closestPoint = this.box.closestPointOnBBToPoint(lastPosition.get());
-        final Vector2D normal;
-        normal = this.box.getNormal(closestPoint);
-        return new ConcreteCollisionTest(true, closestPoint, normal, lastPosition.get());
+        final Point2D lastPosition = circleBuilder.build(timeOfCollision.get()).getPosition();
+        Point2D closestPoint = this.box.closestPointOnBBToPoint(lastPosition);
+        if (lastPosition == closestPoint) {
+            closestPoint = this.box.intersectionToSegment(
+                    circleBuilder.build(0).getPosition(), 
+                    lastPosition);
+        }
+        final Vector2D normal = this.box.getNormal(closestPoint);
+        return new ConcreteCollisionTest(true, closestPoint, normal, lastPosition);
     }
 
     /**
@@ -133,6 +134,14 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
         @Override
         public Optional<Point2D> getPassiveBoxPositionBeforeCollisions() {
             return Optional.ofNullable(this.positionBeforeCollision);
+        }
+
+        @Override
+        public Optional<Vector2D> getActiveBBSideTanget() {
+            if (this.normal != null) {
+                return Optional.ofNullable(new Vector2D(-normal.getY(), normal.getX()));
+            }
+            return Optional.empty();
         }
 
     }

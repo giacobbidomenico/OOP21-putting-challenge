@@ -84,42 +84,14 @@ public final class SceneLoader {
         final String path = FileManager.PATH_START_SCENES
                             + sceneTag.toString().toLowerCase(Locale.ROOT)
                             + FileManager.PATH_END_LEVEL;
-        final LevelController levelController = new LevelController();
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         final String jsonString = IOUtils.toString(getClass().getResource(path), "UTF-8");
         final JSONObject jsonObj = new JSONObject(jsonString).getJSONObject("scene");
         final String pathBackground = jsonObj.getString("background");
         final double h = dim.getHeight() * (jsonObj.getDouble("wScale") / 100);
         final double w = dim.getWidth() * (jsonObj.getDouble("hScale") / 100);
-        final Button button = new Button("Quit");
-        button.setOnAction(levelController::handle);
-        final var posWButton = w * (0.1);
-        button.setLayoutX(w - posWButton);
-        final Label score = new Label();
-        final var posWScore = w * (0.3);
-        score.setLayoutX(posWScore);
-        final Label lives = new Label();
-        final var posWLives = w * (0.4);
-        score.setLayoutX(posWLives);
-        final AnchorPane layout = new AnchorPane();
-        final Canvas canvas = new Canvas(w, h);
-        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, levelController);
-        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, levelController);
-        final Image backgroundImage = new Image(pathBackground);
-        final BackgroundImage bi = new BackgroundImage(backgroundImage, 
-                                                       BackgroundRepeat.NO_REPEAT, 
-                                                       BackgroundRepeat.NO_REPEAT, 
-                                                       BackgroundPosition.DEFAULT,
-                                                       new BackgroundSize(w, h, false, false, false, false));
-        layout.setBackground(new Background(bi));
-        layout.getChildren().add(canvas);
-        layout.getChildren().add(button);
-        layout.getChildren().add(score);
-        layout.getChildren().add(lives);
-        final Scene scene = new Scene(layout, w, h);
-        levelController.init(scene, objs, canvas.getGraphicsContext2D(), score, lives);
-        levelController.render();
-        return levelController;
+        final var newScene = new EnvironmentScene(w, h, pathBackground, objs);
+        return newScene.getController();
     }
 }
 
