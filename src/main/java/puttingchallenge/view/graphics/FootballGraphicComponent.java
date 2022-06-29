@@ -1,6 +1,6 @@
 package puttingchallenge.view.graphics;
 
-import java.io.File;
+import puttingchallenge.common.FileManager;
 
 /**
  * Class that implements the graphical representation of a football ball in the game.
@@ -8,8 +8,7 @@ import java.io.File;
  */
 public class FootballGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String SEP = File.separator;
-    private static final String TEXTURE_PATH_IMAGE = SEP + "obstacles" + SEP + "football.png";
+    private static final String TEXTURE_PATH_IMAGE = FileManager.GENERAL_SKINS_PATH + "football.png";
 
     /**
      * Build a new {@link GraphicComponent} for a football ball in the game.
