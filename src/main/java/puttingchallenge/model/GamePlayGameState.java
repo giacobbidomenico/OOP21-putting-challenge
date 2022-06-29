@@ -1,9 +1,14 @@
 package puttingchallenge.model;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -152,12 +157,14 @@ public class GamePlayGameState extends AbstractGameState {
      */
     public void shoot(final Pair<Point2D, Point2D> points) {
         final BallPhysicsComponent ballPhysicsComponent = (BallPhysicsComponent) this.getEnvironment().get().getBall().getPhysicsComponent();
+        final double batStrength = this.getEnvironment().get().getPlayer().getBat().getType().getStrength();
         if (!ballPhysicsComponent.isMoving()) {
             Vector2D shootingVector = Vector2D.getVectorFrom(points.getKey(), points.getValue());
+            shootingVector.setX(shootingVector.getX() * batStrength);
+            shootingVector.setY(shootingVector.getY() * batStrength);
             if (shootingVector.getModule() > MAX_STRENGTH) {
-                final Double newXComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getX();
-                final Double newYComponent = MAX_STRENGTH / shootingVector.getModule() * shootingVector.getY();
-                shootingVector = new Vector2D(newXComponent, newYComponent);
+                final Double moduleRate = MAX_STRENGTH / shootingVector.getModule();
+                shootingVector = new Vector2D(moduleRate * shootingVector.getX(), moduleRate * shootingVector.getY());
             }
             this.getEnvironment().get().getBall().setVelocity(shootingVector);
             this.notifyEvents(ModelEventType.SHOOT);
@@ -169,13 +176,13 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     void leavingState(final GameStatus nextStatus) {
-        try (BufferedWriter f = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(FileManager.LEADERBOARD_FILE, true)))) {
-            f.write(Integer.toString(score));
-            f.newLine();
-            f.flush();
+        new File(FileManager.LEADERBOARD_DIRECTORY).mkdirs();
+        try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.LEADERBOARD_FILE, true))) {
+            pt.println(Integer.toString(score));
+            pt.flush();
+            pt.close();
         } catch (IOException e) {
-            FileManager.deleteIfPresent(FileManager.LEADERBOARD_FILE);
+            e.printStackTrace();
         }
         super.leavingState(nextStatus);
     }
