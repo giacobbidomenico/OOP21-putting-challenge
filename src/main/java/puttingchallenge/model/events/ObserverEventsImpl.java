@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Class that implements an event observer of type {@link ModelEventType}.
+ * Class that implements an event observer.
  * @param <A>
  */
 public class ObserverEventsImpl<A> implements ObserverEvents<A> {

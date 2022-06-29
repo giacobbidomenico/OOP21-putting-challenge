@@ -23,9 +23,11 @@ public abstract class AbstractGameState implements GameState {
     }
 
     /**
-     * 
+     * Sets up an {@link AbstractGameState}.
      * @param manager
+     *          of the state
      * @param status
+     *          associated with the {@link AbstractGameState}
      */
     public AbstractGameState(final GameStateManager manager,
                              final GameStatus status) {
@@ -59,8 +61,9 @@ public abstract class AbstractGameState implements GameState {
     }
 
     /**
-     * 
+     * The last operations to be done by the current state before ending.
      * @param nextStatus
+     *          the next status of the game
      */
     void leavingState(final GameStatus nextStatus) {
         this.stateManager.switchState(nextStatus);

@@ -1,7 +1,6 @@
 package puttingchallenge.view.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
-import puttingchallenge.common.Point2D;
 import puttingchallenge.model.gameobjects.GameObject;
 
 /**
@@ -27,14 +26,12 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
     public void changeShowStatus() {
         this.show = !this.show;
     }
+
     /**
      * Render the player only if visible.
      */
     @Override
     public void draw(final GameObject obj, final GraphicsContext gc) {
-        if (obj.isFlip()) {
-            obj.setPosition(new Point2D(-obj.getPosition().getX(), obj.getPosition().getY()));
-        }
         if (this.show) {
             super.draw(obj, gc);
         }

@@ -10,14 +10,6 @@ public enum GameStatus {
      */
     PLAY,
     /**
-     * The player is currently aiming.
-     */
-    AIMING,
-    /**
-     * The player finally shoots the ball.
-     */
-    SHOOTING,
-    /**
      * The player runs out of lives.
      */
     GAME_OVER,

@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import puttingchallenge.core.GameLoopImpl;
 
 /**
- * Class that load the application.
+ * Class that loads the graphics part of the application.
  */
 public class ApplicationLoad extends Application {
 
