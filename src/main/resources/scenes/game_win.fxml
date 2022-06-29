@@ -23,8 +23,6 @@
                   <Font name="Algerian" size="51.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="411.0" layoutY="203.0" prefHeight="40.0" prefWidth="76.0" text="SCORE" textFill="#ff9900" />
-            <Label alignment="CENTER" layoutX="487.0" layoutY="203.0" prefHeight="40.0" prefWidth="76.0" text="YOUR SCORE" textFill="#2fff00" />
       </children>
     </AnchorPane>
   </children>
