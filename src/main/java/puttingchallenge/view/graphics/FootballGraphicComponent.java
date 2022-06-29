@@ -8,7 +8,7 @@ import puttingchallenge.common.FileManager;
  */
 public class FootballGraphicComponent extends AbstractGraphicComponent {
 
-    private static final String TEXTURE_PATH_IMAGE = FileManager.GENERAL_SKINS_PATH + "football.png";
+    private static final String TEXTURE_PATH_IMAGE = FileManager.OBSTACLES_SKINS_PATH + "football.png";
 
     /**
      * Build a new {@link GraphicComponent} for a football ball in the game.
