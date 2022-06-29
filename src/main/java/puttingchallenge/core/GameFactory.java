@@ -61,11 +61,15 @@ public class GameFactory {
      * @param h
      *          the height of the player
      * @param flip
-     *          fit of the player
+     *          flip of the player
 
      * @return an instance of {@link GameObject} representing the player
      */
-    public PlayerObject createPlayer(final Point2D pos, final String skinPath, final double w, final double h, final boolean flip) {
+    public PlayerObject createPlayer(final Point2D pos, 
+                                     final String skinPath, 
+                                     final double w, 
+                                     final double h, 
+                                     final boolean flip) {
         final var player = new PlayerObject(GameObjectType.PLAYER, 
                                             pos, 
                                             new PlayerGraphicComponent(skinPath, w, h), 
@@ -87,7 +91,7 @@ public class GameFactory {
      * @param h
      *          the height of the land
      *
-     * @return an instance of {@link GameObject} representing a land.
+     * @return an instance of {@link GameObject} representing the land.
      */
     public GameObject createLand(final Point2D pos,
                                  final double w,
@@ -103,7 +107,7 @@ public class GameFactory {
      * Build a new wall in the game.
      * 
      * @param pos
-     *          static position of the obstacle
+     *          static position of the wall
      * @param w
      *          the width of the wall
      * @param h
@@ -144,7 +148,7 @@ public class GameFactory {
     }
 
     /**
-     * Build a new iceberg in the game.
+     * Build a new football ball in the game.
      *
      * @param pos
      *          position of the football ball
@@ -169,8 +173,12 @@ public class GameFactory {
      * Build a new hole in the game.
      * 
      * @param pos
+     *          position of the hole
      * @param w
+     *          width of the hole
      * @param h
+     *          height of the hole
+     *
      * @return an instance of {@link GameObject} representing a hole.
      */
     public GameObject createHole(final Point2D pos,

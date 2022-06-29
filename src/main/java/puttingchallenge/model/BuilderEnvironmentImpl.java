@@ -12,7 +12,7 @@ import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.model.gameobjects.PlayerObject;
 
 /**
- * Class that implements the builder of the game environment.
+ * Class that implements the builder of the game {@link Environment}.
  * 
  */
 public class BuilderEnvironmentImpl implements BuilderEnvironment {
@@ -53,8 +53,7 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment addBall(final Point2D pos,
-                                   final double radius) {
+    public BuilderEnvironment addBall(final Point2D pos, final double radius) {
         if (ball.isEmpty()) {
             ball = Optional.of(factory.createBall(pos, radius));
         }
@@ -65,7 +64,11 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
      * {@inheritDoc}
      */
     @Override
-    public BuilderEnvironment addPlayer(final Point2D pos, final String skinPath, final double w, final double h, final boolean flip) {
+    public BuilderEnvironment addPlayer(final Point2D pos, 
+                                        final String skinPath, 
+                                        final double w, 
+                                        final double h, 
+                                        final boolean flip) {
         if (player.isEmpty()) {
             player = Optional.of(factory.createPlayer(pos, skinPath, w, h, flip));
         }

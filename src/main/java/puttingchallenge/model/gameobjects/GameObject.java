@@ -23,11 +23,6 @@ public interface GameObject {
         BALL,
 
         /**
-         * The type of a generic static obstacle.
-         */
-        STATIC_OBSTACLE,
-
-        /**
          * The type of the game player.
          */
         PLAYER,

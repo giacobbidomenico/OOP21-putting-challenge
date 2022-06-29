@@ -3,7 +3,7 @@ package puttingchallenge.model.events;
 import java.util.List;
 
 /**
- *  Interface that defines an event observable of type {@link ModelEventType}.
+ *  Interface that defines an event observable of type <A>.
  *  @param <A>
  */
 public interface ObservableEvents<A> {

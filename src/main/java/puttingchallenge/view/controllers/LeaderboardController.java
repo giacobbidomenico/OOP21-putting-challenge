@@ -1,7 +1,6 @@
 package puttingchallenge.view.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventImpl;
@@ -15,8 +14,10 @@ public class LeaderboardController extends AbstractSceneController {
 
     @FXML private TableView<String> table;
 
+    /**
+     * 
+     */
     public LeaderboardController() {
-        
     }
 
     /**

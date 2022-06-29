@@ -23,7 +23,7 @@ import puttingchallenge.model.collisions.PassiveCircleBBTrajectoryBuilder;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 
 /**
- * Class that implements the game environment.
+ * Class that implements the game {@link Environment}.
  * 
  */
 public class EnvironmentImpl implements Environment {
@@ -96,38 +96,6 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public GameObject getBall() {
-        return this.ball;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PlayerObject getPlayer() {
-        return this.player;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameObject getHole() {
-        return this.hole;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<GameObject> getStaticObstacles() {
-        return this.staticObstacles;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
 
@@ -170,23 +138,22 @@ public class EnvironmentImpl implements Environment {
         precPosPlayer = this.player.getPosition();
     }
 
+    /**
+     * @return the player's position calculated to the left of the ball
+     */
     private Point2D leftBallPos() {
         final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         return new Point2D(this.ball.getPosition().getX() - player.getWidth(), 
                            this.ball.getPosition().getY() - player.getHeight() + (bf.getRadius() * 2));
     }
 
+    /**
+     * @return the player's position calculated to the right of the ball
+     */
     private Point2D rightBallPos() {
         final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         return new Point2D(this.ball.getPosition().getX() + (bf.getRadius() * 2), 
                            this.ball.getPosition().getY() - player.getHeight() + (bf.getRadius() * 2));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Rectangle2D getContainer() {
-        return this.container;
     }
 
     /**
@@ -212,6 +179,10 @@ public class EnvironmentImpl implements Environment {
         return !this.container.contains(rectBall);
     }
 
+    /**
+     * @return true if the ball is in the hole,
+     *         false otherwise
+     */
     private boolean isBallInTheHole() {
         return this.collisionWithHole;
     }
@@ -353,4 +324,42 @@ public class EnvironmentImpl implements Environment {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public Rectangle2D getContainer() {
+        return this.container;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObject getBall() {
+        return this.ball;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerObject getPlayer() {
+        return this.player;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<GameObject> getStaticObstacles() {
+        return this.staticObstacles;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObject getHole() {
+        return this.hole;
+    }
 }
