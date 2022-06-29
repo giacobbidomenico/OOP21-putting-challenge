@@ -136,14 +136,16 @@ class EnvironmentTest {
         final var env = this.initEnvironment();
         assertFalse(env.checkCollisions(ball.getHitBox(),
                                        (BallPhysicsComponent) ball.getPhysicsComponent(), 
-                                       ball.getPosition()).isPresent());
+                                       ball.getPosition(),
+                                       Double.valueOf(NUM1).longValue()).isPresent());
 
         final GameObject landCopy = factory.createHole(new Point2D(NUM5, NUM6),
                 this.land.getGraphicComponent().getWidth(), 
                 this.land.getGraphicComponent().getHeight());
         assertFalse(env.checkCollisions(ball.getHitBox(), 
                                         (BallPhysicsComponent) ball.getPhysicsComponent(), 
-                                        landCopy.getPosition()).isPresent());
+                                        landCopy.getPosition(),
+                                        Double.valueOf(NUM1).longValue()).isPresent());
     }
 
     /**
@@ -153,14 +155,16 @@ class EnvironmentTest {
         final var env = this.initEnvironment();
 
         assertTrue(env.checkCollisions(ball.getHitBox(), 
-                                       (BallPhysicsComponent) ball.getPhysicsComponent(), 
-                                       this.hole.getPosition()).isPresent());
+                                      (BallPhysicsComponent) ball.getPhysicsComponent(), 
+                                       this.hole.getPosition(),
+                                       Double.valueOf(NUM2).longValue()).isPresent());
 
         final GameObject holeCopy = factory.createHole(new Point2D(NUM5, NUM6),
                 this.hole.getGraphicComponent().getWidth(), 
                 this.hole.getGraphicComponent().getHeight());
         assertFalse(env.checkCollisions(ball.getHitBox(), 
                                         (BallPhysicsComponent) ball.getPhysicsComponent(), 
-                                        holeCopy.getPosition()).isPresent());
+                                        holeCopy.getPosition(),
+                                        Double.valueOf(NUM2).longValue()).isPresent());
     }
 }
