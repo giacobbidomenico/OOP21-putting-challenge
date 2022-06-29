@@ -44,7 +44,11 @@ public class AbstractGraphicComponent implements GraphicComponent {
     public void draw(final GameObject obj, final GraphicsContext gc) {
         final double x = obj.getPosition().getX();
         final double y = obj.getPosition().getY();
-        gc.drawImage(skin, x, y, w, h);
+        if (obj.isFlip()) {
+            gc.drawImage(skin, x + w, y, -w, h);
+        } else {
+            gc.drawImage(skin, x, y, w, h);
+        }
     }
 
     /**

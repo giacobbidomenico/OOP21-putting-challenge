@@ -6,17 +6,18 @@
     },
 
     "player": {
-        "posX": "10",
-        "posY": "60",
+        "posX": "8",
+        "posY": "60.3",
         "wScale": "15",
         "hScale": "30",
-        "skinPath": "/skins/player.png"
+        "skinPath": "/skins/player.png",
+        "flip" : false
     },
 
     "ball": {
         "posX": "23",
-        "posY": "80",
-        "radiusScale": "1.5"
+        "posY": "85",
+        "radiusScale": "1.3"
     },
 
     "hole": {

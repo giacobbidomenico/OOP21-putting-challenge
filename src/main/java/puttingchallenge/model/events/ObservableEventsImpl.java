@@ -5,7 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
- * Class that implements an event observable of type {@link ModelEventType}.
+ * Class that implements an event observable.
  * @param <A>
  */
 public class ObservableEventsImpl<A> implements ObservableEvents<A> {

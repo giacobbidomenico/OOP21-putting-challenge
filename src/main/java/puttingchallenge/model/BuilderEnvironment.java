@@ -43,10 +43,16 @@ public interface BuilderEnvironment {
      *          width of the rectangle where the player will be contained
      * @param h
      *          height of the rectangle where the player will be contained
+     * @param flip
+     *          flip of the player
      * @return an instance of {@link BuilderEnvironment} ,the builder of 
      *         the game {@link Environment}
      */
-    BuilderEnvironment addPlayer(Point2D pos, String skinPath, double w, double h);
+    BuilderEnvironment addPlayer(Point2D pos, 
+                                 String skinPath, 
+                                 double w, 
+                                 double h, 
+                                 boolean flip);
 
     /**
      * Sets the configuration of a new static obstacle.
@@ -84,7 +90,7 @@ public interface BuilderEnvironment {
      * Builds the game {@link Environment}.
      * 
      * @return an instance of {@link Environment}, representing the
-     *         game environment
+     *         game {@link Environment}
      */
     Environment build();
 

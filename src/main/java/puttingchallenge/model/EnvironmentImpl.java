@@ -23,12 +23,10 @@ import puttingchallenge.model.collisions.PassiveCircleBBTrajectoryBuilder;
 import puttingchallenge.model.collisions.ConcretePassiveCircleBoundingBox;
 
 /**
- * Class that implements the game environment.
+ * Class that implements the game {@link Environment}.
  * 
  */
 public class EnvironmentImpl implements Environment {
-    //private static final int PERC_DISTANCE = 2;
-
     private Optional<ObservableEvents<ModelEventType>> observableGameState;
     private final ObservableEvents<ModelEventType> observable;
     private final ObserverEvents<ModelEventType> observer;
@@ -37,11 +35,10 @@ public class EnvironmentImpl implements Environment {
     private final GameObject ball;
     private final PlayerObject player;
     private final GameObject hole;
-    private final Point2D initPosBall;
-    private final Point2D initPosPlayer;
-    private boolean notifiedBallStopped;
-    private boolean notifiedBallOutOfBounds;
+    private Point2D precPosBall;
+    private Point2D precPosPlayer;
     private boolean collisionWithHole;
+    private boolean notifiable;
 
     /**
      * Build a new {@link EnvironmentImpl}.
@@ -68,12 +65,11 @@ public class EnvironmentImpl implements Environment {
         this.observer = new ObserverEventsImpl<>();
         this.container = Objects.requireNonNull(container);
         this.ball = Objects.requireNonNull(ball);
-        this.initPosBall = ball.getPosition();
+        this.precPosBall = ball.getPosition();
         this.player = Objects.requireNonNull(player);
-        this.initPosPlayer = player.getPosition();
+        this.precPosPlayer = player.getPosition();
         this.hole = Objects.requireNonNull(hole);
         this.staticObstacles = new LinkedList<>(staticObstacles);
-        this.notifiedBallStopped = true;
     }
 
     /**
@@ -84,7 +80,6 @@ public class EnvironmentImpl implements Environment {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
         bf.update(dt, ball, this);
 
-        System.out.println(this.player.getPosition());
         this.receiveEvents();
         this.notifyEvents();
     }
@@ -101,66 +96,64 @@ public class EnvironmentImpl implements Environment {
      * {@inheritDoc}
      */
     @Override
-    public GameObject getBall() {
-        return this.ball;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PlayerObject getPlayer() {
-        return this.player;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameObject getHole() {
-        return this.hole;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<GameObject> getStaticObstacles() {
-        return this.staticObstacles;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+
         if (this.isBallOutOfBounds()) {
             bf.setVelocity(new Vector2D(0, 0));
-            this.ball.setPosition(initPosBall);
-            this.player.setPosition(initPosPlayer);
+            this.ball.setPosition(precPosBall);
+            this.player.setPosition(precPosPlayer);
             return;
         }
+
         final var posBall = this.ball.getPosition();
-        var newPos = new Point2D(posBall.getX() + player.getWidth(), 
-                                 posBall.getY() + player.getHeight());
-        if (newPos.getX() >= 0) {
-            player.setFlip(false);
-            player.setPosition(newPos);
+        var newPos = this.leftBallPos();
+        if (!this.player.isFlip()) {
+            if (posBall.getX() >= 0 
+                    && posBall.getX() <= this.hole.getPosition().getX()) {
+                player.setFlip(false);
+                player.setPosition(newPos);
+            }
+
+            if (posBall.getX() > this.hole.getPosition().getX() 
+                    && posBall.getX() < this.container.getWidth()) {
+                newPos = this.rightBallPos();
+                player.setFlip(true);
+                player.setPosition(newPos);
+            }
+        } else {
+            if (posBall.getX() > this.hole.getPosition().getX()) {
+                newPos = this.rightBallPos();
+                player.setFlip(true);
+                player.setPosition(newPos);
+            }
+
+            if (posBall.getX() >= 0 
+                    && posBall.getX() <= this.hole.getPosition().getX()) {
+                player.setFlip(false);
+                player.setPosition(newPos);
+            }
         }
-        newPos = new Point2D(posBall.getX() + player.getWidth(), 
-                             posBall.getY() + player.getHeight());
-        if (newPos.getX() < this.container.getWidth()) {
-            //player.setFlip(true);
-            player.setPosition(newPos);
-        }
+        precPosBall = this.ball.getPosition();
+        precPosPlayer = this.player.getPosition();
     }
 
     /**
-     * {@inheritDoc}
+     * @return the player's position calculated to the left of the ball
      */
-    public Rectangle2D getContainer() {
-        return this.container;
+    private Point2D leftBallPos() {
+        final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        return new Point2D(this.ball.getPosition().getX() - player.getWidth(), 
+                           this.ball.getPosition().getY() - player.getHeight() + (bf.getRadius() * 2));
+    }
+
+    /**
+     * @return the player's position calculated to the right of the ball
+     */
+    private Point2D rightBallPos() {
+        final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
+        return new Point2D(this.ball.getPosition().getX() + (bf.getRadius() * 2), 
+                           this.ball.getPosition().getY() - player.getHeight() + (bf.getRadius() * 2));
     }
 
     /**
@@ -186,6 +179,10 @@ public class EnvironmentImpl implements Environment {
         return !this.container.contains(rectBall);
     }
 
+    /**
+     * @return true if the ball is in the hole,
+     *         false otherwise
+     */
     private boolean isBallInTheHole() {
         return this.collisionWithHole;
     }
@@ -213,13 +210,13 @@ public class EnvironmentImpl implements Environment {
     @Override
     public void notifyEvents() {
         final List<ModelEventType> events = new LinkedList<>();
-        if (this.isBallStationary() && !this.notifiedBallStopped && !this.notifiedBallOutOfBounds) {
+        if (this.isBallStationary() && this.notifiable) {
             events.add(ModelEventType.BALL_STOPPED);
-            this.notifiedBallStopped = true;
+            this.notifiable = false;
         }
         if (this.isBallOutOfBounds()) {
             events.add(ModelEventType.BALL_OUT_OF_BOUND);
-            this.notifiedBallOutOfBounds = true;
+            this.notifiable = false;
         }
         if (this.isBallInTheHole()) {
             events.add(ModelEventType.BALL_IN_HOLE);
@@ -239,8 +236,7 @@ public class EnvironmentImpl implements Environment {
         eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
-                this.notifiedBallStopped = false;
-                this.notifiedBallOutOfBounds = false;
+                this.notifiable = true; 
                 break;
             case MOVE_PLAYER:
                 this.movePlayer();
@@ -303,7 +299,7 @@ public class EnvironmentImpl implements Environment {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(ball, collisionWithHole, container, hole, initPosBall, initPosPlayer, notifiedBallStopped,
+        return Objects.hash(ball, collisionWithHole, container, hole, precPosBall, precPosPlayer, notifiable,
                 observable, observableGameState, observer, player, staticObstacles);
     }
 
@@ -328,4 +324,42 @@ public class EnvironmentImpl implements Environment {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public Rectangle2D getContainer() {
+        return this.container;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObject getBall() {
+        return this.ball;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerObject getPlayer() {
+        return this.player;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<GameObject> getStaticObstacles() {
+        return this.staticObstacles;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameObject getHole() {
+        return this.hole;
+    }
 }
