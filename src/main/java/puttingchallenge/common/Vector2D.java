@@ -146,4 +146,11 @@ public class Vector2D implements Serializable {
         this.setY(-y); 
     }
 
+    /**
+     * @param vector 
+     * @return the dot product with vector
+     */
+    public double dotProduct(final Vector2D vector) {
+        return this.getX() * vector.getX() + this.getY() * vector.getY();
+    }
 }
