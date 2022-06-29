@@ -173,8 +173,8 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     void leavingState(final GameStatus nextStatus) {
-        new File(FileManager.LEADERBOARD_DIRECTORY).mkdirs();
-        try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.LEADERBOARD_FILE, true))) {
+        new File(FileManager.STATS_DIRECTORY).mkdirs();
+        try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.STATS_FILE, true))) {
             pt.println(Integer.toString(score));
             pt.flush();
             pt.close();
