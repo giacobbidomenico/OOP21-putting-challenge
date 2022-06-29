@@ -91,10 +91,11 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
 
     private void isStopping(final Point2D pos, final ActiveBoundingBox hitbox) {
         if (this.lastHitbox.isPresent() && this.lastPos.isPresent()) {
-            System.out.println(-Y_ACCELERATION * (1 / pos.getY()) * 100);
+            final Vector2D vel = this.getVelocity();
             if (Point2D.getDistance(pos, this.lastPos.get()) < radius * MIN_BOUNCING_DIFFERENCE_FACTOR
                 && hitbox.equals(this.lastHitbox.get())
-                && (-Y_ACCELERATION * (1 / pos.getY()) * 100) < MIN_POTENTIAL_ENERGY) {
+                && (-Y_ACCELERATION * (1 / pos.getY()) * 100) < MIN_POTENTIAL_ENERGY
+                && Math.abs(vel.getX()) + Math.abs(vel.getY()) < 100) {
                 this.setVelocity(new Vector2D(0, 0));
             }
         }
