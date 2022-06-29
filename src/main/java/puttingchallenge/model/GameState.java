@@ -10,13 +10,11 @@ import puttingchallenge.model.gameobjects.GameObject;
 import puttingchallenge.view.SceneType;
 
 /**
- * 
- * Interface for maintaining and handling the states of the game.
- *
+ * Interface that represent the various states in the game.
  */
 public interface GameState extends Colleague {
     /**
-     * Sets the initial state.
+     * Initialize the state.
      * @return 
      *          a {@link Pair} that contains the {@link SceneType} and a {@link List} of {@link GameObject}
      */

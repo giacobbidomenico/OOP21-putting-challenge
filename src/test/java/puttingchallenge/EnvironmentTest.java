@@ -71,11 +71,11 @@ class EnvironmentTest {
         frame.add(jFx);
         this.container = new Rectangle2D(0, 0, NUM1, NUM2);
         this.ball = (BallObjectImpl) factory.createBall(ANOTHER_POSITION, NUM1);
-        this.player = factory.createPlayer(MAIN_POSITION, "/skins/player.png", NUM1, NUM2);
+        this.player = factory.createPlayer(MAIN_POSITION, "/skins/player.png", NUM1, NUM2, false);
         this.land = factory.createLand(MAIN_POSITION, NUM1, NUM2);
         this.wall = factory.createWall(MAIN_POSITION, NUM1, NUM2);
         this.tree = factory.createTree(MAIN_POSITION, NUM1, NUM2);
-        this.iceberg = factory.createIceberg(MAIN_POSITION, NUM1, NUM2);
+        this.iceberg = factory.createFootball(MAIN_POSITION, NUM1, NUM2);
         this.hole = factory.createHole(MAIN_POSITION, NUM1, NUM2);
         this.staticObstacles = List.of(this.land,
                                        this.wall,
@@ -119,11 +119,11 @@ class EnvironmentTest {
         final BuilderEnvironment buildEnv = new BuilderEnvironmentImpl();
         final Environment env =  buildEnv.addBall(ANOTHER_POSITION, NUM1)
                                          .addContainer(container)
-                                         .addPlayer(MAIN_POSITION, "/skins/player.png", NUM1, NUM2)
+                                         .addPlayer(MAIN_POSITION, "/skins/player.png", NUM1, NUM2, false)
                                          .addStaticObstacle(GameObjectType.LAND, MAIN_POSITION, NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.WALL, MAIN_POSITION, NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.TREE, MAIN_POSITION, NUM1, NUM2)
-                                         .addStaticObstacle(GameObjectType.ICEBERG, MAIN_POSITION, NUM1, NUM2)
+                                         .addStaticObstacle(GameObjectType.FOOTBALL, MAIN_POSITION, NUM1, NUM2)
                                          .addHole(MAIN_POSITION, NUM1, NUM2)
                                          .build();
         assertEquals(this.initEnvironment(), env);
