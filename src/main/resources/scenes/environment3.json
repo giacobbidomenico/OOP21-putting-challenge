@@ -6,8 +6,8 @@
     },
 
     "player": {
-        "posX": "80",
-        "posY": "60",
+        "posX": "82.6",
+        "posY": "60.3",
         "wScale": "15",
         "hScale": "30",
         "skinPath": "/skins/player.png",
@@ -16,7 +16,7 @@
 
     "ball": {
         "posX": "80",
-        "posY": "83",
+        "posY": "85",
         "radiusScale": "1.5"
     },
 
