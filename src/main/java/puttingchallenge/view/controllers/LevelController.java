@@ -33,7 +33,7 @@ public class LevelController extends AbstractSceneController implements EventHan
     private static final double UPPER_LEFT_Y = 0.0;
 
     private GraphicsContext gc;
-    private Optional<Point2D> aimingPoint;
+    private Point2D aimingPoint;
     private Label score;
     private Label lives;
 
@@ -73,7 +73,7 @@ public class LevelController extends AbstractSceneController implements EventHan
      * @param event
      */
     private void handleMousePressed(final MouseEvent event) {
-        this.aimingPoint = Optional.of(this.getCoord(event));
+        this.aimingPoint = this.getCoord(event);
     }
 
     /**
@@ -81,8 +81,8 @@ public class LevelController extends AbstractSceneController implements EventHan
      * @param event
      */
     private void handleMouseReleased(final MouseEvent event) {
-        if (this.aimingPoint.isPresent()) {
-            final Pair<Point2D, Point2D> points = new Pair<>(this.aimingPoint.get(), this.getCoord(event));
+        if (!this.getCoord(event).equals(this.aimingPoint)) {
+            final Pair<Point2D, Point2D> points = new Pair<>(this.aimingPoint, this.getCoord(event));
             final GameEventWithDetailsImpl<Pair<Point2D, Point2D>> shootingEvent = new GameEventWithDetailsImpl<>(GameEventType.SHOOT, points);
             this.getMediator().notifyColleagues(shootingEvent, this);
         }
