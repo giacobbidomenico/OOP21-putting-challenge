@@ -61,11 +61,9 @@ public abstract class AbstractGameState implements GameState {
     }
 
     /**
-     * The last operations to be done by the current state before ending.
-     * @param nextStatus
-     *          the next status of the game
+     *{@inheritDoc}
      */
-    void leavingState(final GameStatus nextStatus) {
+    public void leavingState(final GameStatus nextStatus) {
         this.stateManager.switchState(nextStatus);
     }
     /**
