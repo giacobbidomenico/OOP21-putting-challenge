@@ -98,10 +98,8 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
         double x;
         double y;
         if (usesTangent) {
-            double sign = Math.signum(lastVel.getX()) != Math.signum(normale.getX()) ? 1 : 1;
-            final double tangentX = normale.getX() * sign;
-            sign = Math.signum(lastVel.getY()) != Math.signum(normale.getY()) ? 1 : 1;
-            final double tangentY = normale.getY() * sign;
+            final double tangentX = normale.getX();
+            final double tangentY = normale.getY();
             final double dot = tangentX * lastVel.getX() + tangentY * lastVel.getY();
             x = dot * tangentX;
             y = dot * tangentY;

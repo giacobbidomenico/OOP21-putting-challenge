@@ -80,7 +80,7 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
         if (pointOnActiveBoundingBox.getY() == maximumVertex.getY()) {
             return new Vector2D(0, -1);
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -121,6 +121,9 @@ public class AxisAlignedBoundingBox implements ActiveBoundingBox {
      */
     @Override
     public Point2D intersectionToSegment(final Point2D pointA, final Point2D pointB) {
+        if (this.closestPointOnBBToPoint(pointA) == pointA || this.closestPointOnBBToPoint(pointB) != pointB) {
+            throw new IllegalArgumentException();
+        }
         final Point2D closestPoint = this.closestPointOnBBToPoint(pointA);
         if (pointA.getX() == pointB.getX() || pointA.getY() == pointB.getY()) {
             return closestPoint;
