@@ -167,12 +167,10 @@ public class GamePlayGameState extends AbstractGameState {
             this.notifyEvents(ModelEventType.SHOOT);
         }
     }
-
     /**
-     * {@inheritDoc}
+     * Write on file the score of the current attempt.
      */
-    @Override
-    public void leavingState(final GameStatus nextStatus) {
+    private void writeStats() {
         new File(FileManager.STATS_DIRECTORY).mkdirs();
         try (PrintWriter pt = new PrintWriter(new FileWriter(FileManager.STATS_FILE, true))) {
             pt.println(Integer.toString(score));
@@ -181,6 +179,14 @@ public class GamePlayGameState extends AbstractGameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void leavingState(final GameStatus nextStatus) {
+        this.writeStats();
         super.leavingState(nextStatus);
     }
 
