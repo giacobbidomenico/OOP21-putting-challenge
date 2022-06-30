@@ -42,13 +42,7 @@ public class AbstractGraphicComponent implements GraphicComponent {
      */
     @Override
     public void draw(final GameObject obj, final GraphicsContext gc) {
-        final double x = obj.getPosition().getX();
-        final double y = obj.getPosition().getY();
-        if (obj.isFlip()) {
-            gc.drawImage(skin, x + w, y, -w, h);
-        } else {
-            gc.drawImage(skin, x, y, w, h);
-        }
+        gc.drawImage(skin, obj.getPosition().getX(), obj.getPosition().getY(), w, h);
     }
 
     /**
@@ -79,6 +73,13 @@ public class AbstractGraphicComponent implements GraphicComponent {
     @Override
     public int hashCode() {
         return Objects.hash(h, skin, w);
+    }
+
+    /**
+     * @return the {@link Image} of the component skin
+     */
+    protected Image getSkin() {
+        return this.skin;
     }
 
     /**
