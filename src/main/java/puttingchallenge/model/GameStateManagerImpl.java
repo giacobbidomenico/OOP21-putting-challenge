@@ -1,16 +1,10 @@
 package puttingchallenge.model;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import javafx.util.Pair;
-import puttingchallenge.common.FileManager;
 import puttingchallenge.model.events.GameEvent;
 import puttingchallenge.model.events.GameEventType;
 import puttingchallenge.model.events.GameEventWithDetailsImpl;
@@ -26,26 +20,6 @@ public class GameStateManagerImpl implements GameStateManager {
     private GameState currentGameState;
     private Mediator generalMediator;
     private static final GameStatus INITIAL_STATE = GameStatus.MAIN_MENU;
-
-    /**
-     * 
-     * @return saved scores
-     */
-    private List<String> getScores() {
-        final List<String> scores = new ArrayList<>();
-        try (BufferedReader f = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(
-                                FileManager.STATS_FILE)))) {
-            String line;
-            while ((line = f.readLine()) != null) {
-                scores.add(line);
-            }
-        } catch (IOException e) {
-            return List.of();
-        }
-        return scores;
-    }
 
     /**
      * {@inheritDoc}
@@ -122,7 +96,7 @@ public class GameStateManagerImpl implements GameStateManager {
                 this.switchState(GameStatus.LEADERBOARD);
                 final GameEvent leaderboardEvent = new GameEventWithDetailsImpl<>(GameEventType.SET_SCENE,
                                                                                   new Pair<>(SceneType.LEADERBOARD,
-                                                                                          this.getScores()));
+                                                                                          Collections.emptyList()));
                 this.generalMediator.notifyColleagues(leaderboardEvent, this);
                 break;
             case START:
