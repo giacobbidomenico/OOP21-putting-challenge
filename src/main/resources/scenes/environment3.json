@@ -11,7 +11,7 @@
         "wScale": "15",
         "hScale": "30",
         "skinPath": "/skins/player.png",
-        "flip" : true
+        "flip": true
     },
 
     "ball": {
@@ -35,25 +35,25 @@
             "hScale": "10"
         },
         {
-            "type": "FOOTBALL",
+            "type": "SHELF",
             "posX": "5",
             "posY": "10",
             "wScale": "20",
             "hScale": "30"
         },
         {
-            "type": "FOOTBALL",
+            "type": "SHELF",
             "posX": "70",
             "posY": "10",
             "wScale": "20",
             "hScale": "30"
         },
         {
-            "type": "FOOTBALL",
+            "type": "SHELF",
             "posX": "38",
             "posY": "56",
             "wScale": "20",
             "hScale": "30"
         },
-     ]
+    ]
 }
