@@ -12,7 +12,7 @@ This project was realized for the OOP course.
 
 ## How to run the project
 Double click on the application jar file or move from the terminal to the directory where the jar file is contained and execute the command:
-java -jar OOP21-putting-challenge-all.jar
+## java -jar OOP21-putting-challenge-all.jar
 
 ### Credits
 * [Lorenzo Colletta](https://github.com/LorenzoColletta)
