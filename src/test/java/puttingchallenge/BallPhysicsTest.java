@@ -38,7 +38,7 @@ class BallPhysicsTest {
     }
 
     /**
-     * 
+     * Given a zero velocity check if the ball is still moving.
      */
     @Test void testBallStopped() {
         final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
@@ -47,7 +47,7 @@ class BallPhysicsTest {
     }
 
     /**
-     * 
+     * Given a not-zero velocity check if the ball is moving.
      */
     @Test void testBallMoving() {
         final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
@@ -57,7 +57,7 @@ class BallPhysicsTest {
     }
 
     /**
-     * 
+     * Given a velocity and a delta time checks the correct position where the ball should be.
      */
     @Test void testNextPosBall() {
         final var bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();

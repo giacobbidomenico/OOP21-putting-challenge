@@ -53,8 +53,7 @@ class EnvironmentTest {
     private final GameFactory factory = new GameFactory();
 
     /**
-     * 
-     * @return .
+     * @return an{@link Environment} object.
      */
     private Environment initEnvironment() {
         return new EnvironmentImpl(container, 
