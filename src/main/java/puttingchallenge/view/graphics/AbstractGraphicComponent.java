@@ -29,7 +29,6 @@ public class AbstractGraphicComponent implements GraphicComponent {
     protected AbstractGraphicComponent(final String imagePath,
                                        final double w,
                                        final double h) {
-        System.out.println(imagePath);
         this.skin = new Image(imagePath);
         this.pathSkin = imagePath;
         this.w = w;
