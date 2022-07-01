@@ -10,6 +10,10 @@ This project was realized for the OOP course.
 1. Make sure Java is installed (version 11 or greater)
 2. Download the jar file in the *Download* section of this [repo](https://github.com/giacobbidomenico/OOP21-putting-challenge)
 
+## How to run the project
+Double click on the application jar file or move from the terminal to the directory where the jar file is contained and execute the command:
+java -jar OOP21-putting-challenge-all.jar
+
 ### Credits
 * [Lorenzo Colletta](https://github.com/LorenzoColletta)
 * [Giorgio Fantilli](https://github.com/GiorgioFantilliUnibo)
