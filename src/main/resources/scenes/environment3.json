@@ -35,21 +35,21 @@
             "hScale": "10"
         },
         {
-            "type": "SHELF",
+            "type": "FOOTBALL",
             "posX": "5",
             "posY": "10",
             "wScale": "20",
             "hScale": "30"
         },
         {
-            "type": "SHELF",
+            "type": "FOOTBALL",
             "posX": "70",
             "posY": "10",
             "wScale": "20",
             "hScale": "30"
         },
         {
-            "type": "SHELF",
+            "type": "FOOTBALL",
             "posX": "38",
             "posY": "56",
             "wScale": "20",

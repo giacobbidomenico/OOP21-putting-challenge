@@ -13,10 +13,10 @@ import puttingchallenge.model.gameobjects.GameObject.GameObjectType;
 import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.physics.StaticPhysicsComponent;
 import puttingchallenge.view.graphics.BallGraphicComponent;
+import puttingchallenge.view.graphics.FootballGraphicComponent;
 import puttingchallenge.view.graphics.HoleGraphicComponent;
 import puttingchallenge.view.graphics.LandGraphicComponent;
 import puttingchallenge.view.graphics.PlayerGraphicComponent;
-import puttingchallenge.view.graphics.ShelfGraphicComponent;
 import puttingchallenge.view.graphics.TreeGraphicComponent;
 import puttingchallenge.view.graphics.WallGraphicComponent;
 
@@ -149,25 +149,25 @@ public class GameFactory {
     }
 
     /**
-     * Build a new shelf in the game.
+     * Build a new football ball in the game.
      *
      * @param pos
-     *          position of the shelf
+     *          position of the football ball
      * @param w
-     *          width of the shelf
+     *          width of the football ball
      * @param h
-     *          height of the shelf
+     *          height of the football ball
      *
-     * @return an instance of {@link GameObject} representing a shelf.
+     * @return an instance of {@link GameObject} representing a football ball.
      */
-    public GameObject createShelf(final Point2D pos,
+    public GameObject createFootball(final Point2D pos,
                                      final double w,
                                      final double h) {
-        return new GameObjectImpl(GameObjectType.SHELF, 
+        return new GameObjectImpl(GameObjectType.FOOTBALL, 
                                   pos,
-                                  new ShelfGraphicComponent(w, h),
+                                  new FootballGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
+                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
     };
 
     /**
