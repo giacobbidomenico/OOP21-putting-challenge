@@ -12,7 +12,7 @@ public interface DynamicBoundingBox {
 
     /**
      * @param circle the bounding box on which to check the collision
-     * @param deltaT time from last frame
+     * @param dt time from last frame
      * @return details about the collision
      */
     CollisionTest collidesWith(PassiveCircleBBTrajectoryBuilder circle, long dt);
