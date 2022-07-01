@@ -25,6 +25,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
             final long t1, 
             final long t2) {
         final long mid = (t2 + t1) / 2;
+        System.out.println("t1: " + t1 + " t2: " + t2);
         if (!this.box.isColliding(circleBuilder.build(mid))) {
             return Optional.empty();
         }
@@ -48,6 +49,7 @@ public class ConcreteDynamicBoundingBox implements DynamicBoundingBox {
         if (timeOfCollision.isEmpty()) {
             return new ConcreteCollisionTest();
         }
+        System.out.println("Colliding");
         final Point2D lastPosition = circleBuilder.build(timeOfCollision.get()).getPosition();
         Point2D closestPoint = this.box.closestPointOnBBToPoint(lastPosition);
         if (lastPosition == closestPoint) {
