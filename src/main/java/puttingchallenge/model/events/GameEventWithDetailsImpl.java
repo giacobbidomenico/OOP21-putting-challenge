@@ -26,9 +26,14 @@ public class GameEventWithDetailsImpl<B> extends GameEventImpl {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> Optional<T> getDetails() {
-        return Optional.of((T) this.details);
+        try {
+            return Optional.of((T) this.details);
+        } catch (ClassCastException e) {
+            return Optional.empty();
+        }
     }
 
 }

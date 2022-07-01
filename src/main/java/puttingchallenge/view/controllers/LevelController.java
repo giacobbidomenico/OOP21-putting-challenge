@@ -33,7 +33,7 @@ public class LevelController extends AbstractSceneController implements EventHan
     private static final double UPPER_LEFT_Y = 0.0;
 
     private GraphicsContext gc;
-    private Optional<Point2D> aimingPoint;
+    private Point2D aimingPoint;
     private Label score;
     private Label lives;
 
@@ -72,17 +72,17 @@ public class LevelController extends AbstractSceneController implements EventHan
      * Handles mouse pressed event.
      * @param event
      */
-    public void handleMousePressed(final MouseEvent event) {
-        this.aimingPoint = Optional.of(this.getCoord(event));
+    private void handleMousePressed(final MouseEvent event) {
+        this.aimingPoint = this.getCoord(event);
     }
 
     /**
      * Handles mouse released event.
      * @param event
      */
-    public void handleMouseReleased(final MouseEvent event) {
-        if (this.aimingPoint.isPresent()) {
-            final Pair<Point2D, Point2D> points = new Pair<>(this.aimingPoint.get(), this.getCoord(event));
+    private void handleMouseReleased(final MouseEvent event) {
+        if (!this.getCoord(event).equals(this.aimingPoint)) {
+            final Pair<Point2D, Point2D> points = new Pair<>(this.aimingPoint, this.getCoord(event));
             final GameEventWithDetailsImpl<Pair<Point2D, Point2D>> shootingEvent = new GameEventWithDetailsImpl<>(GameEventType.SHOOT, points);
             this.getMediator().notifyColleagues(shootingEvent, this);
         }
@@ -90,9 +90,8 @@ public class LevelController extends AbstractSceneController implements EventHan
 
     /**
      * Method that handle the action on the quit button.
-     * @param event
      */
-    public void handleQuit(final ActionEvent event) {
+    private void handleQuit() {
         final Alert alert = new Alert(AlertType.WARNING);
         alert.setHeaderText("You are quitting the game!");
         alert.setContentText("You will be redirect to the main menu and the game will be lost. Are you sure?");
@@ -132,7 +131,7 @@ public class LevelController extends AbstractSceneController implements EventHan
     @Override
     public void handle(final Event event) {
         if (event.getEventType().equals(ActionEvent.ACTION)) {
-            this.handleQuit((ActionEvent) event);
+            this.handleQuit();
             event.consume();
         }
         if (event.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {

@@ -8,11 +8,12 @@ import puttingchallenge.view.graphics.GraphicComponent;
  * Class that represent the player.
  */
 public class PlayerObject extends AbstractGameObject {
-    private Bat bat;
 
+    private Bat bat;
     private final ConcreteDynamicBoundingBox hitbox;
     private final double width;
     private final double height;
+    private boolean flip;
 
     /**
      * Create a new {@link GameObject} representing the player.
@@ -80,6 +81,23 @@ public class PlayerObject extends AbstractGameObject {
      */
     public double getHeight() {
         return this.height;
+    }
+
+    /**
+     * Sets the flip of the {@link GameObject}.
+     * 
+     * @param flip
+     *          flip of the {@link GameObject}
+     */
+    public void setFlip(final boolean flip) {
+        this.flip = flip;
+    }
+
+    /**
+     * @return the flip of the {@link GameObject}
+     */
+    public boolean isFlip() {
+        return this.flip;
     }
 
 }

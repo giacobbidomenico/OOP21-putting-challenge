@@ -50,4 +50,10 @@ public interface GameState extends Colleague {
      * Reads the events received form the {@link Environment}.
      */
     void receiveEvents();
+    /**
+     * The last operations to be done by the current state before ending.
+     * @param nextStatus
+     *          the next status of the game
+     */
+    void leavingState(GameStatus nextStatus);
 }

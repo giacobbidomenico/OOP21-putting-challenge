@@ -69,6 +69,9 @@ public class CircleBoundingBox implements ActiveBoundingBox {
      */
     @Override
     public Point2D intersectionToSegment(final Point2D pointA, final Point2D pointB) {
+        if (this.closestPointOnBBToPoint(pointA) == pointA || this.closestPointOnBBToPoint(pointB) != pointB) {
+            throw new IllegalArgumentException();
+        }
         final Vector2D m = new Vector2D(pointA.getX() - this.position.getX(), 
                 pointA.getY() -  this.position.getY());
 

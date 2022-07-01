@@ -53,8 +53,7 @@ class EnvironmentTest {
     private final GameFactory factory = new GameFactory();
 
     /**
-     * 
-     * @return .
+     * @return an{@link Environment} object.
      */
     private Environment initEnvironment() {
         return new EnvironmentImpl(container, 
@@ -84,7 +83,7 @@ class EnvironmentTest {
     }
 
     /**
-     * 
+     * Check if the environment is set up correctly.
      */
     @Test void testEnvironment() {
         final Environment env = this.initEnvironment();
@@ -113,7 +112,7 @@ class EnvironmentTest {
     }
 
     /**
-     * 
+     * Check if the environment builder works correctly.
      */
     @Test void testBuilderEnvironment() {
         final BuilderEnvironment buildEnv = new BuilderEnvironmentImpl();
@@ -130,7 +129,7 @@ class EnvironmentTest {
     }
 
     /**
-     * 
+     * Checks if the the collisions are detected correctly.
      */
     @Test void checkCollisions() {
         final var env = this.initEnvironment();
@@ -148,9 +147,6 @@ class EnvironmentTest {
                                         Double.valueOf(NUM1).longValue()).isPresent());
     }
 
-    /**
-     * 
-     */
     @Test void checkCollisionWithHole() {
         final var env = this.initEnvironment();
 
