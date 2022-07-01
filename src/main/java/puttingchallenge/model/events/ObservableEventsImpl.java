@@ -39,7 +39,7 @@ public class ObservableEventsImpl<A> implements ObservableEvents<A> {
      * {@inheritDoc}
      */
     @Override
-    public List<A> eventsRecieved() {
+    public List<A> eventsReceived() {
         return this.observers.stream()
                              .flatMap(e -> e.getEvents().stream())
                              .collect(Collectors.toList());

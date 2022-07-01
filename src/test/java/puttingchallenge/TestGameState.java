@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.swing.JFrame;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +31,9 @@ class TestGameState {
         gsm.setMediator(mediator);
         gsm.initState();
     }
+    /**
+     * Checks if the gameplay state is initialized correctly.
+     */
     @Test
     void gameStateTest() {
         assertEquals(gsm.getCurrentEnvironment(), Optional.empty());
@@ -41,7 +43,6 @@ class TestGameState {
         final GamePlayGameState gpgs = (GamePlayGameState) gsm.getCurrentState();
         assertEquals(gpgs.getLives(), MAX_LIVES);
         assertEquals(gpgs.getScore(), NONE);
-        
     }
 
 }

@@ -1,7 +1,10 @@
 package puttingchallenge.view.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import puttingchallenge.common.Point2D;
 import puttingchallenge.model.gameobjects.GameObject;
+import puttingchallenge.model.gameobjects.PlayerObject;
 
 /**
  * Class that implements the graphical representation of the player.
@@ -9,6 +12,7 @@ import puttingchallenge.model.gameobjects.GameObject;
 public class PlayerGraphicComponent extends AbstractGraphicComponent {
 
     private boolean show;
+
     /**
      * Create a new {@link GraphicComponent} for the player.
      * @param imagePath
@@ -20,6 +24,7 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
         super(imagePath, width, height);
         this.show = true;
     }
+
     /**
      * Change the player visibility in the game.
      */
@@ -33,7 +38,16 @@ public class PlayerGraphicComponent extends AbstractGraphicComponent {
     @Override
     public void draw(final GameObject obj, final GraphicsContext gc) {
         if (this.show) {
-            super.draw(obj, gc);
+            if (((PlayerObject) obj).isFlip()) {
+                final Point2D pos = obj.getPosition();
+                final double w = super.getWidth();
+                final double h = super.getHeight();
+                final Image skin = super.getSkin();
+                gc.drawImage(skin, pos.getX() + w, pos.getY(), -w, h);
+            } else {
+                super.draw(obj, gc);
+            }
         }
     }
+
 }

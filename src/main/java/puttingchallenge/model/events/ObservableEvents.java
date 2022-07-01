@@ -27,6 +27,6 @@ public interface ObservableEvents<A> {
     /**
      * @return a {@link List} in which its type is present for each event received
      */
-    List<A> eventsRecieved();
+    List<A> eventsReceived();
 
 }

@@ -53,8 +53,7 @@ class EnvironmentTest {
     private final GameFactory factory = new GameFactory();
 
     /**
-     * 
-     * @return .
+     * @return an{@link Environment} object.
      */
     private Environment initEnvironment() {
         return new EnvironmentImpl(container, 
@@ -75,7 +74,7 @@ class EnvironmentTest {
         this.land = factory.createLand(MAIN_POSITION, NUM1, NUM2);
         this.wall = factory.createWall(MAIN_POSITION, NUM1, NUM2);
         this.tree = factory.createTree(MAIN_POSITION, NUM1, NUM2);
-        this.iceberg = factory.createFootball(MAIN_POSITION, NUM1, NUM2);
+        this.iceberg = factory.createShelf(MAIN_POSITION, NUM1, NUM2);
         this.hole = factory.createHole(MAIN_POSITION, NUM1, NUM2);
         this.staticObstacles = List.of(this.land,
                                        this.wall,
@@ -84,7 +83,7 @@ class EnvironmentTest {
     }
 
     /**
-     * 
+     * Check if the environment is set up correctly.
      */
     @Test void testEnvironment() {
         final Environment env = this.initEnvironment();
@@ -113,7 +112,7 @@ class EnvironmentTest {
     }
 
     /**
-     * 
+     * Check if the environment builder works correctly.
      */
     @Test void testBuilderEnvironment() {
         final BuilderEnvironment buildEnv = new BuilderEnvironmentImpl();
@@ -123,14 +122,14 @@ class EnvironmentTest {
                                          .addStaticObstacle(GameObjectType.LAND, MAIN_POSITION, NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.WALL, MAIN_POSITION, NUM1, NUM2)
                                          .addStaticObstacle(GameObjectType.TREE, MAIN_POSITION, NUM1, NUM2)
-                                         .addStaticObstacle(GameObjectType.FOOTBALL, MAIN_POSITION, NUM1, NUM2)
+                                         .addStaticObstacle(GameObjectType.SHELF, MAIN_POSITION, NUM1, NUM2)
                                          .addHole(MAIN_POSITION, NUM1, NUM2)
                                          .build();
         assertEquals(this.initEnvironment(), env);
     }
 
     /**
-     * 
+     * Checks if the the collisions are detected correctly.
      */
     @Test void checkCollisions() {
         final var env = this.initEnvironment();
@@ -148,9 +147,6 @@ class EnvironmentTest {
                                         Double.valueOf(NUM1).longValue()).isPresent());
     }
 
-    /**
-     * 
-     */
     @Test void checkCollisionWithHole() {
         final var env = this.initEnvironment();
 
@@ -158,7 +154,6 @@ class EnvironmentTest {
                                       (BallPhysicsComponent) ball.getPhysicsComponent(), 
                                        this.hole.getPosition(),
                                        Double.valueOf(NUM2).longValue()).isPresent());
-
         final GameObject holeCopy = factory.createHole(new Point2D(NUM5, NUM6),
                 this.hole.getGraphicComponent().getWidth(), 
                 this.hole.getGraphicComponent().getHeight());

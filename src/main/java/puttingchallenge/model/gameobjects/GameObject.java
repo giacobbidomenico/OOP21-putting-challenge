@@ -43,9 +43,9 @@ public interface GameObject {
         TREE,
 
         /**
-         * The type of a football ball static obstacle. 
+         * The type of a shelf static obstacle.
          */
-        FOOTBALL,
+        SHELF,
 
         /**
          * The type of the game hole.
@@ -111,16 +111,4 @@ public interface GameObject {
      */
     void draw(GraphicsContext graphicsContext);
 
-    /**
-     * Sets the flip of the {@link GameObject}.
-     * 
-     * @param flip
-     *          flip of the {@link GameObject}
-     */
-    void setFlip(boolean flip);
-
-    /**
-     * @return the flip of the {@link GameObject}
-     */
-    boolean isFlip();
 }

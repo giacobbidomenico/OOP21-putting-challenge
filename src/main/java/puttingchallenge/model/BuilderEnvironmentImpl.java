@@ -93,8 +93,8 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
         case TREE:
             gameObjects.add(factory.createTree(pos, w, h));
             break;
-        case FOOTBALL:
-            gameObjects.add(factory.createFootball(pos, w, h));
+        case SHELF:
+            gameObjects.add(factory.createShelf(pos, w, h));
             break;
         default:
             throw new IllegalArgumentException();

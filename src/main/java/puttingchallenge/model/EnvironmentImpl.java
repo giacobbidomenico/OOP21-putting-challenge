@@ -93,10 +93,9 @@ public class EnvironmentImpl implements Environment {
     }
 
     /**
-     * {@inheritDoc}
+     * 
      */
-    @Override
-    public void movePlayer() {
+    private void movePlayer() {
         final BallPhysicsComponent bf = (BallPhysicsComponent) this.ball.getPhysicsComponent();
 
         if (this.isBallOutOfBounds()) {
@@ -232,7 +231,7 @@ public class EnvironmentImpl implements Environment {
         if (this.observableGameState.isEmpty()) {
             throw new IllegalStateException();
         }
-        final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
+        final List<ModelEventType> eventsReceived = this.observable.eventsReceived();
         eventsReceived.forEach(event -> {
             switch (event) {
             case SHOOT:
