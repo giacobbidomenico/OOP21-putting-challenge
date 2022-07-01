@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import puttingchallenge.common.Point2D;
 import puttingchallenge.common.Vector2D;
