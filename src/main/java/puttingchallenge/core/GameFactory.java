@@ -99,7 +99,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.LAND,
                                   pos, 
-                                  new LandGraphicComponent(w, h * RECT_GRAPHIC_FACTOR), 
+                                  new LandGraphicComponent(w, h), 
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
@@ -121,7 +121,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos,
-                                  new WallGraphicComponent(w, h * RECT_GRAPHIC_FACTOR), 
+                                  new WallGraphicComponent(w, h), 
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
@@ -143,7 +143,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
-                                  new TreeGraphicComponent(w, h *  BALL_GRAPHIC_FACTOR),
+                                  new TreeGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
     }
@@ -165,7 +165,7 @@ public class GameFactory {
                                      final double h) {
         return new GameObjectImpl(GameObjectType.FOOTBALL, 
                                   pos,
-                                  new FootballGraphicComponent(w, h * BALL_GRAPHIC_FACTOR),
+                                  new FootballGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
     };
