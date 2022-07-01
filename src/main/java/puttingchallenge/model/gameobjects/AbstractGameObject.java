@@ -18,7 +18,6 @@ public abstract class AbstractGameObject implements GameObject {
     private Point2D pos;
     private final GraphicComponent graph;
     private final PhysicsComponent phys;
-    private boolean flip;
 
     /**
      * Set up a new {@link AbstractGameObject}.
@@ -40,7 +39,6 @@ public abstract class AbstractGameObject implements GameObject {
         this.pos = Objects.requireNonNull(position);
         this.graph = Objects.requireNonNull(graph);
         this.phys = Objects.requireNonNull(phys);
-        this.flip = false;
     }
 
     /**
@@ -118,24 +116,8 @@ public abstract class AbstractGameObject implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public void setFlip(final boolean flip) {
-        this.flip = flip;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isFlip() {
-        return this.flip;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int hashCode() {
-        return Objects.hash(flip, graph, phys, pos, type);
+        return Objects.hash(graph, phys, pos, type);
     }
 
     /**
@@ -151,14 +133,12 @@ public abstract class AbstractGameObject implements GameObject {
         }
         if (obj instanceof GameObject) {
             final GameObject gameObject = (GameObject) obj;
-            return flip == gameObject.isFlip() 
-                   && graph.equals(gameObject.getGraphicComponent()) 
+            return graph.equals(gameObject.getGraphicComponent()) 
                    && phys.equals(gameObject.getPhysicsComponent())
                    && pos.equals(gameObject.getPosition()) 
                    && type.equals(gameObject.getType());
         }
         return false;
     }
-
 
 }
