@@ -41,7 +41,6 @@ class TestGameState {
         final GamePlayGameState gpgs = (GamePlayGameState) gsm.getCurrentState();
         assertEquals(gpgs.getLives(), MAX_LIVES);
         assertEquals(gpgs.getScore(), NONE);
-        
     }
 
 }
