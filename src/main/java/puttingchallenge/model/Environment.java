@@ -2,8 +2,8 @@ package puttingchallenge.model;
 
 import java.util.List;
 import java.util.Optional;
-
 import javafx.geometry.Rectangle2D;
+
 import puttingchallenge.common.Point2D;
 import puttingchallenge.model.collisions.DynamicBoundingBox.CollisionTest;
 import puttingchallenge.model.collisions.PassiveCircleBoundingBox;
@@ -72,11 +72,6 @@ public interface Environment {
      *         obstacles in the game {@link Environment}
      */
     List<GameObject> getStaticObstacles();
-
-    /**
-     * Move the player next to the ball.
-     */
-    void movePlayer();
 
     /**
      * @return the {@link Rectangle2D} inside which there is the game {@link Environment}.

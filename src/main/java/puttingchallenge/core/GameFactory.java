@@ -14,9 +14,9 @@ import puttingchallenge.model.physics.BallPhysicsComponent;
 import puttingchallenge.model.physics.StaticPhysicsComponent;
 import puttingchallenge.view.graphics.BallGraphicComponent;
 import puttingchallenge.view.graphics.HoleGraphicComponent;
-import puttingchallenge.view.graphics.FootballGraphicComponent;
 import puttingchallenge.view.graphics.LandGraphicComponent;
 import puttingchallenge.view.graphics.PlayerGraphicComponent;
+import puttingchallenge.view.graphics.ShelfGraphicComponent;
 import puttingchallenge.view.graphics.TreeGraphicComponent;
 import puttingchallenge.view.graphics.WallGraphicComponent;
 
@@ -149,25 +149,25 @@ public class GameFactory {
     }
 
     /**
-     * Build a new football ball in the game.
+     * Build a new shelf in the game.
      *
      * @param pos
-     *          position of the football ball
+     *          position of the shelf
      * @param w
-     *          width of the football ball
+     *          width of the shelf
      * @param h
-     *          height of the football ball
+     *          height of the shelf
      *
-     * @return an instance of {@link GameObject} representing a football ball.
+     * @return an instance of {@link GameObject} representing a shelf.
      */
-    public GameObject createFootball(final Point2D pos,
+    public GameObject createShelf(final Point2D pos,
                                      final double w,
                                      final double h) {
-        return new GameObjectImpl(GameObjectType.FOOTBALL, 
+        return new GameObjectImpl(GameObjectType.SHELF, 
                                   pos,
-                                  new FootballGraphicComponent(w, h),
+                                  new ShelfGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
-                                  new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
+                                  new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     };
 
     /**

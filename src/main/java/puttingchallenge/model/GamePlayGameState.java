@@ -197,7 +197,7 @@ public class GamePlayGameState extends AbstractGameState {
      */
     @Override
     public void receiveEvents() {
-        final List<ModelEventType> eventsReceived = this.observable.eventsRecieved();
+        final List<ModelEventType> eventsReceived = this.observable.eventsReceived();
         if (!eventsReceived.isEmpty()) {
             eventsReceived.stream().forEach((event) -> {
                 switch (event) {
