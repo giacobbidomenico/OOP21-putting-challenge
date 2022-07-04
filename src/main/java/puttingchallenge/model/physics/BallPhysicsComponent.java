@@ -21,7 +21,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
     private static final double INCREASE_NORMAL = 1.5;
     private static final double REDUCE_Y = 0.7;
     private static final double REDUCE_X = 0.9;
-    private static final double MIN_POTENTIAL_ENERGY = 70;
+    private static final double MIN_POTENTIAL_ENERGY = 100;
     private static final double MIN_BOUNCING_DIFFERENCE_FACTOR = 0.8;
     private static final double MIN_KINETICS_ENERGY = 100;
 
