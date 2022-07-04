@@ -77,6 +77,8 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
 
     /**
      * {@inheritDoc}
+     * @throws IllegalArgumentException
+     *         if the obstacle doesn't exist
      */
     @Override
     public BuilderEnvironment addStaticObstacle(final GameObjectType gameObjectType, 
@@ -118,6 +120,8 @@ public class BuilderEnvironmentImpl implements BuilderEnvironment {
 
     /**
      * {@inheritDoc}
+     * @throws IllegalStateException
+     *         if the method doens't build the map for an error.
      */
     @Override
     public Environment build() {

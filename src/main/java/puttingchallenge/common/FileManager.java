@@ -53,13 +53,12 @@ public final class FileManager {
     /**
      * Path of general application skins.
      */
-    public static final String GENERAL_SKINS_PATH = SEPARATOR + "skins" + SEPARATOR;
+    public static final String GENERAL_SKINS_PATH = "/skins/";
 
     /**
      * Path of game obstacles skins.
      */
-    public static final String OBSTACLES_SKINS_PATH = GENERAL_SKINS_PATH
-                                                      + SEPARATOR + "obstacles" + SEPARATOR;
+    public static final String OBSTACLES_SKINS_PATH = GENERAL_SKINS_PATH + "obstacles/";
 
 
 

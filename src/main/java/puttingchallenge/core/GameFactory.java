@@ -121,7 +121,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.WALL,
                                   pos,
-                                  new WallGraphicComponent(w, h * RECT_GRAPHIC_FACTOR), 
+                                  new WallGraphicComponent(w, h), 
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
@@ -143,7 +143,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.TREE,
                                   pos, 
-                                  new TreeGraphicComponent(w, w),
+                                  new TreeGraphicComponent(w, h),
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new CircleBoundingBox(new Point2D(pos.getX() + w / 2, pos.getY() + w / 2), w / 2)));
     }
@@ -187,7 +187,7 @@ public class GameFactory {
                                  final double h) {
         return new GameObjectImpl(GameObjectType.HOLE, 
                                   pos, 
-                                  new HoleGraphicComponent(w, h), 
+                                  new HoleGraphicComponent(w, h * RECT_GRAPHIC_FACTOR), 
                                   new StaticPhysicsComponent(),
                                   new ConcreteDynamicBoundingBox(new AxisAlignedBoundingBox(pos, h, w)));
     }
