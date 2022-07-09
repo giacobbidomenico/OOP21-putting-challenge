@@ -109,7 +109,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
             sign = Math.signum(normale.getX()) == -1 ? 1 : -1;
             x = lastVel.getX() * (normale.getX() == 0 ? 1 : normale.getX() * sign) * REDUCE_X;
         }
-        return new  Vector2D(x, y);
+        return new Vector2D(x, y);
     }
 
     private void isStopping(final Point2D pos, final ActiveBoundingBox hitbox) {
@@ -138,12 +138,11 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
      */
     public Point2D nextPos(final long dt, final Point2D curPos) {
         final double t = 0.001 * dt * 1.5;
-        final Vector2D vel = this.getVelocity();
 
         this.reduceVel(dt);
-        final double x = curPos.getX() + (vel.getX() * t);
+        final double x = curPos.getX() + (this.getVelocity().getX() * t);
         final double y = curPos.getY()
-                         + (vel.getY() * t)
+                         + (this.getVelocity().getY() * t)
                          - (0.5 * Y_ACCELERATION * t * t);
         return new Point2D(x, y);
     }
