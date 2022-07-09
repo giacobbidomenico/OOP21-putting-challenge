@@ -66,7 +66,6 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
  
                 final double radius = ((BallObjectImpl) obj).getHitBox().getRadius();
                 Vector2D normale = info.getActiveBBSideNormal().get();
-                final Vector2D tangent = info.getActiveBBSideTanget().get();
                 final Vector2D lastVel = this.getVelocity();
 
                 nextPos = info.getEstimatedPointOfImpact().get();
@@ -82,7 +81,7 @@ public class BallPhysicsComponent extends AbstractPhysicsComponent {
                 nextPos.sumX(-radius);
                 nextPos.sumY(-radius);
 
-                normale = bTangent ? tangent : normale;
+                normale = bTangent ? info.getActiveBBSideTanget().get() : normale;
                 final Vector2D finVel = this.velAfterCollision(normale, lastVel, info.getActiveBoundingBox().bounceAlongTanget());
                 this.setVelocity(finVel);
                 this.isStopping(nextPos, info.getActiveBoundingBox());
